@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Foodtruck Finder Conceptual Model</title>
+	</head>
+	<body>
+		<h2>Conceptual Model</h2>
+		<h3>Entities & Attributes</h3>
+		<strong>User</strong>
+		<ul>
+			<li>userId (primary UUID)</li>
+			<li>userEmail</li>
+			<li>userActivationToken</li>
+			<li>userName</li>
+			<li>userHash</li>
+			<li>userIsOwner</li>
+		</ul>
+		<strong>Favorite</strong>
+		<ul>
+			<li>favUserId (foreign UUID)</li>
+			<li>favTruckId (foreign UUID)</li>
+			<li>favAddDate</li>
+		</ul>
+		<strong>Like</strong>
+		<ul>
+			<li>likeIsUserId</li>
+			<li>likeIsTruckId</li>
+			<li>likeAge</li>
+		</ul>
+		<strong>Foodtruck</strong>
+		<ul>
+			<li>foodTruckName</li>
+			<li>foodTruckId</li>
+			<li>foodTruckUserId</li>
+			<li>foodTruckRegistrationNumber</li>
+			<li>foodTruckImageUrl</li>
+			<li>foodTruckMenuUrl</li>
+			<li>foodTruckDescription</li>
+			<li>foodTruckPhoneNumber</li>
+			<li>foodTruckSocialMediaUrlLink</li>
+		</ul>
+		<strong>Location</strong>
+		<ul>
+			<li>locationFoodTruckId</li>
+			<li>locationUserId</li>
+			<li>locationLat</li>
+			<li>locationLong</li>
+			<li>locationFoodTruckDate</li>
+			<li>locationDuration</li>
+		</ul>
+		<strong>Relationships</strong>
+		<ul>
+			<li>Many users can post multiple locations</li>
+			<li>Many users can like many trucks</li>
+			<li>Many truck profiles can own many locations</li>
+			<li>One user can like many foodtrucks</li>
+			<li>One user owner to one foodtruck profile</li>
+		</ul>
+	</body>
+</html>
