@@ -24,15 +24,15 @@
 		</ul>
 		<strong>Like</strong>
 		<ul>
-			<li>likeIsUserId</li>
-			<li>likeIsTruckId</li>
-			<li>likeAge</li>
+			<li>likeIsUserId (foreign Uuid)</li>
+			<li>likeIsTruckId (foreign Uuid)</li>
+			<li>likeDate</li>
 		</ul>
 		<strong>Foodtruck</strong>
 		<ul>
+			<li>foodTruckId (primary key Uuid)</li>
+			<li>foodTruckUserId (foreign key Uuid)</li>
 			<li>foodTruckName</li>
-			<li>foodTruckId</li>
-			<li>foodTruckUserId</li>
 			<li>foodTruckRegistrationNumber</li>
 			<li>foodTruckImageUrl</li>
 			<li>foodTruckMenuUrl</li>
@@ -42,8 +42,8 @@
 		</ul>
 		<strong>Location</strong>
 		<ul>
-			<li>locationFoodTruckId</li>
-			<li>locationUserId</li>
+			<li>locationFoodTruckId (primary Uuid)</li>
+			<li>locationUserId (foreign Uuid)</li>
 			<li>locationLat</li>
 			<li>locationLong</li>
 			<li>locationFoodTruckDate</li>
