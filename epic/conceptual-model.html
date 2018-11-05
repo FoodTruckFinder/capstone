@@ -13,14 +13,13 @@
 			<li>profileEmail</li>
 			<li>profileActivationToken</li>
 			<li>profileHash</li>
-			<li>profileOwner</li>
+			<li>profileIsOwner</li>
 			<li>profileName</li>
 		</ul>
 		<strong>Favorite</strong>
 		<ul>
-
-			<li>favoriteTruckId (foreign UUID)</li>
 			<li>favoriteProfileId (foreign UUID)</li>
+			<li>favoriteFoodTruckId (foreign UUID)</li>
 			<li>favoriteAddDate</li>
 		</ul>
 		<strong>Social</strong>
@@ -32,9 +31,10 @@
 		<strong>Foodtruck</strong>
 		<ul>
 			<li>foodTruckId (primary key Uuid)</li>
-			<li>foodTruckUserId (foreign key Uuid)</li>
+			<li>foodTruckProfileId (foreign key Uuid)</li>
 			<li>foodTruckDescription</li>
 			<li>foodTruckName</li>
+			<li>foodTruckMenuUrl</li>
 			<li>foodTruckPhoneNumber</li>
 		</ul>
 		<strong>Location</strong>
