@@ -57,9 +57,8 @@ CREATE TABLE social (
 
 	socialId BINARY(16) NOT NULL,
 	socialFoodTruckId BINARY(16) NOT NULL,
-	socialUrl VARCHAR(255) NOT NULL,
+	socialUrrl VARCHAR(255) NOT NULL,
 	INDEX(socialFoodTruckId),
-
 	PRIMARY KEY(socialId),
 	FOREIGN KEY (socialFoodTruckId) REFERENCES foodTruck(foodTruckId)
 
@@ -69,10 +68,10 @@ CREATE TABLE location (
 
 	locationId BINARY(16) NOT NULL,
 	locationFoodtruckId BINARY(16) NOT NULL,
-	locationEndTime DATETIME NOT NULL,
+	locationEnd DATETIME(6) NOT NULL,
 	locationLatitude DECIMAl(9,6) NOT NULL,
 	locationLongitude DECIMAl(9,6) NOT NULL,
-	locationStartTime DATETIME NOT NULL,
+	locationStart DATETIME(6) NOT NULL,
 
 	UNIQUE(locationId),
 	UNIQUE(locationFoodtruckId),
