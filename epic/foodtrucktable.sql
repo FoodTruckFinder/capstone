@@ -53,7 +53,7 @@ CREATE TABLE favorite (
 	favoriteAddDate DATETIME NOT NULL,
 	INDEX(favoriteProfileId),
 
-	PRIMARY KEY(favoriteProfileId, favoriteFoodTruckId)
+	PRIMARY KEY(favoriteProfileId, favoriteFoodTruckId),
 	FOREIGN KEY(favoriteProfileId) REFERENCES Profile(profileId),
 	FOREIGN KEY(favoriteFoodTruckId) REFERENCES foodTruck(foodTruckId),
 
@@ -62,7 +62,7 @@ CREATE TABLE favorite (
 CREATE TABLE social (
 socialId BINARY(16) NOT NULL,
 socialFoodTruckId BINARY(16) NOT NULL,
-socialUrrl VARCHAR(255) NOT NULL
+socialUrrl VARCHAR(255) NOT NULL,
 INDEX(socialFoodTruckId),
 
 UNIQUE(socialFoodTruckId),
