@@ -96,4 +96,19 @@ class Profile implements \JsonSerializable {
 		$this->profileId = $uuid;
 	}
 
+	/**
+	 * accessor method for profile activation token
+	 *
+	 * @param string $newProfileActivationToken new value of the profile activation hash
+	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a valid data type
+	 * @throws \RangeException if $newProfileActivationToken is too long
+	 * @throws \TypeError if data types violate type hints
+	 */
+	/**
+	 * @return string
+	 */
+	public function getProfileHash() : string {
+		return $this->profileHash;
+	}
+	/**
 }
