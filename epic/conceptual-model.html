@@ -7,20 +7,21 @@
 	<body>
 		<h2>Conceptual Model</h2>
 		<h3>Entities & Attributes</h3>
-		<strong>User</strong>
+		<strong>Profile</strong>
 		<ul>
-			<li>isUserId (primary UUID)</li>
-			<li>isUserEmail</li>
-			<li>isUserActivationToken</li>
-			<li>isUserHash</li>
-			<li>isUserIsOwner</li>
-			<li>isUserName</li>
+			<li>profileId(primary UUID)</li>
+			<li>profileEmail</li>
+			<li>profileActivationToken</li>
+			<li>profileHash</li>
+			<li>profileOwner</li>
+			<li>profileName</li>
 		</ul>
 		<strong>Favorite</strong>
 		<ul>
-			<li>favTruckId (foreign UUID)</li>
-			<li>favUserId (foreign UUID)</li>
-			<li>favAddDate</li>
+
+			<li>favoriteTruckId (foreign UUID)</li>
+			<li>favoriteUserId (foreign UUID)</li>
+			<li>favoriteAddDate</li>
 		</ul>
 		<strong>Like</strong>
 		<ul>
