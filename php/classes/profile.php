@@ -1,6 +1,6 @@
 <?php
 
-class profile implements \JsonSerializable {
+class Profile implements \JsonSerializable {
 
 	use ValidateUuid;
 
@@ -38,7 +38,7 @@ class profile implements \JsonSerializable {
 	/**
 	 * constructor for this profile
 	 *
-	 * @param string|Uuid $newProfileId id of this profile or null if new profile
+	 * @param Uuid | string $newProfileId id of this profile or null if new profile
 	 * @param string $newProfileActivationToken activation token of this profile or null if new profile
 	 * @param string $newProfileEmail email of this profile or null if new profile
 	 * @param string $newProfileHash hashed password of this profile or null if new profile
@@ -50,9 +50,50 @@ class profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function construct($newProfileId, $newProfileActivationToken, $newProfileEmail, $newProfileHash, $newProfileIsOwner, $newProfileName) {
+	public function __construct($newProfileId, $newProfileActivationToken, $newProfileEmail, $newProfileHash, $newProfileIsOwner, $newProfileName) {
 		try {
 			$this->setProfileId($newProfileId);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileIsOwner($newProfileIsOwner);
+			$this->setProfileName($newProfileName);
+		}
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new	$exceptionType($exception->getMessage(), 0, $exception));
 		}
 	}
+
+	/**
+	 * accessor method for profile id
+	 *
+	 * @return Uuid value of the profile
+	 */
+	/**
+	 * @return Uuid
+	 */
+	public function getProfileId() : Uuid {
+		return $this->profileId;
+	}
+	/**
+	 * mutator method for profile id
+	 *
+	 * @param Uuid | string $newProfileId new value of the profile id
+	 *@throws \RangeException if $newProfileId is not positive
+	 *@throws \TypeError if $newProfileId violates type hints
+	 */
+	/**
+	 * @param Uuid $profileId
+	 */
+	public function setProfileId($newProfileId) : void {
+		try {
+			$uuid = self::validateUuid($newProfileId);
+		}
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+
+		}
+		$this->profileId = $uuid;
+	}
+
 }
