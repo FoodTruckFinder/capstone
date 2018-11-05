@@ -76,5 +76,4 @@ CREATE TABLE location (
 	UNIQUE(locationId),
 	UNIQUE(locationFoodtruckId),
 	FOREIGN KEY(locationFoodtruckId) REFERENCES FoodTruck(foodTruckId)
-
 );
