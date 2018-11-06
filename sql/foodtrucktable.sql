@@ -26,10 +26,10 @@ CREATE TABLE foodTruck (
 
 	foodTruckId BINARY (16) NOT NULL,
 	foodTruckProfileId BINARY (16) NOT NULL,
-	foodTruckDescription VARCHAR (32) NULL,
+	foodTruckDescription VARCHAR (256) NULL,
 	foodTruckImageUrl VARCHAR (255) NOT NULL,
 	foodTruckMenuUrl VARCHAR (255) NULL,
-	foodTruckName VARCHAR (32) NOT NULL,
+	foodTruckName VARCHAR (128) NOT NULL,
 	foodTruckPhoneNumber STRING (16) NULL,
 
 	UNIQUE(foodTruckName),

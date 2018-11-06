@@ -143,7 +143,7 @@ class FoodTruck {
 	 *
 	 * @param string $newFoodTruckDescription new value of food truck description
 	 * @throws \InvalidArgumentException if $newFoodTruckDescription is not a string or insecure
-	 * @throws \RangeException if $newFoodTruckDescription is > 32 characters
+	 * @throws \RangeException if $newFoodTruckDescription is > 256 characters
 	 * @throws \TypeError if $newFoodTruckDescription is not a string
 	 **/
 	public function setFoodTruckDescription(string $newFoodTruckDescription) : void {
@@ -155,7 +155,7 @@ class FoodTruck {
 		}
 
 		//verify description will fit in database
-		if(strlen($newFoodTruckDescription) >= 32) {
+		if(strlen($newFoodTruckDescription) >= 256) {
 			throw(new \RangeException("description is too long"));
 		}
 
@@ -242,7 +242,7 @@ class FoodTruck {
 	 *
 	 * @param string $newFoodTruckName new value of food truck Name
 	 * @throws \InvalidArgumentException if $newFoodTruckName is not a string or insecure
-	 * @throws \RangeException if $newFoodTruckName is > 32 characters
+	 * @throws \RangeException if $newFoodTruckName is > 128 characters
 	 * @throws \TypeError if $newFoodTruckName is not a string
 	 **/
 	public function setFoodTruckName(string $newFoodTruckName) : void {
@@ -254,7 +254,7 @@ class FoodTruck {
 		}
 
 		//verify Name will fit in database
-		if(strlen($newFoodTruckName) >= 32) {
+		if(strlen($newFoodTruckName) >= 128) {
 			throw(new \RangeException("food truck name is too long"));
 		}
 
