@@ -107,7 +107,7 @@ class FoodTruck {
 	 *getter method for foodTruckProfileId
 	 * @return Uuid value of foodTruckProfileId
 	 **/
-	public function getFoodTruckProfileId(): Uuid {
+	public function getFoodTruckProfileId(): Uuid{
 		return($this->foodTruckProfileId);
 	}
 
@@ -121,14 +121,113 @@ class FoodTruck {
 	public function setFoodTruckProfileId($newFoodTruckProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newFoodTruckProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
+
+		//convert and store food truck profile id
+		$this->foodTruckProfileId = $uuid;
 	}
 
+	/**
+	 *getter method for foodTruckDescription
+	 * @return string value of foodTruckDescription
+	 **/
+	public function getFoodTruckDescription() : string {
+		return($this->foodTruckDescription);
+	}
 
+	/**
+	 * mutator method for food truck description
+	 *
+	 * @param string $newFoodTruckDescription new value of food truck description
+	 * @throws \InvalidArgumentException if $newFoodTruckDescription is not a string or insecure
+	 * @throws \RangeException if $newFoodTruckDescription is > 32 characters
+	 * @throws \TypeError if $newFoodTruckDescription is not a string
+	 **/
+	public function setFoodTruckDescription(string $newFoodTruckDescription) : void {
+		//verify description is secure
+		$newFoodTruckDescription = trim($newFoodTruckDescription);
+		$newFoodTruckDescription = filter_var($newFoodTruckDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newFoodTruckDescription) === true) {
+			throw(new \InvalidArgumentException("description is empty or insecure"));
+		}
 
+		//verify description will fit in database
+		if(strlen($newFoodTruckDescription) >= 32) {
+			throw(new \RangeException("description is too long"));
+		}
 
+		//store description
+		$this->foodTruckDescription = $newFoodTruckDescription;
+	}
 
+	/**
+	 *getter method for foodTruckImageUrl
+	 * @return string value of foodTruckImageUrl
+	 **/
+	public function getFoodTruckImageUrl() : string {
+		return($this->foodTruckImageUrl);
+	}
 
+	/**
+	 * mutator method for food truck image url
+	 *
+	 * @param string $newFoodTruckImageUrl new value of food truck image url
+	 * @throws \InvalidArgumentException if $newFoodTruckImageUrl is not a string or insecure
+	 * @throws \RangeException if $newFoodTruckImageUrl is > 255 characters
+	 * @throws \TypeError if $newFoodTruckImageUrl is not a string
+	 **/
+	public function setFoodTruckImageUrl(string $newFoodTruckImageUrl) : void {
+		//verify image url is secure
+		$newFoodTruckImageUrl = trim($newFoodTruckImageUrl);
+		$newFoodTruckImageUrl = filter_var($newFoodTruckImageUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newFoodTruckImageUrl) === true) {
+			throw(new \InvalidArgumentException("image url is empty or insecure"));
+		}
+
+		//verify image url will fit in database
+		if(strlen($newFoodTruckImageUrl) >= 255) {
+			throw(new \RangeException("image url is too long"));
+		}
+
+		//store image url
+		$this->foodTruckImageUrl = $newFoodTruckImageUrl;
+	}
+
+	/**
+	 *getter method for foodTruckMenuUrl
+	 * @return string value of foodTruckMenuUrl
+	 **/
+	public function getFoodTruckMenuUrl() : string {
+		return($this->foodTruckMenuUrl);
+	}
+
+	/**
+	 * mutator method for food truck menu url
+	 *
+	 * @param string $newFoodTruckMenuUrl new value of food truck Menu url
+	 * @throws \InvalidArgumentException if $newFoodTruckMenuUrl is not a string or insecure
+	 * @throws \RangeException if $newFoodTruckMenuUrl is > 255 characters
+	 * @throws \TypeError if $newFoodTruckMenuUrl is not a string
+	 **/
+	public function setFoodTruckMenuUrl(string $newFoodTruckMenuUrl) : void {
+		//verify image url is secure
+		$newFoodTruckMenuUrl = trim($newFoodTruckMenuUrl);
+		$newFoodTruckMenuUrl = filter_var($newFoodTruckMenuUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newFoodTruckMenuUrl) === true) {
+			throw(new \InvalidArgumentException("menu url is empty or insecure"));
+		}
+
+		//verify menu url will fit in database
+		if(strlen($newFoodTruckMenuUrl) >= 255) {
+			throw(new \RangeException("menu url is too long"));
+		}
+
+		//store menu url
+		$this->foodTruckMenuUrl = $newFoodTruckMenuUrl;
+	}
 
 
 
