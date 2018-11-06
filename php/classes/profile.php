@@ -113,7 +113,7 @@ class Profile implements \JsonSerializable {
 			throw (new \RangeException("string is not 32 characters"));
 		}
 		//verify the string is hexadecimal
-		if(ctype_xdigit($newProfileActivationToken) !== true) {
+		if(ctype_xdigit($newProfileActivationToken) === false) {
 			throw (new \InvalidArgumentException("String is not hexadecimal"));
 		}
 		//store the string
@@ -152,6 +152,38 @@ class Profile implements \JsonSerializable {
 		$this->profileEmail = $newProfileEmail;
 	}
 
-	/
+	/**
+	 * accessor method for profile hash
+	 *
+	 * @return string of profile hash
+	 */
+	public function getProfileHash(): string {
+		return $this->profileHash;
+	}
+	/**
+	 * mutator method for profile hash
+	 *
+	 * @param string $newProfileHash new value of the profile hash
+	 * @throws \InvalidArgumentException if $newProfileHash is empty
+	 * @throws \RangeException is profile hash is longer than 97 characters
+	 * @throws \Exception if profile hash is not hexadecimal
+	 */
+	public function setProfileHash(string $newProfileHash): void {
+		// verify if the profile hash is not empty
+		if(empty($newProfileHash) === true) {
+			throw (new \InvalidArgumentException("profile hash is empty"));
+		}
+		// verify the hash is not too long
+		if(strlen($newProfileHash) > 97) {
+			throw (new \RangeException("hash is too long"));
+		}
+		// verify that hash is hexadecimal
+		if(ctype_xdigit($newProfileHash) === false) {
+			throw (new \Exception("hash is not hexadecimal"));
+		}
+		$this->profileHash = $newProfileHash;
+	}
+
+
 
 }
