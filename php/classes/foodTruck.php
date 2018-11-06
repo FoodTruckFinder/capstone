@@ -229,6 +229,70 @@ class FoodTruck {
 		$this->foodTruckMenuUrl = $newFoodTruckMenuUrl;
 	}
 
+	/**
+	 *getter method for foodTruckName
+	 * @return string value of foodTruckName
+	 **/
+	public function getFoodTruckName() : string {
+		return($this->foodTruckName);
+	}
 
+	/**
+	 * mutator method for food truck Name
+	 *
+	 * @param string $newFoodTruckName new value of food truck Name
+	 * @throws \InvalidArgumentException if $newFoodTruckName is not a string or insecure
+	 * @throws \RangeException if $newFoodTruckName is > 32 characters
+	 * @throws \TypeError if $newFoodTruckName is not a string
+	 **/
+	public function setFoodTruckName(string $newFoodTruckName) : void {
+		//verify Name is secure
+		$newFoodTruckName = trim($newFoodTruckName);
+		$newFoodTruckName = filter_var($newFoodTruckName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newFoodTruckName) === true) {
+			throw(new \InvalidArgumentException("food truck name is empty or insecure"));
+		}
+
+		//verify Name will fit in database
+		if(strlen($newFoodTruckName) >= 32) {
+			throw(new \RangeException("food truck name is too long"));
+		}
+
+		//store Name
+		$this->foodTruckName = $newFoodTruckName;
+	}
+
+	/**
+	 *getter method for foodTruckPhoneNumber
+	 * @return string value of foodTruckPhoneNumber
+	 **/
+	public function getFoodTruckPhoneNumber() : string {
+		return($this->foodTruckPhoneNumber);
+	}
+
+	/**
+	 * mutator method for food truck PhoneNumber
+	 *
+	 * @param string $newFoodTruckPhoneNumber new value of food truck PhoneNumber
+	 * @throws \InvalidArgumentException if $newFoodTruckPhoneNumber is not a string or insecure
+	 * @throws \RangeException if $newFoodTruckPhoneNumber is > 16 characters
+	 * @throws \TypeError if $newFoodTruckPhoneNumber is not a string
+	 **/
+	public function setFoodTruckPhoneNumber(string $newFoodTruckPhoneNumber) : void {
+		//verify PhoneNumber is secure
+		$newFoodTruckPhoneNumber = trim($newFoodTruckPhoneNumber);
+		$newFoodTruckPhoneNumber = filter_var($newFoodTruckPhoneNumber, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newFoodTruckPhoneNumber) === true) {
+			throw(new \InvalidArgumentException("food truck phone number is empty or insecure"));
+		}
+
+		//verify PhoneNumber will fit in database
+		if(strlen($newFoodTruckPhoneNumber) >= 16) {
+			throw(new \RangeException("food truck phone number is too long"));
+		}
+
+		//store PhoneNumber
+		$this->foodTruckPhoneNumber = $newFoodTruckPhoneNumber;
+	}
 
 }
