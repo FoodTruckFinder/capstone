@@ -68,10 +68,7 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile id
 	 *
-	 * @return Uuid value of the profile
-	 */
-	/**
-	 * @return Uuid
+	 * @return Uuid value of the profile id
 	 */
 	public function getProfileId() : Uuid {
 		return $this->profileId;
@@ -83,32 +80,46 @@ class Profile implements \JsonSerializable {
 	 *@throws \RangeException if $newProfileId is not positive
 	 *@throws \TypeError if $newProfileId violates type hints
 	 */
-	/**
-	 * @param Uuid $profileId
-	 */
-	public function setProfileId($newProfileId) : void {
+	public function setProfileId(uuid $newProfileId) : void {
+		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newProfileId);
 		}
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 
 		}
+		// store the id
 		$this->profileId = $uuid;
 	}
 
 	/**
 	 * accessor method for profile activation token
 	 *
+	 * @return string value of the hashed profile password
+	 */
+	public function getProfileHash() : string {
+		return $this->profileHash;
+	}
+	/**
+	 * mutator method for profile activation token
+	 *
 	 * @param string $newProfileActivationToken new value of the profile activation hash
 	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a valid data type
 	 * @throws \RangeException if $newProfileActivationToken is too long
 	 * @throws \TypeError if data types violate type hints
 	 */
-	/**
-	 * @return string
-	 */
-	public function getProfileHash() : string {
-		return $this->profileHash;
+	public function setProfileActivationToken(string $profileActivationToken): void {
+		// verify the hash is 32 characters
+		if(strlen($newProfileActivationToken) !== 32) {
+			throw (new \RangeException("hash is not 32 characters"));
+		}
+		//verify the hash is hexadecimal
+		if(ctype_xdigit($newProfileActivationToken) !== true) {
+			throw (new \TypeError("hash is not hexadecimal"));
+		}
+		//store the hash
+		$this->profileActivationToken = $profileActivationToken;
 	}
+
 	/**
 }
