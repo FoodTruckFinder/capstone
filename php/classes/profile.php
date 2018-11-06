@@ -95,31 +95,63 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile activation token
 	 *
-	 * @return string value of the hashed profile password
+	 * @return string of profile activation token
 	 */
-	public function getProfileHash() : string {
-		return $this->profileHash;
+	public function getProfileActivationToken(): string {
+		return $this->profileActivationToken;
 	}
 	/**
 	 * mutator method for profile activation token
 	 *
 	 * @param string $newProfileActivationToken new value of the profile activation hash
 	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a valid data type
-	 * @throws \RangeException if $newProfileActivationToken is too long
-	 * @throws \TypeError if data types violate type hints
+	 * @throws \RangeException if $newProfileActivationToken is longer than 32 characters
 	 */
-	public function setProfileActivationToken(string $profileActivationToken): void {
-		// verify the hash is 32 characters
+	public function setProfileActivationToken(string $newProfileActivationToken): void {
+		// verify the string is 32 characters
 		if(strlen($newProfileActivationToken) !== 32) {
-			throw (new \RangeException("hash is not 32 characters"));
+			throw (new \RangeException("string is not 32 characters"));
 		}
-		//verify the hash is hexadecimal
+		//verify the string is hexadecimal
 		if(ctype_xdigit($newProfileActivationToken) !== true) {
-			throw (new \TypeError("hash is not hexadecimal"));
+			throw (new \InvalidArgumentException("String is not hexadecimal"));
 		}
-		//store the hash
-		$this->profileActivationToken = $profileActivationToken;
+		//store the string
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/**
+	 * accessor method for profile email
+	 *
+	 * @return	string of the profile email
+	 */
+	public function getProfileEmail(): string {
+		return $this->profileEmail;
+	}
+	/**
+	 * mutator method for profile email
+	 *
+	 * @param string $newProfileEmail new value of the profile email
+	 * @throws \InvalidArgumentException if $newProfileEmail is empty
+	 * @throws \RangeException if profile email is longer than 128 characters
+	 * @throws \Exception if profile email is not well-formed
+	 */
+	public function setProfileEmail(string $newProfileEmail): void {
+		// verify the profile email is not empty
+		if(empty($newProfileEmail) === true) {
+			throw (new \InvalidArgumentException("email field is empty"));
+		}
+		// verify email address is not too long
+		if(strlen($newProfileEmail) > 128) {
+			throw (new \RangeException("email address is too long"));
+		}
+		// verify if email is well formed
+		if(filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL) === false) {
+			throw (new \Exception("email in not valid format"));
+		}
+		$this->profileEmail = $newProfileEmail;
+	}
+
+	/
+
 }
