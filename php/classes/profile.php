@@ -88,7 +88,7 @@ class Profile implements \JsonSerializable {
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 
 		}
-		// store the id
+		// store the uuid
 		$this->profileId = $uuid;
 	}
 
@@ -145,10 +145,13 @@ class Profile implements \JsonSerializable {
 		if(strlen($newProfileEmail) > 128) {
 			throw (new \RangeException("email address is too long"));
 		}
+		// sanitize email
+		$newProfileEmail = filter_var($newProfileEmail,FILTER_SANITIZE_EMAIL);
 		// verify if email is well formed
 		if(filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL) === false) {
 			throw (new \Exception("email in not valid format"));
 		}
+		// store the string
 		$this->profileEmail = $newProfileEmail;
 	}
 
@@ -165,7 +168,7 @@ class Profile implements \JsonSerializable {
 	 *
 	 * @param string $newProfileHash new value of the profile hash
 	 * @throws \InvalidArgumentException if $newProfileHash is empty
-	 * @throws \RangeException is profile hash is longer than 97 characters
+	 * @throws \RangeException if profile hash is longer than 97 characters
 	 * @throws \Exception if profile hash is not hexadecimal
 	 */
 	public function setProfileHash(string $newProfileHash): void {
@@ -181,9 +184,55 @@ class Profile implements \JsonSerializable {
 		if(ctype_xdigit($newProfileHash) === false) {
 			throw (new \Exception("hash is not hexadecimal"));
 		}
+		// store the string
 		$this->profileHash = $newProfileHash;
 	}
 
+	/**
+	 * accessor method for the boolean profile is owner
+	 *
+	 * @return string of profile is owner
+	 */
+	/**
+	 * @return int
+	 */
+	public function getProfileIsOwner(): int {
+		return $this->profileIsOwner;
+	}
+	/**
+	 * mutator method for the boolean profile is owner
+	 *
+	 * @param integer $newProfileIsOwner new value of the boolean profile is owner
+	 * @throws \InvalidArgumentException if $newProfileIsOwner is empty
+	 * @throws \RangeException if integer is longer than 1 character
+	 * @throws \Exception if integer is not 1 or 0
+	 */
+	/**
+	 * @param int $profileIsOwner
+	 */
+	public function setProfileIsOwner(int $newProfileIsOwner): void {
+		// check integer is not empty
+		if(empty($newProfileIsOwner) === true) {
+			throw (new	\InvalidArgumentException("profile is owner is empty"));
+		}
+		// check profile is owner
+		if(is_int($newProfileIsOwner) === false) {
+			throw (new \InvalidArgumentException("profile is owner is not integer"));
+		}
+		// check profile is owner is to long
+		if(strlen((int)$newProfileIsOwner) !== 1) {
+			throw (new \RangeException("integer is too long"));
+		}
+		// check profile is owner is either 1 or 0
+		if($newProfileIsOwner !== 0 or $newProfileIsOwner !== 1) {
+			throw (new \Exception("boolean is not 1 or 0"));
+		}
+		// store the integer
+		$this->profileIsOwner = $newProfileIsOwner;
+	}
 
+	/**
+	 *
+	 */
 
 }
