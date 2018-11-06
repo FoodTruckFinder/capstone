@@ -117,11 +117,13 @@ class Profile implements \JsonSerializable {
 		if(strlen($newProfileActivationToken) !== 32) {
 			throw (new \RangeException("string is not 32 characters"));
 		}
-		//verify the string is hexadecimal
+		// verify the string is hexadecimal
 		if(ctype_xdigit($newProfileActivationToken) === false) {
 			throw (new \InvalidArgumentException("String is not hexadecimal"));
 		}
-		//store the string
+		// sanitize activation token string
+		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
+		// store the string
 		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
@@ -150,6 +152,8 @@ class Profile implements \JsonSerializable {
 		if(strlen($newProfileEmail) > 128) {
 			throw (new \RangeException("email address is too long"));
 		}
+		// sanitize email string
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING);
 		// sanitize email
 		$newProfileEmail = filter_var($newProfileEmail,FILTER_SANITIZE_EMAIL);
 		// verify if email is well formed
