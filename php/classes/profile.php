@@ -194,7 +194,7 @@ class Profile implements \JsonSerializable {
 	 * @return string of profile is owner
 	 */
 	/**
-	 * @return int
+	 * @return int of profile is owner boolean
 	 */
 	public function getProfileIsOwner(): int {
 		return $this->profileIsOwner;
@@ -206,9 +206,6 @@ class Profile implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newProfileIsOwner is empty
 	 * @throws \RangeException if integer is longer than 1 character
 	 * @throws \Exception if integer is not 1 or 0
-	 */
-	/**
-	 * @param int $profileIsOwner
 	 */
 	public function setProfileIsOwner(int $newProfileIsOwner): void {
 		// check integer is not empty
@@ -232,7 +229,33 @@ class Profile implements \JsonSerializable {
 	}
 
 	/**
+	 *accessor method for profile name
 	 *
+	 * @return string of profile name
 	 */
+	public function getProfileName(): string {
+		return $this->profileName;
+	}
+	/**
+	 * mutator method for the profile name
+	 *
+	 * @param string $newProfileName new profile name
+	 * @throws \InvalidArgumentException if $newProfile is empty
+	 * @throws \RangeException if string is too long
+	 */
+	public function setProfileName(string $newProfileName): void {
+		// check if string is empty
+		if(empty($newProfileName) === false) {
+			throw (new \InvalidArgumentException("profile name is empty"));
+		}
+		// check if string is too long
+		if(strlen($newProfileName) > 32) {
+			throw (new \RangeException("profile is too long"));
+		}
+		// sanitize string
+		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
+		// store the string
+		$this->profileName = $newProfileName;
+	}
 
 }
