@@ -200,9 +200,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for the boolean profile is owner
 	 *
-	 * @return string of profile is owner
-	 */
-	/**
 	 * @return int of profile is owner boolean
 	 */
 	public function getProfileIsOwner(): int {
@@ -283,6 +280,64 @@ class Profile implements \JsonSerializable {
 
 		// bind the member variables to the place holders in the template
 		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileHash, "profileHash" => $this->profileHash, "profileIsOwner" => $this->profileIsOwner, "profileName" => $this->profileName];
+	}
+
+	/**
+	 * deletes this Profile form mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM profile WHERE profile = :profileId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holder in the template
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this Profile in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE profile SET profileEmail = :profileEmail, profileHash = :profileHash, profileName = :profileName WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileName" => $this->profileName];
+		$statement->execute($parameters);
+	}
+	// get profile by activation token, email, name
+
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * formats the state variable for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 */
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["profileActivationToken"] = $this->profileActivationToken->unset();
+		$fields["profileHash"] = $this->profileHash->unset();
+		return($fields);
 	}
 
 }
