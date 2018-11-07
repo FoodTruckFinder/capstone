@@ -147,9 +147,14 @@ class Favorite implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$formattedDate = $
+		$formattedDate = $this->favoriteProfileId->format("Y-m-d H:i:s.u");
+		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckIdId->getBytes(), "favoriteAddDate" => $formattedDate];
+		$statement->execute($parameters);
 	}
 
+	/**
+	 *
+	 */
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
