@@ -27,9 +27,9 @@ class Location implements \JsonSerializable {
 	 */
 	private $locationLatitude;
 	/**
-	* stores the longitude coordinate associated with locationFoodTruckId
-	* @var float which stores long coords
-	**/
+	 * stores the longitude coordinate associated with locationFoodTruckId
+	 * @var float which stores long coords
+	 **/
 	private $locationLongitude;
 	/**
 	 * the location start time for when a foodtruck begins service
@@ -101,6 +101,7 @@ class Location implements \JsonSerializable {
 	public function getLocationFoodTruckId(): Uuid {
 		return $this->locationFoodTruckId;
 	}
+
 	/**
 	 * mutator method for profile id
 	 *
@@ -128,20 +129,17 @@ class Location implements \JsonSerializable {
 		return ($this->locationEndTime);
 
 	}
+
 	/**
 	 * mutator method for locationEndTime
 	 * check if location end time is empty, if it is the default Dateinteral is
 	 *
-	 *NEEDS TO BE SOLVED
+	 *
 	 *
 	 */
 	public function setLocationEndTime($newLocationEndTime = null): void {
 		if(empty($newLocationEndTime) === true) {
-			$this->locationEndTime = locationStartTime->add(new DateInterval('PT4H'));
-}
-		if(empty($newLocationEndTime) === false) {
-
-			$this->locationEndTime = $this->locationStartTime->add(new DateInterval("variable passed in by user through PHP"));
+			$this->locationEndTime = $this->locationStartTime->add(new DateInterval('PT4H'));
 		}
 		// store the end time  using the ValidateDate trait
 		try {
@@ -149,10 +147,9 @@ class Location implements \JsonSerializable {
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-
-			// store the string
-			$this->locationEndTime = $newLocationEndTime;
 		}
+		// store the string
+		$this->locationEndTime = $newLocationEndTime;
 	}
 	/**
 	 * accessor method for locationStartTime
@@ -276,9 +273,9 @@ class Location implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getLocationIdByLocationFoodTruckId(\PDO $pdo, $locationFoodtruckId) : \SplFixedArray {
+	public static function getLocationIdByLocationFoodTruckId(\PDO $pdo, $locationFoodTruckId) : \SplFixedArray {
 		try {
-			$locationFoodtruckId = self::validateUuid($locationFoodtruckId);
+			$locationFoodTruckId = self::validateUuid($locationFoodTruckId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -287,7 +284,7 @@ class Location implements \JsonSerializable {
 		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
 		$statement = $pdo->prepare($query);
 		// bind the tweet profile id to the place holder in the template
-		$parameters = ["locationFoodTruckId" => $locationFoodTruckId->getBytes()];
+		$parameters = ["locationFoodTruckId"=> $locationFoodTruckId->getBytes()];
 		$statement->execute($parameters);
 		// build an array of tweets
 		$locations = new \SplFixedArray($statement->rowCount());
