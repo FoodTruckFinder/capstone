@@ -45,17 +45,83 @@ class  social {
  */
 
 	public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl){
-		try{
-
-	/**
- * @param mixed $newSocialId
- */
-	public function setSocialId($newSocialId): void {
-		$this->socialId = $newSocialId;
+  		try {
+ 	 	$this->setSocialId($newSocialId);
+		$this->setSocialFoodTruckId($newSocialFoodTruckId);
+		$this->setSocialUrl($newSocialUrl);
+}
+catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw (new	$exceptionType($exception->getMessage(), 0, $exception));
 	}
 
-}
+	/**
+	 * accessor method for social  id
+	 *
+	 * @return Uuid value of the social id*/
+
+	public function getSocialId() : Uuid {
+	return $this->SocialId;
 }
 
+/**
+ * mutator method for profile id
+ *
+ * @param Uuid | string $newSocialId new value of the social id
+ *@throws \RangeException if $newSocialId is not positive
+ *@throws \TypeError if $newSocialId violates type hints
+ */
+
+
+/**
+ * @param mixed $newSocialId
+ */
+	 public function setSocialId($newSocialId): void {
+	// verify the id is a valid uuid
+	try {
+		$uuid = self::validateUuid($newSocialId);
+	}
+	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+
+	}
+	// store the uuid
+	$this->SocialId = $uuid;{
+}
+	 	/**
+		 * accessor method for socialFoodTruckId
+		 *@return Uuid value of the social foodtruck id
+		 */
+
+
+}
+	public function setSocialFoodTruckId(): Uuid {
+	return $this->SocialFoodTruckId;
+
+
+
+	/**
+	 * mutator method for profile id
+	 *
+	 * @param Uuid | string $newSocialId new value of the location id
+	 * @throws \RangeException if $newSocialId is not positive
+	 * @throws \TypeError if $newsocialId violates type hints
+	 */
+
+	public function getSocialFoodTruckId(uuid $newSocialFoodTruckId): void {
+		// verify the id is a valid uuid
+		try {
+			$uuid = self::validateUuid($newSocialFoodTruckId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+
+		}
+		// store the uuid
+		$this->socialFoodTruckId = $uuid;
+	}
+	/**
+	 *accessor method for Social Url
+	 *
+	 * @return string of social Url
+	 */
 }
 
+	public function setSocialUrl
