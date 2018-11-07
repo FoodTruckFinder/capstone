@@ -124,7 +124,7 @@ class Favorite implements \JsonSerializable {
 		// store the favorite add date using the ValidateDate Trait
 		try {
 			$newFavoriteAddDate = self::validateDateTime($newFavoriteAddDate);
-		} catch(\InvalidArgumentException | RangeException | $exception) {
+		} catch(\InvalidArgumentException | RangeException $exception) {
 					$exceptionType = get_class($exception);
 				throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
