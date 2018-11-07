@@ -1,13 +1,15 @@
 <?php
 
-namespace Edu/Cnm/FoodTruckFinder;
+namespace Edu/
+
+use Edu\Cnm\FoodTruckFinder\ValidateUuid;
+
+Cnm/FoodTruckFinder;
 require_once ("Autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 
-
 class  social implements \ JsonSerializable {
-	use ValidateUrl;
 	use ValidateUuid;
 
 

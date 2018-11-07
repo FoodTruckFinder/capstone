@@ -57,7 +57,7 @@ CREATE TABLE social (
 
 	socialId BINARY(16) NOT NULL,
 	socialFoodTruckId BINARY(16) NOT NULL,
-	socialUrrl VARCHAR(255) NOT NULL,
+	socialUrl VARCHAR(255) NOT NULL,
 	INDEX(socialFoodTruckId),
 	PRIMARY KEY(socialId),
 	FOREIGN KEY (socialFoodTruckId) REFERENCES foodTruck(foodTruckId)
