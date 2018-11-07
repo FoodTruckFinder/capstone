@@ -18,12 +18,12 @@ class FoodTruck {
 	 *id for profile associated with this foodTruck. foreign key. is indexed.
 	 * @var Uuid $foodTruckProfileId
 	 **/
-	 private $foodTruckProfileId;
+	private $foodTruckProfileId;
 	/**
 	 *description for food truck.
 	 * @var varchar $foodTruckDescription
 	 **/
-	 private $foodTruckDescription;
+	private $foodTruckDescription;
 	/**
 	 *image url for foodTruck.
 	 * @var varchar $foodTruckImageUrl
@@ -33,17 +33,17 @@ class FoodTruck {
 	 * menu url for foodTruck
 	 * @var varchar $foodTruckMenuUrl
 	 **/
-	 private $foodTruckMenuUrl;
+	private $foodTruckMenuUrl;
 	/**
 	 * name of foodTruck.
 	 * @var varchar $foodTruckName
 	 **/
-	 private $foodTruckName;
+	private $foodTruckName;
 	/**
 	 * phone number for FoodTruck.
 	 * @var string $foodTruckPhoneNumber
 	 **/
-	 private $foodTruckPhoneNumber;
+	private $foodTruckPhoneNumber;
 
 	/**
 	 * constructor for this foodTruck
