@@ -611,5 +611,91 @@ public static function getFoodTruckByFoodTruckName(\PDO $pdo, string $foodTruckN
 	return($foodTrucks);
 }
 
+/**
+ * gets the foodTruck by PhoneNumber
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param string $foodTruckPhoneNumber food truck PhoneNumber to search for
+ * @return \SplFixedArray SplFixedArray of foodTrucks found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct data type
+ **/
+public static function getFoodTruckByFoodTruckPhoneNumber(\PDO $pdo, string $foodTruckPhoneNumber) : \SplFixedArray {
+	//sanitize the description before searching
+	$foodTruckPhoneNumber = trim($foodTruckPhoneNumber);
+	$foodTruckPhoneNumber = filter_var($foodTruckPhoneNumber, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	if(empty($foodTruckPhoneNumber) === true) {
+		throw(new \PDOException("food truck PhoneNumber is invalid"));
+	}
 
+	// escape any mySQL wild cards
+	$foodTruckPhoneNumber = str_replace("_", "\\_", str_replace("%", "\\%", $foodTruckPhoneNumber));
 
+	// create query template
+	$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber WHERE foodTruckPhoneNumber LIKE :foodTruckPhoneNumber";
+	$statement = $pdo->prepare($query);
+
+	// bind the truck Name to the placeholder in the template
+	$foodTruckName = "%$$foodTruckPhoneNumber%";
+	$parameters = ["foodTruckPhoneNumber" => $foodTruckPhoneNumber];
+	$statement->execute($parameters);
+
+	//build array of food trucks
+	$foodTrucks = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
+			$foodTrucks[$foodTrucks->key()] = $foodTruck;
+			$foodTrucks->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+	return($foodTrucks);
+}
+
+/**
+ * gets all Tweets
+ *
+ * @param \PDO $pdo PDO connection object
+ * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct data type
+ **/
+ public static function getAllFoodTrucks(\PDO $pdo) : \SPLFixedArray {
+ 	//create query template
+ 	$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber";
+ 	$statement = $pdo->prepare($query);
+ 	$statement->execute();
+
+ 	//build array of foodTrucks
+ 	$foodTrucks = new \SplFixedArray($statement->rowCount());
+ 	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+ 	while(($row = $statement->fetch()) !== false) {
+		try {
+			$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
+			$foodTrucks[$foodTrucks->key()] = $foodTruck;
+			$foodTrucks->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+	return($foodTrucks);
+}
+
+/**
+ * formats the state variables for JSON serialization
+ *
+ * @return array resulting state variables to serialize
+ **/
+ public function jsonSerialize() : array {
+ 	$fields = get_object_vars($this);
+
+ 	$fields["foodTruckId"] = $this->foodTruckId->toString();
+ 	$fields["foodTruckProfileId"] = $this->foodTruckProfileId->toString();
+
+ 	return($fields);
+ }
