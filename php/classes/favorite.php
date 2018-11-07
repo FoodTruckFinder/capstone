@@ -55,8 +55,8 @@ class Favorite implements \JsonSerializable {
 		/** mutator method for favorite profile id
 		 *
 		 * @param Uuid | string $newFavoriteProfileId new value of the favorite profile id
+		 * @throws \InvalidArgumentException if $newFavoriteProfileId is not a valid uuid
 		 * @throws \RangeException if $newFavoriteProfileId is not positive
-		 * @throws \TypeError if $newFavoriteProfileId violates type hints
 		 */
 		public function setFavoriteProfileId(uuid $newFavoriteProfileId) : void {
 			// verify the id is a valid uuid
@@ -80,8 +80,8 @@ class Favorite implements \JsonSerializable {
 		 * mutator method for favorite food truck id
 		 *
 		 * @param Uuid | string $newFavoriteFoodTruckId new value of the favorited food truck id
+		 * @throws \InvalidArgumentException if $newFavoriteFoodTruckId is not a valid uuid
 		 * @throws \RangeException if $newFavoriteFoodTruckId is not positive
-		 * @throws \TypeError if $newFavoriteFoodTruckId violates type hints
 		 */
 		public function setFavoriteFoodTruckId(uuid $newFavoriteFoodTruckId) : void {
 			// verify the id is a valid uuid
@@ -93,5 +93,25 @@ class Favorite implements \JsonSerializable {
 			//store the uuid
 			$this->favoriteFoodTruckId = $uuid;
 		}
-
+		/**
+		 * accessor method for favorite add date
+		 *
+		 * @return DateTime value of the favorite food truck add
+		 */
+		public function getFavoriteAddDate() : \DateTime {
+			return ($this->FavoriteAddDate);
+		}
+		/**
+		 * mutator method for favorite add date
+		 *
+		 * @param \DateTime | string $newFavoriteAddDate date to validate
+		 * @return \DateTime DateTime object containing the validated date
+		 */
+		public function setFavoriteAddDate($newFavoriteAddDate = null) : void {
+			//base case if the date is null use the current date time
+				if($newFavoriteAddDate ===null) {
+					$this->favoriteAddDate = new \DateTime();
+					return
+				}
+		}
 }
