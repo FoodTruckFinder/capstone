@@ -33,7 +33,7 @@ class Social implements \JsonSerializable {
 	 **/
 
 
-	/* constructor for this social
+	/** constructor for this social
  *
  * @param string|Uuid $socialId id of this social or null if  a social
  * @param string|Uuid $socialFoodTruckId id of the Profile that sent this social
@@ -130,22 +130,23 @@ class Social implements \JsonSerializable {
 	/**
 	 * mutator method for social Url
 	 *
-	 * @param string $newSocialUrl new value of the profile activation hash
+	 * @param string $newSocialUrl new value of the social url
 	 * @throws \InvalidArgumentException if $newSocialUrl is not a valid data type
-	 * @throws \RangeException if $newSocialUrl is longer than 32 characters
+	 * @throws \RangeException if $newSocialUrl is longer than  characters
 	 */
 
 	public function setSocialUrl(string $newSocialUrl): void {
-		// verify the string is 32 characters
-		if(strlen($newSocialUrl) !== 32) {
-			throw (new \RangeException("string is not 32 characters"));
+		// verify the string is 500 characters
+		$newSocialUrl = trim($newSocialUrl);
+		$newSocialUrl = Filter_Validate_Url ($newSocialUrl);
+		if(empty($newSocialUrl));
 		}
-		// verify the string is hexadecimal
-		if(ctype_xdigit($newSocialUrl) === false) {
-			throw (new \InvalidArgumentException("String is not hexadecimal"));
+		// verify the string is validated
+		if(
+			throw
 		}
-		// sanitize activation token string
-		$newSocialUrl = filter_var($newSocialUrl, FILTER_SANITIZE_STRING);
+		// filter social url  string to validate
+		$newSocialUrl = filter_var($newSocialUrl,FILTER_VALIDATE_URL);
 		// store the string
 		$this->socialUrl = $newSocialUrl;
 	}
