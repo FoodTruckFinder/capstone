@@ -1,11 +1,6 @@
 <?php
 
-namespace Edu/
-
-use http\Exception\InvalidArgumentException;
-
-Cnm/$foodFinderFinder;
-
+namespace Edu/Cnm/$FoodTruckFinder;
 require_once "autoload.php";
 require_once (dirname(__DIR__, 2)) . "vendor/autoload.php";
 
@@ -42,7 +37,10 @@ class Favorite implements \JsonSerializable {
 			try {
 				$this->setFavoriteProfileId($newFavoriteProfileId);
 				$this->setFavoriteTruckId($newFavoriteTruckId);
-				$this->set
+				$this->setFavoriteAddDate($newFavoriteAddDate);
+			}
+			catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+				$exceptionType = get_class($exception);
 			}
 		}
 }
