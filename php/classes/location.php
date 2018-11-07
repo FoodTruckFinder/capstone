@@ -267,6 +267,44 @@ class Location implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * gets the Location Id by Location Food Truck Id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $location Foodtruck Id to search by
+	 * @return \SplFixedArray SplFixedArray of Locations found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getLocationIdByLocationFoodTruckId(\PDO $pdo, $locationFoodtruckId) : \SplFixedArray {
+		try {
+			$locationFoodtruckId = self::validateUuid($locationFoodtruckId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		// create query template
+
+		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
+		$statement = $pdo->prepare($query);
+		// bind the tweet profile id to the place holder in the template
+		$parameters = ["locationFoodTruckId" => $locationFoodTruckId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of tweets
+		$locations = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$location = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
+				$locations[$locations->key()] = $location;
+				$locations->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($locations);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
