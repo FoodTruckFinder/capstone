@@ -26,10 +26,10 @@ class Location implements \JsonSerializable {
 	 * @var float which stores lat coords
 	 */
 	private $locationLatitude;
-	/*
+	/**
 	* stores the longitude coordinate associated with locationFoodTruckId
 	* @var float which stores long coords
-	*/
+	**/
 	private $locationLongitude;
 	/**
 	 * the location start time for when a foodtruck begins service
@@ -101,7 +101,6 @@ class Location implements \JsonSerializable {
 	public function getLocationFoodTruckId(): Uuid {
 		return $this->locationFoodTruckId;
 	}
-
 	/**
 	 * mutator method for profile id
 	 *
@@ -129,7 +128,32 @@ class Location implements \JsonSerializable {
 		return ($this->locationEndTime);
 
 	}
+	/**
+	 * mutator method for locationEndTime
+	 * check if location end time is empty, if it is the default Dateinteral is
+	 *
+	 *NEEDS TO BE SOLVED
+	 *
+	 */
+	public function setLocationEndTime($newLocationEndTime = null): void {
+		if(empty($newLocationEndTime) === true) {
+			$this->locationEndTime = locationStartTime->add(new DateInterval('PT4H'));
+}
+		if(empty($newLocationEndTime) === false) {
 
+			$this->locationEndTime = $this->locationStartTime->add(new DateInterval("variable passed in by user through PHP"));
+		}
+		// store the end time  using the ValidateDate trait
+		try {
+			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+
+			// store the string
+			$this->locationEndTime = $newLocationEndTime;
+		}
+	}
 	/**
 	 * accessor method for locationStartTime
 	 *
@@ -149,13 +173,12 @@ class Location implements \JsonSerializable {
 	 */
 
 	public function setLocationStartTime($newLocationStartTime = null): void {
-///base case if the date is null use the current date and time
+		//base case if the date is null use the current date and time
 		if($newLocationStartTime === null) {
 			$this->locationStartTime = new \DateTime();
 			return;
 		}
-
-//store the start time using the ValidateDate Trait
+		//store the start time using the ValidateDate Trait
 		try {
 			$newLocationStartTime = self::validateDateTime($newLocationStartTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
@@ -224,32 +247,24 @@ class Location implements \JsonSerializable {
 		$this->locationLongitude = $newLocationLongitude;
 	}
 
-
 	/**
-	 * mutator method for locationEndTime
+	 * inserts this Location into mySQL
 	 *
-	 *
-	 *NEEDS TO BE SOLVED
-	 *
-	 */
-	public function setLocationEndTime($newLocationEndTime = null): void {
-		if(empty($newLocationEndTime) === true) {
-			$this->locationEndTime = locationStartTime->add(new DateInterval('PT4H'));
-}
-		if(empty($newLocationEndTime) === false) {
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
 
-		$this->locationEndTime = $this->locationStartTime->add(new DateInterval("variable passed in by user through PHP"));
-		}
-		// store the end time  using the ValidateDate trait
-			try {
-			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
-		} catch(\InvalidArgumentException | \RangeException $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		// create query template
+		$query = "INSERT INTO location(locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime) VALUES(:locationId, :locationFoodTruckId, :locationEndTime, :locationLatitude, :locationLongitude, :locationStartTime)";
+		$statement = $pdo->prepare($query);
 
-			// store the string
-			$this->locationEndTime = $newLocationEndTime;
-		}
+		// bind the member variables to the place holders in the template
+		$formattedStartTime = $this->locationStartTime->format("Y-m-d H:i:s.u");
+		$formattedEndTime = $this->locationEndTime>format("Y-m-d H:i:s.u");
+		$parameters = ["locationId" => $this->locationId->getBytes(), "locationFoodTruckId" => $this->locationFoodTruckId->getBytes(), "locationEndTime" => $formattedEndTime, "locationLatitude" => $this -> locationLatitude, "locationLongitude" => $this -> locationLongitude, "locationStartTime" => $formattedStartTime];
+		$statement->execute($parameters);
 	}
 
 
