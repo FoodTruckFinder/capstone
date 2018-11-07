@@ -44,11 +44,11 @@ class  social {
  * @Documentation https://php.net/manual/en/language.oop5.decon.php
  */
 
-	public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl){
+	public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl)
   		try {
- 	 	$this->setSocialId($newSocialId);
-		$this->setSocialFoodTruckId($newSocialFoodTruckId);
-		$this->setSocialUrl($newSocialUrl);
+$this->setSocialId($newSocialId);
+$this->setSocialFoodTruckId($newSocialFoodTruckId);
+$this->setSocialUrl($newSocialUrl);
 }
 catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
@@ -98,7 +98,6 @@ catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exc
 	return $this->SocialFoodTruckId;
 
 
-
 	/**
 	 * mutator method for profile id
 	 *
@@ -107,7 +106,8 @@ catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exc
 	 * @throws \TypeError if $newsocialId violates type hints
 	 */
 
-	public function getSocialFoodTruckId(uuid $newSocialFoodTruckId): void {
+	public
+	function getSocialFoodTruckId(uuid $newSocialFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newSocialFoodTruckId);
