@@ -1,6 +1,10 @@
 <?php
 
-namespace Edu/Cnm/FoodTruckFinder;
+namespace Edu/
+
+use RangeException;
+
+Cnm/FoodTruckFinder;
 require_once "autoload.php";
 require_once (dirname(__DIR__, 2)) . "vendor/autoload.php";
 
@@ -29,7 +33,7 @@ class Favorite implements \JsonSerializable {
 		 * @param Uuid | string $newFavoriteFoodTruckId is uuid for the favorited truck
 		 * @param DateTime | $newFavoriteAddDate  datetime value
 		 * @throws \InvalidArgumentException if the data types are not valid
-		 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+		 * @throws RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 		 * @throws \TypeError if data types violate type hints
 		 * @throws \Exception if some other exception occurs
 		 */
@@ -39,7 +43,7 @@ class Favorite implements \JsonSerializable {
 				$this->setFavoriteFoodTruckId($newFavoriteTruckId);
 				$this->setFavoriteAddDate($newFavoriteAddDate);
 			}
-			catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			catch(\InvalidArgumentException | RangeException | \Exception | \TypeError $exception) {
 				$exceptionType = get_class($exception);
 				throw (new $exceptionType($exception->getMessage(), 0, $exception));
 			}
@@ -56,13 +60,13 @@ class Favorite implements \JsonSerializable {
 		 *
 		 * @param Uuid | string $newFavoriteProfileId new value of the favorite profile id
 		 * @throws \InvalidArgumentException if $newFavoriteProfileId is not a valid uuid
-		 * @throws \RangeException if $newFavoriteProfileId is not positive
+		 * @throws RangeException if $newFavoriteProfileId is not positive
 		 */
 		public function setFavoriteProfileId(uuid $newFavoriteProfileId) : void {
 			// verify the id is a valid uuid
 			try {
 				$uuid = self::validateUuid(newFavoriteProfileId);
-			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			} catch(\InvalidArgumentException | RangeException | \Exception | \TypeError $exception) {
 
 			}
 			// store the uuid
@@ -81,13 +85,13 @@ class Favorite implements \JsonSerializable {
 		 *
 		 * @param Uuid | string $newFavoriteFoodTruckId new value of the favorited food truck id
 		 * @throws \InvalidArgumentException if $newFavoriteFoodTruckId is not a valid uuid
-		 * @throws \RangeException if $newFavoriteFoodTruckId is not positive
+		 * @throws RangeException if $newFavoriteFoodTruckId is not positive
 		 */
 		public function setFavoriteFoodTruckId(uuid $newFavoriteFoodTruckId) : void {
 			// verify the id is a valid uuid
 			try {
 				$uuid = self::validateUuid($newFavoriteFoodTruckId);
-			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			} catch(\InvalidArgumentException | RangeException | \Exception | \TypeError $exception) {
 
 			}
 			//store the uuid
@@ -96,7 +100,9 @@ class Favorite implements \JsonSerializable {
 		/**
 		 * accessor method for favorite add date
 		 *
-		 * @return DateTime value of the favorite food truck add
+		 * @return \DateTime DateTime value of the favorite food truck add
+		 * @throws \InvalidArgumentException if the date is in an invalid format
+		 * @throws RangeException if the date is not a Gregorian date
 		 */
 		public function getFavoriteAddDate() : \DateTime {
 			return ($this->FavoriteAddDate);
@@ -105,13 +111,23 @@ class Favorite implements \JsonSerializable {
 		 * mutator method for favorite add date
 		 *
 		 * @param \DateTime | string $newFavoriteAddDate date to validate
-		 * @return \DateTime DateTime object containing the validated date
+		 * @throws \InvalidArgumentException if the date is in an invalid format
+		 * @throws RangeException if the date is not a Gregorian date
+		 * @throws \Exception if some other error occurs
 		 */
 		public function setFavoriteAddDate($newFavoriteAddDate = null) : void {
 			//base case if the date is null use the current date time
-				if($newFavoriteAddDate ===null) {
+				if($newFavoriteAddDate === null) {
 					$this->favoriteAddDate = new \DateTime();
-					return
+					return;
 				}
+		// store the favorite add date using the ValidateDate Trait
+		try {
+			$newFavoriteAddDate = self::validateDateTime($newFavoriteAddDate);
+		} catch(\InvalidArgumentException | RangeException | $exception) {
+					$exceptionType = get_class($exception);
+				throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->favoriteAddDate = $newFavoriteAddDate;
 		}
 }
