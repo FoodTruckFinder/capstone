@@ -475,6 +475,51 @@ public static function getFoodTruckByFoodTruckDescription(\PDO $pdo, string $foo
 	return($foodTrucks);
 }
 
+/**
+ * gets the foodTruck by image url
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param string $foodTruckImageUrl food truck ImageUrl to search for
+ * @return \SplFixedArray SplFixedArray of foodTrucks found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct data type
+ **/
+
+public static function getFoodTruckByFoodTruckImageUrl(\PDO $pdo, string $foodTruckImageUrl) : \SplFixedArray {
+	//sanitize the description before searching
+	$foodTruckImageUrl = trim($foodTruckImageUrl);
+	$foodTruckImageUrl = filter_var($foodTruckImageUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	if(empty($foodTruckImageUrl) === true) {
+		throw(new \PDOException("food truck image url is invalid"));
+	}
+
+	// escape any mySQL wild cards
+	$foodTruckImageUrl = str_replace("_", "\\_", str_replace("%", "\\%", $foodTruckImageUrl));
+
+	// create query template
+	$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber WHERE foodTruckImageUrl LIKE :foodTruckImageUrl";
+	$statement = $pdo->prepare($query);
+
+	// bind the truck ImageUrl to the placeholder in the template
+	$foodTruckImageUrl = "%$$foodTruckImageUrl%";
+	$parameters = ["foodTruckImageUrl" => $foodTruckImageUrl];
+	$statement->execute($parameters);
+
+	//build array of food trucks
+	$foodTrucks = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
+			$foodTrucks[$foodTrucks->key()] = $foodTruck;
+			$foodTrucks->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+	return($foodTrucks);
+}
 
 
 
