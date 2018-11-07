@@ -4,9 +4,9 @@ namespace Edu/Cnm/FoodTruckFinder;
 require_once ("Autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
-use Ramsey\Uuid\Uuid;
 
-class  social {
+
+class  social implements \ JsonSerializable {
 	use ValidateUrl;
 	use ValidateUuid;
 
@@ -44,23 +44,26 @@ class  social {
  * @Documentation https://php.net/manual/en/language.oop5.decon.php
  */
 
-	public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl)
-  		try {
-$this->setSocialId($newSocialId);
-$this->setSocialFoodTruckId($newSocialFoodTruckId);
-$this->setSocialUrl($newSocialUrl);
+public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl)
+try {
+$this->setSocialId($newSocialId)
+$this->setSocialFoodTruckId($newSocialFoodTruckId)
+$this->setSocialUrl($newSocialUrl)
 }
-catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+
+catch
+(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
-		throw (new	$exceptionType($exception->getMessage(), 0, $exception));
+		throw (new   $exceptionType($exception->getMessage(), 0, $exception));
 	}
 
 	/**
 	 * accessor method for social  id
 	 *
-	 * @return Uuid value of the social id*/
+	 * @return Uuid value of the social id
+	 */
 
-	public function getSocialId() : Uuid {
+	public function getSocialId(): Uuid {
 	return $this->SocialId;
 }
 
@@ -68,8 +71,8 @@ catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exc
  * mutator method for profile id
  *
  * @param Uuid | string $newSocialId new value of the social id
- *@throws \RangeException if $newSocialId is not positive
- *@throws \TypeError if $newSocialId violates type hints
+ * @throws \RangeException if $newSocialId is not positive
+ * @throws \TypeError if $newSocialId violates type hints
  */
 
 
@@ -80,17 +83,17 @@ catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exc
 	// verify the id is a valid uuid
 	try {
 		$uuid = self::validateUuid($newSocialId);
-	}
-	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 
 	}
 	// store the uuid
-	$this->SocialId = $uuid;{
-}
-	 	/**
-		 * accessor method for socialFoodTruckId
-		 *@return Uuid value of the social foodtruck id
-		 */
+	$this->SocialId = $uuid;
+	{
+	}
+	/**
+	 * accessor method for socialFoodTruckId
+	 * @return Uuid value of the social foodtruck id
+	 */
 
 
 }
@@ -151,3 +154,4 @@ public function getSocialUrl(string $newSocialUrl): void {
 	// store the string
 	$this->socialUrl = $newSocialUrl;
 }
+	}
