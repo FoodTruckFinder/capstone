@@ -68,10 +68,10 @@ CREATE TABLE location (
 
 	locationId BINARY(16) NOT NULL,
 	locationFoodtruckId BINARY(16) NOT NULL,
-	locationEnd DATETIME(6) NOT NULL,
+	locationEndTime DATETIME(6) NOT NULL,
 	locationLatitude DECIMAl(9,6) NOT NULL,
 	locationLongitude DECIMAl(9,6) NOT NULL,
-	locationStart DATETIME(6) NOT NULL,
+	locationStartTime DATETIME(6) NOT NULL,
 
 	UNIQUE(locationId),
 	UNIQUE(locationFoodtruckId),
