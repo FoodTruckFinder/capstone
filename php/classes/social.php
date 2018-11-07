@@ -1,15 +1,14 @@
 <?php
 
-namespace Edu/
+namespace Edu\Cnm\FoodTruckFinder\ValidateUuid;
 
-use Edu\Cnm\FoodTruckFinder\ValidateUuid;
 
 Cnm/FoodTruckFinder;
 require_once ("Autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 
-class  social implements \ JsonSerializable {
+class Social implements \JsonSerializable {
 	use ValidateUuid;
 
 
@@ -46,17 +45,16 @@ class  social implements \ JsonSerializable {
  * @Documentation https://php.net/manual/en/language.oop5.decon.php
  */
 
-public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl)
-try {
-$this->setSocialId($newSocialId)
-$this->setSocialFoodTruckId($newSocialFoodTruckId)
-$this->setSocialUrl($newSocialUrl)
-}
+	public function __construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl) {
 
-catch
-(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-		$exceptionType = get_class($exception);
-		throw (new   $exceptionType($exception->getMessage(), 0, $exception));
+		try {
+			$this->setSocialId($newSocialId);
+			$this->setSocialFoodTruckId($newSocialFoodTruckId);
+			$this->setSocialUrl($newSocialUrl);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
 
 	/**
@@ -66,42 +64,39 @@ catch
 	 */
 
 	public function getSocialId(): Uuid {
-	return $this->SocialId;
-}
-
-/**
- * mutator method for profile id
- *
- * @param Uuid | string $newSocialId new value of the social id
- * @throws \RangeException if $newSocialId is not positive
- * @throws \TypeError if $newSocialId violates type hints
- */
-
-
-/**
- * @param mixed $newSocialId
- */
-	 public function setSocialId($newSocialId): void {
-	// verify the id is a valid uuid
-	try {
-		$uuid = self::validateUuid($newSocialId);
-	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+		return $this->socialId;
 	}
-	// store the uuid
-	$this->SocialId = $uuid;
-	{
-	}
+
 	/**
-	 * accessor method for socialFoodTruckId
-	 * @return Uuid value of the social foodtruck id
+	 * mutator method for profile id
+	 *
+	 * @param Uuid | string $newSocialId new value of the social id
+	 * @throws \RangeException if $newSocialId is not positive
+	 * @throws \TypeError if $newSocialId violates type hints
 	 */
 
+	public function setSocialId($newSocialId): void {
+		// verify the id is a valid uuid
+		try {
+			$uuid = self::validateUuid($newSocialId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 
-}
-	public function setSocialFoodTruckId(): Uuid {
-	return $this->SocialFoodTruckId;
+		}
+		// store the uuid
+		$this->SocialId = $uuid;
+		{
+		}
+		/**
+		 * accessor method for socialFoodTruckId
+		 * @return Uuid value of the social foodtruck id
+		 */
 
+
+	}
+
+	public function getSocialFoodTruckId(): Uuid {
+		return ($this->socialFoodTruckId);
+	}
 
 	/**
 	 * mutator method for profile id
@@ -111,8 +106,7 @@ catch
 	 * @throws \TypeError if $newsocialId violates type hints
 	 */
 
-	public
-	function getSocialFoodTruckId(uuid $newSocialFoodTruckId): void {
+	public function setSocialFoodTruckId(uuid $newSocialFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newSocialFoodTruckId);
@@ -122,38 +116,37 @@ catch
 		// store the uuid
 		$this->socialFoodTruckId = $uuid;
 	}
+
 	/**
 	 *accessor method for Social Url
 	 *
 	 * @return string of social Url
 	 */
-}
 
-	public function setSocialUrl(): string {
-	return $this->socialUrl;
-}
-
-/**
- * mutator method for social Url
- *
- * @param string $newSocialUrl new value of the profile activation hash
- * @throws \InvalidArgumentException if $newSocialUrl is not a valid data type
- * @throws \RangeException if $newSocialUrl is longer than 32 characters
- */
-
-public function getSocialUrl(string $newSocialUrl): void {
-	// verify the string is 32 characters
-	if(strlen($newSocialUrl) !== 32) {
-		throw (new \RangeException("string is not 32 characters"));
+	public function getSocialUrl(): string {
+		return ($this->socialUrl);
 	}
 
-	// verify the string is hexadecimal
-	if(ctype_xdigit($newSocialUrl) === false) {
-		throw (new \InvalidArgumentException("String is not hexadecimal"));
+	/**
+	 * mutator method for social Url
+	 *
+	 * @param string $newSocialUrl new value of the profile activation hash
+	 * @throws \InvalidArgumentException if $newSocialUrl is not a valid data type
+	 * @throws \RangeException if $newSocialUrl is longer than 32 characters
+	 */
+
+	public function setSocialUrl(string $newSocialUrl): void {
+		// verify the string is 32 characters
+		if(strlen($newSocialUrl) !== 32) {
+			throw (new \RangeException("string is not 32 characters"));
+		}
+		// verify the string is hexadecimal
+		if(ctype_xdigit($newSocialUrl) === false) {
+			throw (new \InvalidArgumentException("String is not hexadecimal"));
+		}
+		// sanitize activation token string
+		$newSocialUrl = filter_var($newSocialUrl, FILTER_SANITIZE_STRING);
+		// store the string
+		$this->socialUrl = $newSocialUrl;
 	}
-	// sanitize activation token string
-	$newSocialUrl = filter_var($newSocialUrl, FILTER_SANITIZE_STRING);
-	// store the string
-	$this->socialUrl = $newSocialUrl;
 }
-	}
