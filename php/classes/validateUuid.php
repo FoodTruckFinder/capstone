@@ -1,8 +1,10 @@
 <?php
 
-namespace Edu/Cnm/FoodTruckFinder;
-require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
+namespace Edu/Cnm / FoodTruckFinder;
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+
 use Ramsey\Uuid\Uuid;
+
 /**
  * Trait to validate a uuid
  *
@@ -12,7 +14,6 @@ use Ramsey\Uuid\Uuid;
  * 2. binary string (16 bytes)
  * 3. Ramsey\Uuid|Uuid object
  */
-
 trait ValidateUuid {
 	/**
 	 * validates a uuid irrespective of format
@@ -22,29 +23,26 @@ trait ValidateUuid {
 	 * @throws \InvalidArgumentException if $newUuid is not a valid uuid
 	 * @throws \RangeException if $newUuid is not a valid uuid v4
 	 */
-	private static function validateUuid($newUuid) : Uuid {
+	private static function validateUuid($newUuid): Uuid {
 		// verify a string Uuid
 		if(gettype($newUuid) === "string") {
 			// 16 characters is binary data from mySQL - convert to string and fall to next if block
 			if(strlen($newUuid) === 16) {
 				$newUuid = bin2hex($newUuid);
-				$newUuid = substr($newUuid, 0, 8) . "-" . substr($newUuid, 8, 4) . "-" . substr($newUuid,12,4) . "-" . substr($newUuid,16,4) . "-" . substr($newUuid,20,12);
+				$newUuid = substr($newUuid, 0, 8) . "-" . substr($newUuid, 8, 4) . "-" . substr($newUuid, 12, 4) . "-" . substr($newUuid, 16, 4) . "-" . substr($newUuid, 20, 12);
 			}
 			// 36 characters is human readable uuid
 			if(strlen($newUuid) === 36) {
 				if(Uuid::isValid($newUuid) === false) {
 					throw (new \InvalidArgumentException("invalid uuid"));
 					$uuid = Uuid::fromString($newUuid);
-				}
-				else {
+				} else {
 					throw (new \InvalidArgumentException("invalid uuid"));
 				}
-			}
-			elseif(gettype($newUuid) === "object" && get_class($newUuid) === "Ramsey\Uuid\Uuid") {
+			} elseif(gettype($newUuid) === "object" && get_class($newUuid) === "Ramsey\Uuid\Uuid") {
 				// if the misquote id is already a valid UUID, press on
 				$uuid = $newUuid;
-			}
-			else {
+			} else {
 				//throw out any other trash
 				throw (new \InvalidArgumentException("invalid uuid"));
 			}
@@ -52,7 +50,7 @@ trait ValidateUuid {
 			if($uuid->getVersion() !== 4) {
 				throw (new \RangeException("uuid is incorrect version"));
 			}
-			return($uuid);
+			return ($uuid);
 		}
 	}
 }
