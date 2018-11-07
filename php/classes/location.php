@@ -138,10 +138,10 @@ class Location implements \JsonSerializable {
 	 *
 	 */
 
-	public function setLocationStartTime($newLocationStartTime = null) void {
+	public function setLocationStartTime($newLocationStartTime = null) : void {
 ///base case if the date is null use the current date and time
 if($newLocationStartTime === null) {
-    $this->setLocationStartTime = new \DateTime();
+    $this->locationStartTime = new \DateTime();
     return;
 }
 
