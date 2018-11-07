@@ -124,4 +124,30 @@ catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exc
 	 */
 }
 
-	public function setSocialUrl
+	public function setSocialUrl(): string {
+	return $this->socialUrl;
+}
+
+/**
+ * mutator method for social Url
+ *
+ * @param string $newSocialUrl new value of the profile activation hash
+ * @throws \InvalidArgumentException if $newSocialUrl is not a valid data type
+ * @throws \RangeException if $newSocialUrl is longer than 32 characters
+ */
+
+public function getSocialUrl(string $newSocialUrl): void {
+	// verify the string is 32 characters
+	if(strlen($newSocialUrl) !== 32) {
+		throw (new \RangeException("string is not 32 characters"));
+	}
+
+	// verify the string is hexadecimal
+	if(ctype_xdigit($newSocialUrl) === false) {
+		throw (new \InvalidArgumentException("String is not hexadecimal"));
+	}
+	// sanitize activation token string
+	$newSocialUrl = filter_var($newSocialUrl, FILTER_SANITIZE_STRING);
+	// store the string
+	$this->socialUrl = $newSocialUrl;
+}
