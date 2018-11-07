@@ -268,6 +268,24 @@ class Location implements \JsonSerializable {
 	}
 
 
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["locationId"] = $this->locationId->toString();
+		$fields["locationFoodTruckId"] = $this->locationFoodTruckId->toString();
+		$fields["locationLatitude"] = $this->locationLatitude->toFloat();
+		$fields["locationLongitude"] = $this->locationLongitude->toFloat();
+		//format the date so that the front end can consume it
+		$fields["locationStartTime"] = round(floatval($this->locationStartTime->format("U.u")) * 1000);
+		$fields["locationEndTime"] = round(floatval($this->locationEndTime->format("U.u")) * 1000);
+		return($fields);
+	}
+
 }
 
 
