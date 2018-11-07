@@ -30,4 +30,19 @@ class  social {
 	 * This is a string and will be a string
 	 *
 	 **/
+
+
+	/* constructor for this social
+ *
+ * @param string|Uuid $socialId id of this social or null if  a social
+ * @param string|Uuid $socialFoodTruckId id of the Profile that sent this social
+ * @param string socialUrl string containing actual Url data
+ * @throws \InvalidArgumentException if data types are not valid
+ * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+ * @throws \TypeError if data types violate type hints
+ * @throws \Exception if some other exception occurs
+ * @Documentation https://php.net/manual/en/language.oop5.decon.php
+ */
+
 }
+
