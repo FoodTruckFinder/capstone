@@ -20,6 +20,12 @@ class Favorite implements \JsonSerializable {
 		 */
 		private $favoriteTruckId;
 		/**
+		 * stores the datetime for when a foodtruck is  added as a favorite
+		 */
+		private $favoriteAddDate;
+
+		/** constructor for this favorite
 		 *
+		 * @param Uuid | string $newFavoriteUserId if of
 		 */
 }
