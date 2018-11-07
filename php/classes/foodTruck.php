@@ -294,5 +294,40 @@ class FoodTruck {
 		//store PhoneNumber
 		$this->foodTruckPhoneNumber = $newFoodTruckPhoneNumber;
 	}
+}
 
+/**
+ * inserts this foodTruck into mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+public function insert(\PDO $pdo) : void {
+
+	//create query template
+	$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber)";
+	$statement = $pdo->prepare($query);
+
+	//bind the member variables to the placeholders in the template
+	$parameters = ["foodTruckId" => $this->foodTruckId->getBytes(), "foodTruckProfileId" => $this->foodTruckProfileId->getBytes(), "foodTruckDescription" => $this->foodTruckDescription, "foodTruckImageUrl" => $this->foodTruckImageUrl, "foodTruckMenuUrl" => $this->foodTruckMenuUrl, "foodTruckName" => $this->foodTruckName, "foodTruckPhoneNumber" => $this->foodTruckPhoneNumber];
+	$statement->execute($parameters);
+}
+
+/**
+ * deletes this foodTruck from mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+public function delete(\PDO $pdo) : void {
+
+	// create query template
+	$query = "DELETE FROM foodTruck WHERE foodTruckId = :foodTruckId";
+	$statement = $pdo->prepare($query);
+
+	// bind the member variables to the placeholder in the template
+	$parameters = ["foodTruckId" => $this->foodTruckId->getBytes()];
+	$statement->execute($parameters);
 }
