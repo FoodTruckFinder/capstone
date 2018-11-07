@@ -153,8 +153,17 @@ class Favorite implements \JsonSerializable {
 	}
 
 	/**
+	 * deletes this favoriteProfileId from mySQL
 	 *
-	 */
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query
+	}
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
