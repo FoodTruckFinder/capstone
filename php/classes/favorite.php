@@ -41,6 +41,12 @@ class Favorite implements \JsonSerializable {
 			}
 			catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 				$exceptionType = get_class($exception);
+				throw (new $exceptionType($exception->getMessage(), 0, $exception));
 			}
 		}
+
+		/** accessor method for favorite profile id
+		 *
+		 * @param
+		 */
 }
