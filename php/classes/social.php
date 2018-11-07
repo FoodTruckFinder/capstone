@@ -44,5 +44,18 @@ class  social {
  * @Documentation https://php.net/manual/en/language.oop5.decon.php
  */
 
+	public function__construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl){
+		try{
+
+	/**
+ * @param mixed $newSocialId
+ */
+	public function setSocialId($newSocialId): void {
+		$this->socialId = $newSocialId;
+	}
+
+}
+}
+
 }
 
