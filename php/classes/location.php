@@ -131,6 +131,16 @@ class Location implements \JsonSerializable {
 	}
 
 	/**
+	 * accessor method for locationStartTime
+	 *
+	 * @return DATETIME value of the location end time
+	 */
+	public function getLocationStartTime(): \DateTime {
+		return ($this->locationStartTime);
+
+	}
+
+	/**
 	 * mutator method for locationStartTime
 	 *
 	 *
@@ -138,109 +148,109 @@ class Location implements \JsonSerializable {
 	 *
 	 */
 
-	public function setLocationStartTime($newLocationStartTime = null) : void {
+	public function setLocationStartTime($newLocationStartTime = null): void {
 ///base case if the date is null use the current date and time
-if($newLocationStartTime === null) {
-    $this->locationStartTime = new \DateTime();
-    return;
-}
+		if($newLocationStartTime === null) {
+			$this->locationStartTime = new \DateTime();
+			return;
+		}
 
 //store the start time using the ValidateDate Trait
-try {
-	$newLocationStartTime = self::validateDateTime($newLocationStartTime);
-} catch(\InvalidArgumentException | \RangeException $exception) {
-	$exceptionType = get_class($exception);
-	throw (new $exceptionType($exception->getMessage(), 0, $exception));
-}
-$this->locationStartTime = $newLocationStartTime;
-}
-
-
-/**
- * accessor method for locationLatitude
- *
- * @return float lat coords of FoodTrucks Location
- */
-public function getLocationLatitude(): float {
-	return ($this->locationLatitude);
-}
-
-/** mutator method for locationLatitude
- *
- * @param float $newLocationLatitude new value of location latitude
- * @throws \InvalidArgumentException if $newLocationLatitude is not a float or insecure
- * @throws \RangeException if $newLocationLatitude is not within -90 to 90
- * @throws \TypeError if $newLocationLatitude is not a float
- **/
-public function setLocationLatitude(float $newLocationLatitude): void {
-	// verify the latitude exists on earth
-	if(floatval($newLocationLatitude) > 90) {
-		throw(new \RangeException("Location latitude is not between -90 and 90"));
+		try {
+			$newLocationStartTime = self::validateDateTime($newLocationStartTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->locationStartTime = $newLocationStartTime;
 	}
-	if(floatval($newLocationLatitude) < -90) {
-		throw(new \RangeException("location latitude is not between -90 and 90"));
+
+
+	/**
+	 * accessor method for locationLatitude
+	 *
+	 * @return float lat coords of FoodTrucks Location
+	 */
+	public function getLocationLatitude(): float {
+		return ($this->locationLatitude);
 	}
-	// store the latitude
-	$this->locationLatitude = $newLocationLatitude;
+
+	/** mutator method for locationLatitude
+	 *
+	 * @param float $newLocationLatitude new value of location latitude
+	 * @throws \InvalidArgumentException if $newLocationLatitude is not a float or insecure
+	 * @throws \RangeException if $newLocationLatitude is not within -90 to 90
+	 * @throws \TypeError if $newLocationLatitude is not a float
+	 **/
+	public function setLocationLatitude(float $newLocationLatitude): void {
+		// verify the latitude exists on earth
+		if(floatval($newLocationLatitude) > 90) {
+			throw(new \RangeException("Location latitude is not between -90 and 90"));
+		}
+		if(floatval($newLocationLatitude) < -90) {
+			throw(new \RangeException("location latitude is not between -90 and 90"));
+		}
+		// store the latitude
+		$this->locationLatitude = $newLocationLatitude;
+	}
+
+
+	/**
+	 * accessor method for locationLongitude
+	 *
+	 * @return float long coords of FoodTrucks Location
+	 */
+	public function getLocationLongitude(): float {
+		return ($this->locationLongitude);
+	}
+
+	/** mutator method for locationLongitude
+	 *
+	 * @param float $newLocationLatitude new value of location latitude
+	 * @throws \InvalidArgumentException if $newLocationLatitude is not a float or insecure
+	 * @throws \RangeException if $newLocationLatitude is not within -90 to 90
+	 * @throws \TypeError if $newLocationLatitude is not a float
+	 **/
+
+	public function setLocationLongitude(float $newLocationLongitude): void {
+		// verify the latitude exists on earth
+		if(floatval($newLocationLongitude) > 180) {
+			throw(new \RangeException("location longitude is not between -180 and 180"));
+		}
+		if(floatval($newLocationLongitude) < -180) {
+			throw(new \RangeException("location longitude is not between -180 and 180"));
+		}
+		// store the latitude
+		$this->locationLongitude = $newLocationLongitude;
+	}
+
+
+	/**
+	 * mutator method for locationEndTime
+	 *
+	 *
+	 *NEEDS TO BE SOLVED
+	 *
+	 */
+	public function setLocationEndTime($newLocationEndTime = null): void {
+		if(empty($newLocationEndTime) === true) {
+			$this->locationEndTime = locationStartTime->add(new DateInterval('PT4H'));
 }
+		if(empty($newLocationEndTime) === false) {
 
+		$this->locationEndTime = $this->locationStartTime->add(new DateInterval("variable passed in by user through PHP"));
+		}
+		// store the end time  using the ValidateDate trait
+			try {
+			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 
-/**
- * accessor method for locationLongitude
- *
- * @return float long coords of FoodTrucks Location
- */
-public function getLocationLongitude(): float {
-	return ($this->locationLongitude);
-}
-
-/** mutator method for locationLongitude
- *
- * @param float $newLocationLatitude new value of location latitude
- * @throws \InvalidArgumentException if $newLocationLatitude is not a float or insecure
- * @throws \RangeException if $newLocationLatitude is not within -90 to 90
- * @throws \TypeError if $newLocationLatitude is not a float
- **/
-
-public
-function setLocationLongitude(float $newLocationLongitude): void {
-	// verify the latitude exists on earth
-	if(floatval($newLocationLongitude) > 180) {
-		throw(new \RangeException("location longitude is not between -180 and 180"));
+			// store the string
+			$this->locationEndTime = $newLocationEndTime;
+		}
 	}
-	if(floatval($newLocationLongitude) < -180) {
-		throw(new \RangeException("location longitude is not between -180 and 180"));
-	}
-	// store the latitude
-	$this->locationLongitude = $newLocationLongitude;
-}
-
-
-/**
- * mutator method for locationEndTime
- *
- *
- *NEEDS TO BE SOLVED
- *
- */
-public
-function setLocationEndTime($newLocationEndTime = null): void {
-	if(empty($newLocationEndTime) === true) {
-		throw (new \InvalidArgumentException("Location end time is empty, Please enter a location end time"));
-	}
-	if(strlen($newLocationEndTime) !== 14) {
-		throw (new \RangeException("LocationEndTime is not in the correct format"));
-	}
-	try {
-		$newLocationEndTime = self::validateDateTime($newLocationEndTime);
-	} catch(\InvalidArgumentException | \RangeException $exception) {
-		$exceptionType = get_class($exception);
-		throw(new $exceptionType($exception->getMessage(), 0, $exception));
-
-		// store the string
-		$this->locationEndTime = $newLocationEndTime;
-	}
-}
 
 
 }
