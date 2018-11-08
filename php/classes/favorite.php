@@ -228,7 +228,7 @@ class Favorite implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		// Bind the favorite food truck id to the place holder in the template
 		$parameters = ["favoriteFoodTruckId" => $favoriteFoodTruckId->getBytes()];
-		$statement=>execute($parameters);
+		$statement->execute($parameters);
 		// build an array of favorites by food truck id
 		$favorites = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode( \PDO::FETCH_ASSOC);
@@ -236,8 +236,13 @@ class Favorite implements \JsonSerializable {
 			try {
 				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodtruckId"], ["favoriteAddDate"]);
 				$favorites[$favorites->key()] = $favorite;
+				$favorites->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-	}
+		}
+		return($favorites);
 	}
 
 	// TODO Gets all favorites
