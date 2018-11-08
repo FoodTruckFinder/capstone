@@ -10,8 +10,8 @@ use Ramsey\Uuid\Uuid;
 //todo: add use validatedate
 
 class Location implements \JsonSerializable {
-	use ValidateUuid;
-	use ValidateDate;
+	use validateUuid;
+	use validateDate;
 	/**
 	 * id for this location this is a primary key
 	 * @var Uuid $locationId
