@@ -143,7 +143,7 @@ class Social implements \JsonSerializable {
 	public function setSocialUrl(string $newSocialUrl): void {
 		// verify the string is 500 characters
 		$newSocialUrl = trim($newSocialUrl);
-		$newSocialUrl = filter_var ($newSocialUrl,FILTER_VALIDATE_URL);
+		$newSocialUrl = filter_var($newSocialUrl, FILTER_VALIDATE_URL);
 		if(empty($newSocialUrl) === true) {
 			throw(new \InvalidArgumentException("Social Url link is empty or insecure."));
 		}
@@ -163,7 +163,7 @@ class Social implements \JsonSerializable {
 
 
 
-//PDO Statement begin
+//PDO Statements begin
 
 
 	/**
@@ -194,7 +194,7 @@ class Social implements \JsonSerializable {
 	public function update(\PDO $pdo): void {
 
 		// create query template
-		$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = ://??// WHERE socialId = :socialId ";
+		$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = :socialUrl WHERE socialId = :socialId ";
 		$statement = $pdo->prepare($query);
 
 
@@ -202,5 +202,33 @@ class Social implements \JsonSerializable {
 		=> $this->socialUrl];
 		$statement->execute($parameters);
 	}
+
+
+
+
+
+
+
+	/**
+	 * deletes this social from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+
+		// create query template
+		$query = "DELETE FROM social WHERE socialId = :socialId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["socialId" => $this->socialId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+
+
+
 }
 
