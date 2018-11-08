@@ -34,16 +34,16 @@ class Social implements \JsonSerializable {
 
 
 	/** constructor for this social
- *
- * @param string|Uuid $socialId id of this social or null if  a social
- * @param string|Uuid $socialFoodTruckId id of the Profile that sent this social
- * @param string socialUrl string containing actual Url data
- * @throws \InvalidArgumentException if data types are not valid
- * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
- * @throws \TypeError if data types violate type hints
- * @throws \Exception if some other exception occurs
- * @Documentation https://php.net/manual/en/language.oop5.decon.php
- */
+	 *
+	 * @param string|Uuid $socialId id of this social or null if  a social
+	 * @param string|Uuid $socialFoodTruckId id of the Profile that sent this social
+	 * @param string socialUrl string containing actual Url data
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 */
 
 	public function __construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl) {
 
@@ -141,20 +141,21 @@ class Social implements \JsonSerializable {
 		// verify the string is 500 characters
 		$newSocialUrl = trim($newSocialUrl);
 		$newSocialUrl = filter_validate_url($newSocialUrl);
-		if(empty($newSocialUrl) === true);{
+		if(empty($newSocialUrl) === true) ;
+		{
 			throw(new \InvalidArgumentException("Social Url link is empty or insecure."));
 		}
 
 		// verify the string is validated
-		if(strlen($newSocialUrl) > 500){
+		if(strlen($newSocialUrl) > 500) {
 			throw(new \RangeException("Social Url is too large, limit 500 characters"));
 		}
 		// filter social url  string to validate
-		$newSocialUrl = filter_var($newSocialUrl,FILTER_VALIDATE_URL);
+		$newSocialUrl = filter_var($newSocialUrl, FILTER_VALIDATE_URL);
 // store the social url link
 		$this->socialUrl = $newSocialUrl;
 	}
-}
+
 
 
 
@@ -165,19 +166,41 @@ class Social implements \JsonSerializable {
 //PDO Statement begin
 
 
-/**
- * inserts this social Url into mySQL
- *
- * @param \PDO $pdo PDO connection object
- * @throws \PDOException when mySQL related errors occur
- * @throws \TypeError if $pdo is not a PDO connection object
- **/
-public function insert(PDO $pdo): void {
-	// create query template
-	$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
-	$statement = $pdo->prepare($query);
+	/**
+	 * inserts this social Url into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(PDO $pdo): void {
+		// create query template
+		$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
+		$statement = $pdo->prepare($query);
 
-	// bind the member variables to the place holders in the template
-	$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
-	$statement->execute($parameters);
+		// bind the member variables to the place holders in the template
+		$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
+		$statement->execute($parameters);
+	}
+
+
+	/**
+	 * updates this Product in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo): void {
+
+		// create query template
+		$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = ://??// WHERE socialId = :socialId ";
+		$statement = $pdo->prepare($query);
+
+
+		$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl"
+		=> $this->socialUrl];
+		$statement->execute($parameters);
+	}
 }
+
