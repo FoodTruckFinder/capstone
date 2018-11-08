@@ -134,7 +134,7 @@ class Favorite implements \JsonSerializable {
 	}
 
 	/**
-	 * inserts this Favorite Profile Id into mySQL
+	 * inserts this favorite into mySQL
 	 *
 	 * @param \PDO $pdo connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -153,7 +153,7 @@ class Favorite implements \JsonSerializable {
 	}
 
 	/**
-	 * deletes this favoriteProfileId from mySQL
+	 * deletes favorite from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -169,6 +169,7 @@ class Favorite implements \JsonSerializable {
 		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes()];
 		$statement->execute($parameters);
 	}
+
 
 	/**
 	 * gets the favorite by favoriteProfileId
@@ -187,7 +188,7 @@ class Favorite implements \JsonSerializable {
 			throw(new\PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckProfileId, favoriteAddDate FROM favorite WHERE favoriteProfileId = favoriteProfileId";
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteProfileId = favoriteProfileId";
 		$statement = $pdo->prepare($query);
 		// Bind the favorite profile id to the place holder in the template
 		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
@@ -197,7 +198,7 @@ class Favorite implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckProfileId"], ["favoriteAddDate"]);
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], ["favoriteAddDate"]);
 				$favorites[$favorites->key()] = $favorite;
 				$favorites->next();
 			} catch(\Exception $exception) {
@@ -207,7 +208,10 @@ class Favorite implements \JsonSerializable {
 			}
 		return($favorites);
 	}
-
+	/** get favorite by favorite food truck id
+	 *
+	 * @param
+	 */
 
 	// TODO Gets all favorites
 	/** gets all favorites
@@ -219,7 +223,7 @@ class Favorite implements \JsonSerializable {
 	 **/
 	public static function getAllfavorites(\PDO $pdo) : \SplFixedArray {
 		//create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckProfileId, favoriteAddDate";
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -228,7 +232,7 @@ class Favorite implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 					try {
-							$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckProfileId"], $row["favoriteAddDate"]);
+							$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row["favoriteAddDate"]);
 							$favorites[$favorites->key()] = $favorite;
 							$favorites->next();
 					} catch(\Exception $exception) {
@@ -238,7 +242,7 @@ class Favorite implements \JsonSerializable {
 		}
 		return ($favorites);
 	}
-
+	/** inserts this favorite  */
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
