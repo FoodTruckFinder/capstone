@@ -129,7 +129,7 @@ class Location implements \JsonSerializable {
 	/**
 	 * accessor method for locationEndTime
 	 *
-	 * @return DATETIME value of the location end time
+	 * returns locationEndTime
 	 */
 	public function getLocationEndTime(): \DateTime {
 		return ($this->locationEndTime);
@@ -138,23 +138,23 @@ class Location implements \JsonSerializable {
 
 	/**
 	 * mutator method for locationEndTime
-	 * check if location end time is empty, if it is the default Dateinterval is
-	 *
-	 *
-	 *
+	 * check if location end time is empty, if it is the default end time is a Dateinterval that adds 4 hours to the start time
+	 * @try runs locationEndtime through validateDateTime
+	 * throws errors if not a valid date/time
+	 * store the datetime value
 	 */
 	public function setLocationEndTime($newLocationEndTime = null): void {
 		if(empty($newLocationEndTime) === true) {
 			$this->locationEndTime = $this->locationStartTime->add(new DateInterval('PT4H'));
 		}
-		// store the end time  using the ValidateDate trait
+		// check the end time using the ValidateDate trait
 		try {
 			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		// store the string
+		// store the datetime value
 		$this->locationEndTime = $newLocationEndTime;
 	}
 
@@ -167,15 +167,14 @@ class Location implements \JsonSerializable {
 		return ($this->locationStartTime);
 
 	}
-
 	/**
 	 * mutator method for $newLocationStartTime
 	 *
-	 *
-	 *
-	 *
+	 * if no start time is entered, the date is set to the current date/time
+	 * @try runs locationStartTime through validateDateTime
+	 * throws errors if not a valid date/time
+	 * stores location start time
 	 */
-
 	public function setLocationStartTime($newLocationStartTime = null): void {
 		//base case if the date is null use the current date and time
 			$this->locationStartTime = new \DateTime();
@@ -186,6 +185,7 @@ class Location implements \JsonSerializable {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
+		// store the datetime value
 		$this->locationStartTime = $newLocationStartTime;
 	}
 
@@ -328,7 +328,7 @@ class Location implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $location Id to search by
-	 * @return \Object of Foodtrucks found
+	 * @return \Object of FoodTrucks found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
