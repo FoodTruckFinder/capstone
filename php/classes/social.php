@@ -192,6 +192,23 @@ class Social implements \JsonSerializable {
 		$statement->execute($parameters);
 
 
+		// grab the social from mySQL
+		try {
+			$social = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$social = new  Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($social);
+	}
+
+
+
 
 
 
@@ -251,6 +268,7 @@ class Social implements \JsonSerializable {
 		// bind the member variables to the place holder in the template
 		$parameters = ["socialId" => $this->socialId->getBytes()];
 		$statement->execute($parameters);
+
 		}
 
 	}
