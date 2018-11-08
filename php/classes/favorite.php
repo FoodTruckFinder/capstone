@@ -175,7 +175,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid | string $favoriteProfileId favorite profile id to search by
-	 * @param return SplFixedArray SplFixedArrays of favorites found
+	 * @return SplFixedArray SplFixedArrays of favorites found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
@@ -195,7 +195,13 @@ class Favorite implements \JsonSerializable {
 		// build an array of favorites by profile id
 		$favorites = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while()
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckProfileId"], ["favoriteAddDate"]);
+				$favorites[$favorites->key()] = $favorite;
+				$favorites
+			}
+		}
 	}
 		/**
 		 * Specify data which should be serialized to JSON
