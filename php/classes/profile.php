@@ -5,6 +5,8 @@ namespace Edu\Cnm\FoodTruckFinder;
 require_once "autoload.php";
 require_once (dirname(__DIR__, 2) . "vendor/autoload.php");
 
+use Ramsey\Uuid\Uuid;
+
 class Profile implements \JsonSerializable {
 
 	use ValidateUuid;
@@ -315,6 +317,7 @@ class Profile implements \JsonSerializable {
 		$parameters = ["profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileName" => $this->profileName];
 		$statement->execute($parameters);
 	}
+
 	// get profile by activation token, email, name
 
 
