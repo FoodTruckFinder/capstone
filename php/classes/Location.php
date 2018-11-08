@@ -1,13 +1,15 @@
 <?php
+
 namespace Edu\Cnm\FoodTruckFinder;
 
 require_once "autoload.php";
-require_once (dirname(__DIR__, 2) . "vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
-class Location implements \JsonSerializable {
+//todo: add use validatedate
 
+class Location implements \JsonSerializable {
 	use ValidateUuid;
 	use ValidateDate;
 	/**
@@ -48,17 +50,17 @@ class Location implements \JsonSerializable {
 	 *
 	 * @param Uuid | string $newLocationId id of this location
 	 * @param Uuid | string $newLocationFoodTruckId id of foodtruck at this location
-	 * @param DATETIME | $newLocationEndTime datetime value
+	 * @param /DATETIME | $newLocationEndTime datetime value
 	 * @param float $newLocationLatitude latitude coordinate of this location
 	 * @param float $newLocationLongitude longitude coordinate of this location
-	 * @param DATETIME $newLocationStartTime datetime value
+	 * @param /DATETIME $newLocationStartTime datetime value
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newLocationId, $newLocationFoodTruckId, $newLocationEndTime, $newLocationLatitude, $newLocationLongitude, $newLocationStartTime) {
+	public function __construct($newLocationId, $newLocationFoodTruckId, $newLocationEndTime, float $newLocationLatitude, float $newLocationLongitude, $newLocationStartTime) {
 		try {
 			$this->setLocationId($newLocationId);
 			$this->setLocationFoodTruckId($newLocationFoodTruckId);
@@ -75,7 +77,7 @@ class Location implements \JsonSerializable {
 	/**
 	 * accessor method for location id
 	 *
-	 * @return Uuid value of the location id
+	 * @return locationId value of the location id
 	 */
 	public function getLocationId(): Uuid {
 		return $this->locationId;
@@ -88,7 +90,7 @@ class Location implements \JsonSerializable {
 	 * @throws \RangeException if $newLocationId is not positive
 	 * @throws \TypeError if $newLocationId violates type hints
 	 */
-	public function setLocationId(uuid $newLocationId): void {
+	public function setLocationId(Uuid $newLocationId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newLocationId);
@@ -115,7 +117,7 @@ class Location implements \JsonSerializable {
 	 * @throws \RangeException if $newLocationId is not positive
 	 * @throws \TypeError if $newLocationId violates type hints
 	 */
-	public function setLocationFoodTruckId(uuid $newLocationFoodTruckId): void {
+	public function setLocationFoodTruckId(Uuid $newLocationFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newLocationFoodTruckId);
@@ -138,7 +140,7 @@ class Location implements \JsonSerializable {
 
 	/**
 	 * mutator method for locationEndTime
-	 * check if location end time is empty, if it is the default Dateinteral is
+	 * check if location end time is empty, if it is the default Dateinterval is
 	 *
 	 *
 	 *
@@ -157,6 +159,7 @@ class Location implements \JsonSerializable {
 		// store the string
 		$this->locationEndTime = $newLocationEndTime;
 	}
+
 	/**
 	 * accessor method for locationStartTime
 	 *
@@ -168,7 +171,7 @@ class Location implements \JsonSerializable {
 	}
 
 	/**
-	 * mutator method for locationStartTime
+	 * mutator method for $newLocationStartTime
 	 *
 	 *
 	 *
@@ -177,10 +180,7 @@ class Location implements \JsonSerializable {
 
 	public function setLocationStartTime($newLocationStartTime = null): void {
 		//base case if the date is null use the current date and time
-		if($newLocationStartTime === null) {
 			$this->locationStartTime = new \DateTime();
-			return;
-		}
 		//store the start time using the ValidateDate Trait
 		try {
 			$newLocationStartTime = self::validateDateTime($newLocationStartTime);
@@ -210,10 +210,10 @@ class Location implements \JsonSerializable {
 	 **/
 	public function setLocationLatitude(float $newLocationLatitude): void {
 		// verify the latitude exists on earth
-		if(floatval($newLocationLatitude) > 90) {
+		if($newLocationLatitude > 90) {
 			throw(new \RangeException("Location latitude is not between -90 and 90"));
 		}
-		if(floatval($newLocationLatitude) < -90) {
+		if($newLocationLatitude < -90) {
 			throw(new \RangeException("location latitude is not between -90 and 90"));
 		}
 		// store the latitude
@@ -232,7 +232,7 @@ class Location implements \JsonSerializable {
 
 	/** mutator method for locationLongitude
 	 *
-	 * @param float $newLocationLatitude new value of location latitude
+	 * @param float $newLocationLongitude new value of location latitude
 	 * @throws \InvalidArgumentException if $newLocationLatitude is not a float or insecure
 	 * @throws \RangeException if $newLocationLatitude is not within -90 to 90
 	 * @throws \TypeError if $newLocationLatitude is not a float
@@ -240,10 +240,10 @@ class Location implements \JsonSerializable {
 
 	public function setLocationLongitude(float $newLocationLongitude): void {
 		// verify the latitude exists on earth
-		if(floatval($newLocationLongitude) > 180) {
+		if ($newLocationLongitude > 180) {
 			throw(new \RangeException("location longitude is not between -180 and 180"));
 		}
-		if(floatval($newLocationLongitude) < -180) {
+		if($newLocationLongitude < -180) {
 			throw(new \RangeException("location longitude is not between -180 and 180"));
 		}
 		// store the latitude
@@ -257,7 +257,7 @@ class Location implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(\PDO $pdo) : void {
+	public function insert(\PDO $pdo): void {
 
 		// create query template
 		$query = "INSERT INTO location(locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime) VALUES(:locationId, :locationFoodTruckId, :locationEndTime, :locationLatitude, :locationLongitude, :locationStartTime)";
@@ -265,32 +265,32 @@ class Location implements \JsonSerializable {
 
 		// bind the member variables to the place holders in the template
 		$formattedStartTime = $this->locationStartTime->format("Y-m-d H:i:s.u");
-		$formattedEndTime = $this->locationEndTime>format("Y-m-d H:i:s.u");
-		$parameters = ["locationId" => $this->locationId->getBytes(), "locationFoodTruckId" => $this->locationFoodTruckId->getBytes(), "locationEndTime" => $formattedEndTime, "locationLatitude" => $this -> locationLatitude, "locationLongitude" => $this -> locationLongitude, "locationStartTime" => $formattedStartTime];
+		$formattedEndTime = $this->locationEndTime > format("Y-m-d H:i:s.u");
+		$parameters = ["locationId" => $this->locationId->getBytes(), "locationFoodTruckId" => $this->locationFoodTruckId->getBytes(), "locationEndTime" => $formattedEndTime, "locationLatitude" => $this->locationLatitude, "locationLongitude" => $this->locationLongitude, "locationStartTime" => $formattedStartTime];
 		$statement->execute($parameters);
 	}
-
+//TODO write a delete PDO
 	/**
 	 * gets the Location Id by Location Food Truck Id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $location Foodtruck Id to search by
+	 * @param Uuid|string $locationFoodTruckId to search by
 	 * @return \SplFixedArray SplFixedArray of Locations found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getLocationIdByLocationFoodTruckId(\PDO $pdo, $locationFoodTruckId) : \SplFixedArray {
+	public static function getLocationIdByLocationFoodTruckId(\PDO $pdo, $locationFoodTruckId): \SplFixedArray {
 		try {
 			$locationFoodTruckId = self::validateUuid($locationFoodTruckId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 		// create query template
 
 		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
 		$statement = $pdo->prepare($query);
 		// bind the tweet profile id to the place holder in the template
-		$parameters = ["locationFoodTruckId"=> $locationFoodTruckId->getBytes()];
+		$parameters = ["locationFoodTruckId" => $locationFoodTruckId->getBytes()];
 		$statement->execute($parameters);
 		// build an array of tweets
 		$locations = new \SplFixedArray($statement->rowCount());
@@ -305,16 +305,53 @@ class Location implements \JsonSerializable {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($locations);
+		return ($locations);
 	}
 
 
+	/**
+	 * gets the Location Food Truck Id by Location Id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $location Id to search by
+	 * @return \Object of Foodtrucks found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	//TODO rewrite method to return an object look at ty statement
+	public static function getLocationFoodTruckIdByLocationId(\PDO $pdo, $locationId): ?FoodTruck {
+		try {
+			$locationId = self::validateUuid($locationId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+
+		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationId = :locationId";
+		$statement = $pdo->prepare($query);
+		// bind the location id to the place holder in the template
+		$parameters = ["locationId" => $locationId->getBytes()];
+		$statement->execute($parameters);
+			try {
+				$foodTruck = null;
+				$statement->setFetchMode(\PDO::FETCH_ASSOC);
+				$row = $statement->fetch();
+				if($row !== false) {
+					$foodTruck = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
+				}
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+
+		return ($foodTruck);
+	}
 	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
 	 **/
-	public function jsonSerialize() : array {
+	public function jsonSerialize(): array {
 		$fields = get_object_vars($this);
 
 		$fields["locationId"] = $this->locationId->toString();
@@ -324,7 +361,7 @@ class Location implements \JsonSerializable {
 		//format the date so that the front end can consume it
 		$fields["locationStartTime"] = round(floatval($this->locationStartTime->format("U.u")) * 1000);
 		$fields["locationEndTime"] = round(floatval($this->locationEndTime->format("U.u")) * 1000);
-		return($fields);
+		return ($fields);
 	}
 
 }
