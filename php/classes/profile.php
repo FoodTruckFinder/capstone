@@ -3,7 +3,7 @@
 namespace Edu\Cnm\FoodTruckFinder;
 
 require_once "autoload.php";
-require_once (dirname(__DIR__, 2) . "vendor/autoload.php");
+require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -57,7 +57,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newProfileId, $newProfileActivationToken, $newProfileEmail, $newProfileHash, $newProfileIsOwner, $newProfileName) {
+	public function __construct($newProfileId, string $newProfileActivationToken,string $newProfileEmail, string $newProfileHash, int $newProfileIsOwner, string $newProfileName) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
@@ -123,8 +123,6 @@ class Profile implements \JsonSerializable {
 		if(ctype_xdigit($newProfileActivationToken) === false) {
 			throw (new \InvalidArgumentException("String is not hexadecimal"));
 		}
-		// sanitize activation token string
-		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
 		// store the string
 		$this->profileActivationToken = $newProfileActivationToken;
 	}
@@ -154,8 +152,7 @@ class Profile implements \JsonSerializable {
 		if(strlen($newProfileEmail) > 128) {
 			throw (new \RangeException("email address is too long"));
 		}
-		// sanitize email string
-		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING);
+		//todo get rid of sanitize and add trim
 		// sanitize email
 		$newProfileEmail = filter_var($newProfileEmail,FILTER_SANITIZE_EMAIL);
 		// verify if email is well formed
@@ -174,6 +171,8 @@ class Profile implements \JsonSerializable {
 	public function getProfileHash(): string {
 		return $this->profileHash;
 	}
+
+	//todo check salting and hashing https://bootcamp-coders.cnm.edu/class-materials/security/salting-and-hashing/ ignore first if statement
 	/**
 	 * mutator method for profile hash
 	 *
@@ -216,21 +215,10 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if integer is not 1 or 0
 	 */
 	public function setProfileIsOwner(int $newProfileIsOwner): void {
-		// check integer is not empty
-		if(empty($newProfileIsOwner) === true) {
-			throw (new	\InvalidArgumentException("profile is owner is empty"));
-		}
-		// check profile is owner
-		if(is_int($newProfileIsOwner) === false) {
-			throw (new \InvalidArgumentException("profile is owner is not integer"));
-		}
-		// check profile is owner is to long
-		if(strlen((int)$newProfileIsOwner) !== 1) {
-			throw (new \RangeException("integer is too long"));
-		}
+
 		// check profile is owner is either 1 or 0
-		if($newProfileIsOwner !== 0 or $newProfileIsOwner !== 1) {
-			throw (new \Exception("boolean is not 1 or 0"));
+		if($newProfileIsOwner !== 0 || $newProfileIsOwner !== 1) {
+			throw (new \InvalidArgumentException("boolean is not 1 or 0"));
 		}
 		// store the integer
 		$this->profileIsOwner = $newProfileIsOwner;
@@ -252,16 +240,17 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if string is too long
 	 */
 	public function setProfileName(string $newProfileName): void {
-		// check if string is empty
-		if(empty($newProfileName) === false) {
-			throw (new \InvalidArgumentException("profile name is empty"));
-		}
+
 		// check if string is too long
 		if(strlen($newProfileName) > 32) {
 			throw (new \RangeException("profile is too long"));
 		}
 		// sanitize string
 		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
+		// check if string is empty
+		if(empty($newProfileName) === false) {
+			throw (new \InvalidArgumentException("profile name is empty"));
+		}
 		// store the string
 		$this->profileName = $newProfileName;
 	}
@@ -276,12 +265,14 @@ class Profile implements \JsonSerializable {
 	 */
 	public function insert(\PDO $pdo) : void {
 
+
 		// create query template
 		$query = "INSERT INTO profile(profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName) VALUES (:profileId, :profileActivationToken, :profileEmail, :profileHash, :profileIsOwner, :profileName)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
 		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileHash, "profileHash" => $this->profileHash, "profileIsOwner" => $this->profileIsOwner, "profileName" => $this->profileName];
+		$statement->execute($parameters);
 	}
 
 	/**
@@ -317,11 +308,45 @@ class Profile implements \JsonSerializable {
 		$parameters = ["profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileName" => $this->profileName];
 		$statement->execute($parameters);
 	}
+//todo get profile by profile id return object
+	/**
+	 * get Profile by profile activation token
+	 *
+	 * @param |PDO $pdo PDO connection object
+	 * @param string $profileActivationToken profile activation token to search for
+	 * @return Profile|null return Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) {
 
-	// get profile by activation token, email, name
+	}
 
+	/**
+	 * get Profile by profile email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileEmail profile email to search for
+	 * @return Profile|null return Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail) {
 
+	}
 
+	/**
+	 * get Profile by profile name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileName profile email to search for
+	 * @return \SplFixedArray return SplFixedArray
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileName(\PDO $pdo, string $profileName) {
+
+	}
 
 
 	/**
@@ -332,10 +357,9 @@ class Profile implements \JsonSerializable {
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
 
-		$fields["profileActivationToken"] = $this->profileActivationToken->unset();
-		$fields["profileHash"] = $this->profileHash->unset();
+		unset($fields["profileActivationToken"]);
+		unset($fields["profileHash"]);
 		return($fields);
 	}
 
-
-
+}
