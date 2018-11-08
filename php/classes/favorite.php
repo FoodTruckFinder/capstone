@@ -112,13 +112,12 @@ class Favorite implements \JsonSerializable {
 	/**
 	 * mutator method for favorite add date
 	 *
-	 * @param \DateTime | string $newFavoriteAddDate date to validate
-	 * @throws \InvalidArgumentException if the date is in an invalid format
-	 * @throws RangeException if the date is not a Gregorian date
-	 * @throws \Exception if some other error occurs
+	 * @param \DateTime | string | null $newFavoriteAddDate date as a Datetime object or string (or null to load the current time)
+	 * @throws \InvalidArgumentException if $newFavoriteAddDate is not a valid object or string
+	 * @throws RangeException if $newFavoriteAddDate is not a valid object or string
 	 */
 	public function setFavoriteAddDate($newFavoriteAddDate = null): void {
-		//base case if the date is null use the current date time
+		//base case if the date is null, use the current date time
 		if($newFavoriteAddDate === null) {
 			$this->favoriteAddDate = new \DateTime();
 			return;
@@ -126,9 +125,9 @@ class Favorite implements \JsonSerializable {
 		// store the favorite add date using the ValidateDate Trait
 		try {
 			$newFavoriteAddDate = self::validateDateTime($newFavoriteAddDate);
-		} catch(\InvalidArgumentException | RangeException $exception) {
+		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
-			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		$this->favoriteAddDate = $newFavoriteAddDate;
 	}
@@ -162,8 +161,17 @@ class Favorite implements \JsonSerializable {
 	public function delete(\PDO $pdo) : void {
 
 		// create query template
-		$query
+		$query = "DELETE from favorite WHERE favoriteProfileId = :favoriteProfileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes()];
+		$statement->execute($parameters);
 	}
+
+	/**
+	 *
+	 */
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
