@@ -138,16 +138,18 @@ class Social implements \JsonSerializable {
 	public function setSocialUrl(string $newSocialUrl): void {
 		// verify the string is 500 characters
 		$newSocialUrl = trim($newSocialUrl);
-		$newSocialUrl = Filter_Validate_Url ($newSocialUrl);
-		if(empty($newSocialUrl));
+		$newSocialUrl = filter_validate_url($newSocialUrl);
+		if(empty($newSocialUrl) === true);{
+			throw(new \InvalidArgumentException("Social Url link is empty or insecure."));
 		}
+
 		// verify the string is validated
-		if(
-			throw
+		if(strlen($newSocialUrl) > 500){
+			throw(new \RangeException("Social Url is too large, limit 500 characters"));
 		}
 		// filter social url  string to validate
 		$newSocialUrl = filter_var($newSocialUrl,FILTER_VALIDATE_URL);
-		// store the string
+// store the social url link
 		$this->socialUrl = $newSocialUrl;
 	}
 }
