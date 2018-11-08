@@ -7,11 +7,9 @@ require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
-//todo: add use validatedate
-
 class Location implements \JsonSerializable {
-	use validateUuid;
-	use validateDate;
+	use ValidateUuid;
+	use ValidateDate;
 	/**
 	 * id for this location this is a primary key
 	 * @var Uuid $locationId
