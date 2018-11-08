@@ -309,6 +309,32 @@ class Profile implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 //todo get profile by profile id return object
+
+	/**
+	 * get Profile by profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileId profile id to search for
+	 * @return Profile|null return Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileId(\PDO $pdo, uuid $profileId): Profile {
+		// sanitize the profileId before searching
+		try {
+			$profileId = self::validateUuid($profileId);
+		}
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT Profile FROM Profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+		//bind the profile id to the place holder in the template
+		$parameters = ["profileId" => $profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
 	/**
 	 * get Profile by profile activation token
 	 *
@@ -318,8 +344,13 @@ class Profile implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) {
-
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken): Profile {
+		// create query template
+		$query = "SELECT Profile FROM Profile WHERE profileActivationToken = :profileActivationToken";
+		$statement = $pdo->prepare($query);
+		// bind the profile id to the place holder in the template
+		$parameters = ["profileActivationToken" => $profileActivationToken];
+		$statement->execute($parameters);
 	}
 
 	/**
@@ -331,7 +362,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail) {
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): Profile {
 
 	}
 
@@ -344,7 +375,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfileName(\PDO $pdo, string $profileName) {
+	public static function getProfileByProfileName(\PDO $pdo, string $profileName): Profile {
 
 	}
 
