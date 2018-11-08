@@ -199,10 +199,21 @@ class Favorite implements \JsonSerializable {
 			try {
 				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckProfileId"], ["favoriteAddDate"]);
 				$favorites[$favorites->key()] = $favorite;
-				$favorites
+				$favorites->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+				}
 			}
-		}
+		return($favorites);
 	}
+
+	/** gets all favorites
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Favorites
+	 */
+
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
