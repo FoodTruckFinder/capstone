@@ -30,7 +30,7 @@ CREATE TABLE foodTruck (
 	foodTruckImageUrl VARCHAR (255) NOT NULL,
 	foodTruckMenuUrl VARCHAR (255) NULL,
 	foodTruckName VARCHAR (128) NOT NULL,
-	foodTruckPhoneNumber STRING (16) NULL,
+	foodTruckPhoneNumber VARCHAR (16) NULL,
 
 	UNIQUE(foodTruckName),
 	UNIQUE(foodTruckProfileId),
@@ -46,10 +46,10 @@ CREATE TABLE favorite (
 	favoriteFoodTruckId BINARY(16) NOT NULL,
 	favoriteAddDate DATETIME NOT NULL,
 	INDEX(favoriteProfileId),
-
+	INDEX(favoriteFoodTruckId),
 	PRIMARY KEY(favoriteProfileId, favoriteFoodTruckId),
 	FOREIGN KEY(favoriteProfileId) REFERENCES Profile(profileId),
-	FOREIGN KEY(favoriteFoodTruckId) REFERENCES foodTruck(foodTruckId),
+	FOREIGN KEY(favoriteFoodTruckId) REFERENCES foodTruck(foodTruckId)
 
 );
 
@@ -73,7 +73,7 @@ CREATE TABLE location (
 	locationLongitude DECIMAl(9,6) NOT NULL,
 	locationStartTime DATETIME(6) NOT NULL,
 
-	UNIQUE(locationId),
-	UNIQUE(locationFoodtruckId),
-	FOREIGN KEY(locationFoodtruckId) REFERENCES FoodTruck(foodTruckId)
+	INDEX(locationFoodTruckId),
+	FOREIGN KEY(locationFoodtruckId) REFERENCES FoodTruck(foodTruckId),
+	PRIMARY KEY (locationId)
 );
