@@ -51,11 +51,19 @@ class FoodTruck implements \JsonSerializable {
 	 * constructor for this foodTruck
 	 *
 	 * @param string|Uuid $newFoodTruckId id of this foodTruck or null if a new truck
+<<<<<<< HEAD
 	 * @param string|Uuid $newFoodTruckProfileId id of the Profile for the food truck
 	 * @param string $newFoodTruckDescription string containing description
 	 * @param string $newFoodTruckImageUrl string for foodTruck image url
 	 * @param string $newFoodTruckMenuUrl string for foodTruck menu url
 	 * @param string $newFoodTruckName string for foodTruck name
+=======
+	 * @param string|Uuid $newFoodTruckProfileId id of the Profile for the tood truck
+	 * @param $newFoodTruckDescription containing description
+	 * @param $newFoodTruckImageUrl for foodTruck image url
+	 * @param $newFoodTruckMenuUrl for foodTruck menu url
+	 * @param $newFoodTruckName for foodTruck name
+>>>>>>> 8181 insert select statement for favoriteProfileId
 	 * @param string $newFoodTruckPhoneNumber string for truck phone number
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)

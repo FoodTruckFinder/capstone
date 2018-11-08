@@ -23,6 +23,7 @@ class Favorite implements \JsonSerializable {
 	private $favoriteFoodTruckId;
 	/**
 	 * date and time for when a food truck is added as a favorite
+	 * @var \DateTime
 	 */
 	private $favoriteAddDate;
 
@@ -30,18 +31,18 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param Uuid | string $newFavoriteProfileId is uuid for profile that favorited the foodtruck
 	 * @param Uuid | string $newFavoriteFoodTruckId is uuid for the favorited truck
-	 * @param DateTime | $newFavoriteAddDate datetime value
+	 * @param \DateTime | string $newFavoriteAddDate datetime value
 	 * @throws \InvalidArgumentException if the data types are not valid
-	 * @throws RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newFavoriteProfileId, $newFavoriteTruckId, $newFavoriteAddDate) {
+	public function __construct($newFavoriteProfileId, $newFavoriteFoodTruckId, $newFavoriteAddDate) {
 		try {
 			$this->setFavoriteProfileId($newFavoriteProfileId);
-			$this->setFavoriteFoodTruckId($newFavoriteTruckId);
+			$this->setFavoriteFoodTruckId($newFavoriteFoodTruckId);
 			$this->setFavoriteAddDate($newFavoriteAddDate);
-		} catch(\InvalidArgumentException | RangeException | \Exception | \TypeError $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -64,8 +65,8 @@ class Favorite implements \JsonSerializable {
 	public function setFavoriteProfileId(uuid $newFavoriteProfileId): void {
 		// verify the id is a valid uuid
 		try {
-			$uuid = self::validateUuid(newFavoriteProfileId);
-		} catch(\InvalidArgumentException | RangeException | \Exception | \TypeError $exception) {
+			$uuid = self::validateUuid($newFavoriteProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 
 		}
 		// store the uuid
@@ -76,7 +77,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @return Uuid value of the favorite food truck id
 	 */
-	public function getFavoriteFoodTruckId(): uuid {
+	public function getFavoriteFoodTruckId(): Uuid {
 		return $this->favoriteFoodTruckId;
 	}
 
@@ -87,11 +88,11 @@ class Favorite implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newFavoriteFoodTruckId is not a valid uuid
 	 * @throws RangeException if $newFavoriteFoodTruckId is not positive
 	 */
-	public function setFavoriteFoodTruckId(uuid $newFavoriteFoodTruckId): void {
+	public function setFavoriteFoodTruckId(Uuid $newFavoriteFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newFavoriteFoodTruckId);
-		} catch(\InvalidArgumentException | RangeException | \Exception | \TypeError $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 
 		}
 		//store the uuid
@@ -106,7 +107,7 @@ class Favorite implements \JsonSerializable {
 	 * @throws RangeException if the date is not a Gregorian date
 	 */
 	public function getFavoriteAddDate(): \DateTime {
-		return ($this->FavoriteAddDate);
+		return ($this->favoriteAddDate);
 	}
 
 	/**
@@ -114,7 +115,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param \DateTime | string | null $newFavoriteAddDate date as a Datetime object or string (or null to load the current time)
 	 * @throws \InvalidArgumentException if $newFavoriteAddDate is not a valid object or string
-	 * @throws RangeException if $newFavoriteAddDate is not a valid object or string
+	 * @throws \RangeException if $newFavoriteAddDate is not a valid object or string
 	 */
 	public function setFavoriteAddDate($newFavoriteAddDate = null): void {
 		//base case if the date is null, use the current date time
@@ -147,7 +148,7 @@ class Favorite implements \JsonSerializable {
 
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->favoriteProfileId->format("Y-m-d H:i:s.u");
-		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckIdId->getBytes(), "favoriteAddDate" => $formattedDate];
+		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckId->getBytes(), "favoriteAddDate" => $formattedDate];
 		$statement->execute($parameters);
 	}
 
@@ -178,14 +179,20 @@ class Favorite implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getFavoriteProfileIdbyFavoriteProfileId(\PDO $pdo $favoriteProfileId): \SplFixedArray {
-		try $favoriteProfileId = self::validateUuid($favoriteProfileId);
-	}  catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new\PDOException($exception->getMessage) 0, $exception));
+	public static function getFavoritebyFavoriteProfileId(\PDO $pdo, $favoriteProfileId): \SplFixedArray {
+		// sanitize favoriteProfileId before searching
+		try {
+			$favoriteProfileId = self::validateUuid($favoriteProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new\PDOException($exception->getMessage(), 0, $exception));
 	}
-
 	// create query template
-	$query = SELECT foodtruckProfileId, favoriteFoodTruckId, favoriteAddDate FROM
+	$query = "SELECT favoriteProfileId, favoriteFoodTruckProfileId, favoriteAddDate FROM favorite WHERE favoriteProfileId = favoriteProfileId";
+	$statement = $pdo=prepare->($query);
+	// Bind the favorite profile id to the place holder in the template
+	$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
+	$statement->execute($parameters);
+
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
