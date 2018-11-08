@@ -80,7 +80,8 @@ class Social implements \JsonSerializable {
 		try {
 			$uuid = self::validateUuid($newSocialId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// store the uuid
 		$this->SocialId = $uuid;
@@ -111,7 +112,8 @@ class Social implements \JsonSerializable {
 		try {
 			$uuid = self::validateUuid($newSocialFoodTruckId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// store the uuid
 		$this->socialFoodTruckId = $uuid;
