@@ -155,12 +155,13 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckDescription is > 256 characters
 	 * @throws \TypeError if $newFoodTruckDescription is not a string
 	 **/
-	//todo: update other nullable fields
+	//todo: only ? on nullable X
 	public function setFoodTruckDescription(?string $newFoodTruckDescription): void {
 		if($newFoodTruckDescription === null) {
 			$this->foodTruckDescription = null;
+			return;
 		}
-		//todo: ask george about return above
+		//todo: ask george about return above X
 		//verify description is secure
 		$newFoodTruckDescription = trim($newFoodTruckDescription);
 		$newFoodTruckDescription = filter_var($newFoodTruckDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -193,7 +194,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckImageUrl is > 255 characters
 	 * @throws \TypeError if $newFoodTruckImageUrl is not a string
 	 **/
-	public function setFoodTruckImageUrl(?string $newFoodTruckImageUrl): void {
+	public function setFoodTruckImageUrl(string $newFoodTruckImageUrl): void {
 		//verify image url is secure
 		$newFoodTruckImageUrl = trim($newFoodTruckImageUrl);
 		$newFoodTruckImageUrl = filter_var($newFoodTruckImageUrl, FILTER_VALIDATE_URL);
@@ -227,6 +228,10 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \TypeError if $newFoodTruckMenuUrl is not a string
 	 **/
 	public function setFoodTruckMenuUrl(?string $newFoodTruckMenuUrl): void {
+		if($newFoodTruckMenuUrl === null) {
+			$this->foodTruckMenuUrl = null;
+			return;
+		}
 		//verify image url is secure
 		$newFoodTruckMenuUrl = trim($newFoodTruckMenuUrl);
 		$newFoodTruckMenuUrl = filter_var($newFoodTruckMenuUrl, FILTER_VALIDATE_URL);
@@ -259,7 +264,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckName is > 128 characters
 	 * @throws \TypeError if $newFoodTruckName is not a string
 	 **/
-	public function setFoodTruckName(?string $newFoodTruckName): void {
+	public function setFoodTruckName(string $newFoodTruckName): void {
 		//verify Name is secure
 		$newFoodTruckName = trim($newFoodTruckName);
 		$newFoodTruckName = filter_var($newFoodTruckName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -293,6 +298,10 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \TypeError if $newFoodTruckPhoneNumber is not a string
 	 **/
 	public function setFoodTruckPhoneNumber(?string $newFoodTruckPhoneNumber): void {
+		if($newFoodTruckPhoneNumber === null) {
+			$this->foodTruckPhoneNumber = null;
+			return;
+		}
 		//verify PhoneNumber is secure
 		$newFoodTruckPhoneNumber = trim($newFoodTruckPhoneNumber);
 		$newFoodTruckPhoneNumber = filter_var($newFoodTruckPhoneNumber, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -320,8 +329,8 @@ class FoodTruck implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		//create query template
-		//todo: finish $query line below
-		$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber) set:foodTruckId";
+		//todo: finish $query line below X
+			$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber) VALUES(:foodTruckId, :foodTruckProfileId, :foodTruckDescription, :foodTruckImageUrl, :foodTruckMenuUrl, :foodTruckName, :foodTruckPhoneNumber)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
@@ -414,8 +423,8 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	//todo: change method to return an object instead of an array
-	public static function getFoodTruckByFoodTruckProfileId(\PDO $pdo, $foodTruckProfileId): \SplFixedArray {
+	//todo: change method to return an object instead of an array X
+	public static function getFoodTruckByFoodTruckProfileId(\PDO $pdo, $foodTruckProfileId): ?FoodTruck {
 
 		try {
 			$foodTruckProfileId = self::validateUuid($foodTruckProfileId);
@@ -429,20 +438,19 @@ class FoodTruck implements \JsonSerializable {
 		//bind food truck profile id to placeholder in template
 		$parameters = ["foodTruckProfileId" => $foodTruckProfileId->getBytes()];
 		$statement->execute($parameters);
-		//build array of foodTrucks
-		$foodTrucks = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
+		// grab the foodTruck from mySQL
+		try {
+			$foodTruck = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
 				$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
-				$foodTrucks[$foodTrucks->key()] = $foodTruck;
-				$foodTrucks->next();
-			} catch(\Exception $exception) {
+			}
+		} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}
-		return ($foodTrucks);
+		return ($foodTruck);
 	}
 
 	/**
