@@ -60,7 +60,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param Uuid | string $newFavoriteProfileId new value of the favorite profile id
 	 * @throws \InvalidArgumentException if $newFavoriteProfileId is not a valid uuid
-	 * @throws RangeException if $newFavoriteProfileId is not positive
+	 * @throws \RangeException if $newFavoriteProfileId is not positive
 	 */
 	public function setFavoriteProfileId(uuid $newFavoriteProfileId): void {
 		// verify the id is a valid uuid
@@ -86,7 +86,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param Uuid | string $newFavoriteFoodTruckId new value of the favorited food truck id
 	 * @throws \InvalidArgumentException if $newFavoriteFoodTruckId is not a valid uuid
-	 * @throws RangeException if $newFavoriteFoodTruckId is not positive
+	 * @throws \RangeException if $newFavoriteFoodTruckId is not positive
 	 */
 	public function setFavoriteFoodTruckId(Uuid $newFavoriteFoodTruckId): void {
 		// verify the id is a valid uuid
@@ -104,7 +104,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @return \DateTime DateTime value of the favorite food truck add
 	 * @throws \InvalidArgumentException if the date is in an invalid format
-	 * @throws RangeException if the date is not a Gregorian date
+	 * @throws \RangeException if the date is not a Gregorian date
 	 */
 	public function getFavoriteAddDate(): \DateTime {
 		return ($this->favoriteAddDate);
@@ -176,11 +176,11 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid | string $favoriteProfileId favorite profile id to search by
-	 * @return SplFixedArray SplFixedArrays of favorites found
+	 * @return \SplFixedArray SplFixedArrays of favorites found
 	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when a variable are not the correct data type
+	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getFavoritebyFavoriteProfileId(\PDO $pdo, $favoriteProfileId): \SplFixedArray {
+	public static function getFavoriteByFavoriteProfileId(\PDO $pdo, $favoriteProfileId): \SplFixedArray {
 		// sanitize favoriteProfileId before searching
 		try {
 			$favoriteProfileId = self::validateUuid($favoriteProfileId);
@@ -188,7 +188,7 @@ class Favorite implements \JsonSerializable {
 			throw(new\PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteProfileId = favoriteProfileId";
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteProfileId = :favoriteProfileId";
 		$statement = $pdo->prepare($query);
 		// Bind the favorite profile id to the place holder in the template
 		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
@@ -210,8 +210,35 @@ class Favorite implements \JsonSerializable {
 	}
 	/** get favorite by favorite food truck id
 	 *
-	 * @param
-	 */
+	 * @param \PDO $pdo connection object
+	 * @param \Uuid | string $favoriteFoodTruckId favorite food truck to search by
+	 * @return \SplFixedArray SplFixedArray of favorites found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variables are not the correct data type
+	 **/
+	public static function getFavoriteByFavoriteFoodTruckId(\PDO $pdo, $favoriteFoodTruckId): \SplFixedArray {
+		// sanitize favoriteFoodTruckId before searching
+		try {
+			$favoriteFoodTruckId = self::validateUuid($favoriteFoodTruckId);
+		} catch(\InvalidArgumentException | \RangeException |\Exception | \TypeError $exception) {
+				throw(new\PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT favoriteFoodTruckId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteFoodTruckId = :favoriteFoodTruckId";
+		$statement = $pdo->prepare($query);
+		// Bind the favorite food truck id to the place holder in the template
+		$parameters = ["favoriteFoodTruckId" => $favoriteFoodTruckId->getBytes()];
+		$statement=>execute($parameters);
+		// build an array of favorites by food truck id
+		$favorites = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode( \PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodtruckId"], ["favoriteAddDate"]);
+				$favorites[$favorites->key()] = $favorite;
+			}
+	}
+	}
 
 	// TODO Gets all favorites
 	/** gets all favorites
