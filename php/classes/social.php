@@ -3,10 +3,13 @@
 namespace Edu\Cnm\FoodTruckFinder\ValidateUuid;
 
 
+use Edu\Cnm\FoodTruckFinder\ValidateUuid;
+
 Cnm/FoodTruckFinder;
 require_once ("Autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
+use Ramsey\Uuid\Uuid;
 
 class Social implements \JsonSerializable {
 	use ValidateUuid;
@@ -35,9 +38,9 @@ class Social implements \JsonSerializable {
 
 	/** constructor for this social
 	 *
-	 * @param string|Uuid $socialId id of this social or null if  a social
-	 * @param string|Uuid $socialFoodTruckId id of the Profile that sent this social
-	 * @param string socialUrl string containing actual Url data
+	 * @param string|Uuid $newSocialId id of this social or null if  a social
+	 * @param string|Uuid $newSocialFoodTruckId id of the Profile that sent this social
+	 * @param string $newSocialUrl string containing actual Url data
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
@@ -84,7 +87,7 @@ class Social implements \JsonSerializable {
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// store the uuid
-		$this->SocialId = $uuid;
+		$this->socialId = $uuid;
 		{
 		}
 		/**
@@ -102,12 +105,12 @@ class Social implements \JsonSerializable {
 	/**
 	 * mutator method for profile id
 	 *
-	 * @param Uuid | string $newSocialId new value of the location id
+	 * @param Uuid | string $newSocialFoodTruckId new value of the location id
 	 * @throws \RangeException if $newSocialId is not positive
-	 * @throws \TypeError if $newsocialId violates type hints
+	 * @throws \TypeError if $newSocialFoodTruckId violates type hints
 	 */
 
-	public function setSocialFoodTruckId(uuid $newSocialFoodTruckId): void {
+	public function setSocialFoodTruckId(Uuid $newSocialFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newSocialFoodTruckId);
@@ -140,9 +143,8 @@ class Social implements \JsonSerializable {
 	public function setSocialUrl(string $newSocialUrl): void {
 		// verify the string is 500 characters
 		$newSocialUrl = trim($newSocialUrl);
-		$newSocialUrl = filter_validate_url($newSocialUrl);
-		if(empty($newSocialUrl) === true) ;
-		{
+		$newSocialUrl = filter_var ($newSocialUrl,FILTER_VALIDATE_URL);
+		if(empty($newSocialUrl) === true) {
 			throw(new \InvalidArgumentException("Social Url link is empty or insecure."));
 		}
 
@@ -150,8 +152,6 @@ class Social implements \JsonSerializable {
 		if(strlen($newSocialUrl) > 500) {
 			throw(new \RangeException("Social Url is too large, limit 500 characters"));
 		}
-		// filter social url  string to validate
-		$newSocialUrl = filter_var($newSocialUrl, FILTER_VALIDATE_URL);
 // store the social url link
 		$this->socialUrl = $newSocialUrl;
 	}
@@ -173,7 +173,7 @@ class Social implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(PDO $pdo): void {
+	public function insert(\PDO $pdo): void {
 		// create query template
 		$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
 		$statement = $pdo->prepare($query);
