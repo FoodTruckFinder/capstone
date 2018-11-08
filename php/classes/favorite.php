@@ -12,17 +12,17 @@ class Favorite implements \JsonSerializable {
 	use ValidateDate;
 
 	/**
-	 * id for favoriteProfile; this is a foreign key
+	 * id for the Profile that favorited the food truck; this is a foreign key
 	 * @var Uuid $favoriteProfileId
 	 */
 	private $favoriteProfileId;
 	/**
-	 * id for favoriteTruck; this is a foreign key
+	 * id for the food truck that was favorited; this is a foreign key
 	 * @var Uuid $favoriteTruckId
 	 */
 	private $favoriteFoodTruckId;
 	/**
-	 * stores the datetime for when a food truck is  added as a favorite
+	 * date and time for when a food truck is added as a favorite
 	 */
 	private $favoriteAddDate;
 
