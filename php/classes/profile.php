@@ -324,12 +324,6 @@ class Profile implements \JsonSerializable {
 
 
 
-
-
-
-
-
-
 	/**
 	 * formats the state variable for JSON serialization
 	 *
@@ -343,4 +337,5 @@ class Profile implements \JsonSerializable {
 		return($fields);
 	}
 
-}
+
+

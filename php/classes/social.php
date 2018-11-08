@@ -155,3 +155,29 @@ class Social implements \JsonSerializable {
 		$this->socialUrl = $newSocialUrl;
 	}
 }
+
+
+
+
+
+
+
+//PDO Statement begin
+
+
+/**
+ * inserts this social Url into mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+public function insert(PDO $pdo): void {
+	// create query template
+	$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
+	$statement = $pdo->prepare($query);
+
+	// bind the member variables to the place holders in the template
+	$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
+	$statement->execute($parameters);
+}
