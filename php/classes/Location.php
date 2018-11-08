@@ -269,7 +269,23 @@ class Location implements \JsonSerializable {
 		$parameters = ["locationId" => $this->locationId->getBytes(), "locationFoodTruckId" => $this->locationFoodTruckId->getBytes(), "locationEndTime" => $formattedEndTime, "locationLatitude" => $this->locationLatitude, "locationLongitude" => $this->locationLongitude, "locationStartTime" => $formattedStartTime];
 		$statement->execute($parameters);
 	}
-//TODO write a delete PDO
+	/**
+	 * deletes this Location from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM location WHERE locationId = :locationId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["locationId" => $this->locationId->getBytes()];
+		$statement->execute($parameters);
+	}
 	/**
 	 * gets the Location Id by Location Food Truck Id
 	 *
@@ -289,10 +305,10 @@ class Location implements \JsonSerializable {
 
 		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
 		$statement = $pdo->prepare($query);
-		// bind the tweet profile id to the place holder in the template
+		// bind the location FoodTruck id to the place holder in the template
 		$parameters = ["locationFoodTruckId" => $locationFoodTruckId->getBytes()];
 		$statement->execute($parameters);
-		// build an array of tweets
+		// build an array of locations
 		$locations = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
