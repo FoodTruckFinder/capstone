@@ -170,8 +170,22 @@ class Favorite implements \JsonSerializable {
 	}
 
 	/**
+	 * gets the favorite by favoriteProfileId
 	 *
-	 */
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid | string $favoriteProfileId favorite profile id to search by
+	 * @param return SplFixedArray SplFixedArrays of favorites found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getFavoriteProfileIdbyFavoriteProfileId(\PDO $pdo $favoriteProfileId): \SplFixedArray {
+		try $favoriteProfileId = self::validateUuid($favoriteProfileId);
+	}  catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new\PDOException($exception->getMessage) 0, $exception));
+	}
+
+	// create query template
+	$query = SELECT foodtruckProfileId, favoriteFoodTruckId, favoriteAddDate FROM
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
