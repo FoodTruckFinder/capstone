@@ -193,7 +193,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckImageUrl is > 255 characters
 	 * @throws \TypeError if $newFoodTruckImageUrl is not a string
 	 **/
-	public function setFoodTruckImageUrl(string $newFoodTruckImageUrl): void {
+	public function setFoodTruckImageUrl(?string $newFoodTruckImageUrl): void {
 		//verify image url is secure
 		$newFoodTruckImageUrl = trim($newFoodTruckImageUrl);
 		$newFoodTruckImageUrl = filter_var($newFoodTruckImageUrl, FILTER_VALIDATE_URL);
@@ -226,7 +226,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckMenuUrl is > 255 characters
 	 * @throws \TypeError if $newFoodTruckMenuUrl is not a string
 	 **/
-	public function setFoodTruckMenuUrl(string $newFoodTruckMenuUrl): void {
+	public function setFoodTruckMenuUrl(?string $newFoodTruckMenuUrl): void {
 		//verify image url is secure
 		$newFoodTruckMenuUrl = trim($newFoodTruckMenuUrl);
 		$newFoodTruckMenuUrl = filter_var($newFoodTruckMenuUrl, FILTER_VALIDATE_URL);
@@ -259,7 +259,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckName is > 128 characters
 	 * @throws \TypeError if $newFoodTruckName is not a string
 	 **/
-	public function setFoodTruckName(string $newFoodTruckName): void {
+	public function setFoodTruckName(?string $newFoodTruckName): void {
 		//verify Name is secure
 		$newFoodTruckName = trim($newFoodTruckName);
 		$newFoodTruckName = filter_var($newFoodTruckName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -292,7 +292,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckPhoneNumber is > 16 characters
 	 * @throws \TypeError if $newFoodTruckPhoneNumber is not a string
 	 **/
-	public function setFoodTruckPhoneNumber(string $newFoodTruckPhoneNumber): void {
+	public function setFoodTruckPhoneNumber(?string $newFoodTruckPhoneNumber): void {
 		//verify PhoneNumber is secure
 		$newFoodTruckPhoneNumber = trim($newFoodTruckPhoneNumber);
 		$newFoodTruckPhoneNumber = filter_var($newFoodTruckPhoneNumber, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -461,7 +461,7 @@ class FoodTruck implements \JsonSerializable {
 		if(empty($foodTruckName) === true) {
 			throw(new \PDOException("food truck Name is invalid"));
 		}
-		//todo: remove things that dont need to be searched
+		//todo: remove things that dont need to be searched X
 		// escape any mySQL wild cards
 		$foodTruckName = str_replace("_", "\\_", str_replace("%", "\\%", $foodTruckName));
 
