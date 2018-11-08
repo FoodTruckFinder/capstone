@@ -185,14 +185,18 @@ class Favorite implements \JsonSerializable {
 			$favoriteProfileId = self::validateUuid($favoriteProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new\PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckProfileId, favoriteAddDate FROM favorite WHERE favoriteProfileId = favoriteProfileId";
+		$statement = $pdo->prepare($query);
+		// Bind the favorite profile id to the place holder in the template
+		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of favorites by profile id
+		$favorites = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while()
 	}
-	// create query template
-	$query = "SELECT favoriteProfileId, favoriteFoodTruckProfileId, favoriteAddDate FROM favorite WHERE favoriteProfileId = favoriteProfileId";
-	$statement = $pdo=prepare->($query);
-	// Bind the favorite profile id to the place holder in the template
-	$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
-	$statement->execute($parameters);
-
 		/**
 		 * Specify data which should be serialized to JSON
 		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
