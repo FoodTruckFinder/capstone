@@ -318,8 +318,7 @@ class Location implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	//TODO rewrite method to return an object look at ty statement
-	public static function getLocationFoodTruckIdByLocationId(\PDO $pdo, $locationId): ?FoodTruck {
+	public static function getLocationFoodTruckIdByLocationId(\PDO $pdo, $locationId): ?Location {
 		try {
 			$locationId = self::validateUuid($locationId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -339,7 +338,7 @@ class Location implements \JsonSerializable {
 				if($row !== false) {
 					$foodTruck = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
 				}
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
