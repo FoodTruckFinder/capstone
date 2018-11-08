@@ -166,6 +166,36 @@ class Social implements \JsonSerializable {
 //PDO Statements begin
 
 
+//SELECT statement
+	/**
+	 * gets the social by SocialId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $socialId social id to search for
+	 * @return Social|null Product found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getSocialBySocialId(\PDO $pdo, $socialId) : ?Product {
+		// sanitize the social Id before searching
+		try {
+			$socialId = self::validateUuid($socialId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT socialId, socialFoodTruckId, socialUrl, FROM social WHERE socialId = :socialId";
+		$statement = $pdo->prepare($query);
+
+		// bind the social id to the place holder in the template
+		$parameters = ["socialId" => $socialId->getBytes()];
+		$statement->execute($parameters);
+
+
+
+
+
+
 	/**
 	 * inserts this social Url into mySQL
 	 *
@@ -174,14 +204,14 @@ class Social implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo): void {
-		// create query template
-		$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
-		$statement = $pdo->prepare($query);
+			// create query template
+			$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
+			$statement = $pdo->prepare($query);
 
-		// bind the member variables to the place holders in the template
-		$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
-		$statement->execute($parameters);
-	}
+			// bind the member variables to the place holders in the template
+			$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
+			$statement->execute($parameters);
+		}
 
 
 	/**
@@ -193,19 +223,15 @@ class Social implements \JsonSerializable {
 	 **/
 	public function update(\PDO $pdo): void {
 
-		// create query template
-		$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = :socialUrl WHERE socialId = :socialId ";
-		$statement = $pdo->prepare($query);
+			// create query template
+			$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = :socialUrl WHERE socialId = :socialId ";
+			$statement = $pdo->prepare($query);
 
 
-		$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl"
-		=> $this->socialUrl];
-		$statement->execute($parameters);
-	}
-
-
-
-
+			$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl"
+			=> $this->socialUrl];
+			$statement->execute($parameters);
+		}
 
 
 
@@ -225,10 +251,7 @@ class Social implements \JsonSerializable {
 		// bind the member variables to the place holder in the template
 		$parameters = ["socialId" => $this->socialId->getBytes()];
 		$statement->execute($parameters);
+		}
+
 	}
-
-
-
-
-}
 
