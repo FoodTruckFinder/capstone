@@ -245,7 +245,7 @@ class Favorite implements \JsonSerializable {
 		return($favorites);
 	}
 
-	// TODO Gets all favorites
+	// TODO Gets all favorites (do we need?)
 	/** gets all favorites
 	 *
 	 * @param \PDO $pdo PDO connection object
