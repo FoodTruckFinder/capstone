@@ -120,7 +120,7 @@ class Profile implements \JsonSerializable {
 			throw (new \RangeException("string is not 32 characters"));
 		}
 		// verify the string is hexadecimal
-		if(ctype_xdigit($newProfileActivationToken) === false) {
+		if(ctype_xdigit($newProfileActivationToken) !== true) {
 			throw (new \InvalidArgumentException("String is not hexadecimal"));
 		}
 		// store the string
@@ -155,7 +155,7 @@ class Profile implements \JsonSerializable {
 		// trim whitespace from email
 		$newProfileEmail = trim($newProfileEmail);
 		// verify if email is well formed
-		if(filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL) === false) {
+		if(filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL) !== true) {
 			throw (new \Exception("email in not valid format"));
 		}
 		// store the string
@@ -190,7 +190,7 @@ class Profile implements \JsonSerializable {
 			throw (new \RangeException("hash is too long"));
 		}
 		// verify that hash is hexadecimal
-		if(ctype_xdigit($newProfileHash) === false) {
+		if(ctype_xdigit($newProfileHash) !== true) {
 			throw (new \Exception("hash is not hexadecimal"));
 		}
 		// store the string
@@ -247,7 +247,7 @@ class Profile implements \JsonSerializable {
 		// sanitize string
 		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
 		// check if string is empty
-		if(empty($newProfileName) === false) {
+		if(empty($newProfileName) !== true) {
 			throw (new \InvalidArgumentException("profile name is empty"));
 		}
 		// store the string
@@ -369,7 +369,7 @@ class Profile implements \JsonSerializable {
 		// trim profile email sanitize
 		$profileEmail = trim($profileEmail);
 		// verify if email is well formed
-		if(filter_var($profileEmail, FILTER_VALIDATE_EMAIL) === false) {
+		if(filter_var($profileEmail, FILTER_VALIDATE_EMAIL) == true) {
 			throw (new \TypeError("email in not valid format"));
 		}
 		// create query template
@@ -405,7 +405,7 @@ class Profile implements \JsonSerializable {
 		// build an array of profile information
 		$profile = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) === true) {
 			try {
 				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileIsOwner"], $row["profileName"]);
 			}
