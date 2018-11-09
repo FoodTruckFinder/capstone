@@ -271,5 +271,24 @@ class Social implements \JsonSerializable {
 
 		}
 
+
+	/**
+	 * gets the social by social id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $socialFoodTruckId social id to search by
+	 * @return \SplFixedArray SplFixedArray of social found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+		public function getSocialBySocialFoodTruckId(\PDO $pdo, $socialFoodTruckId) : \SplFixedArray {
+
+			{try
+
+			}
+		}
+
+
 	}
 
