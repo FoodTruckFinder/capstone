@@ -35,7 +35,7 @@ CREATE TABLE foodTruck (
 	UNIQUE(foodTruckName),
 	UNIQUE(foodTruckProfileId),
 	INDEX (foodTruckProfileId),
-	FOREIGN KEY(foodTruckProfileId) REFERENCES profile(ProfileId),
+	FOREIGN KEY(foodTruckProfileId) REFERENCES profile(profileId),
 	PRIMARY KEY(foodTruckId)
 
 );
