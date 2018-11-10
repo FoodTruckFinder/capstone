@@ -35,7 +35,7 @@ CREATE TABLE foodTruck (
 	UNIQUE(foodTruckName),
 	UNIQUE(foodTruckProfileId),
 	INDEX (foodTruckProfileId),
-	FOREIGN KEY(foodTruckProfileId) REFERENCES Profile(ProfileId),
+	FOREIGN KEY(foodTruckProfileId) REFERENCES profile(ProfileId),
 	PRIMARY KEY(foodTruckId)
 
 );
@@ -48,7 +48,7 @@ CREATE TABLE favorite (
 	INDEX(favoriteProfileId),
 	INDEX(favoriteFoodTruckId),
 	PRIMARY KEY(favoriteProfileId, favoriteFoodTruckId),
-	FOREIGN KEY(favoriteProfileId) REFERENCES Profile(profileId),
+	FOREIGN KEY(favoriteProfileId) REFERENCES profile(profileId),
 	FOREIGN KEY(favoriteFoodTruckId) REFERENCES foodTruck(foodTruckId)
 
 );
@@ -74,6 +74,6 @@ CREATE TABLE location (
 	locationStartTime DATETIME(6) NOT NULL,
 
 	INDEX(locationFoodTruckId),
-	FOREIGN KEY(locationFoodtruckId) REFERENCES FoodTruck(foodTruckId),
+	FOREIGN KEY(locationFoodtruckId) REFERENCES foodTruck(foodTruckId),
 	PRIMARY KEY (locationId)
 );
