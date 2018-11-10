@@ -48,9 +48,11 @@ abstract class FoodTruckFinderTest extends TestCase {
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
 		$dataset->addTable("profile");
-		$dataset->addTable("tweet");
+		$dataset->addTable("foodTruck");
+		$dataset->addTable("favorite");
+		$dataset->addTable("social");
+		$dataset->addTable("location");
 		// the second parameter is required because like is also a SQL keyword and is the only way PHPUnit can query the like table
-		$dataset->addTable("like", "SELECT likeProfileId, likeTweetId, likeDate FROM `like`");
 		return($dataset);
 	}
 
