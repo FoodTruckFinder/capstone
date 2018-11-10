@@ -1,5 +1,5 @@
 -- The statement below sets the collation of the database to utf8
-ALTER DATABASE foodtruckfinder CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER DATABASE fooddelivery CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS foodTruck;
