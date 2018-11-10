@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Greg Klein <gklein@cnm.edu>
  **/
 
- class FoodTruckTest extends DataDesignTest {
+ class FoodTruckTest extends FoodTruckFinderTest {
 	 /**
 	  * Profile that created the FoodTruck; this is for foreign key relations
 	  * @var Profile profile
