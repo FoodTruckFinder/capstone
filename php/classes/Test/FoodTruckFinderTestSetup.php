@@ -91,7 +91,7 @@ abstract class FoodTruckFinderTest extends TestCase {
 			// connect to mySQL and provide the interface to PHPUnit
 
 
-			$secrets =  new Secrets("/etc/apache2/capstone-mysql/ddctwitter.ini");
+			$secrets =  new Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery.ini");
 			$pdo = $secrets->getPdoObject();
 			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabase());
 		}
