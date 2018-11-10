@@ -1,11 +1,12 @@
 -- The statement below sets the collation of the database to utf8
 ALTER DATABASE fooddelivery CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-DROP TABLE IF EXISTS profile;
-DROP TABLE IF EXISTS foodTruck;
 DROP TABLE IF EXISTS favorite;
 DROP TABLE IF EXISTS social;
 DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS foodTruck;
+DROP TABLE IF EXISTS profile;
+
 
 CREATE TABLE profile (
 
