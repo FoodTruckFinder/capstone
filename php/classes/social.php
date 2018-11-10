@@ -284,11 +284,33 @@ class Social implements \JsonSerializable {
 
 		public function getSocialBySocialFoodTruckId(\PDO $pdo, $socialFoodTruckId) : \SplFixedArray {
 
-			{try
-
+			try {
+				$socialFoodTruckId = self::validateUuid($socialFoodTruckId);
+			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}
 
+			// create query template
+			$query = "SELECT socialId, socialFoodTruckId, socialUrl FROM social WHERE socialFoodTruckId = :socialFoodTruckId";
+			$statement = $pdo->prepare($query);
+			// bind the social food truck id to the place holder in the template
+			$parameters = ["socialFoodTruckId" => $socialFoodTruckId->getBytes()];
+			$statement->execute($parameters);
+			// build an array of social food truck ID
+			$social = new \SplFixedArray($statement->rowCount());
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			while(($row = $statement->fetch()) !== false) {
+				try {
+					$social = new Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
+					$social [$social->key()] = $social;
+					$social->next();
+				} catch(\Exception $exception) {
+					// if the row couldn't be converted, rethrow it
+					throw(new \PDOException($exception->getMessage(), 0, $exception));
+				}
+			}
+			return($social);
+		}
 
 	}
 
