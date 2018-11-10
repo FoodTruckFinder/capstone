@@ -10,7 +10,7 @@ use Edu\Cnm\FoodTruckFinder\ValidateUuid\Social;
  * PHPUnit test of the Social class.
  *
  * @see Social
- * @author Daniel Nakitare
+ * @author Rae Jack
  */
 class SocialTest extends LocationTest {
 	/**
