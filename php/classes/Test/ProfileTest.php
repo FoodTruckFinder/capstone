@@ -243,6 +243,35 @@ class ProfileTest extends FoodTruckFinderTest {
 	/**
 	 * test getting a Profile by its activation token
 	 */
+	public function testGetValidProfileByActivationToken() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new Profile and insert into mySQL
+		$profileId = generateUuidV4();
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile->insert($this->getPDO());
+
+		// get Profile from the database by profile activation token
+		$pdoProfile = Profile::getProfileByProfileActivationToken($this->getPDO(), $profile->getProfileActivationToken());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
+	}
+
+	/**
+	 * test getting a Profile by an activation token that doesn't exist
+	 */
+	public function testGetInvalidProfileActivationToken() : void {
+		// get an activation token that does not exist
+		$profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "91a930a7d9746db530a1315d65c31bbf");
+		$this->assertNull($profile);
+	}
 
 
 
