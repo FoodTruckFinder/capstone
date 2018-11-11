@@ -180,7 +180,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
-		// get Profile for database using profile name
+		// get Profile form database using profile name
 		$results = Profile::getProfileByProfileName($this->getPDO(), $this->VALID_PROFILE_NAME);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 
@@ -207,7 +207,33 @@ class ProfileTest extends FoodTruckFinderTest {
 		$this->assertCount(0, $profile);
 	}
 
-	/
+	/**
+	 * test grabbing a Profile by profile email
+	 */
+	public function testGetProfilebyProfileEmail() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new Profile and insert into mySQL
+		$profileId = generateUuidV4();
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile->insert($this->getPDO());
+
+		// get the Profile from database by profile email
+		$pdoProfile = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
+	}
+
+	/**
+	 *
+	 */
 
 
 
