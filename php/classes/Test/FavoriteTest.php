@@ -47,7 +47,9 @@ public final function setUp() : void {
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 		// create and insert the mocked profile
-
-
+		$this->profile = new Profile(generateUuidV4(), null, "@phpunit";
+		$this->profile->insert($this->getPDO());
+		// create and insert the mocked favorite
+		$this->favorite = new Favorite(generateUuidV4), $this->profile->getProfileId, "PHPUnit like test passing");
 
 }
