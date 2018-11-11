@@ -208,7 +208,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test grabbing a Profile by profile email
+	 * test getting a Profile by profile email
 	 */
 	public function testGetProfilebyProfileEmail() {
 		// count the number of rows and save it for later
@@ -232,7 +232,16 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 *
+	 * test getting a Profile that doesn't exist by profile email
+	 */
+	public function testGetInvalidProfileByProfileEmail() : void {
+		// get an email that doesn't exist
+		$profile = Profile::getProfileByProfileEmail($this->getPDO(), "eye@dont.exist");
+		$this->assertNull($profile);
+	}
+
+	/**
+	 * test getting a Profile by its activation token
 	 */
 
 
