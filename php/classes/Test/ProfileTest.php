@@ -2,27 +2,27 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\Profile;
+use Edu\Cnm\FoodTruckFinder\{Profile};
 
 
 /**
  * PHPUnit test of the Profile class.
  *
  * @see Profile
- * @author Daniel Nakitare
+ * @author Daniel Nakitare <dnakitare@cnm.edu>
  */
-class ProfileTest extends FoodTruckTest {
+class ProfileTest extends FoodTruckFinderTest {
 	/**
 	 * valid profile id, this is a primary key
 	 * @var uuid $VALID_PROFILE_ID
 	 */
-	protected $VALID_PROFILE_ID = "710a0875-9775-4312-a075-7b1bb2f72622";
+	protected $VALID_PROFILE_ID = null;
 
 	/**
 	 * placeholder for valid profile activation token
 	 * @var string $VALID_ACTIVATION_TOKEN
 	 */
-	protected $VALID_ACTIVATION_TOKEN;
+	protected $VALID_ACTIVATION_TOKEN = null;
 
 	/**
 	 * vaild profile email
@@ -34,7 +34,7 @@ class ProfileTest extends FoodTruckTest {
 	 * placeholder for a valid profile hash
 	 * @var $VALID_PROFILE_HASH;
 	 */
-	protected $VALID_PROFILE_HASH;
+	protected $VALID_PROFILE_HASH = null;
 
 	/**
 	 * valid profile is owner boolean
@@ -67,9 +67,9 @@ class ProfileTest extends FoodTruckTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
+		// create new profile and insert into mySQL
 		$profileId = generateUuidV4();
-
-		$profile = new Profile($profile, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile = new Profile($profileId, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -82,4 +82,46 @@ class ProfileTest extends FoodTruckTest {
 		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
 		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
 	}
+
+	/**
+	 * test inserting a Profile, editing it, and then updating it
+	 */
+	public function testUpdateValidProfile() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new profile and update it in mySQL
+		$profileId = generateUuidV4();
+		$profile = new Profile($profileId, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile->insert($this->getPDO());
+
+		// edit the profile and update it in mySQL
+		$profile->setProfileContent($this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_NAME);
+		$profile->update($this->getPDO());
+
+		// grab the date from mySQL and enforce the fields match out expectations
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
+	}
+
+	/**
+	 * test creating and then deleting a Profile
+	 */
+	public function testDeleteValidProfile() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+	}
+
+
+
+
+
+
 }
