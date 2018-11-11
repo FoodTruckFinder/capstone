@@ -185,7 +185,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 
 		// make sure no other objects are contaminating the profile
-		$this->asseertContainsOnlyInstanceOf("Edu\\Cnm\\FoodTruckFinder\\Profile", $results);
+		$this->asseertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Profile", $results);
 
 		// make sure results are same as expected
 		$pdoProfile = $results[0];
