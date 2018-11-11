@@ -42,7 +42,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	 * valid profile is profile name
 	 * @var $VALID_PROFILE_NAME
 	 */
-	protected $VALID_PROFILE_NAME = "IAmATest011";
+	protected $VALID_PROFILE_NAME = "Chad";
 
 	/**
 	 * default setup operation to create salt and hash
@@ -157,7 +157,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test grabbing a Profile that doesn't exist
+	 * test getting a Profile that doesn't exist by profile id
 	 */
 	public function testGetInvalidProfileByProfileId () : void {
 		// grab a profile id that doesn't exist?
@@ -197,6 +197,17 @@ class ProfileTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
 		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
 	}
+
+	/**
+	 * test getting a Profile that doesn't exist by profile name
+	 */
+	public function testGetInvalidProfileByProfileName() : void {
+		// get a profile name that doesn't exist
+		$profile = Profile::getProfileByProfileName($this->getPDO(), "Invalid Profile Name");
+		$this->assertCount(0, $profile);
+	}
+
+	/
 
 
 
