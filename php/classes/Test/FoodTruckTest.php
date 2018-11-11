@@ -2,7 +2,7 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\{profile, foodTruck};
+use Edu\Cnm\FoodTruckFinder\{Profile, FoodTruck};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -26,13 +26,7 @@ require_once(dirname(__DIR__, 1) . "/validateUuid.php");
 	  * @var Profile profile
 	  **/
 	  protected $profile = null;
-
-	 /**
-	  * valid profile hash to create the profile object to own the test
-	  * @var $VALID_HASH
-	  */
-	  protected $VALID_PROFILE_HASH;
-
+	  
 	 /**
 	  * content of the food truck description
 	  * @var string $VALID_FOODTRUCKDESCRIPTION
@@ -132,18 +126,18 @@ public final function setUp()  : void {
 }
 
 /**
- * test inserting a FoodTruck, editing it, and then updating it
+ * test inserting a FoodTruck, editing the description, and then updating it
  **/
-	public function testUpdateValidFoodTruck() : void {
+	public function testUpdateValidFoodTruckDescription() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("foodTruck");
 
-	// create a new Tweet and insert to into mySQL
+	// create a new food truck and insert to into mySQL
 	$foodTruckId = generateUuidV4();
 	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
 	$foodTruck->insert($this->getPDO());
 
-	// edit the food truck description and update it in mySQL
+	// edit the food truck image url and update it in mySQL
 	$foodTruck->setFoodTruckDescription($this->VALID_FOODTRUCKDESCRIPTION2);
 	$foodTruck->update($this->getPDO());
 
@@ -153,6 +147,30 @@ public final function setUp()  : void {
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
 	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoFoodTruck->getFoodTruckDescription(), $this->VALID_FOODTRUCKDESCRIPTION2);
+}
+
+/**
+ * test inserting a FoodTruck, editing the image url, and then updating it
+ **/
+	public function testUpdateValidFoodTruckImageUrl() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("foodTruck");
+
+	// create a new Tweet and insert to into mySQL
+	$foodTruckId = generateUuidV4();
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck->insert($this->getPDO());
+
+	// edit the food truck description and update it in mySQL
+	$foodTruck->setFoodTruckImageUrl($this->VALID_FOODTRUCKIMAGEURL2);
+	$foodTruck->update($this->getPDO());
+
+	// grab the data from mySQL and enforce the fields match our expectations
+	$pdoFoodTruck = FoodTruck::getFoodTruckByFoodTruckId($this->getPDO(), $foodTruck->getFoodTruckId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
+	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckImageUrl(), $this->VALID_VALID_FOODTRUCKIMAGEURL2);
 }
 
 	/**
