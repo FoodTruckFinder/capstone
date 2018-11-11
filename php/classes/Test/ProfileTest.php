@@ -61,7 +61,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test inserting a valid Profile and verify thath the actual mySQL data matches
+	 * test creating a valid Profile and verify that the actual mySQL data matches
 	 */
 	public function testInsertValidProfile() : void {
 		// count the number of rows and save it for later
@@ -84,7 +84,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test inserting a Profile, editing it, and then updating it
+	 * test creating a Profile, editing it, and then updating it
 	 */
 	public function testUpdateValidProfile() : void {
 		// count the number of rows and save it for later
@@ -117,7 +117,24 @@ class ProfileTest extends FoodTruckFinderTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
+		// create a new Profile and insert into mySQL
+		$profileId = generateUuidV4();
+		$profile = new Profile($profileId, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile->insert($this->getPDO());
+
+		// delete the Profile from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$profile->delete($this->getPDO());
+
+		// grab the data from mySQL and make sure the Profile does not exist
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertNull($pdoProfile);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 	}
+
+	/**
+	 * test creating a Profile and then grabbing it from mySQL by profileId
+	 */
 
 
 
