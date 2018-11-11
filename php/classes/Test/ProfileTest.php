@@ -8,15 +8,11 @@ use Edu\Cnm\FoodTruckFinder\{Profile};
 /**
  * PHPUnit test of the Profile class.
  *
- * @see Profile
+ * @see \Edu\Cnm\FoodTruckFinder\Profile
  * @author Daniel Nakitare <dnakitare@cnm.edu>
  */
 class ProfileTest extends FoodTruckFinderTest {
-	/**
-	 * valid profile id, this is a primary key
-	 * @var uuid $VALID_PROFILE_ID
-	 */
-	protected $VALID_PROFILE_ID = null;
+
 
 	/**
 	 * placeholder for valid profile activation token
@@ -61,6 +57,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
+	 * test beginning
 	 * test creating a valid Profile and verify that the actual mySQL data matches
 	 */
 	public function testInsertValidProfile() : void {
@@ -69,7 +66,8 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		// create new profile and insert into mySQL
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -92,7 +90,8 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		// create a new profile and update it in mySQL
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
 		// edit the profile and update it in mySQL
@@ -119,7 +118,8 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		// create a new Profile and insert into mySQL
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_PROFILE_ID, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
 		// delete the Profile from mySQL
@@ -135,6 +135,68 @@ class ProfileTest extends FoodTruckFinderTest {
 	/**
 	 * test creating a Profile and then grabbing it from mySQL by profileId
 	 */
+	public function testGetValidProfileById() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new Profile and insert into mySQL
+		$profileId = generateUuidV4();
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile->insert($this->getPDO());
+
+		// grab the date from mySQL and enforce the fields match out expectations
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
+	}
+
+	/**
+	 * test grabbing a Profile that doesn't exist
+	 */
+	public function testGetInvalidProfileByProfileId () : void {
+		// grab a profile id that doesn't exist?
+		$invalidProfileId = generateUuidV4();
+
+		$profile = Profile::getProfileByProfileId($this->getPDO() , "$invalidProfileId");
+		$this->assertNull($profile);
+	}
+
+	/**
+	 * test getting a Profile by profile name
+	 */
+	public function testGetValidProfileByProfileName() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new Profile and insert into mySQL
+		$profileId = generateUuidV4();
+
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
+		$profile->insert($this->getPDO());
+
+		// get Profile for database using profile name
+		$results = Profile::getProfileByProfileName($this->getPDO(), $this->VALID_PROFILE_NAME);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		// make sure no other objects are contaminating the profile
+		$this->asseertContainsOnlyInstanceOf("Edu\\Cnm\\FoodTruckFinder\\Profile", $results);
+
+		// make sure results are same as expected
+		$pdoProfile = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
+	}
 
 
 
