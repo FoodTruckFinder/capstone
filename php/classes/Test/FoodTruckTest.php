@@ -8,7 +8,7 @@ use Edu\Cnm\FoodTruckFinder\{profile, foodTruck};
 require_once(dirname(__DIR__) . "/autoload.php");
 
 // grab the uuid generator
-require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+require_once(dirname(__DIR__, 1) . "/validateUuid.php");
 
 /**
  * Full PHPUnit test for the FoodTruck class
@@ -37,7 +37,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 	  * content of the food truck description
 	  * @var string $VALID_FOODTRUCKDESCRIPTION
 	  **/
-	  protected $VALID_FOODTRUCKDESCRIPTION = "PHPUnit test still passing";
+	  protected $VALID_FOODTRUCKDESCRIPTION = "PHPUnit test passing";
 
 	 /**
 	  * content of the updated foodTruck description
@@ -49,49 +49,49 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 	  * content of the food truck image url
 	  * @var string $VALID_FOODTRUCKIMAGEURL
 	  **/
-	 protected $VALID_FOODTRUCKIMAGEURL = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKIMAGEURL = "food truck image url";
 
 	 /**
 	  * content of the updated foodTruck image url
 	  * @var string $VALID_FOODTRUCKIMAGEURL2
 	  **/
-	 protected $VALID_FOODTRUCKIMAGEURL2 = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKIMAGEURL2 = "second food truck image url";
 
 	 /**
 	  * content of the food truck menu url
 	  * @var string $VALID_FOODTRUCKMENUURL
 	  **/
-	 protected $VALID_FOODTRUCKMENUURL = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKMENUURL = "food truck menu url";
 
 	 /**
 	  * content of the updated foodTruck menu url
 	  * @var string $VALID_FOODTRUCKMENUURL2
 	  **/
-	 protected $VALID_FOODTRUCKMENUURL2 = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKMENUURL2 = "second food truck menu url";
 
 	 /**
 	  * content of the food truck name
 	  * @var string $VALID_FOODTRUCKNAME
 	  **/
-	 protected $VALID_FOODTRUCKNAME = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKNAME = "food truck name";
 
 	 /**
 	  * content of the updated foodTruck name
 	  * @var string $VALID_FOODTRUCKNAME2
 	  **/
-	 protected $VALID_FOODTRUCKNAME2 = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKNAME2 = "second food truck name";
 
 	 /**
 	  * content of the food truck phone number
 	  * @var string $VALID_FOODTRUCKPHONENUMBER
 	  **/
-	 protected $VALID_FOODTRUCKPHONENUMBER = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKPHONENUMBER = "phone number";
 
 	 /**
 	  * content of the updated foodTruck phone number
 	  * @var string $VALID_FOODTRUCKPHONENUMBER2
 	  **/
-	 protected $VALID_FOODTRUCKPHONENUMBER2 = "PHPUnit test still passing";
+	 protected $VALID_FOODTRUCKPHONENUMBER2 = "new phone number";
  }
 
 
@@ -140,7 +140,7 @@ public final function setUp()  : void {
 
 	// create a new Tweet and insert to into mySQL
 	$foodTruckId = generateUuidV4();
-	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getFoodTruckProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
 	$foodTruck->insert($this->getPDO());
 
 	// edit the food truck description and update it in mySQL
@@ -164,7 +164,7 @@ public final function setUp()  : void {
 
 	// create a new food truck and insert to into mySQL
 	$foodTruckId = generateUuidV4();
-	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getFoodTruckProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
 	$foodTruck->insert($this->getPDO());
 
 	// delete the food truck from mySQL
@@ -175,4 +175,34 @@ public final function setUp()  : void {
 	$pdoFoodTruck = FoodTruck::getFoodTruckByFoodTruckId($this->getPDO(), $foodTruck->getFoodTruckId());
 	$this->assertNull($pdoFoodTruck);
 	$this->assertEquals($numRows, $this->getConnection()->getRowCount("foodTruck"));
+}
+
+	/**
+	 * test inserting a food truck and regrabbing it from mySQL
+	 **/
+	public function testGetValidFoodTruckByFoodTruckProfileId() {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("foodTruck");
+
+	// create a new food truck and insert to into mySQL
+	$foodTruckId = generateUuidV4();
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck->insert($this->getPDO());
+
+	// grab the data from mySQL and enforce the fields match our expectations
+	$results = FoodTruck::getFoodTruckByFoodTruckProfileId($this->getPDO(), $foodTruck->getFoodTruckProfileId());
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
+	$this->assertCount(1, $results);
+	$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder", $results);
+
+	// grab the result from the array and validate it
+	$pdoFoodTruck = $results[0];
+
+	$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
+	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckDescription(), $this->VALID_FOODTRUCKDESCRIPTION);
+	$this->assertEquals($pdoFoodTruck->getFoodTruckImageUrl(), $this->VALID_FOODTRUCKIMAGEURL);
+	$this->assertEquals($pdoFoodTruck->getFoodTruckMenuUrl(), $this->VALID_FOODTRUCKMENUURL);
+	$this->assertEquals($pdoFoodTruck->getFoodTruckName(), $this->VALID_FOODTRUCKNAME);
+	$this->assertEquals($pdoFoodTruck->getFoodTruckPhoneNumber(), $this->VALID_FOODTRUCKPHONENUMBER);
 }
