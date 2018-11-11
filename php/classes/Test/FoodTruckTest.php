@@ -156,12 +156,12 @@ public final function setUp()  : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("foodTruck");
 
-	// create a new Tweet and insert to into mySQL
+	// create a new food truck and insert to into mySQL
 	$foodTruckId = generateUuidV4();
 	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
 	$foodTruck->insert($this->getPDO());
 
-	// edit the food truck description and update it in mySQL
+	// edit the food truck menu url and update it in mySQL
 	$foodTruck->setFoodTruckImageUrl($this->VALID_FOODTRUCKIMAGEURL2);
 	$foodTruck->update($this->getPDO());
 
@@ -170,7 +170,79 @@ public final function setUp()  : void {
 	$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
 	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
-	$this->assertEquals($pdoFoodTruck->getFoodTruckImageUrl(), $this->VALID_VALID_FOODTRUCKIMAGEURL2);
+	$this->assertEquals($pdoFoodTruck->getFoodTruckImageUrl(), $this->VALID_FOODTRUCKIMAGEURL2);
+}
+
+/**
+ * test inserting a FoodTruck, editing the menu url, and then updating it
+ **/
+	public function testUpdateValidFoodTruckMenuUrl() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("foodTruck");
+
+	// create a new food truck and insert to into mySQL
+	$foodTruckId = generateUuidV4();
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck->insert($this->getPDO());
+
+	// edit the food truck menu url and update it in mySQL
+	$foodTruck->setFoodTruckMenuUrl($this->VALID_FOODTRUCKMENUURL2);
+	$foodTruck->update($this->getPDO());
+
+	// grab the data from mySQL and enforce the fields match our expectations
+	$pdoFoodTruck = FoodTruck::getFoodTruckByFoodTruckId($this->getPDO(), $foodTruck->getFoodTruckId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
+	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckMenuUrl(), $this->VALID_FOODTRUCKMENUURL2);
+}
+
+/**
+ * test inserting a FoodTruck, editing the name, and then updating it
+ **/
+	public function testUpdateValidFoodTruckName() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("foodTruck");
+
+	// create a new food truck and insert to into mySQL
+	$foodTruckId = generateUuidV4();
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck->insert($this->getPDO());
+
+	// edit the food truck name and update it in mySQL
+	$foodTruck->setFoodTruckName($this->VALID_FOODTRUCKNAME2);
+	$foodTruck->update($this->getPDO());
+
+	// grab the data from mySQL and enforce the fields match our expectations
+	$pdoFoodTruck = FoodTruck::getFoodTruckByFoodTruckId($this->getPDO(), $foodTruck->getFoodTruckId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
+	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckName(), $this->VALID_FOODTRUCKNAME2);
+}
+
+/**
+ * test inserting a FoodTruck, editing the phone number, and then updating it
+ **/
+	public function testUpdateValidFoodTruckPhoneNumber() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("foodTruck");
+
+	// create a new food truck and insert to into mySQL
+	$foodTruckId = generateUuidV4();
+	$foodTruck = new FoodTruck($foodTruckId, $this->profile->getProfileId(), $this->VALID_FOODTRUCKDESCRIPTION, $this->VALID_FOODTRUCKIMAGEURL, $this->VALID_FOODTRUCKMENUURL, $this->VALID_FOODTRUCKNAME, $this->VALID_FOODTRUCKPHONENUMBER);
+	$foodTruck->insert($this->getPDO());
+
+	// edit the food truck phone number and update it in mySQL
+	$foodTruck->setFoodTruckPhoneNumber($this->VALID_FOODTRUCKPHONENUMBER2);
+	$foodTruck->update($this->getPDO());
+
+	// grab the data from mySQL and enforce the fields match our expectations
+	$pdoFoodTruck = FoodTruck::getFoodTruckByFoodTruckId($this->getPDO(), $foodTruck->getFoodTruckId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
+	$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoFoodTruck->getFoodTruckPhoneNumber(), $this->VALID_FOODTRUCKPHONENUMBER2);
 }
 
 	/**
