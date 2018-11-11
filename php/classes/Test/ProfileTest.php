@@ -2,11 +2,11 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\{Profile};
+use Edu\Cnm\FoodTruckFinder\{Profile, FoodTruck, Favorite};
 
 
 /**
- * PHPUnit test of the Profile class.
+ * Full PHPUnit test of the Profile class.
  *
  * @see \Edu\Cnm\FoodTruckFinder\Profile
  * @author Daniel Nakitare <dnakitare@cnm.edu>

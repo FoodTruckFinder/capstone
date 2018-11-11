@@ -2,8 +2,7 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\Favorite;
-
+use Edu\Cnm\FoodTruckFinder\{Profile, Favorite, Foodtruck};
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 
@@ -13,27 +12,36 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 /**
  * PHPUnit test of the Favorite class.
  *
+ * This is a complete PHPUnit test of the Favorite class. It is complete because *ALL* mySQL/PDO enabled methods
+ * are tested for both invalid and valid inputs.
+ *
  * @see Favorite
  * @author Bernina Gray <bgray11@cnm.edu>
  **/
 class FavoriteTest extends FoodTruckTest {
 		/**
-		 * Profile that created the favorite; this is the foreign key relations
-		 * @var Favorite profile
+		 * Profile that created the favorited FoodTruck; this is the foreign key relations
+		 * @var Favorite $profile
 		 **/
-		protected $profile = null;
+		protected $profile;
 
 		/**
-		 * the id referencing the favorited food truck
-		 * @var favorite id
+		 * FoodTruck that was liked; this is for foreign key relations
+		 * @var FoodTruck $foodTruck
 		 **/
-		protected $id = null;
+		protected $foodtruck;
 
 		/**
 		 * timestamp of the Favorite; this starts as null and is assigned later
-		 * @var \DateTime $VALID_TWEETDATE
+		 * @var \DateTime $VALID_FAVORITEDATE
 		 **/
-		protected $VALID_FAVORITEDATE = null;
-
+		protected $VALID_FAVORITEDATE;
+/**
+ * create dependent objects before running each test
+ **/
+public final function setUp() : void {
+		//run the default setUp() method first
+		parent::setUp();
+}
 
 }
