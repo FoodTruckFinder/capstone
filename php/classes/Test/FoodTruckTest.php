@@ -26,66 +26,72 @@ require_once(dirname(__DIR__, 1) . "/validateUuid.php");
 	  * @var Profile profile
 	  **/
 	  protected $profile = null;
-	  
+
+	 /**
+	  * valid profile hash to create the profile object to own the test
+	  * @var $VALID_HASH
+	  */
+	 protected $VALID_PROFILE_HASH;
+
 	 /**
 	  * content of the food truck description
 	  * @var string $VALID_FOODTRUCKDESCRIPTION
 	  **/
-	  protected $VALID_FOODTRUCKDESCRIPTION = "PHPUnit test passing";
+	  protected $VALID_FOODTRUCKDESCRIPTION = "Food truck description";
 
 	 /**
 	  * content of the updated foodTruck description
 	  * @var string $VALID_FOODTRUCKDESCRIPTION2
 	  **/
-	  protected $VALID_FOODTRUCKDESCRIPTION2 = "PHPUnit test still passing";
+	  protected $VALID_FOODTRUCKDESCRIPTION2 = "second food truck description";
 
 	 /**
 	  * content of the food truck image url
 	  * @var string $VALID_FOODTRUCKIMAGEURL
 	  **/
-	 protected $VALID_FOODTRUCKIMAGEURL = "food truck image url";
+	 protected $VALID_FOODTRUCKIMAGEURL = "truckimgurl.com";
 
 	 /**
 	  * content of the updated foodTruck image url
 	  * @var string $VALID_FOODTRUCKIMAGEURL2
 	  **/
-	 protected $VALID_FOODTRUCKIMAGEURL2 = "second food truck image url";
+	 protected $VALID_FOODTRUCKIMAGEURL2 = "secondimgurl.com";
 
 	 /**
 	  * content of the food truck menu url
 	  * @var string $VALID_FOODTRUCKMENUURL
 	  **/
-	 protected $VALID_FOODTRUCKMENUURL = "food truck menu url";
+	 protected $VALID_FOODTRUCKMENUURL = "foodtruckmenuurl.com";
 
 	 /**
 	  * content of the updated foodTruck menu url
 	  * @var string $VALID_FOODTRUCKMENUURL2
 	  **/
-	 protected $VALID_FOODTRUCKMENUURL2 = "second food truck menu url";
+	 protected $VALID_FOODTRUCKMENUURL2 = "secondmenuurl.com";
 
 	 /**
 	  * content of the food truck name
 	  * @var string $VALID_FOODTRUCKNAME
 	  **/
-	 protected $VALID_FOODTRUCKNAME = "food truck name";
+	 protected $VALID_FOODTRUCKNAME = "foodtruck name";
 
 	 /**
 	  * content of the updated foodTruck name
 	  * @var string $VALID_FOODTRUCKNAME2
 	  **/
-	 protected $VALID_FOODTRUCKNAME2 = "second food truck name";
+	 protected $VALID_FOODTRUCKNAME2 = "second foodtruck name";
 
 	 /**
 	  * content of the food truck phone number
 	  * @var string $VALID_FOODTRUCKPHONENUMBER
 	  **/
-	 protected $VALID_FOODTRUCKPHONENUMBER = "phone number";
+	 protected $VALID_FOODTRUCKPHONENUMBER = "5555555555";
 
 	 /**
 	  * content of the updated foodTruck phone number
 	  * @var string $VALID_FOODTRUCKPHONENUMBER2
 	  **/
-	 protected $VALID_FOODTRUCKPHONENUMBER2 = "new phone number";
+	 protected $VALID_FOODTRUCKPHONENUMBER2 = "6666666666";
 
  /**
  * create dependent objects before running each test
@@ -93,9 +99,11 @@ require_once(dirname(__DIR__, 1) . "/validateUuid.php");
 	public final function setUp()  : void {
 		// run the default setUp() method first
 		parent::setUp();
+		$password = "abc123";
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 
 		// create and insert a Profile to own the test FoodTruck
-		$this->profile = new FoodTruck(generateUuidV4(), null,"this is a food truck", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
+		$this->profile = new Profile(generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "chadstruck");
 		$this->profile->insert($this->getPDO());
 	}
 
