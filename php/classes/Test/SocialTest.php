@@ -114,10 +114,10 @@ class SocialTest extends foodTruckFinderTest {
 		$numRows = $this->getConnection()->getRowCount("Favorite");
 
 		// create a new Favorite and insert into mySQL
-		$favorite = new Favorite($this->profile->getprofileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite = new Social($this->Social->getSocialId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
 		$favorite->insert($this->getPDO());
 
-		// delete the Favorite from mySQL
+		// delete the Social from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
 		$favorite->delete($this->getPDO());
 
