@@ -2,7 +2,7 @@
 
 namespace FoodTruckFinder\Capstone\Test;
 
-use FoodTruckFinder\{Profile, Favorite, Foodtruck};
+use FoodTruckFinder\capstone\{Profile, Favorite, Foodtruck};
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 
