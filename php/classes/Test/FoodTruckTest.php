@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 1) . "/validateUuid.php");
  * @author Greg Klein <gklein@cnm.edu>
  **/
 
- class FoodTruckTest extends FoodTruckFinderTest {
+ class FoodTruckTest extends FoodTruckFinderTestSetup {
 	 /**
 	  * Profile that created the FoodTruck; this is for foreign key relations
 	  * @var Profile profile
