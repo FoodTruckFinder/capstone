@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Dylan McDonald  <dmcdonald21@cnm.edu>
  * @author David Sanderson <sanderdj90@gmail.com>
  **/
-class LocationTest extends FoodTruckTest {
+class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * FoodTruck that created the Location; this is for foreign key relations
 	 * @var FoodTruck $foodTruck
@@ -94,13 +94,13 @@ class LocationTest extends FoodTruckTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
-		// create a new Tweet and insert to into mySQL
+		// create a new Location and insert to into mySQL
 		$locationId = generateUuidV4();
 		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoLocation = Location::getLocationIdByLocationFoodTruckId($this->getPDO(), $location->getLocationFoodTruckId());
+		$pdoLocation = Location::getLocationFoodTruckIdByLocationId($this->getPDO(), $location->getLocationId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
@@ -120,7 +120,7 @@ class LocationTest extends FoodTruckTest {
 
 		// create a new Tweet and insert to into mySQL
 		$locationId = generateUuidV4();
-		$location = new Location($locationId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
 		// edit the Tweet and update it in mySQL
