@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  **/
 class FavoriteTest extends FoodTruckTest {
 		/**
-		 * Profile that created the favorited FoodTruck; this is the foreign key relations
+		 * Profile that created the favorite FoodTruck; this is the foreign key relations
 		 * @var Profile $profile
 		 **/
 		protected $profile;
@@ -53,7 +53,7 @@ public final function setUp() : void {
 		$this->profile->insert($this->getPDO());
 
 		// create and insert the mocked foodtruck
-		$this->foodTruck = new foodTruck(generateUuidV4(), $this->profile->getProfileId, "PHPUnit like test passing");
+		$this->foodTruck = new foodTruck(generateUuidV4(), $this->profile->getProfileId,  "PHPUnit like test passing");
 		$this->foodTruck->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
@@ -72,7 +72,7 @@ public function testInsertValidFavorite() : void {
 		$favorite->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoFavorite = Favorite::getFavoritebyFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodtruckId());
+		$pdoFavorite = Favorite::getFavoritebyFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodtruck->getFoodTruckId());
@@ -135,6 +135,57 @@ public function testGetInvalidFavoriteByFoodTruckIdAndProfileId() {
  **/
 public function testGetValidFavoriteByFoodTruckId() : void {
 		// count the number of rows and save it for later
-	//
+		$numRows = $this->getConnection()->getRowCount("Favorite");
+
+		// create a new Favorite and insert into mySQL
+		$favorite = new Favorite($this->getPDO());
+		$favorite->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Favorite::getFavoriteByFavoriteFoodTruckId($this->getPDO(), $this->foodTruck->getFoodTruckId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Favorite", $results);
+
+		// grab the results from the array and validate it
+		$pdoFavorite = $results[0];
+		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodTruck->getFoodTruckId());
+
+		// format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoFavorite->getFavoriteDate()->getTimeStamp(), $this->VALID_FAVORITEDATE->getTimestamp());
+}
+/**
+ * test grabbing a Favorite by profile id
+ **/
+public function testGetValidFavoriteByProfileId() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("Favorite");
+
+		// create a new Favorite and insert into mySQL
+		$favorite = new Favorite($this->profile->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Favorite::getFavoriteByFavoriteProfileId($this->getPDO(), $this->profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertCount(1, $results);
+
+		// enforce no other objects are bleeding into the test
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Favorite", $results);
+
+		// grab the results from the array and validate it
+		$pdoFavorite = $results[0];
+		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoFavorite->getFavoriteDate()->getTimeStamp(), $this->VALID_FAVORITEDATE->getTimeStamp());
+}
+
+/**
+ * test grabbing a Favorite by a profile id that does not exist
+ **/
+public function testGetInvalidFavoriteByProfileId() : void {
+		// grab a foodTruck id that exceeds the maximum allowable profile id
+		$favorite = Favorite::getFavoriteByFavoriteProfileId($this->getPDO(), generateUuidV4());
+		$this->assertCount(0, $favorite);
 }
 }
