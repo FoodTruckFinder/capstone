@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\FoodTruckFinder\ValidateUuid;
+namespace FoodTruckFinder\Capstone;
 
 
 use Edu\Cnm\FoodTruckFinder\ValidateUuid;

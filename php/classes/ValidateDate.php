@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\FoodTruckFinder;
+namespace FoodTruckFinder\Capstone;
 /**
  * Trait to Validate a mySQL Date
  *
