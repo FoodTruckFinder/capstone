@@ -1,0 +1,16 @@
+<phpunit>
+	<testsuites>
+		<testsuite name="Food Truck Finder">
+			<file>ProfileTest.php</file>
+			<file>FoodTruckTest</file>
+			<file>FavoriteTest.php</file>
+			<file>SocialTest.php</file>
+			<file>LocationTest.php</file>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">..</directory>
+		</whitelist>
+	</filter>
+</phpunit>
