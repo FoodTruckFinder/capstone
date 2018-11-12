@@ -18,7 +18,7 @@ require_once(dirname(__DIR__, 1) . "/ValidateUuid.php");
 /**
  * Full PHPUnit test of the Profile class.
  *
- * @see \Edu\Cnm\FoodTruckFinder\Profile
+ * @see FoodTruckFinder\Capstone\Profile
  * @author Daniel Nakitare <dnakitare@cnm.edu>
  */
 class ProfileTest extends FoodTruckFinderTest {

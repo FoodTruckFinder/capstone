@@ -2,7 +2,7 @@
 
 namespace FoodTruckFinder\Capstone\Test;
 
-use Edu\Cnm\FoodTruckFinder\Test\Social;
+use FoodTruckFinder\Capstone\Social;
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace FoodTruckFinder\Capstone\;
+namespace FoodTruckFinder\Capstone;
 
 
 
