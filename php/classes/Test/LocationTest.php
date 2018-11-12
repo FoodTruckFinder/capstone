@@ -1,8 +1,8 @@
 <?php
 
-namespace Edu\Cnm\FoodTruckFinder\Test;;
+namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\{FoodTruck, Profile, Location};
+use Edu\Cnm\FoodTruckFinder\{FoodTruck, Location};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Dylan McDonald  <dmcdonald21@cnm.edu>
  * @author David Sanderson <sanderdj90@gmail.com>
  **/
-class LocationTest extends FoodTruckFinderTest {
+class LocationTest extends FoodTruckTest {
 	/**
 	 * FoodTruck that created the Location; this is for foreign key relations
 	 * @var FoodTruck $foodTruck
@@ -72,11 +72,8 @@ class LocationTest extends FoodTruckFinderTest {
 		parent::setUp();
 
 		// create and insert a FoodTruck Record to own the test Location
-		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubu Shimp n Grits FoodTruck");
+		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck");
 		$this->foodTruck->insert($this->getPDO());
-
-		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_LOCATIONSTARTTIME= new \DateTime();
 
 		//format the location start time to use for testing
 		$this->VALID_LOCATIONSTARTTIME = new \DateTime();
@@ -103,19 +100,19 @@ class LocationTest extends FoodTruckFinderTest {
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoLocation = Location::getLocationIdByLocationFoodTruckId($this->getPDO(), $location->getLocationId());
+		$pdoLocation = Location::getLocationIdByLocationFoodTruckId($this->getPDO(), $location->getLocationFoodTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
-		$this->assertEquals($pdoLocation->getLocationIdByLocationFoodTruckId(), $locationId);
-		$this->assertEquals($pdoLocation->getLocationFoodTruckIdByLocationId(), $locationFoodTruckId);
+		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE);
 		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoLocation->getLocationStartTIme()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
+		//format the Location Start and End Time to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
 		$this->assertEquals($pdoLocation->getLocationEndTIme()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
 	}
 
 	/**
-	 * test inserting a Tweet, editing it, and then updating it
+	 * test inserting a Location, editing it, and then updating it
 	 **/
 	public function testUpdateValidLocation() : void {
 		// count the number of rows and save it for later
