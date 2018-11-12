@@ -17,7 +17,7 @@ require_once(dirname(__DIR__, 1) . "/validateUuid.php");
  * @see \Edu\Cnm\FoodTruckFinder\Profile
  * @author Daniel Nakitare <dnakitare@cnm.edu>
  */
-class ProfileTest extends FoodTruckFinderTestSetup {
+class ProfileTest extends FoodTruckFinderTest {
 
 
 	/**
