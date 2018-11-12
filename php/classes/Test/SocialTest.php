@@ -98,10 +98,12 @@ class SocialTest extends foodTruckFinderTest {
 		$social = new Social( $this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
+
+		// Has syntax errors with colons
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
-		$this->assertEquals($pdoSocial->getSocialBySocialFoodTruckId()ID(); $socialId;
+		$this->assertEquals($pdoSocial->getSocialBySocialFoodTruckId(), $socialId());
 		$this->assertEquals($pdoSocial->getSocialBySocialUrl(), $this->VALID_SOCIAL_URL);
 	}
 
