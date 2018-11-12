@@ -12,7 +12,7 @@ require_once ("FoodTruckFinderTestSetup.php");
 require_once (dirname(__DIR__). "/autoload.php");
 
 // get the uuid generator
-require_once(dirname(__DIR__, 1) . "/validateUuid.php");
+require_once(dirname(__DIR__, 1) . "/ValidateUuid.php");
 
 
 /**
