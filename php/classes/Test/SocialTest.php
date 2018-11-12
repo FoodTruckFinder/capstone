@@ -12,7 +12,7 @@ use Edu\Cnm\FoodTruckFinder\ValidateUuid\Social;
  * @see Social
  * @author Rae Jack
  */
-class SocialTest extends LocationTest {
+class SocialTest extends foodTruckFinderTest {
 	/**
 	 * valid social id, this is a primary key
 	 * @var uuid $VALID_PROFILE_ID
@@ -38,11 +38,53 @@ class SocialTest extends LocationTest {
 	public final function setUp() : void {
 		parent::setUp();
 
-		// creating hashed password and random token
-		$password = "1234abcd";
-		$this->VALID_SOCIAL_ID = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_SOCIAL_FOOD_TRUCK_ID_ = bin2hex(random_bytes(16));
+		// create and insert a Profile to own the test FoodTruck
+		$this->testInsertValidSocial(); = new social(generateUuidV4(), null,"this is a social url", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
+		$this->profile->insert($this->getPDO());
 	}
+
+
+	/**
+	 * test creating a Social, editing it, and then updating it
+	 */
+	public function testUpdateValidSocial() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("social");
+
+		// create a new social and update it in mySQL
+		$socialId = generateUuidV4();
+
+		$social = new Soical($socialId, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL );
+		$social->insert($this->getPDO());
+
+		// edit the social and update it in mySQL
+		$social->setSocialContent($this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_NAME);
+		$social->update($this->getPDO());
+
+		// grab the date from mySQL and enforce the fields match out expectations
+		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
+		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
+		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
+	}
+
+
+// Not sure is this is right or needed
+	/**
+	 * Test testing social URL
+	 */
+	public function test_Social_url($socialUrl){
+		$data = file_get_contents("$this->API?socialUrl=$socialUrl");
+		$result = json_decode($data, true);
+		$this->assertEquals(true, $result['result']);
+		$this->assertEquals(200, $result['code']);
+	}
+
+
+
+
+
 
 	/**
 	 * test inserting a valid social and verify that the actual mySQL data matches
@@ -53,13 +95,36 @@ class SocialTest extends LocationTest {
 
 		$socialId = generateUuidV4();
 
-		$social = new Profile($social, $this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		$social = new Social($social, $this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
-		$this->assertEquals($pdoSocial->getSocialBySocialFoodTruckId()Id(); $socialId;
+		$this->assertEquals($pdoSocial->getSocialBySocialFoodTruckId()ID(); $socialId;
 		$this->assertEquals($pdoSocial->getSocialBySocialUrl(), $this->VALID_SOCIAL_URL);
 	}
+
+
+	/**
+	 * test creating a social and then deleting it
+	 **/
+	public function testDeleteValidSocial() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("Favorite");
+
+		// create a new Favorite and insert into mySQL
+		$favorite = new Favorite($this->profile->getprofileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite->insert($this->getPDO());
+
+		// delete the Favorite from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$favorite->delete($this->getPDO());
+
+		// grab the data from mySQL and enforce the foodTruck does not exist
+		$pdoFavorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodtruck->getFoodTruckId());
+		$this->assertNull($pdoFavorite);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Favorite"));
+	}
+
 }
