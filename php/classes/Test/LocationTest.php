@@ -101,7 +101,7 @@ class LocationTest extends FoodTruckFinderTest {
 
 		// create a new Tweet and insert to into mySQL
 		$locationId = generateUuidV4();
-		$location = new Location($locationId, $this->location->getLocationId(), $locationFoodTruckId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIMETIME);
+		$location = new Location($locationId, $this->location->getLocationId(), $locationFoodTruckId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
