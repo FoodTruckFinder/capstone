@@ -20,7 +20,7 @@ trait ValidateUuid {
 	 * validates a uuid irrespective of format
 	 *
 	 * @param string | Uuid $newUuid uuid to validate
-	 * @return Uuid objext with validate uuid
+	 * @return Uuid object with validate uuid
 	 * @throws \InvalidArgumentException if $newUuid is not a valid uuid
 	 * @throws \RangeException if $newUuid is not a valid uuid v4
 	 */
