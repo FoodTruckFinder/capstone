@@ -2,7 +2,7 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\{Profile, FoodTruck, Favorite};
+use Edu\Cnm\FoodTruckFinder\{Profile};
 
 
 /**
