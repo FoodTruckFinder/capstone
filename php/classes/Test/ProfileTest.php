@@ -2,10 +2,13 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
-use Edu\Cnm\FoodTruckFinder\Profile;
+use FoodTruckFinder\Capstone\Profile;
 
-require_once (dirname(__DIR__). "/Profile.php");
-// get class under scrutiny
+
+//
+require_once ("FoodTruckFinderTestSetup.php");
+
+// get the autoloader
 require_once (dirname(__DIR__). "/autoload.php");
 
 // get the uuid generator

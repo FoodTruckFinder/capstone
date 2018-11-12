@@ -1,8 +1,8 @@
 <?php
 
-namespace Edu\Cnm\FoodTruckFinder\Test;
+namespace FoodTruckFinder\Capstone\Test;
 
-use Edu\Cnm\FoodTruckFinder\Test\social;
+use Edu\Cnm\FoodTruckFinder\Test\Social;
 
 
 

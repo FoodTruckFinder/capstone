@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\FoodTruckFinder\Test;
+namespace FoodTruckFinder\Capstone\Test;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
@@ -91,7 +91,7 @@ abstract class FoodTruckFinderTest extends TestCase {
 			// connect to mySQL and provide the interface to PHPUnit
 
 
-			$secrets =  new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery.ini");
+			$secrets =  new Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery.ini");
 			$pdo = $secrets->getPdoObject();
 			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabase());
 		}
