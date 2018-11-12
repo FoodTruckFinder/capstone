@@ -2,7 +2,7 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;;
 
-use Edu\Cnm\FoodTruckFinder\Location;
+use Edu\Cnm\FoodTruckFinder\{FoodTruck, Profile, Location};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -22,43 +22,43 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  **/
 class LocationTest extends FoodTruckFinderTest {
 	/**
-	 * Profile that created the Tweet; this is for foreign key relations
-	 * @var Profile profile
+	 * FoodTruck that created the Location; this is for foreign key relations
+	 * @var FoodTruck $foodTruck
 	 **/
-	protected $location = null;
+	protected $foodTruck = null;
 
 
 	/**
-	 * valid profile hash to create the profile object to own the test
-	 * @var $VALID_HASH
+	 * Uuid of the location
+	 * @var uuid $VALID_LOCATION_ID
 	 */
 	protected $VALID_LOCATION_ID = null;
 
 	/**
-	 * content of the Tweet
-	 * @var string $VALID_TWEETCONTENT
+	 * UUId of the foodTruck
+	 * @var uuid $VALID_LOCATIONFOODTRUCK_ID
 	 **/
-	protected $VALID_LOCATIONFOODTRUCK_ID = null;
+	protected $VALID_LOCATION_FOODTRUCK_ID = null;
 
 	/**
-	 * Valid timestamp to use as sunsetTweetDate
+	 * Valid Date Object and is assigned later.
 	 */
 	protected $VALID_LOCATIONENDTIME = null;
 
 	/**
-	 * content of the updated Tweet
-	 * @var string $VALID_TWEETCONTENT2
+	 * latitude coords of location
+	 * @var float $VALID_LOCATIONLATITUDE
 	 **/
 	protected $VALID_LOCATIONLATITUDE = 87;
 
 	/**
-	 * timestamp of the Tweet; this starts as null and is assigned later
-	 * @var \DateTime $VALID_TWEETDATE
+	 * longitude coords of location
+	 * @var \float $VALID_LOCATIONLONGITUDE
 	 **/
 	protected $VALID_LOCATIONLONGITUDE = -160;
 
 	/**
-	 * Valid timestamp to use as sunriseTweetDate
+	 * Valid Date Object and is assigned later.
 	 */
 	protected $VALID_LOCATIONSTARTTIME = null;
 
@@ -70,12 +70,10 @@ class LocationTest extends FoodTruckFinderTest {
 	public final function setUp()  : void {
 		// run the default setUp() method first
 		parent::setUp();
-		$locationId = generateUuidV4();
-		$locationFoodTruckId = generateUuidV4();
 
-		// create and insert a Location Record to own the test Location
-		$this->location = new Location($locationId, $locationFoodTruckId, new \DateTime(), 87, -160, new \DateTime());
-		$this->location->insert($this->getPDO());
+		// create and insert a FoodTruck Record to own the test Location
+		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubu Shimp n Grits FoodTruck");
+		$this->foodTruck->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
 		$this->VALID_LOCATIONSTARTTIME= new \DateTime();
@@ -101,6 +99,7 @@ class LocationTest extends FoodTruckFinderTest {
 
 		// create a new Tweet and insert to into mySQL
 		$locationId = generateUuidV4();
+		$locationFoodTruckId = generateUuidV4();
 		$location = new Location($locationId, $this->location->getLocationId(), $locationFoodTruckId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
