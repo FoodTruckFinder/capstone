@@ -101,30 +101,32 @@ class LocationTest extends FoodTruckFinderTest {
 
 		// create a new Tweet and insert to into mySQL
 		$locationId = generateUuidV4();
-		$location = new Location($locationId, $this->location->getLocationId(), $locationFoodTruckId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONENDTIME);
+		$location = new Location($locationId, $this->location->getLocationId(), $locationFoodTruckId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIMETIME);
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoLocation = Location::getLocationIdByLocationFoodTruckId($this->getPDO(), $tweet->getTweetId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
+		$pdoLocation = Location::getLocationIdByLocationFoodTruckId($this->getPDO(), $location->getLocationId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
+		$this->assertEquals($pdoLocation->getLocationIdByLocationFoodTruckId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationFoodTruckIdByLocationId(), $locationFoodTruckId);
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE);
+		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationStartTIme()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationEndTIme()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
 	}
 
 	/**
 	 * test inserting a Tweet, editing it, and then updating it
 	 **/
-	public function testUpdateValidTweet() : void {
+	public function testUpdateValidLocation() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("location");
 
 		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		$locationId = generateUuidV4();
+		$location = new Location($locationId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location->insert($this->getPDO());
 
 		// edit the Tweet and update it in mySQL
 		$tweet->setTweetContent($this->VALID_TWEETCONTENT2);
