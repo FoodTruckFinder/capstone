@@ -3,7 +3,7 @@
 namespace Edu\Cnm\FoodTruckFinder\Test;
 
 use Edu\Cnm\FoodTruckFinder\Test\social;
-use Edu\Cnm\FoodTruckFinder\ValidateUuid\Social;
+
 
 
 /**
@@ -40,7 +40,7 @@ class SocialTest extends foodTruckFinderTest {
 
 		// create and insert a Profile to own the test FoodTruck
 		$this->testInsertValidSocial(); = new social(generateUuidV4(), null,"this is a social url", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
-		$this->profile->insert($this->getPDO());
+		$this->social->insert($this->getPDO());
 	}
 
 
@@ -58,7 +58,7 @@ class SocialTest extends foodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// edit the social and update it in mySQL
-		$social->setSocialContent($this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_NAME);
+		$social->setSocialContent($this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
@@ -84,7 +84,7 @@ class SocialTest extends foodTruckFinderTest {
 
 
 
-
+// Has errors, not sure
 
 	/**
 	 * test inserting a valid social and verify that the actual mySQL data matches
@@ -95,7 +95,7 @@ class SocialTest extends foodTruckFinderTest {
 
 		$socialId = generateUuidV4();
 
-		$social = new Social($social, $this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		$social = new Social( $this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -105,26 +105,26 @@ class SocialTest extends foodTruckFinderTest {
 		$this->assertEquals($pdoSocial->getSocialBySocialUrl(), $this->VALID_SOCIAL_URL);
 	}
 
-
+// Has errors, not sure
 	/**
 	 * test creating a social and then deleting it
 	 **/
 	public function testDeleteValidSocial() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Favorite");
+		$numRows = $this->getConnection()->getRowCount("Social");
 
 		// create a new Favorite and insert into mySQL
-		$favorite = new Social($this->Social->getSocialId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite = new Social($this->Social->getSocialId(), $this->SocialFoodTruckId->getSocialFoodTruckId());
 		$favorite->insert($this->getPDO());
 
 		// delete the Social from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
-		$favorite->delete($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Social"));
+		$this->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
-		$pdoFavorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodtruck->getFoodTruckId());
-		$this->assertNull($pdoFavorite);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Favorite"));
+		$pdoSocial = Social::getSocialBySocialFoodTruckIdAndSocialProfileId($this->getPDO(), $this->social->getSocialId(), $this->foodtruck->getSocialFoodTruckId());
+		$this->assertNull($pdoSocial);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Social"));
 	}
 
 }
