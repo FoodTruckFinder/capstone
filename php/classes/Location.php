@@ -149,7 +149,7 @@ class Location implements \JsonSerializable {
 		if(empty($newLocationEndTime) === true) {
 			$this->locationEndTime = $this->locationStartTime->add(new DateInterval('PT4H'));
 		}
-		// check the end time using the ValidateDate trait
+		// check the end time using the validateDateTime trait
 		try {
 			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
