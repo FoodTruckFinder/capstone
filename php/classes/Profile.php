@@ -307,7 +307,6 @@ class Profile implements \JsonSerializable {
 		$parameters = ["profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileName" => $this->profileName];
 		$statement->execute($parameters);
 	}
-//todo get profile by profile id return object
 
 	/**
 	 * get Profile by profile id
