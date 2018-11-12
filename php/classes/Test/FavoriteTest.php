@@ -49,7 +49,7 @@ public final function setUp() : void {
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		// create and insert the mocked profile
-		$this->profile = new Profile(generateUuidV4(), null, "@phpunit" "test@phpunit.de", $this->>VALID_HASH, "+12125551212");
+		$this->profile = new Profile(generateUuidV4(), null, "@phpunit", "test@phpunit.de", $this->VALID_HASH, "+12125551212");
 		$this->profile->insert($this->getPDO());
 
 		// create and insert the mocked favorite
@@ -72,6 +72,17 @@ public function testInsertValidFavorite() : void {
 		$favorite->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-
-	}
+		$pdoFavorite = Favorite::getFavoritebyFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodtruckId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($pdoFavorite->getFavoeriteProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodtruck->getFoodTruckId());
+		// format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoFavorite->getFavoritedate()->getTimeStamp(), $this->VALID_FAVORITEDATE->getTimestamp());
+}
+/**
+ * test creating a Favorite and then deleting it
+ **/
+public function testDeleteValidFavorite() : void {
+		// count
+}
 }
