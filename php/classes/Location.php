@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\FoodTruckFinder;
+namespace FoodTruckFinder\Capstone\;
 
 
 
