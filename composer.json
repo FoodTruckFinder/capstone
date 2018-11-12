@@ -3,7 +3,7 @@
     "php": "7.2.*",
     "ext-json": "*",
     "ext-pdo": "*",
-    "ramsey/uuid": "@stable",
+    "ramsey/uuid": "^3.8",
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",
     "swiftmailer/swiftmailer": "@stable",
