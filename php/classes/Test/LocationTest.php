@@ -24,6 +24,7 @@ class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * FoodTruck that created the Location; this is for foreign key relations
 	 * @var FoodTruck $foodTruck
+	 *
 	 **/
 	protected $foodTruck = null;
 
@@ -90,7 +91,7 @@ class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * test inserting a valid Location and verify that the actual mySQL data matches
 	 **/
-	public function testInsertValidLocation() : void {
+	public function testInsertValidLocationId() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
@@ -114,41 +115,42 @@ class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * test inserting a Location, editing it, and then updating it
 	 **/
-	public function testUpdateValidLocation() : void {
+	public function testUpdateValidLocationId() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("location");
+
+		// create a new Location and insert to into mySQL
+		$locationId = generateUuidV4();
+		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location->insert($this->getPDO());
+
+		// edit the locationId and update it in mySQL
+		$VALID_LOCATION_ID = generateUuidV4();
+		$location->setLocationId($this->$VALID_LOCATION_ID);
+		$location->update($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoLocation = Location::getLocationFoodTruckIdByLocationId($this->getPDO(), $location->getLocationId());
+		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
+		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
+		$this->assertEquals($pdoLocation->getLocationEndTime(), $this->VALID_LOCATIONENDTIME);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoLocation->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+	}
+
+
+	/**
+	 * test creating a LocationId and then deleting it
+	 **/
+	public function testDeleteValidLocationId() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
 		// create a new Tweet and insert to into mySQL
 		$locationId = generateUuidV4();
-		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(),$this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
-
-		// edit the Tweet and update it in mySQL
-		$tweet->setTweetContent($this->VALID_TWEETCONTENT2);
-		$tweet->update($this->getPDO());
-
-		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT2);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
-	}
-
-
-	/**
-	 * test creating a Tweet and then deleting it
-	 **/
-	public function testDeleteValidTweet() : void {
-		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
-
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
 
 		// delete the Tweet from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
