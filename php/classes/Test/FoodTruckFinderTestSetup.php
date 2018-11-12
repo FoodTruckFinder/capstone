@@ -28,7 +28,7 @@ require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
  *
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
-abstract class FoodTruckFinderTestSetup extends TestCase {
+abstract class FoodTruckFinderTest extends TestCase {
 	use TestCaseTrait;
 
 	/**
@@ -52,7 +52,7 @@ abstract class FoodTruckFinderTestSetup extends TestCase {
 		$dataset->addTable("favorite");
 		$dataset->addTable("social");
 		$dataset->addTable("location");
-		// the second parameter is required because like is also a SQL keyword and is the only way PHPUnit can query the like table
+
 		return($dataset);
 	}
 
