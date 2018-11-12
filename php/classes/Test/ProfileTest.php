@@ -4,6 +4,7 @@ namespace Edu\Cnm\FoodTruckFinder\Test;
 
 use Edu\Cnm\FoodTruckFinder\Profile;
 
+require_once (dirname(__DIR__). "/Profile.php");
 // get class under scrutiny
 require_once (dirname(__DIR__). "/autoload.php");
 
