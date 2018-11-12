@@ -2,7 +2,7 @@
 
 namespace Edu\Cnm\FoodTruckFinder\Test;;
 
-use Edu\Cnm\FoodTruckFinder\{profile, location};
+use Edu\Cnm\FoodTruckFinder\Location;
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -16,50 +16,53 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * This is a complete PHPUnit test of the Location class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * @see Tweet
- * @author Dylan McDonald <dmcdonald21@cnm.edu>
+ * @see Location
+ * @author Dylan McDonald  <dmcdonald21@cnm.edu>
+ * @author David Sanderson <sanderdj90@gmail.com>
  **/
 class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * Profile that created the Tweet; this is for foreign key relations
 	 * @var Profile profile
 	 **/
-	protected $profile = null;
+	protected $location = null;
 
 
 	/**
 	 * valid profile hash to create the profile object to own the test
 	 * @var $VALID_HASH
 	 */
-	protected $VALID_PROFILE_HASH;
+	protected $VALID_LOCATION_ID = null;
 
 	/**
 	 * content of the Tweet
 	 * @var string $VALID_TWEETCONTENT
 	 **/
-	protected $VALID_TWEETCONTENT = "PHPUnit test passing";
+	protected $VALID_LOCATIONFOODTRUCK_ID = null;
+
+	/**
+	 * Valid timestamp to use as sunsetTweetDate
+	 */
+	protected $VALID_LOCATIONENDTIME = null;
 
 	/**
 	 * content of the updated Tweet
 	 * @var string $VALID_TWEETCONTENT2
 	 **/
-	protected $VALID_TWEETCONTENT2 = "PHPUnit test still passing";
+	protected $VALID_LOCATIONLATITUDE = 87;
 
 	/**
 	 * timestamp of the Tweet; this starts as null and is assigned later
 	 * @var \DateTime $VALID_TWEETDATE
 	 **/
-	protected $VALID_TWEETDATE = null;
+	protected $VALID_LOCATIONLONGITUDE = -160;
 
 	/**
 	 * Valid timestamp to use as sunriseTweetDate
 	 */
-	protected $VALID_SUNRISEDATE = null;
+	protected $VALID_LOCATIONSTARTTIME = null;
 
-	/**
-	 * Valid timestamp to use as sunsetTweetDate
-	 */
-	protected $VALID_SUNSETDATE = null;
+
 
 	/**
 	 * create dependent objects before running each test
@@ -67,43 +70,42 @@ class LocationTest extends FoodTruckFinderTest {
 	public final function setUp()  : void {
 		// run the default setUp() method first
 		parent::setUp();
-		$password = "abc123";
-		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$locationId = generateUuidV4();
+		$locationFoodTruckId = generateUuidV4();
 
-
-		// create and insert a Profile to own the test Tweet
-		$this->profile = new Location(generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "test@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
-		$this->profile->insert($this->getPDO());
+		// create and insert a Location Record to own the test Location
+		$this->location = new Location($locationId, $locationFoodTruckId, new \DateTime(), 87, -160, new \DateTime());
+		$this->location->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_TWEETDATE = new \DateTime();
+		$this->VALID_LOCATIONSTARTTIME= new \DateTime();
 
-		//format the sunrise date to use for testing
-		$this->VALID_SUNRISEDATE = new \DateTime();
-		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
+		//format the location start time to use for testing
+		$this->VALID_LOCATIONSTARTTIME = new \DateTime();
+		$this->VALID_LOCATIONSTARTTIME->sub(new \DateInterval("P10H"));
 
-		//format the sunset date to use for testing
-		$this->VALID_SUNSETDATE = new\DateTime();
-		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
+		//format the location end time to use for testing
+		$this->VALID_LOCATIONENDTIME = new\DateTime();
+		$this->VALID_LOCATIONENDTIME->add(new \DateInterval("P10H"));
 
 
 
 	}
 
 	/**
-	 * test inserting a valid Tweet and verify that the actual mySQL data matches
+	 * test inserting a valid Location and verify that the actual mySQL data matches
 	 **/
-	public function testInsertValidTweet() : void {
+	public function testInsertValidLocation() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("location");
 
 		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		$locationId = generateUuidV4();
+		$location = new Location($locationId, $this->location->getLocationId(), $locationFoodTruckId, $this->location->getLocationFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONENDTIME);
+		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
+		$pdoLocation = Location::getLocationIdByLocationFoodTruckId($this->getPDO(), $tweet->getTweetId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
 		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
 		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
