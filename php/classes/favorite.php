@@ -12,26 +12,26 @@ class Favorite implements \JsonSerializable {
 	use ValidateDate;
 
 	/**
-	 * id for the Profile that favorited the food truck; this is a foreign key
+	 * id of the Profile that favorited; this is a component of a composite primary key (and a foreign key)
 	 * @var Uuid $favoriteProfileId
 	 */
 	private $favoriteProfileId;
 	/**
-	 * id for the food truck that was favorited; this is a foreign key
-	 * @var Uuid $favoriteTruckId
+	 * id of the food truck that was favorited; this is a composite of a primary key (and a foreign key)
+	 * @var Uuid $favoriteFoodTruckId
 	 */
 	private $favoriteFoodTruckId;
 	/**
 	 * date and time for when a food truck is added as a favorite
 	 * @var \DateTime
 	 */
-	private $favoriteAddDate;
+	private $favoriteDate;
 
 	/** constructor for this favorite
 	 *
-	 * @param Uuid | string $newFavoriteProfileId is uuid for profile that favorited the foodtruck
-	 * @param Uuid | string $newFavoriteFoodTruckId is uuid for the favorited truck
-	 * @param \DateTime | string $newFavoriteAddDate datetime value
+	 * @param Uuid | string $newFavoriteProfileId id of the parent profile
+	 * @param Uuid | string $newFavoriteFoodTruckId id of the parent FoodTruck
+	 * @param \DateTime|null $newFavoriteDate date the foodTruck was liked (or null for current time)
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
@@ -41,7 +41,7 @@ class Favorite implements \JsonSerializable {
 		try {
 			$this->setFavoriteProfileId($newFavoriteProfileId);
 			$this->setFavoriteFoodTruckId($newFavoriteFoodTruckId);
-			$this->setFavoriteAddDate($newFavoriteAddDate);
+			$this->setFavoriteDate($newFavoriteAddDate);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
@@ -106,31 +106,31 @@ class Favorite implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if the date is in an invalid format
 	 * @throws \RangeException if the date is not a Gregorian date
 	 */
-	public function getFavoriteAddDate(): \DateTime {
-		return ($this->favoriteAddDate);
+	public function getFavoriteDate(): \DateTime {
+		return ($this->favoriteDate);
 	}
 
 	/**
-	 * mutator method for favorite add date
+	 * mutator method for favorite date
 	 *
-	 * @param \DateTime | string | null $newFavoriteAddDate date as a Datetime object or string (or null to load the current time)
+	 * @param \DateTime | string | null $newFavoriteDate date as a Datetime object or string (or null to load the current time)
 	 * @throws \InvalidArgumentException if $newFavoriteAddDate is not a valid object or string
 	 * @throws \RangeException if $newFavoriteAddDate is not a valid object or string
 	 */
-	public function setFavoriteAddDate($newFavoriteAddDate = null): void {
+	public function setFavoriteDate($newFavoriteDate = null): void {
 		//base case if the date is null, use the current date time
-		if($newFavoriteAddDate === null) {
-			$this->favoriteAddDate = new \DateTime();
+		if($newFavoriteDate === null) {
+			$this->favoriteDate = new \DateTime();
 			return;
 		}
 		// store the favorite add date using the ValidateDate Trait
 		try {
-			$newFavoriteAddDate = self::validateDateTime($newFavoriteAddDate);
+			$newFavoriteDate = self::validateDateTime($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->favoriteAddDate = $newFavoriteAddDate;
+		$this->favoriteDate = $newFavoriteDate;
 	}
 
 	/**
@@ -143,12 +143,12 @@ class Favorite implements \JsonSerializable {
 	public function insert(\PDO $pdo) : void {
 
 		// create query template
-		$query = "INSERT INTO favorite (favoriteProfileId, favoriteFoodTruckId, favoriteAddDate) VALUES (:favoriteProfileId, :favoriteFoodTruckId, :favoriteAddDate)";
+		$query = "INSERT INTO favorite (favoriteProfileId, favoriteFoodTruckId, favoriteDate) VALUES (:favoriteProfileId, :favoriteFoodTruckId, :favoriteDate)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->favoriteProfileId->format("Y-m-d H:i:s.u");
-		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckId->getBytes(), "favoriteAddDate" => $formattedDate];
+		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckId->getBytes(), "favoriteDate" => $formattedDate];
 		$statement->execute($parameters);
 	}
 
@@ -188,7 +188,7 @@ class Favorite implements \JsonSerializable {
 			throw(new\PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteProfileId = :favoriteProfileId";
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteDate FROM favorite WHERE favoriteProfileId = :favoriteProfileId";
 		$statement = $pdo->prepare($query);
 		// Bind the favorite profile id to the place holder in the template
 		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
@@ -224,7 +224,7 @@ class Favorite implements \JsonSerializable {
 				throw(new\PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT favoriteFoodTruckId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteFoodTruckId = :favoriteFoodTruckId";
+		$query = "SELECT favoriteFoodTruckId, favoriteFoodTruckId, favoriteDate FROM favorite WHERE favoriteFoodTruckId = :favoriteFoodTruckId";
 		$statement = $pdo->prepare($query);
 		// Bind the favorite food truck id to the place holder in the template
 		$parameters = ["favoriteFoodTruckId" => $favoriteFoodTruckId->getBytes()];
@@ -234,7 +234,7 @@ class Favorite implements \JsonSerializable {
 		$statement->setFetchMode( \PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodtruckId"], ["favoriteAddDate"]);
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], ["favoriteDate"]);
 				$favorites[$favorites->key()] = $favorite;
 				$favorites->next();
 			} catch(\Exception $exception) {
@@ -253,9 +253,9 @@ class Favorite implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getAllfavorites(\PDO $pdo) : \SplFixedArray {
+	public static function getAllFavorites(\PDO $pdo) : \SplFixedArray {
 		//create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate";
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteDate";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -264,7 +264,7 @@ class Favorite implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 					try {
-							$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row["favoriteAddDate"]);
+							$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row["favoriteDate"]);
 							$favorites[$favorites->key()] = $favorite;
 							$favorites->next();
 					} catch(\Exception $exception) {
