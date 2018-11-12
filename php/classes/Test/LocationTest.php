@@ -153,13 +153,13 @@ class LocationTest extends FoodTruckFinderTest {
 		$location->insert($this->getPDO());
 
 		// delete the Tweet from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$tweet->delete($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
+		$location->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the Tweet does not exist
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertNull($pdoTweet);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("tweet"));
+		$pdoLocation = Location::getLocationFoodTruckIdByLocationId($this->getPDO(), $location->getLocationId());
+		$this->assertNull($pdoLocation);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("location"));
 	}
 
 	/**
