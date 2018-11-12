@@ -4,6 +4,9 @@ namespace Edu\Cnm\FoodTruckFinder\Test;
 
 use Edu\Cnm\FoodTruckFinder\{Profile};
 
+// grab the uuid generator
+require_once(dirname(__DIR__, 1) . "/validateUuid.php");
+
 
 /**
  * Full PHPUnit test of the Profile class.
