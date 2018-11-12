@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\FoodTruckFinder\Test;
+namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\Profile;
 
