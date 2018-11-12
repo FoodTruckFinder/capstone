@@ -28,7 +28,7 @@ require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
  *
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
-abstract class FoodTruckFinderTest extends TestCase {
+abstract class FoodTruckFinderTestSetup extends TestCase {
 	use TestCaseTrait;
 
 	/**
