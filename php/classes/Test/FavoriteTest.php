@@ -7,7 +7,7 @@ use Edu\Cnm\FoodTruckFinder\{Profile, Favorite, Foodtruck};
 require_once(dirname(__DIR__) . "/autoload.php");
 
 // grab the uuid generator
-require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+require_once(dirname(__DIR__, 1) . "/lib/uuid.php");
 
 /**
  * PHPUnit test of the Favorite class.
@@ -18,7 +18,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @see Favorite
  * @author Bernina Gray <bgray11@cnm.edu>
  **/
-class FavoriteTest extends FoodTruckTest {
+class FavoriteTest extends FoodTruckFinderTest {
 		/**
 		 * Profile that created the favorite FoodTruck; this is the foreign key relations
 		 * @var Profile $profile
