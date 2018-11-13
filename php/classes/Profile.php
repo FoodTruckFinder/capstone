@@ -188,7 +188,6 @@ class Profile implements \JsonSerializable {
 		}
 		//enforce the hash is really an Argon hash
 		$profileHashInfo = password_get_info($newProfileHash);
-		var_dump($profileHashInfo);
 		if($profileHashInfo["algoName"] !== "argon2i") {
 			throw(new \InvalidArgumentException("profile hash is not a valid hash"));
 		}
@@ -288,7 +287,7 @@ class Profile implements \JsonSerializable {
 	public function delete(\PDO $pdo) : void {
 
 		// create query template
-		$query = "DELETE FROM profile WHERE profile = :profileId";
+		$query = "DELETE FROM profile WHERE profile LIKE :profileId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holder in the template
 		$parameters = ["profileId" => $this->profileId->getBytes()];
@@ -308,7 +307,7 @@ class Profile implements \JsonSerializable {
 		$query = "UPDATE profile SET profileEmail = :profileEmail, profileHash = :profileHash, profileName = :profileName WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileName" => $this->profileName];
+		$parameters = ["profileEmail" => $this->profileEmail, "profileName" => $this->profileName];
 		$statement->execute($parameters);
 	}
 
