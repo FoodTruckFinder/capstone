@@ -287,7 +287,7 @@ class Profile implements \JsonSerializable {
 	public function delete(\PDO $pdo) : void {
 
 		// create query template
-		$query = "DELETE FROM profile WHERE profile LIKE :profileId";
+		$query = "DELETE FROM profile WHERE profileId LIKE :profileId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holder in the template
 		$parameters = ["profileId" => $this->profileId->getBytes()];
@@ -304,11 +304,12 @@ class Profile implements \JsonSerializable {
 	public function update(\PDO $pdo) : void {
 
 		// create query template
-		$query = "UPDATE profile SET profileEmail = :profileEmail, profileHash = :profileHash, profileName = :profileName WHERE profileId = :profileId";
+		$query = "UPDATE profile SET profileEmail = :profileEmail WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["profileEmail" => $this->profileEmail, "profileName" => $this->profileName];
+		$parameters = ["profileEmail" => $this->profileEmail];
 		$statement->execute($parameters);
+		var_dump($parameters);
 	}
 
 	/**
@@ -367,11 +368,25 @@ class Profile implements \JsonSerializable {
 			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
 		}
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileActivationToken LIKE :profileActivationToken";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileActivationToken = :profileActivationToken";
 		$statement = $pdo->prepare($query);
 		// bind the profile id to the place holder in the template
 		$parameters = ["profileActivationToken" => $profileActivationToken];
 		$statement->execute($parameters);
+
+		//grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row ["profileIsOwner"], $row["profileName"]);
+			}
+		} catch (\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
 	}
 
 	/**
@@ -400,6 +415,20 @@ class Profile implements \JsonSerializable {
 		// bind the profile email to the place holder in the template
 		$parameters = ["profileEmail" => $profileEmail];
 		$statement->execute($parameters);
+
+		//grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row ["profileIsOwner"], $row["profileName"]);
+			}
+		} catch (\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
 	}
 
 	/**

@@ -120,7 +120,6 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		// edit the profile and update it in mySQL
 		$profile->setProfileEmail($this->VALID_PROFILE_EMAIL2);
-		$profile->setProfileName($this->VALID_PROFILE_NAME2);
 		$profile->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
@@ -277,6 +276,7 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
+		var_dump($profile);
 
 		// get Profile from the database by profile activation token
 		$pdoProfile = Profile::getProfileByProfileActivationToken($this->getPDO(), $profile->getProfileActivationToken());
