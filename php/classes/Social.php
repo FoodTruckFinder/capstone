@@ -312,5 +312,19 @@ class Social implements \JsonSerializable {
 			return($social);
 		}
 
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize(): array {
+		$fields = get_object_vars($this);
+
+		$fields["socialId"] = $this->socialId;
+		$fields["socialFoodTruckId"] = $this->socialFoodTruckId;
+
+		return ($fields);
+	}
+
 	}
 
