@@ -4,6 +4,8 @@ namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\{Profile, FoodTruck};
 
+
+require_once ("FoodTruckFinderTestSetup.php");
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 

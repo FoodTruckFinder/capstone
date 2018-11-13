@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS foodTruck;
 DROP TABLE IF EXISTS profile;
 
 
+
+
 CREATE TABLE profile (
 
 	profileId BINARY(16) NOT NULL,

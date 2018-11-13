@@ -3,7 +3,7 @@
 namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\Profile;
-
+use Ramsey\Uuid;
 
 //
 require_once ("FoodTruckFinderTestSetup.php");
@@ -12,17 +12,15 @@ require_once ("FoodTruckFinderTestSetup.php");
 require_once (dirname(__DIR__). "/autoload.php");
 
 // get the uuid generator
-require_once(dirname(__DIR__, 1) . "/ValidateUuid.php");
-
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit test of the Profile class.
  *
- * @see FoodTruckFinder\Capstone\Profile
+ * @see Profile
  * @author Daniel Nakitare <dnakitare@cnm.edu>
  */
 class ProfileTest extends FoodTruckFinderTest {
-
 
 	/**
 	 * placeholder for valid profile activation token
@@ -37,10 +35,22 @@ class ProfileTest extends FoodTruckFinderTest {
 	protected $VALID_PROFILE_EMAIL = "this@email.edu";
 
 	/**
+	 * vaild profile email
+	 * @var string $VALID_PROFILE_EMAIL
+	 */
+	protected $VALID_PROFILE_EMAIL2 = "that@email.cnm";
+
+	/**
 	 * placeholder for a valid profile hash
 	 * @var $VALID_PROFILE_HASH;
 	 */
 	protected $VALID_PROFILE_HASH = null;
+
+	/**
+	 * placeholder for a valid profile hash
+	 * @var $VALID_PROFILE_HASH;
+	 */
+	protected $VALID_PROFILE_HASH2 = "B5BB466E56EFAF27";
 
 	/**
 	 * valid profile is owner boolean
@@ -53,6 +63,12 @@ class ProfileTest extends FoodTruckFinderTest {
 	 * @var $VALID_PROFILE_NAME
 	 */
 	protected $VALID_PROFILE_NAME = "Chad";
+
+	/**
+	 * valid profile is profile name
+	 * @var $VALID_PROFILE_NAME
+	 */
+	protected $VALID_PROFILE_NAME2 = "Brad";
 
 	/**
 	 * default setup operation to create salt and hash
@@ -104,8 +120,11 @@ class ProfileTest extends FoodTruckFinderTest {
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
+		//todo write a set for each attribute set in Profile Class
 		// edit the profile and update it in mySQL
-		$profile->setProfileContent($this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_NAME);
+		$profile->setProfileEmail($this->VALID_PROFILE_EMAIL2);
+		$profile->setProfileHash($this->VALID_PROFILE_HASH2);
+		$profile->setProfileName($this->VALID_PROFILE_NAME2);
 		$profile->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
