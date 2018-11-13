@@ -44,8 +44,8 @@ class SocialTest extends foodTruckFinderTest {
 		parent::setUp();
 
 		// create and insert a Social to own the test FoodTruck- error found
-		$this->social = new social(generateUuidV4(), null,"this is a social url", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
-		$this->social->insert($this->getPDO());
+		$this->$this = new social(generateUuidV4(), null,"this is a social url", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
+		$this->$this->insert($this->getPDO());
 	}
 
 
@@ -63,7 +63,7 @@ class SocialTest extends foodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// edit the social and update it in mySQL
-		$social->setSocialContent($this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		$social->setSocial($this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
