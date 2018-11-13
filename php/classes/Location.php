@@ -140,11 +140,12 @@ class Location implements \JsonSerializable {
 
 	/**
 	 * mutator method for locationEndTime
-	 * check if location end time is empty, if it is the default end time is a Dateinterval that adds 4 hours to the start time
-	 * @try runs locationEndtime through validateDateTime
-	 * throws errors if not a valid date/time
-	 * store the datetime value
+	 * @param null $newLocationEndTime
+	 * checks if location end time is empty, if it is the default end time is 4 hours from the start time.
+	 *  @try runs locationEndtime through validateDateTime
+	 * @throws \Exception \InvalidArgumentException or \RangeException if not a valid date.
 	 */
+
 	public function setLocationEndTime($newLocationEndTime = null): void {
 		if(empty($newLocationEndTime) === true) {
 			$this->locationEndTime = $this->locationStartTime->add(new DateInterval('PT4H'));
@@ -195,7 +196,7 @@ class Location implements \JsonSerializable {
 	/**
 	 * accessor method for locationLatitude
 	 *
-	 * @return float lat coords of FoodTrucks Location
+	 * @return float lat coordinates of FoodTrucks Location
 	 */
 	public function getLocationLatitude(): float {
 		return ($this->locationLatitude);
@@ -327,12 +328,12 @@ class Location implements \JsonSerializable {
 
 	/**
 	 * gets the Location Food Truck Id by Location Id
-	 * 
+	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param UUid| $locationId to search by
+	 * @param Uuid| $locationId to search by
 	 * @throws \PDOException when mySQL errors occur
 	 * @throws \TypeError when variables are not the correct data type
-	 * @return foodTruck with matching Location Id
+	 * @return Uuid with matching Location Id
 	 **/
 
 	public static function getLocationFoodTruckIdByLocationId(\PDO $pdo, $locationId): ?Location {
