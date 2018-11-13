@@ -430,43 +430,6 @@ class Profile implements \JsonSerializable {
 		return ($profile);
 	}
 
-	/**
-	 * get Profile by profile name
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $profileName profile name to search for
-	 * @return \SplFixedArray return SplFixedArray
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 */
-	public static function getProfileByProfileName(\PDO $pdo, string $profileName): Profile {
-		// trim profile name and sanitize
-		$profileName = trim($profileName);
-		$profileName = filter_var($profileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($profileName) === true) {
-			throw (new \PDOException("name content it empty"));
-		}
-		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileName LIKE :profileName";
-		$statement = $pdo->prepare($query);
-		// bind the profile email to the place holder in the template
-		$parameters = ["profileName" => $profileName];
-		$statement->execute($parameters);
-		// build an array of profile information
-		$profile = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) === true) {
-			try {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileIsOwner"], $row["profileName"]);
-			}
-			catch(\Exception $exception) {
-				// if the row couldn't ne converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($profile);
-	}
-
 
 	/**
 	 * formats the state variable for JSON serialization

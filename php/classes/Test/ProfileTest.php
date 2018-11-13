@@ -108,7 +108,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	/**
 	 * test creating a Profile, editing it, and then updating it
 	 */
-	public function testUpdateValidProfile() : void {
+	public function testUpdateValidProfile() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
@@ -171,38 +171,6 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		// grab the profile from mySQL and enforce the fields match out expectations
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
-		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
-		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
-		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
-		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
-		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
-		var_dump($pdoProfile);
-	}
-
-	/**
-	 * test getting a Profile by profile name
-	 */
-	public function testGetValidProfileByProfileName() {
-		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("profile");
-
-		// create a new Profile and insert into mySQL
-		$profileId = generateUuidV4();
-
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
-		$profile->insert($this->getPDO());
-
-		// get Profile form database using profile name
-		$results = Profile::getProfileByProfileName($this->getPDO(), $this->VALID_PROFILE_NAME);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-
-		// make sure no other objects are contaminating the profile
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Profile", $results);
-
-		// make sure results are same as expected
-		$pdoProfile = $results[0];
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
