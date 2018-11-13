@@ -20,28 +20,28 @@ class Location implements \JsonSerializable {
 	private $locationId;
 
 	/**
-	 * id for this Foodtruck this is a foreign key from the foodTruck table
+	 * id for this foodTruck this is a foreign key from the foodTruck table
 	 * @var Uuid $locationFoodTruckId
 	 */
 	private $locationFoodTruckId;
 	/**
-	 * the location end time for when a foodtruck completes service
-	 * @var datetime datatype $locationEnd
+	 * the location end time for when a foodTruck completes service
+	 * @var \DateTime $locationEnd
 	 */
 	private $locationEndTime;
 	/**
 	 * stores the latitude coordinate associated with locationFoodTruckId
-	 * @var float which stores lat coords
+	 * @var float which stores lat coordinates
 	 */
 	private $locationLatitude;
 	/**
 	 * stores the longitude coordinate associated with locationFoodTruckId
-	 * @var float which stores long coords
+	 * @var float which stores long coordinatess
 	 **/
 	private $locationLongitude;
 	/**
 	 * the location start time for when a foodtruck begins service
-	 * @var datetime datatype $locationStart
+	 * @var \DateTime $locationStart
 	 */
 	private $locationStartTime;
 
@@ -77,7 +77,7 @@ class Location implements \JsonSerializable {
 	/**
 	 * accessor method for location id
 	 *
-	 * @return locationId value of the location id
+	 * @return Uuid value of the Location
 	 */
 	public function getLocationId(): Uuid {
 		return $this->locationId;
@@ -163,7 +163,7 @@ class Location implements \JsonSerializable {
 	/**
 	 * accessor method for locationStartTime
 	 *
-	 * @return DATETIME value of the location end time
+	 * @return \DateTime of the location end time
 	 */
 	public function getLocationStartTime(): \DateTime {
 		return ($this->locationStartTime);
@@ -327,13 +327,14 @@ class Location implements \JsonSerializable {
 
 	/**
 	 * gets the Location Food Truck Id by Location Id
-	 *
+	 * 
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $location Id to search by
-	 * @return \Object of FoodTrucks found
-	 * @throws \PDOException when mySQL related errors occur
+	 * @param UUid| $locationId to search by
+	 * @throws \PDOException when mySQL errors occur
 	 * @throws \TypeError when variables are not the correct data type
+	 * @return foodTruck with matching Location Id
 	 **/
+
 	public static function getLocationFoodTruckIdByLocationId(\PDO $pdo, $locationId): ?Location {
 		try {
 			$locationId = self::validateUuid($locationId);
