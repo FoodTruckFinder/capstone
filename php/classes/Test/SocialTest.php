@@ -80,7 +80,7 @@ class SocialTest extends foodTruckFinderTest {
 	 * Test testing social URL
 	 */
 	public function test_Social_url($socialUrl){
-		$data = file_get_contents("$this->API?socialUrl=$socialUrl");
+		$data = file_get_contents("$this->?socialUrl=$socialUrl");
 		$result = json_decode($data, true);
 		$this->assertEquals(true, $result['result']);
 		$this->assertEquals(500, $result['code']);
