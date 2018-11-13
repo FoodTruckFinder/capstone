@@ -12,7 +12,7 @@ spl_autoload_register(function($class) {
 	 * prefix: the prefix for all the classes (e.g., the namespace)
 	 * baseDir: the base directory for all classes (default = current directory)
 	 */
-	$prefix = "FoodTruckFinder\\Capstone\\Test";
+	$prefix = "FoodTruckFinder\\Capstone";
 	$baseDir = __DIR__;
 
 	// does the class use the namespace prefix?

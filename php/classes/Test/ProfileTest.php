@@ -3,7 +3,6 @@
 namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\Profile;
-use Ramsey\Uuid;
 
 //
 require_once ("FoodTruckFinderTestSetup.php");
@@ -26,25 +25,25 @@ class ProfileTest extends FoodTruckFinderTest {
 	 * placeholder for valid profile activation token
 	 * @var string $VALID_ACTIVATION_TOKEN
 	 */
-	protected $VALID_ACTIVATION_TOKEN = null;
+	protected $VALID_ACTIVATION_TOKEN;
 
 	/**
 	 * vaild profile email
 	 * @var string $VALID_PROFILE_EMAIL
 	 */
-	protected $VALID_PROFILE_EMAIL = "this@email.edu";
+	protected $VALID_PROFILE_EMAIL = "thisisanemail.email.edu";
 
 	/**
 	 * vaild profile email
 	 * @var string $VALID_PROFILE_EMAIL
 	 */
-	protected $VALID_PROFILE_EMAIL2 = "that@email.cnm";
+	protected $VALID_PROFILE_EMAIL2 = "thatisanemail@email.cnm";
 
 	/**
 	 * placeholder for a valid profile hash
 	 * @var $VALID_PROFILE_HASH;
 	 */
-	protected $VALID_PROFILE_HASH = null;
+	protected $VALID_PROFILE_HASH;
 
 	/**
 	 * placeholder for a valid profile hash
@@ -301,10 +300,4 @@ class ProfileTest extends FoodTruckFinderTest {
 		$profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "91a930a7d9746db530a1315d65c31bbf");
 		$this->assertNull($profile);
 	}
-
-
-
-
-
-
 }

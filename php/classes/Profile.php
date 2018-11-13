@@ -49,7 +49,7 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileActivationToken activation token of this profile or null if new profile
 	 * @param string $newProfileEmail email of this profile or null if new profile
 	 * @param string $newProfileHash hashed password of this profile or null if new profile
-	 * @param integer $newProfileIsOwner boolean assigning truck owner status of this profile or null if new profile
+	 * @param $newProfileIsOwner boolean assigning truck owner status of this profile or null if new profile
 	 * @param string $newProfileName name of the profile or null if new profile
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -57,7 +57,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, string $newProfileHash, int $newProfileIsOwner, string $newProfileName) {
+	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, string $newProfileHash, $newProfileIsOwner, string $newProfileName) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
@@ -93,7 +93,8 @@ class Profile implements \JsonSerializable {
 			$uuid = self::validateUuid($newProfileId);
 		}
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+			$exceptionType = get_class($exception);
+			throw (new	$exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// store the uuid
 		$this->profileId = $uuid;
@@ -152,10 +153,11 @@ class Profile implements \JsonSerializable {
 		if(strlen($newProfileEmail) > 128) {
 			throw (new \RangeException("email address is too long"));
 		}
+		var_dump($newProfileEmail);
 		// trim whitespace from email
 		$newProfileEmail = trim($newProfileEmail);
 		// verify if email is well formed
-		if(filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL) !== true) {
+		if(filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL) === true) {
 			throw (new \Exception("email in not valid format"));
 		}
 		// store the string
@@ -171,7 +173,6 @@ class Profile implements \JsonSerializable {
 		return $this->profileHash;
 	}
 
-	//todo check salting and hashing https://bootcamp-coders.cnm.edu/class-materials/security/salting-and-hashing/ ignore first if statement
 	/**
 	 * mutator method for profile hash
 	 *
@@ -190,7 +191,7 @@ class Profile implements \JsonSerializable {
 			throw (new \RangeException("hash is too long"));
 		}
 		// verify that hash is hexadecimal
-		if(ctype_xdigit($newProfileHash) !== true) {
+		if(ctype_xdigit($newProfileHash) === true) {
 			throw (new \Exception("hash is not hexadecimal"));
 		}
 		// store the string
@@ -326,7 +327,7 @@ class Profile implements \JsonSerializable {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT Profile FROM Profile WHERE profileId = :profileId";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the profile id to the place holder in the template
 		$parameters = ["profileId" => $profileId->getBytes()];
@@ -343,8 +344,13 @@ class Profile implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken): Profile {
+		// make sure activation toke is in the right format and that it is a string of hexadecimal
+		$profileActivationToken = trim($profileActivationToken);
+		if(ctype_xdigit($profileActivationToken) === false) {
+			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
+		}
 		// create query template
-		$query = "SELECT Profile FROM Profile WHERE profileActivationToken LIKE :profileActivationToken";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileActivationToken LIKE :profileActivationToken";
 		$statement = $pdo->prepare($query);
 		// bind the profile id to the place holder in the template
 		$parameters = ["profileActivationToken" => $profileActivationToken];
@@ -372,7 +378,7 @@ class Profile implements \JsonSerializable {
 			throw (new \TypeError("email in not valid format"));
 		}
 		// create query template
-		$query = "SELECT Profile FROM Profile WHERE profileEmail LIKE :profileEmail";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileEmail LIKE :profileEmail";
 		$statement = $pdo->prepare($query);
 		// bind the profile email to the place holder in the template
 		$parameters = ["profileEmail" => $profileEmail];
@@ -396,7 +402,7 @@ class Profile implements \JsonSerializable {
 			throw (new \PDOException("name content it empty"));
 		}
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM Profile WHERE profileName LIKE :profileName";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileName LIKE :profileName";
 		$statement = $pdo->prepare($query);
 		// bind the profile email to the place holder in the template
 		$parameters = ["profileName" => $profileName];

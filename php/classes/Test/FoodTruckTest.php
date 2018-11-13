@@ -2,7 +2,8 @@
 
 namespace FoodTruckFinder\Capstone\Test;
 
-use FoodTruckFinder\Capstone\{Profile, FoodTruck};
+use FoodTruckFinder\Capstone\Profile;
+use FoodTruckFinder\Capstone\FoodTruck;
 
 
 require_once ("FoodTruckFinderTestSetup.php");

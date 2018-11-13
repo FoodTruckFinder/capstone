@@ -2,10 +2,7 @@
 	<testsuites>
 		<testsuite name="Food Truck Finder">
 			<file>ProfileTest.php</file>
-			<file>FoodTruckTest.php</file>
-			<file>FavoriteTest.php</file>
-			<file>SocialTest.php</file>
-			<file>LocationTest.php</file>
+
 		</testsuite>
 	</testsuites>
 	<filter>
