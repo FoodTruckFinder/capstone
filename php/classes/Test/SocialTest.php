@@ -129,4 +129,38 @@ class SocialTest extends foodTruckFinderTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Social"));
 	}
 
-}
+
+	/**
+	 * test creating a social and then grabbing it from mySQL by socialId
+	 */
+	public function testGetValidSocialById() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("social");
+
+		// create a new social and insert into mySQL
+		$socialId = generateUuidV4();
+
+		$social = new Social($socialId, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		$social->insert($this->getPDO());
+
+		// grab the date from mySQL and enforce the fields match out expectations
+		$pdoSocial = Profile::getSocialySocialId($this->getPDO(), $social->getSocialId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
+		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
+		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
+	}
+
+		/**
+		 * test getting a Profile that doesn't exist by profile id
+		 */
+		public
+		function testGetInvalidSocialBySocialId(): void {
+			// grab a profile id that doesn't exist?
+			$invalidSocialId = generateUuidV4();
+
+			$social = Social::getSocialBySocialId($this->getPDO(), "$invalidSocialId");
+			$this->assertNull($social);
+		}
+
+	}
