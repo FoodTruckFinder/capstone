@@ -4,6 +4,11 @@ namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\Social;
 
+// grab the class under scrutiny
+require_once(dirname(__DIR__) . "/autoload.php");
+
+// grab the uuid generator
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 
 /**
@@ -39,7 +44,7 @@ class SocialTest extends foodTruckFinderTest {
 		parent::setUp();
 
 		// create and insert a Social to own the test FoodTruck- error found
-		$this->testInsertValidSocial = new social(generateUuidV4(), null,"this is a social url", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
+		$this->social = new social(generateUuidV4(), null,"this is a social url", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "chadstruck", "5555555555");
 		$this->social->insert($this->getPDO());
 	}
 
