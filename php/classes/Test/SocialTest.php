@@ -26,7 +26,7 @@ class SocialTest extends foodTruckFinderTest {
 	protected $VALID_SOCIAL_FOOD_TRUCK_ID_;
 
 	/**
-	 * vaild social URL
+	 * valid social URL
 	 * @var string $VALID_SOCIAL_URL
 	 */
 	protected $VALID_SOCIAL_URL = "";
