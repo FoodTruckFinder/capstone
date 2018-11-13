@@ -75,7 +75,7 @@ class LocationTest extends FoodTruckFinderTest {
 		parent::setUp();
 
 		// create and insert a FoodTruck Record to own the test Location
-		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck");
+		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck", "505-555-5555");
 		$this->foodTruck->insert($this->getPDO());
 
 		//format the location start time to use for testing
@@ -93,7 +93,7 @@ class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * test inserting a valid Location and verify that the actual mySQL data matches
 	 **/
-	public function testInsertValidLocationId() : void {
+	public function testInsertValidLocation() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
@@ -117,7 +117,7 @@ class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * test inserting a Location, editing it, and then updating it
 	 **/
-	public function testUpdateValidLocationId() : void {
+	public function testUpdateValidLocation() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
@@ -147,36 +147,36 @@ class LocationTest extends FoodTruckFinderTest {
 	/**
 	 * test creating a LocationId and then deleting it
 	 **/
-	public function testDeleteValidLocationId() : void {
+	public function testDeleteValidLocation() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
-		// create a new Tweet and insert to into mySQL
+		// create a new Location and insert to into mySQL
 		$locationId = generateUuidV4();
 		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(),$this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
-		// delete the Tweet from mySQL
+		// delete the Location from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 		$location->delete($this->getPDO());
 
-		// grab the data from mySQL and enforce the Tweet does not exist
+		// grab the data from mySQL and enforce the Location does not exist
 		$pdoLocation = Location::getLocationFoodTruckIdByLocationId($this->getPDO(), $location->getLocationId());
 		$this->assertNull($pdoLocation);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("location"));
 	}
 
 	/**
-	 * test inserting a Tweet and regrabbing it from mySQL
+	 * test inserting a Location and regrabbing it from mySQL
 	 **/
-	public function testGetValidTweetByTweetProfileId() {
+	public function testGetValidLocationByLocationId() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("location");
 
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		// create a new Location and insert to into mySQL
+		$locationId = generateUuidV4();
+		$location = new Location($locationId, $this->location->getLocationId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Tweet::getTweetByTweetProfileId($this->getPDO(), $tweet->getTweetProfileId());
@@ -195,7 +195,7 @@ class LocationTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test grabbing a Tweet by tweet content
+	 * test grabbing a Location by tweet content
 	 **/
 	public function testGetValidTweetByTweetContent() : void {
 		// count the number of rows and save it for later
