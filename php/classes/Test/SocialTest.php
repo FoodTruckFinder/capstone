@@ -28,13 +28,13 @@ class SocialTest extends foodTruckFinderTest {
 	 * placeholder for valid social food truck Id
 	 * @var string $VALID_SOCIAL_FOOD_TRUCK_ID
 	 */
-	protected $VALID_SOCIAL_FOOD_TRUCK_ID_;
+	protected $VALID_SOCIAL_FOOD_TRUCK_ID_ = "26e44c14-3ff0-4a66-b730-7a116eb82bbf";
 
 	/**
 	 * valid social URL
 	 * @var string $VALID_SOCIAL_URL
 	 */
-	protected $VALID_SOCIAL_URL = "";
+	protected $VALID_SOCIAL_URL = "https://www.werock.com/Learn-the-Net-330002341216/";
 
 	/**
 	 *Test set up for Uuid
