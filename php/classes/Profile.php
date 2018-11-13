@@ -87,7 +87,7 @@ class Profile implements \JsonSerializable {
 	 *@throws \RangeException if $newProfileId is not positive
 	 *@throws \TypeError if $newProfileId violates type hints
 	 */
-	public function setProfileId(uuid $newProfileId) : void {
+	public function setProfileId($newProfileId) : void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newProfileId);
@@ -185,13 +185,16 @@ class Profile implements \JsonSerializable {
 		if(empty($newProfileHash) === true) {
 			throw (new \InvalidArgumentException("profile hash is empty"));
 		}
-		// verify the hash is not too long
-		if(strlen($newProfileHash) > 97) {
-			throw (new \RangeException("hash is too long"));
+		//enforce the hash is really an Argon hash
+		$profileHashInfo = password_get_info($newProfileHash);
+		var_dump($profileHashInfo);
+		if($profileHashInfo["algoName"] !== "argon2i") {
+			throw(new \InvalidArgumentException("profile hash is not a valid hash"));
 		}
-		// verify that hash is hexadecimal
-		if(ctype_xdigit($newProfileHash) === true) {
-			throw (new \Exception("hash is not hexadecimal"));
+
+		// verify the hash is not too long
+		if(strlen($newProfileHash) !== 97) {
+			throw (new \RangeException("hash must be 97 characters!"));
 		}
 		// store the string
 		$this->profileHash = $newProfileHash;
@@ -317,7 +320,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfileId(\PDO $pdo, uuid $profileId): Profile {
+	public static function getProfileByProfileId(\PDO $pdo, uuid $profileId): ?Profile {
 		// sanitize the profileId before searching
 		try {
 			$profileId = self::validateUuid($profileId);
@@ -326,12 +329,27 @@ class Profile implements \JsonSerializable {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileId = :profileId";
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileId LIKE :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the profile id to the place holder in the template
 		$parameters = ["profileId" => $profileId->getBytes()];
 		$statement->execute($parameters);
+
+		//grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row ["profileIsOwner"], $row["profileName"]);
+			}
+		} catch (\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
 	}
+
 
 	/**
 	 * get Profile by profile activation token

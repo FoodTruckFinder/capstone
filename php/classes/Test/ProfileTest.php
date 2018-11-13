@@ -25,13 +25,13 @@ class ProfileTest extends FoodTruckFinderTest {
 	 * placeholder for valid profile activation token
 	 * @var string $VALID_ACTIVATION_TOKEN
 	 */
-	protected $VALID_ACTIVATION_TOKEN;
+	protected $VALID_ACTIVATION_TOKEN = "928764b5b55e063c13339e72f90f3f6a";
 
 	/**
 	 * vaild profile email
 	 * @var string $VALID_PROFILE_EMAIL
 	 */
-	protected $VALID_PROFILE_EMAIL = "thisisanemail.email.edu";
+	protected $VALID_PROFILE_EMAIL = "thisisanemail@email.edu";
 
 	/**
 	 * vaild profile email
@@ -76,9 +76,8 @@ class ProfileTest extends FoodTruckFinderTest {
 		parent::setUp();
 
 		// creating hashed password and random token
-		$password = "";
+		$password = "1234abcd";
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
 	}
 
 	/**
@@ -173,7 +172,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
-		// grab the date from mySQL and enforce the fields match out expectations
+		// grab the profile from mySQL and enforce the fields match out expectations
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
