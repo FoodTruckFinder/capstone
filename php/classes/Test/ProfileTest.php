@@ -49,7 +49,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	 * placeholder for a valid profile hash
 	 * @var $VALID_PROFILE_HASH;
 	 */
-	protected $VALID_PROFILE_HASH2 = "B5BB466E56EFAF27";
+	protected $VALID_PROFILE_HASH2;
 
 	/**
 	 * valid profile is owner boolean
@@ -118,10 +118,8 @@ class ProfileTest extends FoodTruckFinderTest {
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
 
-		//todo write a set for each attribute set in Profile Class
 		// edit the profile and update it in mySQL
 		$profile->setProfileEmail($this->VALID_PROFILE_EMAIL2);
-		$profile->setProfileHash($this->VALID_PROFILE_HASH2);
 		$profile->setProfileName($this->VALID_PROFILE_NAME2);
 		$profile->update($this->getPDO());
 

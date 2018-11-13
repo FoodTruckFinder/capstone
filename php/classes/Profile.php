@@ -135,6 +135,7 @@ class Profile implements \JsonSerializable {
 	 */
 	public function getProfileEmail(): string {
 		return $this->profileEmail;
+
 	}
 	/**
 	 * mutator method for profile email
@@ -273,7 +274,7 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileHash, "profileHash" => $this->profileHash, "profileIsOwner" => $this->profileIsOwner, "profileName" => $this->profileName];
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileIsOwner" => $this->profileIsOwner, "profileName" => $this->profileName];
 		$statement->execute($parameters);
 	}
 
