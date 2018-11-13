@@ -52,25 +52,25 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 	  * content of the food truck image url
 	  * @var string $VALID_FOODTRUCKIMAGEURL
 	  **/
-	 protected $VALID_FOODTRUCKIMAGEURL = "truckimgurl.com";
+	 protected $VALID_FOODTRUCKIMAGEURL = "http://www.truckimgurl.com";
 
 	 /**
 	  * content of the updated foodTruck image url
 	  * @var string $VALID_FOODTRUCKIMAGEURL2
 	  **/
-	 protected $VALID_FOODTRUCKIMAGEURL2 = "secondimgurl.com";
+	 protected $VALID_FOODTRUCKIMAGEURL2 = "http://www.secondimgurl.com";
 
 	 /**
 	  * content of the food truck menu url
 	  * @var string $VALID_FOODTRUCKMENUURL
 	  **/
-	 protected $VALID_FOODTRUCKMENUURL = "foodtruckmenuurl.com";
+	 protected $VALID_FOODTRUCKMENUURL = "http://www.foodtruckmenuurl.com";
 
 	 /**
 	  * content of the updated foodTruck menu url
 	  * @var string $VALID_FOODTRUCKMENUURL2
 	  **/
-	 protected $VALID_FOODTRUCKMENUURL2 = "secondmenuurl.com";
+	 protected $VALID_FOODTRUCKMENUURL2 = "http://www.secondmenuurl.com";
 
 	 /**
 	  * content of the food truck name
@@ -292,7 +292,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 		$results = FoodTruck::getFoodTruckByFoodTruckProfileId($this->getPDO(), $foodTruck->getFoodTruckProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder", $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\FoodTruck", $results);
 
 		// grab the result from the array and validate it
 		$pdoFoodTruck = $results[0];

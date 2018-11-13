@@ -419,7 +419,7 @@ class FoodTruck implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $foodTruckProfileId profile id to search by
-	 * @return \SplFixedArray SplFixedArray of FoodTrucks found
+	 * @return FoodTruck
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
