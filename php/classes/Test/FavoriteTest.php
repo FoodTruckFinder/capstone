@@ -10,7 +10,7 @@ use FoodTruckFinder\Capstone\Foodtruck;
 require_once(dirname(__DIR__) . "/autoload.php");
 
 // grab the uuid generator
-require_once(dirname(__DIR__, 1) . "/lib/uuid.php");
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * PHPUnit test of the Favorite class.
