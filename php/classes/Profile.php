@@ -304,19 +304,18 @@ class Profile implements \JsonSerializable {
 	public function update(\PDO $pdo) : void {
 
 		// create query template
-		$query = "UPDATE profile SET profileEmail = :profileEmail WHERE profileId = :profileId";
+		$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileEmail = :profileEmail, profileHash = :profileHash, profileIsOwner = :profileIsOwner, profileName = :profileName WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["profileEmail" => $this->profileEmail];
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,  "profileIsOwner" => $this->profileIsOwner, "profileName" => $this->profileName];
 		$statement->execute($parameters);
-		var_dump($parameters);
 	}
 
 	/**
 	 * get Profile by profile id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $profileId profile id to search for
+	 * @param Uuid $profileId profile id to search for
 	 * @return Profile|null return Profile or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type

@@ -119,7 +119,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		$profile->insert($this->getPDO());
 
 		// edit the profile and update it in mySQL
-		$profile->setProfileEmail($this->VALID_PROFILE_EMAIL2);
+		$profile->setProfileEmail($this->VALID_PROFILE_EMAIL);
 		$profile->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
@@ -159,7 +159,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	/**
 	 * test creating a Profile and then grabbing it from mySQL by profileId
 	 */
-	public function testGetValidProfileById() {
+	public function testGetValidProfileByProfileId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
@@ -178,17 +178,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
 		$this->assertEquals($pdoProfile->getProfileIsOwner(), $this->VALID_PROFILE_IS_OWNER);
 		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
-	}
-
-	/**
-	 * test getting a Profile that doesn't exist by profile id
-	 */
-	public function testGetInvalidProfileByProfileId () : void {
-		// grab a profile id that doesn't exist?
-		$invalidProfileId = generateUuidV4();
-
-		$profile = Profile::getProfileByProfileId($this->getPDO() , "$invalidProfileId");
-		$this->assertNull($profile);
+		var_dump($pdoProfile);
 	}
 
 	/**
@@ -222,14 +212,6 @@ class ProfileTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
 	}
 
-	/**
-	 * test getting a Profile that doesn't exist by profile name
-	 */
-	public function testGetInvalidProfileByProfileName() : void {
-		// get a profile name that doesn't exist
-		$profile = Profile::getProfileByProfileName($this->getPDO(), "Invalid Profile Name");
-		$this->assertCount(0, $profile);
-	}
 
 	/**
 	 * test getting a Profile by profile email
@@ -256,15 +238,6 @@ class ProfileTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test getting a Profile that doesn't exist by profile email
-	 */
-	public function testGetInvalidProfileByProfileEmail() : void {
-		// get an email that doesn't exist
-		$profile = Profile::getProfileByProfileEmail($this->getPDO(), "eye@dont.exist");
-		$this->assertNull($profile);
-	}
-
-	/**
 	 * test getting a Profile by its activation token
 	 */
 	public function testGetValidProfileByActivationToken() {
@@ -276,7 +249,6 @@ class ProfileTest extends FoodTruckFinderTest {
 
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
 		$profile->insert($this->getPDO());
-		var_dump($profile);
 
 		// get Profile from the database by profile activation token
 		$pdoProfile = Profile::getProfileByProfileActivationToken($this->getPDO(), $profile->getProfileActivationToken());
@@ -289,12 +261,4 @@ class ProfileTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILE_NAME);
 	}
 
-	/**
-	 * test getting a Profile by an activation token that doesn't exist
-	 */
-	public function testGetInvalidProfileActivationToken() : void {
-		// get an activation token that does not exist
-		$profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "91a930a7d9746db530a1315d65c31bbf");
-		$this->assertNull($profile);
-	}
 }
