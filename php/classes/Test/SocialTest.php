@@ -181,7 +181,7 @@ class SocialTest extends foodTruckFinderTest {
 		// grab the date from mySQL and enforce the fields match out expectations
 		$pdoSocial = Profile::getSocialySocialFoodTruckId($this->getPDO(), $social->getSocialFoodTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
-		$this->assertEquals($pdoSocial->getSocialId(),$socialId);
+		$this->assertEquals($pdoSocial->getSocialId(), $this->VALID_SOCIAL_ID );
 		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 	}
@@ -189,8 +189,8 @@ class SocialTest extends foodTruckFinderTest {
 	/**
 	 * test getting a social that doesn't exist by social food truck id
 	 */
-	public
-	function testGetInvalidSocialBySocialFoodTruckId(): void {
+
+	public  function testGetInvalidSocialBySocialFoodTruckId(): void {
 		// grab a social food truck id that doesn't exist?
 		$invalidSocialFoodTruckId = generateUuidV4();
 
