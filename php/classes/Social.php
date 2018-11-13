@@ -3,15 +3,15 @@
 namespace FoodTruckFinder\Capstone;
 
 
-use Edu\Cnm\FoodTruckFinder\ValidateUuid;
+use FoodTruckFinder\Capstone\ValidateUuid;
 
-Cnm/FoodTruckFinder;
-require_once ("Autoload.php");
+require_once ("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
 class Social implements \JsonSerializable {
+
 	use ValidateUuid;
 
 
