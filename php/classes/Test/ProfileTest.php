@@ -55,7 +55,7 @@ class ProfileTest extends FoodTruckFinderTest {
 	 * valid profile is owner boolean
 	 * @var $VALID_PROFILE_IS_OWNER
 	 */
-	protected $VALID_PROFILE_IS_OWNER = "0";
+	protected $VALID_PROFILE_IS_OWNER = 1;
 
 	/**
 	 * valid profile is profile name
@@ -76,7 +76,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		parent::setUp();
 
 		// creating hashed password and random token
-		$password = "1234abcd";
+		$password = "";
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 		$this->VALID_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
 	}

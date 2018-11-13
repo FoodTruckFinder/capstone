@@ -57,7 +57,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, string $newProfileHash, $newProfileIsOwner, string $newProfileName) {
+	public function __construct($newProfileId, ?string $newProfileActivationToken, string $newProfileEmail, string $newProfileHash, int $newProfileIsOwner, string $newProfileName) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
@@ -153,7 +153,6 @@ class Profile implements \JsonSerializable {
 		if(strlen($newProfileEmail) > 128) {
 			throw (new \RangeException("email address is too long"));
 		}
-		var_dump($newProfileEmail);
 		// trim whitespace from email
 		$newProfileEmail = trim($newProfileEmail);
 		// verify if email is well formed
@@ -217,7 +216,7 @@ class Profile implements \JsonSerializable {
 	public function setProfileIsOwner(int $newProfileIsOwner): void {
 
 		// check profile is owner is either 1 or 0
-		if($newProfileIsOwner !== 0 || $newProfileIsOwner !== 1) {
+		if($newProfileIsOwner !== 0 && $newProfileIsOwner !== 1) {
 			throw (new \InvalidArgumentException("boolean is not 1 or 0"));
 		}
 		// store the integer
@@ -248,7 +247,7 @@ class Profile implements \JsonSerializable {
 		// sanitize string
 		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
 		// check if string is empty
-		if(empty($newProfileName) !== true) {
+		if(empty($newProfileName) === true) {
 			throw (new \InvalidArgumentException("profile name is empty"));
 		}
 		// store the string
