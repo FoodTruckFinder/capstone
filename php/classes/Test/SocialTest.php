@@ -120,16 +120,16 @@ class SocialTest extends foodTruckFinderTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("Social");
 
-		// create a new Favorite and insert into mySQL
-		$favorite = new Social($this->Social->getSocialId(), $this->SocialFoodTruckId->getSocialFoodTruckId());
-		$favorite->insert($this->getPDO());
+		// create a new social and insert into mySQL
+		$pdoSocial = new Social($this->Social->getSocialId(), $this->SocialFoodTruckId->getSocialFoodTruckId(), $this->socialUrl->getSocialUrl());
+		$pdoSocial->insert($this->getPDO());
 
 		// delete the Social from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Social"));
 		$this->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
-		$pdoSocial = Social::getSocialBySocialFoodTruckIdAndSocialProfileId($this->getPDO(), $this->social->getSocialId(), $this->foodtruck->getSocialFoodTruckId());
+		$pdoSocial = Social::getSocialBySocialFoodTruckId($this->getPDO(), $this->social->getSocialId(), $this->foodtruck->getSocialFoodTruckId());
 		$this->assertNull($pdoSocial);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Social"));
 	}
@@ -149,7 +149,7 @@ class SocialTest extends foodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
-		$pdoSocial = Profile::getSocialySocialId($this->getPDO(), $social->getSocialId());
+		$pdoSocial = Social::getSocialySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
 		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
@@ -184,7 +184,7 @@ class SocialTest extends foodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
-		$pdoSocial = Profile::getSocialySocialFoodTruckId($this->getPDO(), $social->getSocialFoodTruckId());
+		$pdoSocial = Social::getSocialySocialFoodTruckId($this->getPDO(), $social->getSocialFoodTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertEquals($pdoSocial->getSocialId(), $this->VALID_SOCIAL_ID );
 		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
