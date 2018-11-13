@@ -405,7 +405,8 @@ class Profile implements \JsonSerializable {
 		// trim profile email sanitize
 		$profileEmail = trim($profileEmail);
 		// verify if email is well formed
-		if(filter_var($profileEmail, FILTER_VALIDATE_EMAIL) == true) {
+		var_dump($profileEmail);
+		if(filter_var($profileEmail, FILTER_VALIDATE_EMAIL) === false) {
 			throw (new \TypeError("email in not valid format"));
 		}
 		// create query template
