@@ -21,6 +21,29 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Rae Jack
  */
 class SocialTest extends foodTruckFinderTest {
+
+
+	/**
+	 * Profile that created the FoodTruck; this is for foreign key relations
+	 * @var Profile profile
+	 **/
+	protected $profile = null;
+
+	/**
+	 * valid profile hash to create the profile object to own the test
+	 * @var $VALID_HASH
+	 */
+	protected $VALID_PROFILE_HASH;
+
+
+	/**
+	 * FoodTruck that created the Location; this is for foreign key relations
+	 * @var FoodTruck $foodTruck
+	 *
+	 **/
+	protected $foodTruck = null;
+
+
 	/**
 	 * valid social id, this is a primary key
 	 * @var uuid $VALID_PROFILE_ID
@@ -43,14 +66,22 @@ class SocialTest extends foodTruckFinderTest {
 	 *Test set up for Uuid
 	 */
 
-	public final function setUp() : void {
+	public final function setUp()  : void {
+		// run the default setUp() method first
 		parent::setUp();
+		$password = "abc123";
+		$this->profile = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		// create and insert a Profile to own the test FoodTruck
 
-		// create and insert a Social to own the test FoodTruck- error found
-		$this->social = new social (generateUuidV4(), generateUuidV4(),null,"https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif");
-		$this->social->insert($this->getPDO());
+
+		$this->profile = new Profile(generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "chadstruck");
+		$this->profile->insert($this->getPDO());
+
+		// create and insert a FoodTruck Record to own the test Location
+		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck", "505-555-5555");
+		$this->foodTruck->insert($this->getPDO());
+
 	}
-
 
 	/**
 	 * test creating a Social, editing it, and then updating it
@@ -192,7 +223,5 @@ class SocialTest extends foodTruckFinderTest {
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 
 	}
-
-
 
 }
