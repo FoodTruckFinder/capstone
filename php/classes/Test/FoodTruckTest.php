@@ -290,13 +290,10 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = FoodTruck::getFoodTruckByFoodTruckProfileId($this->getPDO(), $foodTruck->getFoodTruckProfileId());
-		var_dump($results);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("foodTruck"));
-		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\FoodTruck", $results);
 
-		// grab the result from the array and validate it
-		$pdoFoodTruck = $results[0];
+		// grab the result and validate it
+		$pdoFoodTruck = $results;
 
 		$this->assertEquals($pdoFoodTruck->getFoodTruckId(), $foodTruckId);
 		$this->assertEquals($pdoFoodTruck->getFoodTruckProfileId(), $this->profile->getProfileId());
