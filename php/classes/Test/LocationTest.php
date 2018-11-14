@@ -191,7 +191,7 @@ class LocationTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
-		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE,);
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE);
 		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
@@ -223,7 +223,7 @@ class LocationTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
-		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE,);
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE);
 		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
@@ -253,7 +253,7 @@ class LocationTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
-		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE,);
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE);
 		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
@@ -266,8 +266,3 @@ class LocationTest extends FoodTruckFinderTest {
 
 
 
-
-
-
-
-?>
