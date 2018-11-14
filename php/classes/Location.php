@@ -266,7 +266,7 @@ class Location implements \JsonSerializable {
 
 		// bind the member variables to the place holders in the template
 		$formattedStartTime = $this->locationStartTime->format("Y-m-d H:i:s.u");
-		$formattedEndTime = $this->locationEndTime > format("Y-m-d H:i:s.u");
+		$formattedEndTime = $this->locationEndTime -> format("Y-m-d H:i:s.u");
 		$parameters = ["locationId" => $this->locationId->getBytes(), "locationFoodTruckId" => $this->locationFoodTruckId->getBytes(), "locationEndTime" => $formattedEndTime, "locationLatitude" => $this->locationLatitude, "locationLongitude" => $this->locationLongitude, "locationStartTime" => $formattedStartTime];
 		$statement->execute($parameters);
 	}
@@ -287,6 +287,63 @@ class Location implements \JsonSerializable {
 		$parameters = ["locationId" => $this->locationId->getBytes()];
 		$statement->execute($parameters);
 	}
+	/**
+	 * updates this Location in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE location SET locationFoodTruckId = :locationFoodTruckId, locationEndTime = :locationEndTime, locationLatitude = :locationLatitude, locationLongitude = :locationLongitude, locationStartTime = :locationStartTime, WHERE locationId = :locationId";
+		$statement = $pdo->prepare($query);
+
+
+		$formattedStartTime = $this->locationStartTime->format("Y-m-d H:i:s.u");
+		$formattedEndTime = $this->locationEndTime -> format("Y-m-d H:i:s.u");
+		$parameters = ["locationId" => $this->locationId->getBytes(),"locationFoodTruckId" => $this->locationFoodTruckId->getBytes(), "locationEndTime" => $formattedEndTime, "locationLatitude" => $this->locationLatitude, "locationLongitude" => $this->locationLongitude, "locationStartTime" => $formattedStartTime];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * @param \PDO $pdo PDO connection object
+	 * @param $locationFoodTruckId UUid of FoodTruck to search by
+	 * @return Location| null returns
+	 */
+
+	public static function getLocationByLocationFoodTruckId(\PDO $pdo, $locationFoodTruckId) : ?Location {
+		// sanitize the tweetId before searching
+		try {
+			$locationFoodTruckId = self::validateUuid($locationFoodTruckId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStarTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
+		$statement = $pdo->prepare($query);
+
+		// bind the tweet id to the place holder in the template
+		$parameters = ["locationFoodTruckId" => $locationFoodTruckId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the tweet from mySQL
+		try {
+			$location = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$location = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($location);
+	}
+
 	/**
 	 * gets the Location Id by Location Food Truck Id
 	 *
