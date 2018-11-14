@@ -116,6 +116,7 @@ class LocationTest extends FoodTruckFinderTest {
 
 	/**
 	 * test inserting a Location, editing it, and then updating it
+	 * @throws
 	 **/
 	public function testUpdateValidLocation() : void {
 		// count the number of rows and save it for later
@@ -133,7 +134,7 @@ class LocationTest extends FoodTruckFinderTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoLocation = Location::getLocationFoodTruckIdByLocationId($this->getPDO(), $location->getLocationId());
-		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationId(), $VALID_LOCATION_ID);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
@@ -145,7 +146,8 @@ class LocationTest extends FoodTruckFinderTest {
 
 
 	/**
-	 * test creating a LocationId and then deleting it
+	 * test creating a Location and then deleting it
+	 *
 	 **/
 	public function testDeleteValidLocation() : void {
 		// count the number of rows and save it for later
@@ -167,87 +169,94 @@ class LocationTest extends FoodTruckFinderTest {
 	}
 
 	/**
-	 * test inserting a Location and regrabbing it from mySQL
-	 **/
-	public function testGetValidLocationByLocationId() {
+	 * test inserting a Location and retrieving it from mySQL
+	 */
+	public function testGetValidLocationByLocationFoodTruckId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
 
 		// create a new Location and insert to into mySQL
 		$locationId = generateUuidV4();
-		$location = new Location($locationId, $this->location->getLocationId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(),$this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getTweetByTweetProfileId($this->getPDO(), $tweet->getTweetProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$results = Location::getLocationByLocationFoodTruckId($this->getPDO(), $location->getLocationFoodTruckId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
+		$pdoLocation = $results;
 
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
+		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE,);
+		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
 	}
 
 	/**
-	 * test grabbing a Location by tweet content
+	 * test grabbing a Location by LocationFoodTruckId
 	 **/
-	public function testGetValidTweetByTweetContent() : void {
+	public function testGetValidLocationByLocationId() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("location");
 
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		// create a new Location and insert to into mySQL
+		$locationId = generateUuidV4();
+		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(),$this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getTweetByTweetContent($this->getPDO(), $tweet->getTweetContent());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertCount(1, $results);
+		$results = Location::getLocationByLocationId($this->getPDO(), $location->getLocationId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 
 		// enforce no other objects are bleeding into the test
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\Location", $results);
 
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
+		$pdoLocation = $results;
+
+		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE,);
+		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
 	}
 
 	/**
-	 * test grabbing all Tweets
+	 * test grabbing all Locations
 	 **/
-	public function testGetAllValidTweets() : void {
+	public function testGetAllValidLocations() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("location");
 
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		// create a new Location and insert to into mySQL
+		$locationId = generateUuidV4();
+		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getAllTweets($this->getPDO());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = Location::getAllLocations($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\Location", $results);
 
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
+		$pdoLocation = $results[0];
+		$this->assertEquals($pdoLocation->getLocationIdId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
+		$this->assertEquals($pdoLocation->getLocationLatitude(), $this->VALID_LOCATIONLATITUDE,);
+		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
 	}
 }
 
