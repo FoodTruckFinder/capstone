@@ -314,7 +314,7 @@ class Location implements \JsonSerializable {
 	 */
 
 	public static function getLocationByLocationFoodTruckId(\PDO $pdo, $locationFoodTruckId) : ?Location {
-		// sanitize the tweetId before searching
+		// sanitize the locationFoodTruckId before searching
 		try {
 			$locationFoodTruckId = self::validateUuid($locationFoodTruckId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -322,14 +322,56 @@ class Location implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStarTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
+		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationFoodTruckId = :locationFoodTruckId";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet id to the place holder in the template
+		// bind the locationFoodTruckId to the place holder in the template
 		$parameters = ["locationFoodTruckId" => $locationFoodTruckId->getBytes()];
 		$statement->execute($parameters);
 
-		// grab the tweet from mySQL
+		// grab the location from mySQL
+		try {
+			$location = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$location = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($location);
+	}
+
+	/**
+	 * gets the Location by Location Id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $locationId to search by
+	 * @return \SplFixedArray SplFixedArray of Locations found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+
+	public static function getLocationByLocationId(\PDO $pdo, $locationId) : ?Location {
+		// sanitize the locationId before searching
+		try {
+			$locationId = self::validateUuid($locationId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location WHERE locationId = :locationId";
+		$statement = $pdo->prepare($query);
+
+		// bind the location id to the place holder in the template
+		$parameters = ["locationId" => $locationId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the location from mySQL
 		try {
 			$location = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -422,6 +464,38 @@ class Location implements \JsonSerializable {
 
 		return ($foodTruck);
 	}
+
+
+	/**
+	 * gets all Locations
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Locationsfound or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllLocations(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT locationId, locationFoodTruckId, locationEndTime, locationLatitude, locationLongitude, locationStartTime FROM location";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of locations
+		$locations = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$location = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
+				$locations[$locations->key()] = $location;
+				$locations->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($locations);
+	}
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
@@ -442,5 +516,3 @@ class Location implements \JsonSerializable {
 
 }
 
-
-?>
