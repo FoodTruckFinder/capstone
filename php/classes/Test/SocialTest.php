@@ -59,7 +59,7 @@ class SocialTest extends foodTruckFinderTest {
 		// create a new social and update it in mySQL
 		$socialId = generateUuidV4();
 
-		$social = new Soical($socialId, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL );
+		$social = new Social($socialId, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL );
 		$social->insert($this->getPDO());
 
 		// edit the social and update it in mySQL
@@ -156,51 +156,40 @@ class SocialTest extends foodTruckFinderTest {
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 	}
 
-		/**
-		 * test getting a Social that doesn't exist by social id
-		 */
-		public
-		function testGetInvalidSocialBySocialId(): void {
-			// grab a social id that doesn't exist?
-			$invalidSocialId = generateUuidV4();
-
-			$social = Social::getSocialBySocialId($this->getPDO(), "$invalidSocialId");
-			$this->assertNull($social);
-		}
-
 
 	// Social food truck Id test?
 	/**
 	 * test creating a social and then taking it from mySQL by socialFoodTruckId
 	 */
-	public function testGetValidSocialFoodTruckById() {
+
+	/**
+	 * test inserting a social and retrieving it from mySQL
+	 **/
+	public function testGetValidSocialBySocialFoodTruckProfileId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("social");
 
-		// create a new social and insert into mySQL
-		$socialFoodTruckId = generateUuidV4();
-
-		$social = new Social($socialFoodTruckId, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		// create a new social and insert to into mySQL
+		$socialId = generateUuidV4();
+		$social = new social ($socialId, $this->profile->getProfileId(), $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
-		// grab the date from mySQL and enforce the fields match out expectations
-		$pdoSocial = Social::getSocialySocialFoodTruckId($this->getPDO(), $social->getSocialFoodTruckId());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Social::getSocialBySocialId($this->getPDO(), $social->getSocialFoodTruckId());
+		var_dump($results);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
-		$this->assertEquals($pdoSocial->getSocialId(), $this->VALID_SOCIAL_ID );
-		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\FoodTruck", $results);
+
+		// grab the result from the array and validate it
+		$pdoSocial = $results[0];
+
+		$this->assertEquals($pdoSocial->getSocialId(), $social);
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
+
 	}
 
-	/**
-	 * test getting a social that doesn't exist by social food truck id
-	 */
 
-	public  function testGetInvalidSocialBySocialFoodTruckId(): void {
-		// grab a social food truck id that doesn't exist?
-		$invalidSocialFoodTruckId = generateUuidV4();
-
-		$social = Social::getSocialBySocialFoodTruckId($this->getPDO(), "$invalidSocialFoodTruckId");
-		$this->assertNull($social);
-	}
 
 }
