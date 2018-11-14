@@ -2,7 +2,7 @@
 
 namespace FoodTruckFinder\Capstone\Test;
 
-use FoodTruckFinder\Capstone\{FoodTruck, Location};
+use FoodTruckFinder\Capstone\{Profile, FoodTruck, Location};
 
 require_once ("FoodTruckFinderTestSetup.php");
 
@@ -30,6 +30,7 @@ class LocationTest extends FoodTruckFinderTest {
 	 **/
 	protected $foodTruck = null;
 
+	protected $profile = null;
 
 	/**
 	 * Uuid of the location
@@ -75,8 +76,9 @@ class LocationTest extends FoodTruckFinderTest {
 		parent::setUp();
 
 		// create and insert a FoodTruck Record to own the test Location
-		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck", "505-555-5555");
+		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shrimp n Grits FoodTruck", "505-555-5555");
 		$this->foodTruck->insert($this->getPDO());
+
 
 		//format the location start time to use for testing
 		$this->VALID_LOCATIONSTARTTIME = new \DateTime();
