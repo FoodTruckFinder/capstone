@@ -4,6 +4,9 @@ namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\Social;
 
+// grab test setup
+require_once("FoodTruckFinderTestSetup.php");
+
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 
