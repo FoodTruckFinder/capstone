@@ -47,8 +47,8 @@ class SocialTest extends foodTruckFinderTest {
 		parent::setUp();
 
 		// create and insert a Social to own the test FoodTruck- error found
-		$this->$this = new Social(generateUuidV4(), new SocialFoodTruckId (), "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif");
-		$this->$this->insert($this->getPDO());
+		$this->social = new Social(generateUuidV4(),  SocialFoodTruckId (generateUuidV4(), newSocialUrl ("https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif"));
+		$this->social->insert($this->getPDO());
 	}
 
 
