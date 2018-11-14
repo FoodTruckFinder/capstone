@@ -113,7 +113,7 @@ class Location implements \JsonSerializable {
 	/**
 	 * mutator method for profile id
 	 *
-	 * @param Uuid | string $newLocationId new value of the location id
+	 * @param Uuid | string $newLocationFoodTruckId new value of the location id
 	 * @throws \RangeException if $newLocationId is not positive
 	 * @throws \TypeError if $newLocationId violates type hints
 	 */
@@ -148,7 +148,7 @@ class Location implements \JsonSerializable {
 
 	public function setLocationEndTime($newLocationEndTime = null): void {
 		if(empty($newLocationEndTime) === true) {
-			$this->locationEndTime = $this->locationStartTime->add(new DateInterval('PT4H'));
+			$this->locationEndTime = $this->locationStartTime->add(new \DateInterval('PT4H'));
 		}
 		// check the end time using the validateDateTime trait
 		try {
@@ -170,13 +170,13 @@ class Location implements \JsonSerializable {
 		return ($this->locationStartTime);
 
 	}
+
 	/**
 	 * mutator method for $newLocationStartTime
 	 *
-	 * if no start time is entered, the date is set to the current date/time
+	 * @param null $newLocationStartTime
 	 * @try runs locationStartTime through validateDateTime
-	 * throws errors if not a valid date/time
-	 * stores location start time
+	 * @throws \Exception  if not a valid date/time
 	 */
 	public function setLocationStartTime($newLocationStartTime = null): void {
 		//base case if the date is null use the current date and time
@@ -333,8 +333,10 @@ class Location implements \JsonSerializable {
 	 * @param Uuid| $locationId to search by
 	 * @throws \PDOException when mySQL errors occur
 	 * @throws \TypeError when variables are not the correct data type
-	 * @return Uuid with matching Location Id
+	 * @return Location | null $foodTrucks with matching Location Id
 	 **/
+
+
 
 	public static function getLocationFoodTruckIdByLocationId(\PDO $pdo, $locationId): ?Location {
 		try {
