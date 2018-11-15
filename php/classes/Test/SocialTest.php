@@ -172,7 +172,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$numRows = $this->getConnection()->getRowCount("social");
 
 		// create a new social and insert into mySQL
-		$pdoSocial = new Social($this->Social->getSocialId(), $this->SocialFoodTruckId->getSocialFoodTruckId(), $this->socialUrl->getSocialUrl());
+		$pdoSocial = new Social($this->social->getSocialId(), $this->socialFoodTruckId->getSocialFoodTruckId(), $this->socialUrl->getSocialUrl());
 		$pdoSocial->insert($this->getPDO());
 
 		// delete the Social from mySQL

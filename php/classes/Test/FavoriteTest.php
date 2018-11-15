@@ -40,7 +40,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		 * valid hash to use
 		 * @var $VALID_HASH
 		 **/
-		protected $VALID_HASH
+		protected $VALID_HASH;
 
 		/**
 		 * timestamp of the Favorite; this starts as null and is assigned later
