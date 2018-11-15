@@ -220,7 +220,7 @@ class Social implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo): void {
 			// create query template
-			$query = "INSERT INTO (socialId, socialFoodTruckId, socialUrl,)";
+			$query = "INSERT INTO social (socialId, socialFoodTruckId, socialUrl) VALUES (:socialId, :socialFoodTruckId, :socialUrl)";
 			$statement = $pdo->prepare($query);
 
 			// bind the member variables to the place holders in the template

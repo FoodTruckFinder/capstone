@@ -47,14 +47,11 @@ class SocialTest extends FoodTruckFinderTest {
 	protected $VALID_PROFILE_HASH;
 
 
-
-
-
 	/**
 	 * valid social id, this is a primary key
-	 * @var uuid $VALID_PROFILE_ID
+	 * @var Uuid $VALID_PROFILE_ID
 	 */
-	protected $VALID_SOCIAL_ID = "710a0875-9775-4312-a075-7b1bb2f72622";
+	protected $VALID_SOCIAL_ID ;
 
 	/**
 	 * placeholder for valid social food truck Id
@@ -80,12 +77,16 @@ class SocialTest extends FoodTruckFinderTest {
 		// create and insert a Profile to own the test FoodTruck
 
 
-		$this->profile = new Profile(generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "CHAD");
+		$this->profile = new Profile (generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "CHAD");
 		$this->profile->insert($this->getPDO());
 
 		// create and insert a FoodTruck Record to own the test Location
-		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck", "505-555-5555");
+		$this->foodTruck = new FoodTruck(generateUuidV4(),$this->profile->getProfileId() , "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck", "505-555-5555");
 		$this->foodTruck->insert($this->getPDO());
+
+
+		$this->social = new Social (generateUuidV4(), $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
+		$this->social->insert($this->getPDO());
 
 	}
 
@@ -110,7 +111,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
-		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->foodTruck->getFoodtruckId());
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 	}
 
@@ -158,7 +159,7 @@ class SocialTest extends FoodTruckFinderTest {
 	 **/
 	public function testDeleteValidSocial() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Social");
+		$numRows = $this->getConnection()->getRowCount("social");
 
 		// create a new social and insert into mySQL
 		$pdoSocial = new Social($this->Social->getSocialId(), $this->SocialFoodTruckId->getSocialFoodTruckId(), $this->socialUrl->getSocialUrl());
@@ -225,7 +226,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$pdoSocial = $results[0];
 
 		$this->assertEquals($pdoSocial->getSocialId(), $social);
-		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->social->getSocialId());
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 
 	}
