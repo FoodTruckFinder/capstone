@@ -3,6 +3,7 @@
 namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\{Profile, FoodTruck, Social};
+use Ramsey\Uuid\Uuid;
 
 // grab test setup
 require_once("FoodTruckFinderTestSetup.php");
@@ -55,7 +56,7 @@ class SocialTest extends FoodTruckFinderTest {
 
 	/**
 	 * placeholder for valid social food truck Id
-	 * @var string $VALID_SOCIAL_FOOD_TRUCK_ID
+	 * @var Uuid $VALID_SOCIAL_FOOD_TRUCK_ID
 	 */
 	protected $VALID_SOCIAL_FOOD_TRUCK_ID_ = "26e44c14-3ff0-4a66-b730-7a116eb82bbf";
 

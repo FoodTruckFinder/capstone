@@ -36,8 +36,8 @@ class Social implements \JsonSerializable {
 
 	/** constructor for this social
 	 *
-	 * @param string|Uuid $newSocialId id of this social or null if  a social
-	 * @param string|Uuid $newSocialFoodTruckId id of the Profile that sent this social
+	 * @param Uuid $newSocialId id of this social or null if  a social
+	 * @param Uuid $newSocialFoodTruckId id of the Profile that sent this social
 	 * @param string $newSocialUrl string containing actual Url data
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -71,7 +71,7 @@ class Social implements \JsonSerializable {
 	/**
 	 * mutator method for profile id
 	 *
-	 * @param Uuid | string $newSocialId new value of the social id
+	 * @param Uuid $newSocialId new value of the social id
 	 * @throws \RangeException if $newSocialId is not positive
 	 * @throws \TypeError if $newSocialId violates type hints
 	 */
@@ -103,7 +103,7 @@ class Social implements \JsonSerializable {
 	/**
 	 * mutator method for profile id
 	 *
-	 * @param Uuid | string $newSocialFoodTruckId new value of the location id
+	 * @param Uuid  $newSocialFoodTruckId new value of the location id
 	 * @throws \RangeException if $newSocialId is not positive
 	 * @throws \TypeError if $newSocialFoodTruckId violates type hints
 	 */
@@ -167,7 +167,7 @@ class Social implements \JsonSerializable {
 	 * gets the social by SocialId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $socialId social id to search for
+	 * @param Uuid $socialId social id to search for
 	 * @return Social|null Product found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
