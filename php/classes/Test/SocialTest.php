@@ -105,7 +105,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// edit the social and update it in mySQL
-		$social->setSocial($this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		$social->setSocial($this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_ ,$this->VALID_SOCIAL_URL);
 		$social->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
@@ -122,7 +122,7 @@ class SocialTest extends FoodTruckFinderTest {
 	 * Test testing social URL
 	 */
 	public function test_Social_url($socialUrl){
-		$data = file_get_contents("$this->?socialUrl=$socialUrl");
+		$data = file_get_contents("$this->$socialUrl=$socialUrl");
 		$result = json_decode($data, true);
 		$this->assertEquals(true, $result['result']);
 		$this->assertEquals(500, $result['code']);
