@@ -76,11 +76,11 @@ class SocialTest extends FoodTruckFinderTest {
 		// run the default setUp() method first
 		parent::setUp();
 		$password = "abc123";
-		$this->profile = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I,["time_cost" => 384]);
 		// create and insert a Profile to own the test FoodTruck
 
 
-		$this->profile = new Profile(generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "chadstruck");
+		$this->profile = new Profile(generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "CHAD");
 		$this->profile->insert($this->getPDO());
 
 		// create and insert a FoodTruck Record to own the test Location
@@ -205,13 +205,13 @@ class SocialTest extends FoodTruckFinderTest {
 	/**
 	 * test inserting a social and retrieving it from mySQL
 	 **/
-	public function testGetValidSocialBySocialFoodTruckProfileId() {
+	public function testGetValidSocialBySocialFoodTruckId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("social");
 
 		// create a new social and insert to into mySQL
 		$socialId = generateUuidV4();
-		$social = new social ($socialId, $this->profile->getProfileId(), $this->VALID_SOCIAL_URL);
+		$social = new social ($socialId, $this->social->getSocialId(), $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
