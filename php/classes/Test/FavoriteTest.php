@@ -60,16 +60,17 @@ public final function setUp() : void {
 	//run the default setUp() method first
 	parent::setUp();
 
+		// create a salt and hash for the mocked profile
+			$password = "abc123";
+			$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+			$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+
 		// create and insert a profile to own the test Favorite
 		$this->profile = new Profile(generateUuidV4(), null, "ownertestemail@fake.com", $this->VALID_PROFILE_HASH, 1, "ChadGarcia");
 		$this->profile->insert($this->getPDO());
 
-		$this->foodTruck = new Foodtruck(generateUuidV4(), $this->)
-/**
- * test inserting a valid food truck and verify that the actual mySQL data matches
- */
 		// create and insert the mocked foodtruck
-		$this->foodTruck = new foodTruck(generateUuidV4), $this->profile->getProfileId(), "Food truck description", "https://www.tacostogo.com/", "https://www.tacostogo.com/menu.html", "TacosToGo FoodTruck", "505-505-8226");
+		$this->foodTruck = new foodTruck(generateUuidV4(), $this->profile->getProfileId(), "Food truck description", "https://www.tacostogo.com/", "https://www.tacostogo.com/menu.html", "TacosToGo FoodTruck", "505-505-8226");
 		$this->foodTruck->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
@@ -84,7 +85,7 @@ public function testInsertValidFavorite() : void {
 		$numRows = $this->getConnection()->getRowCount("Favorite");
 
 		// create a new Favorite and insert to into mySQL
-		$favorite = new Favorite($profileId, $this->profileId->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite = new Favorite($this->profileId->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
 		$favorite->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -103,7 +104,7 @@ public function testDeleteValidFavorite() : void {
 		$numRows = $this->getConnection()->getRowCount("Favorite");
 
 		// create a new Favorite and insert into mySQL
-		$favorite = new Favorite($ProfileId($this->profile->getprofileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite = new Favorite($this->profile->getprofileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
 		$favorite->insert($this->getPDO());
 
 		// delete the Favorite from mySQL
