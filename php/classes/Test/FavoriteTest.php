@@ -6,6 +6,8 @@ use FoodTruckFinder\Capstone\Profile;
 use FoodTruckFinder\Capstone\Favorite;
 use FoodTruckFinder\Capstone\Foodtruck;
 
+require_once ("FoodTruckFinderTestSetup.php");
+
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 
@@ -13,7 +15,7 @@ require_once(dirname(__DIR__) . "/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
- * PHPUnit test of the Favorite class.
+ * Full PHPUnit test of the Favorite class.
  *
  * This is a complete PHPUnit test of the Favorite class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
@@ -23,44 +25,47 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  **/
 class FavoriteTest extends FoodTruckFinderTest {
 		/**
-		 * Profile that created the favorite FoodTruck; this is the foreign key relations
+		 * Profile that created the Favorite; this is for the foreign key relations
 		 * @var Profile $profile
 		 **/
-		protected $profile;
+		protected $profile = null;
+
+		/**
+		 * valid profile hash to create the profile object to own the test
+		 * @var $VALID_PROFILE_HASH
+		 */
+		protected $VALID_PROFILE_HASH;
 
 		/**
 		 * FoodTruck that was liked; this is for foreign key relations
 		 * @var FoodTruck $foodTruck
 		 **/
-		protected $foodTruck;
+		protected $foodTruck = null;
 
 		/**
 		 * timestamp of the Favorite; this starts as null and is assigned later
 		 * @var \DateTime $VALID_FAVORITEDATE
 		 **/
-		protected $VALID_FAVORITEDATE;
+		protected $VALID_FAVORITEDATE = null;
 /**
  * create dependent objects before running each test
  **/
 public final function setUp() : void {
-		//run the default setUp() method first
-		parent::setUp();
-
-		// create a salt and hash for the mocked profile
-		$password = "abc123";
-		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+	//run the default setUp() method first
+	parent::setUp();
 
 		// create and insert the mocked profile
-		$this->profile = new Profile(generateUuidV4(), null, "@phpunit", "test@phpunit.de", $this->VALID_HASH, "+12125551212");
+		$this->profile = new Profile(generateUuidV4(), null, new FoodTruckProfileId(generateUuidV4(), $this->VALID_PROFILE_HASH, 1, new \DateTime()));
 		$this->profile->insert($this->getPDO());
-
+/**
+ * test inserting a valid food truck and verify that the actual mySQL data matches
+ */
 		// create and insert the mocked foodtruck
-		$this->foodTruck = new foodTruck(generateUuidV4(), $this->profile->getProfileId,  "PHPUnit like test passing");
+		$this->foodTruck = new foodTruck(generateUuidV4), $this->profile->getProfileId(), "Food truck description", "https://www.tacostogo.com/", "https://www.tacostogo.com/menu.html", "TacosToGo FoodTruck", "505-505-8226");
 		$this->foodTruck->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_LIKEDATE = new \DateTime();
+		$this->VALID_FAVORITEDATE = new \DateTime();
 }
 
 /**

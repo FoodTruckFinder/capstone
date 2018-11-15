@@ -1,10 +1,9 @@
 <?php
 
 namespace FoodTruckFinder\Capstone;
-require_once "autoload.php";
-require_once (dirname(__DIR__, 2)) . "/vendor/autoload.php";
-require_once "ValidateDate.php";
-require_once "ValidateUuid.php";
+require_once("autoload.php");
+require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
+
 
 use Ramsey\Uuid\Uuid;
 
@@ -39,11 +38,11 @@ class Favorite implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newFavoriteProfileId, $newFavoriteFoodTruckId, $newFavoriteAddDate) {
+	public function __construct($newFavoriteProfileId, $newFavoriteFoodTruckId, $newFavoriteDate) {
 		try {
 			$this->setFavoriteProfileId($newFavoriteProfileId);
 			$this->setFavoriteFoodTruckId($newFavoriteFoodTruckId);
-			$this->setFavoriteDate($newFavoriteAddDate);
+			$this->setFavoriteDate($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
