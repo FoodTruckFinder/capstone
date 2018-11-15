@@ -1,8 +1,9 @@
 <?php
 
 namespace FoodTruckFinder\Capstone\Test;
-
-use FoodTruckFinder\Capstone\{Profile, FoodTruck, Location};
+use FoodTruckFinder\Capstone\Location;
+use FoodTruckFinder\Capstone\Profile;
+use FoodTruckFinder\Capstone\FoodTruck;
 
 require_once ("FoodTruckFinderTestSetup.php");
 
@@ -29,8 +30,6 @@ class LocationTest extends FoodTruckFinderTest {
 	 *
 	 **/
 	protected $foodTruck = null;
-
-	protected $profile = null;
 
 	/**
 	 * Uuid of the location
@@ -75,18 +74,33 @@ class LocationTest extends FoodTruckFinderTest {
 		// run the default setUp() method first
 		parent::setUp();
 
+
+	/**	// create and insert a Profile Record to own the test FoodTruck
+		$this->profile = new Profile(generateUuidV4(), );
+	 *
+	 * */
+
+		// create and insert a Profile Record to own the FoodTruck and test Location
+		$password = "1234abcd";
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->profile = new Profile(generateUuidV4(), null,"example@gmail.com", $this->VALID_PROFILE_HASH, 1, "chadstruck");
+		$this->profile->insert($this->getPDO());
+
+
+
+
 		// create and insert a FoodTruck Record to own the test Location
-		$this->foodTruck = new FoodTruck(generateUuidV4(), generateUuidV4(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shrimp n Grits FoodTruck", "505-555-5555");
+		$this->foodTruck = new FoodTruck(generateUuidV4(), $this->profile->getProfileId(), "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shrimp n Grits FoodTruck", "505-555-5555");
 		$this->foodTruck->insert($this->getPDO());
 
 
 		//format the location start time to use for testing
 		$this->VALID_LOCATIONSTARTTIME = new \DateTime();
-		$this->VALID_LOCATIONSTARTTIME->sub(new \DateInterval("P10H"));
+		$this->VALID_LOCATIONSTARTTIME->sub(new \DateInterval("PT10H"));
 
 		//format the location end time to use for testing
 		$this->VALID_LOCATIONENDTIME = new\DateTime();
-		$this->VALID_LOCATIONENDTIME->add(new \DateInterval("P10H"));
+		$this->VALID_LOCATIONENDTIME->add(new \DateInterval("PT10H"));
 
 
 
@@ -100,8 +114,7 @@ class LocationTest extends FoodTruckFinderTest {
 		$numRows = $this->getConnection()->getRowCount("location");
 
 		// create a new Location and insert to into mySQL
-		$locationId = generateUuidV4();
-		$location = new Location($locationId, $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
+		$location = new Location(generateUuidV4(), $this->foodTruck->getFoodTruckId(), $this->VALID_LOCATIONENDTIME, $this->VALID_LOCATIONLATITUDE, $this->VALID_LOCATIONLONGITUDE, $this->VALID_LOCATIONSTARTTIME);
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -132,6 +145,7 @@ class LocationTest extends FoodTruckFinderTest {
 		// edit the locationId and update it in mySQL
 		$VALID_LOCATION_ID = generateUuidV4();
 		$location->setLocationId($this->$VALID_LOCATION_ID);
+		var_dump($VALID_LOCATION_ID);
 		$location->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
