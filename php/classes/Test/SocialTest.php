@@ -212,7 +212,7 @@ class SocialTest extends FoodTruckFinderTest {
 
 		// create a new social and insert to into mySQL
 		$socialId = generateUuidV4();
-		$social = new social ($socialId, $this->social->getSocialId(), $this->VALID_SOCIAL_URL);
+		$social = new Social($socialId, $this->social->getSocialId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
