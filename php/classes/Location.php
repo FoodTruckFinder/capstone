@@ -48,8 +48,8 @@ class Location implements \JsonSerializable {
 	/**
 	 * constructor for this location
 	 *
-	 * @param Uuid | string $newLocationId id of this location
-	 * @param Uuid | string $newLocationFoodTruckId id of foodtruck at this location
+	 * @param Uuid | $newLocationId id of this location
+	 * @param Uuid | $newLocationFoodTruckId id of foodtruck at this location
 	 * @param /DATETIME | $newLocationEndTime datetime value
 	 * @param float $newLocationLatitude latitude coordinate of this location
 	 * @param float $newLocationLongitude longitude coordinate of this location
@@ -86,11 +86,11 @@ class Location implements \JsonSerializable {
 	/**
 	 * mutator method for location id
 	 *
-	 * @param Uuid | string $newLocationId new value of the location id
+	 * @param Uuid |  $newLocationId new value of the location id
 	 * @throws \RangeException if $newLocationId is not positive
 	 * @throws \TypeError if $newLocationId violates type hints
 	 */
-	public function setLocationId(Uuid $newLocationId): void {
+	public function setLocationId($newLocationId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newLocationId);
@@ -113,11 +113,11 @@ class Location implements \JsonSerializable {
 	/**
 	 * mutator method for profile id
 	 *
-	 * @param Uuid | string $newLocationFoodTruckId new value of the location id
+	 * @param Uuid | $newLocationFoodTruckId new value of the location id
 	 * @throws \RangeException if $newLocationId is not positive
 	 * @throws \TypeError if $newLocationId violates type hints
 	 */
-	public function setLocationFoodTruckId(Uuid $newLocationFoodTruckId): void {
+	public function setLocationFoodTruckId($newLocationFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newLocationFoodTruckId);
@@ -348,8 +348,8 @@ class Location implements \JsonSerializable {
 	 * gets the Location by Location Id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $locationId to search by
-	 * @return \SplFixedArray SplFixedArray of Locations found
+	 * @param Uuid| location Id to search by
+	 * @return location Object found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
@@ -390,7 +390,7 @@ class Location implements \JsonSerializable {
 	 * gets the Location Id by Location Food Truck Id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $locationFoodTruckId to search by
+	 * @param Uuid| $locationFoodTruckId to search by
 	 * @return \SplFixedArray SplFixedArray of Locations found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
@@ -466,11 +466,13 @@ class Location implements \JsonSerializable {
 	}
 
 
+
+
 	/**
 	 * gets all Locations
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of Locationsfound or null if not found
+	 * @return \SplFixedArray SplFixedArray of Locations found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
