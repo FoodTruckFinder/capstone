@@ -64,7 +64,14 @@ class SocialTest extends FoodTruckFinderTest {
 	 * valid social URL
 	 * @var string $VALID_SOCIAL_URL
 	 */
-	protected $VALID_SOCIAL_URL;
+	protected $VALID_SOCIAL_URL = "https://www.facebook.com";
+
+	/**
+	 * valid social URL
+	 * @var string $VALID_SOCIAL_URL2
+	 */
+
+	protected  $VALID_SOCIAL_URL2 = "https://www.facebook.com";
 
 	/**
 	 *Test set up for Uuid
@@ -101,11 +108,11 @@ class SocialTest extends FoodTruckFinderTest {
 		// create a new social and update it in mySQL
 		$socialId = generateUuidV4();
 
-		$social = new Social($socialId, $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL );
+		$social = new Social($socialId, $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL );
 		$social->insert($this->getPDO());
 
 		// edit the social and update it in mySQL
-		$social->setSocial($this->VALID_SOCIAL_ID, $this->VALID_SOCIAL_FOOD_TRUCK_ID_ ,$this->VALID_SOCIAL_URL);
+		$social->setSocialUrl($this->VALID_SOCIAL_URL2);
 		$social->update($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
@@ -113,16 +120,18 @@ class SocialTest extends FoodTruckFinderTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
 		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->foodTruck->getFoodtruckId());
-		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
+		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL2);
 	}
 
 
 // Not sure is this is right or needed social url test
+
 	/**
-	 * Test testing social URL
+	 * @param $socialUrl
 	 */
-	public function test_Social_url($socialUrl){
-		$data = file_get_contents("$this->$socialUrl=$socialUrl");
+
+	public function testSocialUrl($socialUrl){
+		$data = file_get_contents("$this->$socialUrl = $socialUrl");
 		$result = json_decode($data, true);
 		$this->assertEquals(true, $result['result']);
 		$this->assertEquals(500, $result['code']);
@@ -218,6 +227,7 @@ class SocialTest extends FoodTruckFinderTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Social::getSocialBySocialId($this->getPDO(), $social->getSocialFoodTruckId());
+		//Added var dump for results, no change
 		var_dump($results);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertCount(1, $results);

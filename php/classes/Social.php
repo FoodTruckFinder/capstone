@@ -165,6 +165,68 @@ class Social implements \JsonSerializable {
 
 //PDO Statements begin
 //SELECT statement
+
+
+	/**
+	 * inserts this social Url into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo): void {
+		// create query template
+		$query = "INSERT INTO social (socialId, socialFoodTruckId, socialUrl) VALUES (:socialId, :socialFoodTruckId, :socialUrl)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
+		$statement->execute($parameters);
+	}
+
+
+	/**
+	 * updates this Product in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo): void {
+
+		// create query template
+		$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = :socialUrl WHERE socialId = :socialId ";
+		$statement = $pdo->prepare($query);
+
+
+		$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl"
+		=> $this->socialUrl];
+		$statement->execute($parameters);
+	}
+
+
+
+	/**
+	 * deletes this social from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+
+		// create query template
+		$query = "DELETE FROM social WHERE socialId = :socialId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["socialId" => $this->socialId->getBytes()];
+		$statement->execute($parameters);
+
+	}
+
+
+
 	/**
 	 * gets the social by SocialId
 	 *
@@ -174,7 +236,7 @@ class Social implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getSocialBySocialId(\PDO $pdo, $socialId) : ?Product {
+	public static function getSocialBySocialId(\PDO $pdo, $socialId) : ?Social {
 		// sanitize the social Id before searching
 		try {
 			$socialId = self::validateUuid($socialId);
@@ -211,63 +273,7 @@ class Social implements \JsonSerializable {
 
 
 
-	/**
-	 * inserts this social Url into mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function insert(\PDO $pdo): void {
-			// create query template
-			$query = "INSERT INTO social (socialId, socialFoodTruckId, socialUrl) VALUES (:socialId, :socialFoodTruckId, :socialUrl)";
-			$statement = $pdo->prepare($query);
 
-			// bind the member variables to the place holders in the template
-			$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl" => $this->socialUrl];
-			$statement->execute($parameters);
-		}
-
-
-	/**
-	 * updates this Product in mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function update(\PDO $pdo): void {
-
-			// create query template
-			$query = "UPDATE social SET  socialFoodTruckId = :socialFoodTruckId, socialUrl = :socialUrl WHERE socialId = :socialId ";
-			$statement = $pdo->prepare($query);
-
-
-			$parameters = ["socialId" => $this->socialId->getBytes(), "socialFoodTruckId" => $this->socialFoodTruckId->getBytes(), "socialUrl"
-			=> $this->socialUrl];
-			$statement->execute($parameters);
-		}
-
-
-
-	/**
-	 * deletes this social from mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function delete(\PDO $pdo): void {
-
-		// create query template
-		$query = "DELETE FROM social WHERE socialId = :socialId";
-		$statement = $pdo->prepare($query);
-
-		// bind the member variables to the place holder in the template
-		$parameters = ["socialId" => $this->socialId->getBytes()];
-		$statement->execute($parameters);
-
-		}
 
 
 	/**
