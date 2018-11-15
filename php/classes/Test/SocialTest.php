@@ -64,7 +64,7 @@ class SocialTest extends FoodTruckFinderTest {
 	 * valid social URL
 	 * @var string $VALID_SOCIAL_URL
 	 */
-	protected $VALID_SOCIAL_URL = "https://www.werock.com/Learn-the-Net-330002341216/";
+	protected $VALID_SOCIAL_URL;
 
 	/**
 	 *Test set up for Uuid

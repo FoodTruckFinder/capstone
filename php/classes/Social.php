@@ -36,8 +36,8 @@ class Social implements \JsonSerializable {
 
 	/** constructor for this social
 	 *
-	 * @param Uuid $newSocialId id of this social or null if  a social
-	 * @param Uuid $newSocialFoodTruckId id of the Profile that sent this social
+	 * @param Uuid| $newSocialId id of this social or null if  a social
+	 * @param Uuid| $newSocialFoodTruckId id of the Profile that sent this social
 	 * @param string $newSocialUrl string containing actual Url data
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -108,7 +108,7 @@ class Social implements \JsonSerializable {
 	 * @throws \TypeError if $newSocialFoodTruckId violates type hints
 	 */
 
-	public function setSocialFoodTruckId(Uuid $newSocialFoodTruckId): void {
+	public function setSocialFoodTruckId($newSocialFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newSocialFoodTruckId);
@@ -141,7 +141,9 @@ class Social implements \JsonSerializable {
 	public function setSocialUrl(string $newSocialUrl): void {
 		// verify the string is 500 characters
 		$newSocialUrl = trim($newSocialUrl);
+
 		$newSocialUrl = filter_var($newSocialUrl, FILTER_VALIDATE_URL);
+		var_dump($newSocialUrl);
 		if(empty($newSocialUrl) === true) {
 			throw(new \InvalidArgumentException("Social Url link is empty or insecure."));
 		}
@@ -272,7 +274,7 @@ class Social implements \JsonSerializable {
 	 * gets the social by social id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $socialFoodTruckId social id to search by
+	 * @param Uuid $socialFoodTruckId social id to search by
 	 * @return \SplFixedArray SplFixedArray of social found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
