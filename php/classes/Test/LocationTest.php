@@ -118,7 +118,7 @@ class LocationTest extends FoodTruckFinderTest {
 		$location->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoLocation = Location::getLocationFoodTruckIdByLocationId($this->getPDO(), $location->getLocationId());
+		$pdoLocation = Location::getLocationByLocationId($this->getPDO(), $location->getLocationId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("location"));
 		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
@@ -129,10 +129,9 @@ class LocationTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
 	}
 
-	/**
+	/*
 	 * test inserting a Location, editing it, and then updating it
 	 * @throws
-	 **/
 	public function testUpdateValidLocation() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("location");
@@ -145,7 +144,6 @@ class LocationTest extends FoodTruckFinderTest {
 		// edit the locationId and update it in mySQL
 		$VALID_LOCATION_ID = generateUuidV4();
 		$location->setLocationId($this->$VALID_LOCATION_ID);
-		var_dump($VALID_LOCATION_ID);
 		$location->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -159,6 +157,7 @@ class LocationTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoLocation->getLocationLongitude(), $this->VALID_LOCATIONLONGITUDE);
 		$this->assertEquals($pdoLocation->getLocationStartTime()->getTimestamp(), $this->VALID_LOCATIONSTARTTIME->getTimestamp());
 	}
+	 **/
 
 
 	/**
@@ -265,7 +264,7 @@ class LocationTest extends FoodTruckFinderTest {
 
 		// grab the result from the array and validate it
 		$pdoLocation = $results[0];
-		$this->assertEquals($pdoLocation->getLocationIdId(), $locationId);
+		$this->assertEquals($pdoLocation->getLocationId(), $locationId);
 		$this->assertEquals($pdoLocation->getLocationFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoLocation->getLocationEndTime()->getTimestamp(), $this->VALID_LOCATIONENDTIME->getTimestamp());
