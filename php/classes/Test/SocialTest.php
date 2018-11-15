@@ -2,7 +2,7 @@
 
 namespace FoodTruckFinder\Capstone\Test;
 
-use FoodTruckFinder\Capstone\Social;
+use FoodTruckFinder\Capstone\{Profile, FoodTruck, Social};
 
 // grab test setup
 require_once("FoodTruckFinderTestSetup.php");
@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @see Social
  * @author Rae Jack
  */
-class SocialTest extends foodTruckFinderTest {
+class SocialTest extends FoodTruckFinderTest {
 
 
 	/**
@@ -29,12 +29,6 @@ class SocialTest extends foodTruckFinderTest {
 	 **/
 	protected $profile = null;
 
-	/**
-	 * valid profile hash to create the profile object to own the test
-	 * @var $VALID_HASH
-	 */
-	protected $VALID_PROFILE_HASH;
-
 
 	/**
 	 * FoodTruck that created the Location; this is for foreign key relations
@@ -42,6 +36,18 @@ class SocialTest extends foodTruckFinderTest {
 	 *
 	 **/
 	protected $foodTruck = null;
+
+
+
+	/**
+	 * valid profile hash to create the profile object to own the test
+	 * @var $VALID_HASH
+	 */
+
+	protected $VALID_PROFILE_HASH;
+
+
+
 
 
 	/**
