@@ -190,7 +190,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
-		$pdoSocial = Social::getSocialySocialId($this->getPDO(), $social->getSocialId());
+		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
 		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_);
@@ -212,7 +212,7 @@ class SocialTest extends FoodTruckFinderTest {
 
 		// create a new social and insert to into mySQL
 		$socialId = generateUuidV4();
-		$social = new Social($socialId, $this->social->getSocialId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL,"690a781c-4246-4719-82ea-5cd435602bcf");
+		$social = new Social($socialId, $this->social->getSocialId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
