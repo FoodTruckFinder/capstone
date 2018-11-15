@@ -46,7 +46,7 @@ class Social implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
 
-	public function __construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl) {
+	public function __construct($newSocialId, $newSocialFoodTruckId, ?string $newSocialUrl) {
 
 		try {
 			$this->setSocialId($newSocialId);
@@ -162,8 +162,6 @@ class Social implements \JsonSerializable {
 
 
 //PDO Statements begin
-
-
 //SELECT statement
 	/**
 	 * gets the social by SocialId

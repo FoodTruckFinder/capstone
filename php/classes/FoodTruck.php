@@ -50,8 +50,8 @@ class FoodTruck implements \JsonSerializable {
 	/**
 	 * constructor for this foodTruck
 	 *
-	 * @param string|Uuid $newFoodTruckId id of this foodTruck or null if a new truck
-<<<<<<< HEAD
+	 * @param String| Uuid $newFoodTruckId id of this foodTruck or null if a new truck
+      HEAD
 	 * @param string|Uuid $newFoodTruckProfileId id of the Profile for the food truck
 	 * @param string $newFoodTruckDescription string containing description
 	 * @param string $newFoodTruckImageUrl string for foodTruck image url

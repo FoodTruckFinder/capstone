@@ -37,6 +37,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 	 protected $VALID_PROFILE_HASH;
 
 	 /**
+	  *
 	  * content of the food truck description
 	  * @var string $VALID_FOODTRUCKDESCRIPTION
 	  **/
