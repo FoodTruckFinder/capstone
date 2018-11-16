@@ -76,9 +76,9 @@ class Favorite implements \JsonSerializable {
 		$this->favoriteProfileId = $uuid;
 	}
 
-	/** accessor method for favorite food truck id
+	/** accessor method for food truck id
 	 *
-	 * @return Uuid value of the favorite food truck id
+	 * @return uuid value of food truck id
 	 */
 	public function getFavoriteFoodTruckId(): Uuid {
 		return $this->favoriteFoodTruckId;
@@ -87,25 +87,26 @@ class Favorite implements \JsonSerializable {
 	/**
 	 * mutator method for favorite food truck id
 	 *
-	 * @param Uuid | string $newFavoriteFoodTruckId new value of the favorited food truck id
-	 * @throws \InvalidArgumentException if $newFavoriteFoodTruckId is not a valid uuid
-	 * @throws \RangeException if $newFavoriteFoodTruckId is not positive
+	 * @param string $newFavoriteFoodTruckId new value of the food truck id
+	 * @throws \RangeException if $newFooFoodTruckId is not positive
+	 * @throws \TypeError if $newFavoriteFoodTruckId is not an integer
 	 */
-	public function setFavoriteFoodTruckId(Uuid $newFavoriteFoodTruckId): void {
+	public function setFavoriteFoodTruckId($newFavoriteFoodTruckId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newFavoriteFoodTruckId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		//store the uuid
+		//convert and store the uuid
 		$this->favoriteFoodTruckId = $uuid;
 	}
 
 	/**
-	 * accessor method for favorite add date
+	 * accessor method for favorite date
 	 *
-	 * @return DateTime DateTime value of the favorite food truck add
+	 * @return DateTime DateTime value of the favorite food truck
 	 * @throws \InvalidArgumentException if the date is in an invalid format
 	 * @throws \RangeException if the date is not a Gregorian date
 	 */
