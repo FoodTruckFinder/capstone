@@ -163,7 +163,7 @@ class ProfileTest extends FoodTruckFinderTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
-		// create a new Profile and insert into mySQL
+		// create a new Favorite and insert into mySQL
 		$profileId = generateUuidV4();
 
 		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_IS_OWNER, $this->VALID_PROFILE_NAME);
