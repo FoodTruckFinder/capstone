@@ -5,6 +5,7 @@ require_once("autoload.php");
 require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 
+use DateTime;
 use Ramsey\Uuid\Uuid;
 
 class Favorite implements \JsonSerializable {
@@ -24,14 +25,14 @@ class Favorite implements \JsonSerializable {
 	private $favoriteFoodTruckId;
 	/**
 	 * date and time for when a food truck is added as a favorite
-	 * @var \DateTime
+	 * @var DateTime
 	 */
 	private $favoriteDate;
 
 	/** constructor for this favorite
 	 *
-	 * @param Uuid | string $newFavoriteProfileId id of the parent profile
-	 * @param Uuid | string $newFavoriteFoodTruckId id of the parent FoodTruck
+	 * @param Uuid | Uuid $newFavoriteProfileId id of the parent profile
+	 * @param Uuid | Uuid $newFavoriteFoodTruckId id of the parent FoodTruck
 	 * @param \DateTime|null $newFavoriteDate date the foodTruck was liked (or null for current time)
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -103,25 +104,25 @@ class Favorite implements \JsonSerializable {
 	/**
 	 * accessor method for favorite add date
 	 *
-	 * @return \DateTime DateTime value of the favorite food truck add
+	 * @return DateTime DateTime value of the favorite food truck add
 	 * @throws \InvalidArgumentException if the date is in an invalid format
 	 * @throws \RangeException if the date is not a Gregorian date
 	 */
-	public function getFavoriteDate(): \DateTime {
+	public function getFavoriteDate(): DateTime {
 		return ($this->favoriteDate);
 	}
 
 	/**
 	 * mutator method for favorite date
 	 *
-	 * @param \DateTime | string | null $newFavoriteDate date as a Datetime object or string (or null to load the current time)
+	 * @param DateTime | string | null $newFavoriteDate date as a Datetime object or string (or null to load the current time)
 	 * @throws \InvalidArgumentException if $newFavoriteAddDate is not a valid object or string
 	 * @throws \RangeException if $newFavoriteAddDate is not a valid object or string
 	 */
 	public function setFavoriteDate($newFavoriteDate = null): void {
 		//base case if the date is null, use the current date time
 		if($newFavoriteDate === null) {
-			$this->favoriteDate = new \DateTime();
+			$this->favoriteDate = new DateTime();
 			return;
 		}
 		// store the favorite add date using the ValidateDate Trait

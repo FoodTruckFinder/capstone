@@ -66,7 +66,7 @@ public final function setUp() : void {
 			$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		// create and insert a profile to own the test Favorite
-		$this->profile = new Profile(generateUuidV4(), null, "ownertestemail@fake.com", $this->VALID_PROFILE_HASH, 1, "ChadGarcia");
+		$this->profile = new Profile(generateUuidV4(), null, "ownertestemail@fake.com", $this->VALID_HASH, 1, "ChadGarcia");
 		$this->profile->insert($this->getPDO());
 
 		// create and insert the mocked foodtruck
@@ -82,17 +82,17 @@ public final function setUp() : void {
  **/
 public function testInsertValidFavorite() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Favorite");
+		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		// create a new Favorite and insert to into mySQL
-		$favorite = new Favorite($this->profileId->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
+		$favorite = new Favorite($this->profile->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
 		$favorite->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoFavorite = Favorite::getFavoritebyFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodTruckId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodtruck->getFoodTruckId());
+		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		// format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoFavorite->getFavoritedate()->getTimeStamp(), $this->VALID_FAVORITEDATE->getTimestamp());
 }
@@ -101,20 +101,20 @@ public function testInsertValidFavorite() : void {
  **/
 public function testDeleteValidFavorite() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Favorite");
+		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		// create a new Favorite and insert into mySQL
 		$favorite = new Favorite($this->profile->getprofileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
 		$favorite->insert($this->getPDO());
 
 		// delete the Favorite from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$favorite->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
 		$pdoFavorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodtruck->getFoodTruckId());
 		$this->assertNull($pdoFavorite);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("favorite"));
 }
 
 /**
@@ -122,7 +122,7 @@ public function testDeleteValidFavorite() : void {
  **/
 public function testGetValidFoodTruckByFoodTruckProfileId() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Favorite");
+		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		// create a new Favorite and insert into mySQL
 		$favorite = new Favorite($this->profile->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
@@ -130,7 +130,7 @@ public function testGetValidFoodTruckByFoodTruckProfileId() : void {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoFavorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodTruck->getFoodTruckId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoFavorite->getFavoriteFoodtruckId(), $this->foodTruck->getFoodTruckId());
 
@@ -152,7 +152,7 @@ public function testGetInvalidFavoriteByFoodTruckIdAndProfileId() {
  **/
 public function testGetValidFavoriteByFoodTruckId() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Favorite");
+		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		// create a new Favorite and insert into mySQL
 		$favorite = new Favorite($this->getPDO());
@@ -160,7 +160,7 @@ public function testGetValidFavoriteByFoodTruckId() : void {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Favorite::getFavoriteByFavoriteFoodTruckId($this->getPDO(), $this->foodTruck->getFoodTruckId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Favorite", $results);
 
@@ -177,7 +177,7 @@ public function testGetValidFavoriteByFoodTruckId() : void {
  **/
 public function testGetValidFavoriteByProfileId() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Favorite");
+		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		// create a new Favorite and insert into mySQL
 		$favorite = new Favorite($this->profile->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITEDATE);
@@ -185,7 +185,7 @@ public function testGetValidFavoriteByProfileId() : void {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Favorite::getFavoriteByFavoriteProfileId($this->getPDO(), $this->profile->getProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Favorite"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertCount(1, $results);
 
 		// enforce no other objects are bleeding into the test
