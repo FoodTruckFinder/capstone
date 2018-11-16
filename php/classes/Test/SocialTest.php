@@ -166,12 +166,12 @@ class SocialTest extends FoodTruckFinderTest {
 
 		// delete the Social from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
-		$this->delete($this->getPDO());
+		$social->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
-		$pdoSocial = Social::getSocialBySocialFoodTruckId($this->getPDO(), $this->social->getSocialId(), $this->foodtruck->getSocialFoodTruckId());
+		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertNull($pdoSocial);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("Social"));
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("social"));
 	}
 
 	// social id test?
