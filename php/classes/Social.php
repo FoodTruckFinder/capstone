@@ -46,7 +46,7 @@ class Social implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
 
-	public function __construct($newSocialId, $newSocialFoodTruckId, ?string $newSocialUrl) {
+	public function __construct($newSocialId, $newSocialFoodTruckId, string $newSocialUrl) {
 
 		try {
 			$this->setSocialId($newSocialId);
@@ -143,7 +143,6 @@ class Social implements \JsonSerializable {
 		$newSocialUrl = trim($newSocialUrl);
 
 		$newSocialUrl = filter_var($newSocialUrl, FILTER_VALIDATE_URL);
-		var_dump($newSocialUrl);
 		if(empty($newSocialUrl) === true) {
 			throw(new \InvalidArgumentException("Social Url link is empty or insecure."));
 		}
@@ -236,15 +235,16 @@ class Social implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getSocialBySocialId(\PDO $pdo, $socialId) : ?Social {
+	public static function getSocialBySocialId(\PDO $pdo, $socialId) : Social {
 		// sanitize the social Id before searching
+
 		try {
 			$socialId = self::validateUuid($socialId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT socialId, socialFoodTruckId, socialUrl, FROM social WHERE socialId = :socialId";
+		$query = "SELECT socialId, socialFoodTruckId, socialUrl FROM social WHERE socialId = :socialId";
 		$statement = $pdo->prepare($query);
 
 		// bind the social id to the place holder in the template

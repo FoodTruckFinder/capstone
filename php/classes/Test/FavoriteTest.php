@@ -52,7 +52,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		 * valid activationToken to create the profile to own the test
 		 * @var string $VALID_ACTIVATION
 		 **/
-		protected $VALID_ACTIVATION
+		protected $VALID_ACTIVATION;
 /**
  * create dependent objects before running each test
  **/
