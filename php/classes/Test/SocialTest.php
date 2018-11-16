@@ -186,6 +186,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$socialId = generateUuidV4();
 
 		$social = new Social($socialId, $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
+		var_dump($social);
 		$social->insert($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
