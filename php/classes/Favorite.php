@@ -107,8 +107,6 @@ class Favorite implements \JsonSerializable {
 	 * accessor method for favorite date
 	 *
 	 * @return DateTime DateTime value of the favorite food truck
-	 * @throws \InvalidArgumentException if the date is in an invalid format
-	 * @throws \RangeException if the date is not a Gregorian date
 	 */
 	public function getFavoriteDate(): DateTime {
 		return ($this->favoriteDate);
@@ -117,17 +115,19 @@ class Favorite implements \JsonSerializable {
 	/**
 	 * mutator method for favorite date
 	 *
-	 * @param DateTime | string | null $newFavoriteDate date as a Datetime object or string (or null to load the current time)
-	 * @throws \InvalidArgumentException if $newFavoriteAddDate is not a valid object or string
-	 * @throws \RangeException if $newFavoriteAddDate is not a valid object or string
-	 */
-	public function setFavoriteDate($newFavoriteDate = null): void {
-		//base case if the date is null, use the current date time
+	 * @param \DateTime|string|null $newFavoriteDate favorite date as a Datetime object or string (or null to load the current time)
+	 * @throws \InvalidArgumentException if $newFavoriteDate is not a valid object or string
+	 * @throws \RangeException if $newFavoriteDate is a date that does not exist
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 **/
+	public function setFavoriteDate($newFavoriteDate): void {
+		// base case if the date is null, use the current date time
 		if($newFavoriteDate === null) {
-			$this->favoriteDate = new DateTime();
+			$this->favoriteDate = new \DateTime();
 			return;
 		}
-		// store the favorite add date using the ValidateDate Trait
+		// store the favorite date using the ValidateDate Trait
 		try {
 			$newFavoriteDate = self::validateDateTime($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
