@@ -31,20 +31,21 @@ class Favorite implements \JsonSerializable {
 
 	/** constructor for this favorite
 	 *
-	 * @param Uuid | Uuid $newFavoriteProfileId id of the parent profile
-	 * @param Uuid | Uuid $newFavoriteFoodTruckId id of the parent FoodTruck
+	 * @param string | Uuid $newFavoriteProfileId id of the parent profile
+	 * @param string | Uuid $newFavoriteFoodTruckId id of the parent FoodTruck
 	 * @param \DateTime|null $newFavoriteDate date the foodTruck was liked (or null for current time)
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newFavoriteProfileId, $newFavoriteFoodTruckId, $newFavoriteDate) {
+	public function __construct($newFavoriteProfileId, $newFavoriteFoodTruckId, $newFavoriteDate = null) {
 		try {
 			$this->setFavoriteProfileId($newFavoriteProfileId);
 			$this->setFavoriteFoodTruckId($newFavoriteFoodTruckId);
 			$this->setFavoriteDate($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			// determine what exception type was thrown
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -57,21 +58,21 @@ class Favorite implements \JsonSerializable {
 	public function getFavoriteProfileId(): Uuid {
 		return $this->favoriteProfileId;
 	}
-
 	/** mutator method for favorite profile id
 	 *
-	 * @param Uuid | string $newFavoriteProfileId new value of the favorite profile id
-	 * @throws \InvalidArgumentException if $newFavoriteProfileId is not a valid uuid
+	 * @param string  $newFavoriteProfileId new value of the profile id
 	 * @throws \RangeException if $newFavoriteProfileId is not positive
-	 */
-	public function setFavoriteProfileId(uuid $newFavoriteProfileId): void {
+	 * @throws \TypeError if $newProfileId is not an integer
+	 **/
+	public function setFavoriteProfileId($newFavoriteProfileId): void {
 		// verify the id is a valid uuid
 		try {
 			$uuid = self::validateUuid($newFavoriteProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		// store the uuid
+		// convert and store the uuid
 		$this->favoriteProfileId = $uuid;
 	}
 
