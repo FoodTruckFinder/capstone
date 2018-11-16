@@ -246,44 +246,53 @@ class Favorite implements \JsonSerializable {
 		}
 		return($favorites);
 	}
-	// TODO Gets all favorites (do we need?)
-	/** gets all favorites
+	/** gets the favorite by food truck id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of Favorites
+	 * @param string $favoriteFoodTruckId food truck id to search for
+	 * @return \SplFixedArray array of Favorites found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
+	 *
 	 **/
-	public static function getAllFavorites(\PDO $pdo) : \SplFixedArray {
-		//create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteDate";
+	public static function getFavoriteByFavoriteFoodTruckId(\PDO $pdo, string $favoriteFoodTruckId) : \SplFixedArray {
+		try {
+					$favoriteFoodTruckId = self::validateUuid($favoriteFoodTruckId);
+		} catch(]\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteDate FROM'favorite' WHERE favoriteFoodTruckId = :favoriteFoodTruckId";
 		$statement = $pdo->prepare($query);
-		$statement->execute();
-
-		// build an array of favorites
-		$favorites = new \SplFixedArray($statement->rowCount());
+		// bind the member variables to the place holders in the template
+		$parameters = ["favoriteFoodTruckId" => $favoriteFoodTruckId->getBytes()];
+		$statement->execute($parameters);
+		// build the array of favorites
+		$favorites = new \SplFixedArray($statement->$rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-					try {
-							$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row["favoriteDate"]);
-							$favorites[$favorites->key()] = $favorite;
-							$favorites->next();
-					} catch(\Exception $exception) {
-						// if the row couldn't be converted, rethrow it
-						throw(new \PDOException($exception->getMessage(), 0, $exception));
-					}
+		while(($row = $statement->fetch()) !== false); {
+			try {
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row[$favoriteDate]);
+				$favorites[$favorites->key()] = $favorite;
+				$favorites->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
 		}
 		return ($favorites);
-	}
-	/** inserts this favorite  */
-		/**
-		 * Specify data which should be serialized to JSON
-		 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
-		 * @return mixed data which can be serialized by <b>json_encode</b>,
-		 * which is a value of any type other than a resource.
-		 * @since 5.4.0
-		 */
-		public function jsonSerialize() {
-			// TODO: Implement jsonSerialize() method.
+}
+
+	/**
+	 * formats the state variable for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 */
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		unset($fields["profileActivationToken"]);
+		unset($fields["profileHash"]);
+		return($fields);
 	}
 }
+
