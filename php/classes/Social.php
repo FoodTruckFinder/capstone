@@ -265,6 +265,7 @@ class Social implements \JsonSerializable {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($social);
+		var_dump($social);
 	}
 
 

@@ -159,11 +159,13 @@ class SocialTest extends FoodTruckFinderTest {
 		$numRows = $this->getConnection()->getRowCount("social");
 
 		// create a new social and insert into mySQL
-		$pdoSocial = new Social($this->social->getSocialId(), $this->socialFoodTruckId->getSocialFoodTruckId(), $this->socialUrl->getSocialUrl());
-		$pdoSocial->insert($this->getPDO());
+		$socialId = generateUuidV4();
+
+		$social = new Social($socialId, $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
+		$social->insert($this->getPDO());
 
 		// delete the Social from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("Social"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
@@ -209,12 +211,11 @@ class SocialTest extends FoodTruckFinderTest {
 
 		// create a new social and insert to into mySQL
 		$socialId = generateUuidV4();
-		var_dump($this->VALID_SOCIAL_URL);
-		$social = new Social($socialId, $this->social->getSocialId(), $this->VALID_SOCIAL_FOOD_TRUCK_ID_, $this->VALID_SOCIAL_URL);
+		$social = new Social($socialId, $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Social::getSocialBySocialId($this->getPDO(), $social->getSocialFoodTruckId());
+		$results = Social::getSocialBySocialId($this->getPDO(), $this->social->getSocialFoodTruckId());
 		//Added var dump for results, no change
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertCount(1, $results);
