@@ -8,6 +8,43 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 use FoodTruckFinder\Capstone\Profile;
 use FoodTruckFinder\Capstone\FoodTruck;
 
+
+/**
+ * api for the foodTruck class
+ *
+ **/
+
+//verify the session, start if not active
+if(session_status() !== PHP_SESSION_ACTIVE) {
+	session_start();
+}
+
+//prepare an empty reply
+$reply = new stdClass();
+$reply->status = 200;
+$reply->data = null;
+
+try {
+	//grab the mySQL connection
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/fooddelivery.ini");
+
+	//determine which HTTP method was used
+	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
+
+	//sanitize input
+	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$foodTruckProfileId = filter_input(INPUT_GET, "foodTruckProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$foodTruckDescription = filter_input(INPUT_GET, "foodTruckDescription", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$foodTruckImageUrl = filter_input(INPUT_GET, "foodTruckImageUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$foodTruckMenuUrl = filter_input(INPUT_GET, "foodTruckMenuUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$foodTruckName = filter_input(INPUT_GET, "foodTruckName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$foodTruckPhoneNumber = filter_input(INPUT_GET, "foodTruckPhoneNumber", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+	//make sure the id is valid for methods that require it
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
+		throw(new InvalidArgumentException("food truck id cannot be empty or negative", 405));
+	}
+
 // GET request
 if ($method === "GET") {
 
