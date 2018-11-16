@@ -129,6 +129,25 @@ if ($method === "GET") {
 
 	//if above requests are neither PUT nor POST, use DELETE below
 } else if($method === "DELETE") {
-
 	//process DELETE request
+	//enforce that the end user has a XSRF token.
+	verifyXsrf();
+
+	// retrieve the food truck to be deleted
+	$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $id);
+	if($foodTruck === null) {
+		throw(new RuntimeException("Food truck does not exist", 404));
+	}
+
+	//enforce the user is signed in and only trying to edit their own food truck
+	if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $foodTruck->getFoodTruckProfileId()) {
+		throw(new \InvalidArgumentException("You are not allowed to delete this food truck", 403));
+	}
+
+	// delete tweet
+	$foodTruck->delete($pdo);
+	// update reply
+	$reply->message = "Food Truck deleted OK";
+}
+
 }
