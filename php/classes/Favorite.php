@@ -257,7 +257,7 @@ class Favorite implements \JsonSerializable {
 	public static function getFavoriteByFavoriteFoodTruckId(\PDO $pdo, string $favoriteFoodTruckId) : \SplFixedArray {
 		try {
 					$favoriteFoodTruckId = self::validateUuid($favoriteFoodTruckId);
-		} catch(]\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
@@ -267,11 +267,11 @@ class Favorite implements \JsonSerializable {
 		$parameters = ["favoriteFoodTruckId" => $favoriteFoodTruckId->getBytes()];
 		$statement->execute($parameters);
 		// build the array of favorites
-		$favorites = new \SplFixedArray($statement->$rowCount());
+		$favorites = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false); {
 			try {
-				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row[$favoriteDate]);
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row["favoriteDate"]);
 				$favorites[$favorites->key()] = $favorite;
 				$favorites->next();
 			} catch (\Exception $exception) {
