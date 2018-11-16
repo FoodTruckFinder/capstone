@@ -155,16 +155,15 @@ class Favorite implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 	/**
-	 * deletes favorite from mySQL
+	 * deletes this favorite from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo) : void {
-
 		// create query template
-		$query = "DELETE from favorite WHERE favoriteProfileId = :favoriteProfileId";
+		$query = "DELETE FROM 'favorite' WHERE favoriteProfileId = :favoriteProfileId" AND "favoriteFoodTruckId = :favoriteFoodTruckId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
@@ -172,22 +171,25 @@ class Favorite implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
-
 	/**
-	 * gets the favorite by favoriteProfileId
+	 * gets the favorite by foodTruckId and ProfileId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid | string $favoriteProfileId favorite profile id to search by
-	 * @return \SplFixedArray SplFixedArrays of favorites found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
+	 * @param string $likeProfileId profile id to search for
+	 * @param string $favoriteFoodTruckId food truck id to search for
+	 * @return Favorite|null Favorite found or null if not found
 	 **/
-	public static function getFavoriteByFavoriteProfileId(\PDO $pdo, $favoriteProfileId): \SplFixedArray {
+	public static function getFavoriteByFavoriteFoodTruckIdByFavoriteProfileId(\PDO $pdo, string $favoriteProfileId, string $favoriteFoodTruckId): ?Favorite {
 		// sanitize favoriteProfileId before searching
 		try {
 			$favoriteProfileId = self::validateUuid($favoriteProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new\PDOException($exception->getMessage(), 0, $exception));
+		}
+		try {
+			$favoriteFoodTruckId = self::validateUuid($favoriteFoodTruckId);
+		} catch(\InvalidArgumentException|\RangeException|\Exception|\TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
 		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteDate FROM favorite WHERE favoriteProfileId = :favoriteProfileId";
