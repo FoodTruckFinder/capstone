@@ -4,7 +4,7 @@ namespace FoodTruckFinder\Capstone\Test;
 
 use FoodTruckFinder\Capstone\Profile;
 use FoodTruckFinder\Capstone\Favorite;
-use FoodTruckFinder\Capstone\Foodtruck;
+use FoodTruckFinder\Capstone\FoodTruck;
 
 require_once ("FoodTruckFinderTestSetup.php");
 
@@ -65,10 +65,10 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 		// create and insert a profile to own the test Favorite
-		$this->profile = new Profile(generateUuidV4(), null, "ownertestemail@fake.com", $this->VALID_HASH, 1, "ChadGarcia");
+		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "ownertestemail@fake.com", $this->VALID_HASH, 1, "ChadGarcia");
 		$this->profile->insert($this->getPDO());
 		// create and insert the mocked profile
-		$this->foodTruck = new foodTruck(generateUuidV4(), $this->profile->getProfileId(), "Food truck description", "https://www.tacostogo.com/", "https://www.tacostogo.com/menu.html", "TacosToGo FoodTruck", "505-505-8226");
+		$this->foodTruck = new FoodTruck(generateUuidV4(), $this->profile->getProfileId(), "Food truck description", "https://www.tacostogo.com/", "https://www.tacostogo.com/menu.html", "TacosToGo FoodTruck", "505-505-8226");
 		$this->foodTruck->insert($this->getPDO());
 		// calculate the date (just use the time the unit test was setup...)
 		$this->VALID_FAVORITE_DATE = new \DateTime();
@@ -150,7 +150,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$results = Favorite::getFavoriteByFavoriteFoodTruckId($this->getPDO(), $this->foodTruck->getFoodtruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Favorite", $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\Favorite", $results);
 
 		// grab the results from the array and validate it
 		$pdoFavorite = $results[0];
@@ -178,7 +178,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertCount(1, $results);
 
 		// enforce no other objects are bleeding into the test
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\FoodTruckFinder\\Favorite", $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\Favorite", $results);
 
 		// grab the results from the array and validate it
 		$pdoFavorite = $results[0];

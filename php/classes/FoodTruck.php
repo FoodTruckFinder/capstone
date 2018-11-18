@@ -123,7 +123,7 @@ class FoodTruck implements \JsonSerializable {
 	/**
 	 * mutator method for foodTruckProfileId
 	 *
-	 * @param Uuid|string $newFoodTruckProfileId new value of foodTruck profile id
+	 * @param Uuid $newFoodTruckProfileId new value of foodTruck profile id
 	 * @throws \RangeException if $newFoodTruckProfileId is not positive
 	 * @throws \TypeError if $newFoodTruckProfileId is not a uuid or string
 	 **/
