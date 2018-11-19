@@ -96,10 +96,6 @@ class SocialTest extends FoodTruckFinderTest {
 		$this->foodTruck = new FoodTruck(generateUuidV4(),$this->profile->getProfileId() , "I am a PHPFoodTruck Description", "http://www.jammincrepes.com/wp-content/uploads/2017/02/Also-Okay-to-use-1024x617.jpg", "https://www.ryouhooked.com/menu.html", "Bubba Shimp n Grits FoodTruck", "505-555-5555");
 		$this->foodTruck->insert($this->getPDO());
 
-
-		$this->social = new Social (generateUuidV4(), $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
-		$this->social->insert($this->getPDO());
-
 	}
 
 	/**
@@ -165,7 +161,7 @@ class SocialTest extends FoodTruckFinderTest {
 		// create a new social and insert into mySQL
 
 
-		$social = new Social($this->social->getSocialId, $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
+		$social = new Social(generateUuidV4(), $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
 		$social->insert($this->getPDO());
 
 		// delete the Social from mySQL
@@ -173,8 +169,8 @@ class SocialTest extends FoodTruckFinderTest {
 		$social->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
-		$pdoSocial = Social::getSocialBySocialFoodTruckId($this->getPDO(), $this->social->getSocialId());
-		$this->assertNull($pdoSocial);
+		$pdoSocial = Social::getSocialBySocialFoodTruckId($this->getPDO(), $social->getSocialId());
+		$this->assertCount(0,$pdoSocial);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("social"));
 	}
 
@@ -190,7 +186,6 @@ class SocialTest extends FoodTruckFinderTest {
 		$socialId = generateUuidV4();
 
 		$social = new Social($socialId, $this->foodTruck->getFoodTruckId(), $this->VALID_SOCIAL_URL);
-		var_dump($social);
 		$social->insert($this->getPDO());
 
 		// grab the date from mySQL and enforce the fields match out expectations
@@ -220,17 +215,17 @@ class SocialTest extends FoodTruckFinderTest {
 		$social->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Social::getSocialBySocialFoodTruckId($this->getPDO(), $this->social->getSocialFoodTruckId());
+		$results = Social::getSocialBySocialFoodTruckId($this->getPDO(), $social->getSocialFoodTruckId());
 		//Added var dump for results, no change
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\FoodTruck", $results);
+		$this->assertContainsOnlyInstancesOf("FoodTruckFinder\\Capstone\\Social", $results);
 
 		// grab the result from the array and validate it
 		$pdoSocial = $results[0];
 
-		$this->assertEquals($pdoSocial->getSocialId(), $social);
-		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->social->getSocialId());
+		$this->assertEquals($pdoSocial->getSocialId(), $socialId);
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $social->getSocialFoodTruckId());
 		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 
 	}
