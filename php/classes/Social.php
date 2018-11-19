@@ -303,19 +303,19 @@ class Social implements \JsonSerializable {
 			$parameters = ["socialFoodTruckId" => $socialFoodTruckId->getBytes()];
 			$statement->execute($parameters);
 			// build an array of social food truck ID
-			$social = new \SplFixedArray($statement->rowCount());
+			$socials = new \SplFixedArray($statement->rowCount());
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			while(($row = $statement->fetch()) !== false) {
 				try {
 					$social = new Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
-					$social [$social->key()] = $social;
-					$social->next();
+					$socials [$socials->key()] = $social;
+					$socials->next();
 				} catch(\Exception $exception) {
 					// if the row couldn't be converted, rethrow it
 					throw(new \PDOException($exception->getMessage(), 0, $exception));
 				}
 			}
-			return($social);
+			return($socials);
 		}
 
 	/**
