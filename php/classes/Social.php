@@ -6,6 +6,7 @@ namespace FoodTruckFinder\Capstone;
 require_once ("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
+use phpDocumentor\Reflection\Types\Null_;
 use Ramsey\Uuid\Uuid;
 
 class Social implements \JsonSerializable {
@@ -231,7 +232,7 @@ class Social implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid $socialId social id to search for
-	 * @return Social|null Product found or null if not found
+	 * @return Social|null social found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
@@ -265,7 +266,7 @@ class Social implements \JsonSerializable {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($social);
-		var_dump($social);
+
 	}
 
 

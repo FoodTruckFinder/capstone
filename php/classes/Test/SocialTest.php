@@ -145,9 +145,9 @@ class SocialTest extends FoodTruckFinderTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("social"));
-		$this->assertEquals($pdoSocial->getSocialBySocialId(), $this->social->getSocialId());
-		$this->assertEquals($pdoSocial->getSocialBySocialFoodTruckId(), $this->foodTruck->getFoodTruckId());
-		$this->assertEquals($pdoSocial->getSocialBySocialUrl(), $this->VALID_SOCIAL_URL);
+		$this->assertEquals($pdoSocial->getSocialId(), $this->social->getSocialId());
+		$this->assertEquals($pdoSocial->getSocialFoodTruckId(), $this->foodTruck->getFoodTruckId());
+		$this->assertEquals($pdoSocial->getSocialUrl(), $this->VALID_SOCIAL_URL);
 	}
 
 // Has errors, not sure
@@ -169,7 +169,7 @@ class SocialTest extends FoodTruckFinderTest {
 		$social->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the foodTruck does not exist
-		$pdoSocial = Social::getSocialBySocialId($this->getPDO(), $social->getSocialId());
+		$pdoSocial = Social::getSocialBySocialFoodTruckId($this->getPDO(), $social->getSocialId());
 		$this->assertNull($pdoSocial);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("social"));
 	}
