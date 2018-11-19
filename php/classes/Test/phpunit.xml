@@ -1,6 +1,10 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="Food Truck Finder">
+			<file>FavoriteTest.php</file>
+			<file>FoodTruckTest.php</file>
+			<file>Location.php</file>
+			<file>Profile.php</file>
 			<file>SocialTest.php</file>
 		</testsuite>
 	</testsuites>
