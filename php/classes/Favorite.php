@@ -33,7 +33,7 @@ class Favorite implements \JsonSerializable {
 	 *
 	 * @param string | Uuid $newFavoriteProfileId id of the parent profile
 	 * @param string | Uuid $newFavoriteFoodTruckId id of the parent FoodTruck
-	 * @param \DateTime|null $newFavoriteAddDate date the foodTruck was liked (or null for current time)
+	 * @param \DateTime| null $newFavoriteAddDate date the foodTruck was liked (or null for current time)
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
@@ -152,7 +152,7 @@ class Favorite implements \JsonSerializable {
 		$query = "INSERT INTO favorite (favoriteProfileId, favoriteFoodTruckId, favoriteAddDate) VALUES (:favoriteProfileId, :favoriteFoodTruckId, :favoriteAddDate)";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holders in the template
-		$formattedDate = $this->favoriteDate->format("Y-m-d H:i:s.u");
+		$formattedDate = $this->favoriteAddDate->format("Y-m-d H:i:s.u");
 		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckId->getBytes(), "favoriteAddDate" => $formattedDate];
 		$statement->execute($parameters);
 	}
@@ -169,7 +169,7 @@ class Favorite implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
-		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes()];
+		$parameters = ["favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteFoodTruckId" => $this->favoriteFoodTruckId->getBytes()];
 		$statement->execute($parameters);
 	}
 
@@ -238,7 +238,7 @@ class Favorite implements \JsonSerializable {
 		$statement->setFetchMode( \PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], ["favoriteAddDate"]);
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteFoodTruckId"], $row["favoriteAddDate"]);
 				$favorites[$favorites->key()] = $favorite;
 				$favorites->next();
 			} catch(\Exception $exception) {
@@ -263,7 +263,7 @@ class Favorite implements \JsonSerializable {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate FROM'favorite' WHERE favoriteFoodTruckId = :favoriteFoodTruckId";
+		$query = "SELECT favoriteProfileId, favoriteFoodTruckId, favoriteAddDate FROM favorite WHERE favoriteFoodTruckId = :favoriteFoodTruckId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holders in the template
 		$parameters = ["favoriteFoodTruckId" => $favoriteFoodTruckId->getBytes()];

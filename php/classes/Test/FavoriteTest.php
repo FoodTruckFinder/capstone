@@ -73,7 +73,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->foodTruck = new FoodTruck(generateUuidV4(), $this->profile->getProfileId(), "Food truck description", "https://www.tacostogo.com/", "https://www.tacostogo.com/menu.html", "TacosToGo FoodTruck", "505-505-8226");
 		$this->foodTruck->insert($this->getPDO());
 		// calculate the date (just use the time the unit test was setup
-		$this->VALID_FAVORITE_DATE = new \DateTime();
+		$this->VALID_FAVORITE_ADD_DATE = new \DateTime();
 	}
 
 	/**
@@ -91,7 +91,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($this->foodTruck->getFoodTruckId(), $pdoFavorite->getFavoriteFoodTruckId());
 		// format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_DATE->getTimestamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_ADD_DATE->getTimestamp());
 	}
 
 	/**
@@ -119,7 +119,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("favorite");
 		// create a new Favorite and insert into mySQL
-		$favorite = new Favorite($this->profile->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITE_DATE);
+		$favorite = new Favorite($this->profile->getProfileId(), $this->foodTruck->getFoodTruckId(), $this->VALID_FAVORITE_ADD_DATE);
 		$favorite->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoFavorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), $this->profile->getProfileId(), $this->foodTruck->getFoodTruckId());
@@ -127,16 +127,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoFavorite->getFavoriteFoodtruckId(), $this->foodTruck->getFoodTruckId());
 		// format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_DATE->getTimestamp());
-	}
-
-	/**
-	 * test grabbing a food truck id that does not exist
-	 **/
-	public function testGetInvalidFavoriteByFoodTruckIdAndProfileId() {
-		// grab a food truck id and profile id that exceeds the maximum allowable foodTruck id
-		$favorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($this->getPDO(), generateUuidV4(), generateUuidV4());
-		$this->assertNull(0, $favorite);
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_ADD_DATE->getTimestamp());
 	}
 
 	/**
@@ -160,7 +151,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodTruck->getFoodTruckId());
 
 		// format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_DATE->getTimestamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_ADD_DATE->getTimestamp());
 	}
 
 	/**
@@ -185,6 +176,6 @@ class FavoriteTest extends FoodTruckFinderTest {
 		// grab the results from the array and validate it
 		$pdoFavorite = $results[0];
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoFavorite->getFavoriteDate()->getTimeStamp(), $this->VALID_FAVORITE_DATE->getTimeStamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimeStamp(), $this->VALID_FAVORITE_ADD_DATE->getTimeStamp());
 	}
 }
