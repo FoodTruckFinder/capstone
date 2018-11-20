@@ -337,7 +337,7 @@ class FoodTruck implements \JsonSerializable {
 		$parameters = ["foodTruckId" => $this->foodTruckId->getBytes(), "foodTruckProfileId" => $this->foodTruckProfileId->getBytes(), "foodTruckDescription" => $this->foodTruckDescription, "foodTruckImageUrl" => $this->foodTruckImageUrl, "foodTruckMenuUrl" => $this->foodTruckMenuUrl, "foodTruckName" => $this->foodTruckName, "foodTruckPhoneNumber" => $this->foodTruckPhoneNumber];
 		$statement->execute($parameters);
 	}
-	
+
 	/**
 	 * deletes this foodTruck from mySQL
 	 *
