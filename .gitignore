@@ -1,4 +1,4 @@
 .DS_Store
 /.idea
 /php/classes/Test/phpunit.xml
-/public_html/frontend/DONTUSE.js
+/public_html/frontend/doNotUseThisOrModify.txt
