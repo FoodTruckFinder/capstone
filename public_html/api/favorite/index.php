@@ -27,7 +27,7 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-		$pdo = connectToEncryptedMySQL();
+		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort22/fooddelivery.ini");
 
 		// determine which HTTP method was used
 		$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
