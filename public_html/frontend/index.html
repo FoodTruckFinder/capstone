@@ -17,11 +17,37 @@
 
 		<!--CSS dependencies-->
 
-		<link rel="stylesheet" type="text/css" href="./style.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 
 		<!--JS dependencies ToDo-->
 
-	<script src ="script.js"></script>
+		<!--MAKE JS BELOW NOT INLINE BEFORE DEMO DAY-->
+
+	<script>
+		function initMap() {
+			//default google maps function do not modify without asking
+			var map = new google.maps.Map(document.getElementById('map'),{
+
+				//DO NOT CHANGE ZOOM OR LAT LONG WITHOUT CONSULTING WITH TEAM
+				zoom: 14,
+				center: {lat: 35.083, lng: -106.638},
+			});
+		}
+
+		//CUSTOM FUNCTIONS -- NOT GOOGLE MAPS API DOCS SUGGESTED
+		//variable declarations only below
+		var screenWidth = $(window).width();
+		//disabling default UI if screen is tiny af
+		if (screenWidth < 340) {
+			disableDefaultUI: true
+		}
+
+	</script>
+	<!--MAKE THIS ABOVE NOT INLINE BEFORE DEMO DAY-->
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap"
+			  async defer>
+	</script>
 
 
 		<!--meta misc-->
@@ -47,14 +73,12 @@
 		<!-- DO NOT MODIFY API KEY BELOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 	--><script
-			src="script.js">
+			src="DONTUSE.js">
 		</script>
 
 		<!-- DO NOT MODIFY API KEY ABOVE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap"
-				  async defer>
-		</script>
+
 	</body>
 
 </html>

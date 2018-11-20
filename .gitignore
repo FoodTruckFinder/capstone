@@ -1,3 +1,4 @@
 .DS_Store
 /.idea
 /php/classes/Test/phpunit.xml
+/public_html/frontend/DONTUSE.js
