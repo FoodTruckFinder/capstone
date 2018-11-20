@@ -1,11 +1,11 @@
-#map{
-	max-height: 100vh;
-	max-width: 100vw;
+#map {
+	height: 100%;
+
 }
 
-	!gmap_canvas {
-	overflow:hidden;
-	background:none!important;
-	height:100vh;
-	width: 100vw;
+html, body {
+	height: 100%;
+
+	margin: 0;
+	padding: 0;
 }
