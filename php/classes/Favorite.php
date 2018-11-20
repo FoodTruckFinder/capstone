@@ -123,7 +123,7 @@ class Favorite implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 **/
-	public function setFavoriteAddDate($newFavoriteAddDate): void {
+	public function setFavoriteAddDate($newFavoriteAddDate = null): void {
 		// base case if the date is null, use the current date time
 		if($newFavoriteAddDate === null) {
 			$this->favoriteAddDate = new \DateTime();

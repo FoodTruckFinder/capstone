@@ -47,7 +47,7 @@ CREATE TABLE favorite (
 
 	favoriteProfileId BINARY(16) NOT NULL,
 	favoriteFoodTruckId BINARY(16) NOT NULL,
-	favoriteAddDate DATETIME NOT NULL,
+	favoriteAddDate DATETIME(6) NOT NULL,
 	INDEX(favoriteProfileId),
 	INDEX(favoriteFoodTruckId),
 	PRIMARY KEY(favoriteProfileId, favoriteFoodTruckId),

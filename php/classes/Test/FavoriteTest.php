@@ -91,7 +91,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertEquals($this->foodTruck->getFoodTruckId(), $pdoFavorite->getFavoriteFoodTruckId());
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		// format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimestamp(), $this->VALID_FAVORITE_ADD_DATE->getTimestamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate(),$favorite->getFavoriteAddDate(), "", .001);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoFavorite->getFavoriteFoodTruckId(), $this->foodTruck->getFoodTruckId());
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		// format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimestamp(), $this->VALID_FAVORITE_ADD_DATE->getTimestamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate(), $this->VALID_FAVORITE_ADD_DATE, "", .001);
 	}
 
 	/**
@@ -151,7 +151,7 @@ class FavoriteTest extends FoodTruckFinderTest {
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 
 		// format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimestamp(), $this->VALID_FAVORITE_ADD_DATE->getTimestamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate(), $this->VALID_FAVORITE_ADD_DATE, "", .001);
 	}
 
 	/**
@@ -176,6 +176,6 @@ class FavoriteTest extends FoodTruckFinderTest {
 		// grab the results from the array and validate it
 		$pdoFavorite = $results[0];
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoFavorite->getFavoriteAddDate()->getTimestamp(), $favorite->getFavoriteAddDate()->getTimestamp());
+		$this->assertEquals($pdoFavorite->getFavoriteAddDate(), $this->VALID_FAVORITE_ADD_DATE, "", .001);
 	}
 }
