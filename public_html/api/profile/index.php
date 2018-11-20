@@ -77,7 +77,40 @@ try {
 			throw (new \RuntimeException("Profile does not exist", 404));
 		}
 
-		// profile
+		// profile email
+		if(empty($requestObject->profileEmail) === true) {
+			throw (new \InvalidArgumentException("No profile email", 405));
+		}
+
+		// profile name
+		if(empty($requestObject->profileName) === true) {
+			throw (new \InvalidArgumentException("No profile name", 405));
+		}
+
+		$profile->setProfileEmail($requestObject->profileEmail);
+		$profile->setProfileName($requestObject->profileName);
+		$profile->update($pdo);
+
+		// update reply
+		$reply->message = "Profile information update";
+
+	} else {
+		throw (new \InvalidArgumentException("Invalid HTTP request", 400));
 	}
+	// catch any exceptions that were thrown and update the status and message state variable fields
+} catch
+(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
+
+
 
