@@ -3,6 +3,7 @@
 	<head>
 		<!--meta reqs-->
 		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0">
 		<!-- dont enable this until we know more about responsive design
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		-->
@@ -11,15 +12,9 @@
 		<!--CSS dependencies-->
 		<link rel="stylesheet" type="text/css" href="./style.css">
 
-		<!--JS dependencies-->
-		<script async defer
-				  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap">
-		</script>
+		<!--JS dependencies ToDo-->
 
-		<!--@David changed the script ref to script.js-->
-		<script
-			src="script.js">
-		</script>
+
 
 		<!--meta misc-->
 		<title>Food Truck Finder</title>
@@ -45,7 +40,12 @@
 		<script async defer
 				  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap">
 		</script>
-	-->
+	--><script
+			src="script.js">
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap"
+				  async defer>
+		</script>
 	</body>
 
 </html>
