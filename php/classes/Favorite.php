@@ -32,7 +32,7 @@ class Favorite implements \JsonSerializable {
 	/** constructor for this favorite
 	 *
 	 * @param Uuid $newFavoriteProfileId id of the parent profile
-	 * @param Uuid $newFavoriteFoodTruckId id of the parent FoodTruck
+	 * @param Uuid $newFavoriteFoodTruckId id of the parent foodTruck
 	 * @param \DateTime| null $newFavoriteAddDate date the foodTruck was liked (or null for current time)
 	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
