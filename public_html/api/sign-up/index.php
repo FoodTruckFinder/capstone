@@ -98,6 +98,17 @@ EOF;
 		// this takes the form of associative array where the email is the key to a real name
 		$swiftMessage->setFrom(["505foodtruckfinder@gmail.com" => "505FoodTruckFinder"]);
 
+		/**
+		 * attach the message to the email
+		 * set the two versions of the message: a html formatted version and a filter_var()ed version of the message, plain text
+		 */
+		// attach the html version of the message
+		$swiftMessage->setBody($message, "text/html");
+		// attach the plain text version of the message
+		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
+
+
+
 
 
 
