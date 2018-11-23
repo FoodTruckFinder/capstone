@@ -49,5 +49,57 @@ try {
 		if(empty($requestObject->profileHashConfirm) === true) {
 			throw (new	\InvalidArgumentException("Must input valid password", 405));
 		}
+
+		// verify that profile is or is not owner
+		if(empty($requestObject->profileIsOwner) === true) {
+			throw (new	\InvalidArgumentException("Must input profile type", 405));
+		}
+
+		// verify that profile name is present
+		if(empty($requestObject->profileName) === true) {
+			throw (new	\InvalidArgumentException("Must input profile type", 405)):
+		}
+
+		// make sure the password and confirm password match
+		if($requestObject->profileHash !== $requestObject->profileHashConfirm) {
+			throw (new \InvalidArgumentException("Password do not match"));
+		}
+
+		$hash = password_hash($requestObject->profileHash, PASSWORD_ARGON2I, ["time_cost =>384"]);
+
+		$profileActivationToken = bin2hex(random_bytes(16));
+
+		// create the profile object and prepare to insert inot the database
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, $requestObject->profileIsOwner, $requestObject->profileName);
+
+		// insert the profile into the database
+		$profile->insert($pdo);
+
+		// compose the email message to sen with the activation token
+		$messageSubject = "Food trucks spotted on the horizon -- Account Activation";
+
+		// building the activation link that can travel to another server and still work. This is the link that will be clicked to confirm the account.
+		// make sure URL is /public_html/pai/activation/$activation
+		$basePath = dirname($_SERVER["SCRIPT_NAME"], 3);
+		// create the path
+		$urlglue = $basePath . "/api/activation/?activation=" . $profileActivationToken;
+		// create the redirect link
+		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
+		// compose message to send with email
+		$message = <<< EOF
+<h2>Welcome to 505 Food Truck Finder.</h2>
+<p>In order to sign in you must confirm your account</p>
+<p><a href="$confirmLink">Confirmation Link</a></p>
+EOF;
+
+		// create swift email
+		$swiftMessage = new Swift_Message();
+		// attach the sender to the message
+		// this takes the form of associative array where the email is the key to a real name
+		$swiftMessage->setFrom(["505foodtruckfinder@gmail.com" => "505FoodTruckFinder"]);
+
+
+
+
 	}
 }
