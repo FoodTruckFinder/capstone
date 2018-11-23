@@ -107,10 +107,41 @@ EOF;
 		// attach the plain text version of the message
 		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
 
+		/**
+		 * send the Email via SMTP; the SMTP server here is configured to relay everything upstream via CNM
+		 * this default may or may not be available on all web hosts; consult their documentation/support for details
+		 *SwiftMailer supports many different transport methods; SMTP was chosen because it is the most compatible and has the best error handling
+		 *@see http://swiftmailer.org/docs/sending.html Documentation
+		 */
+		// setup smtp
+		$smtp = new Swift_SmtpTransport(
+			"localhost", 25
+		);
+		$mailer = new Swift_Mailer($smtp);
 
+		// send the message
+		$numSent = $mailer->send($swiftMessage, $failedRecipients);
 
+		/**
+		 * the send method returns the number of recipients that accepted the Email, if the number attempted is not he number accepted, this is an Exception
+		 */
+		if($numSent !== count($recipients)) {
+			// the $failedRecipients parameter passed in the send() method now contains an array of Emails that failed
+			throw (new RuntimeException("Unable to send email", 400));
+		}
 
-
-
+		// update reply
+		$reply->message = "Thank you for creating a profile with 505 Food Truck Finder";
+	} else {
+		throw (new	InvalidArgumentException("invalid http request"));
 	}
+} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTraceAsString();
 }
+
+// sets up the response header
+header("Content-type: application/json");
+// finally, JSON encode the $reply object and echo it back to the front end
+echo json_encode($reply);
