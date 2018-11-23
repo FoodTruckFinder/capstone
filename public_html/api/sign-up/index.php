@@ -57,7 +57,7 @@ try {
 
 		// verify that profile name is present
 		if(empty($requestObject->profileName) === true) {
-			throw (new	\InvalidArgumentException("Must input profile type", 405)):
+			throw (new	\InvalidArgumentException("Must input profile type", 405));
 		}
 
 		// make sure the password and confirm password match
