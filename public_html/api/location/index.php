@@ -32,7 +32,7 @@ try {
 	$locationFoodTruckId = filter_input(INPUT_GET, "locationFoodTruckId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$locationLatitude = filter_input(INPUT_GET, "locationLatitude", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$locationLongitude = filter_input(INPUT_GET, "locationLongitude", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	// handle GET request - if id is present, that location is returned, otherwise all location are returned
+	// handle GET request - if locationId or locationFoodTruckId is present, that location is returned, otherwise all location are returned.
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
