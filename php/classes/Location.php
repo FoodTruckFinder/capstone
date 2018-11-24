@@ -36,7 +36,7 @@ class Location implements \JsonSerializable {
 	private $locationLatitude;
 	/**
 	 * stores the longitude coordinate associated with locationFoodTruckId
-	 * @var float which stores long coordinatess
+	 * @var float which stores long coordinates
 	 **/
 	private $locationLongitude;
 	/**
