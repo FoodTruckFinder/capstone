@@ -30,7 +30,7 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize the search parameters
 	$SocialId = filter_input(INPUT_GET, "SocialId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
-	$socialFoodTruckTruckId = filter_input(INPUT_GET, "socialFoodTruckId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$socialFoodTruckId = filter_input(INPUT_GET, "socialFoodTruckId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 	/**
 	 * Get API for Social
 	 **/
@@ -38,7 +38,7 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
-		if ($socialId !== null && $SocialFoodTruckId !== null) {
+		if ($socialId !== null && $socialFoodTruckId !== null) {
 			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckTruckId, $socialUrl);
 			if($social!== null) {
 				$reply->data = $social;
@@ -102,7 +102,7 @@ try {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
 		// retrieve the social to be deleted
-		$social = Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $socialId, $socialFoodTruckTruckId, $socialUrl);
+		$social = Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $socialId, $socialFoodTruckId, $socialUrl);
 		if($social === null) {
 			throw(new RuntimeException("Social does not exist", 404));
 		}
