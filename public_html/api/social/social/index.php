@@ -25,7 +25,7 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/fooddelivery.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/foodtruck.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize the search parameters
@@ -41,7 +41,7 @@ try {
 		if ($socialId !== null && $SocialFoodTruckId !== null) {
 			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckTruckId, $socialUrl);
 			if($social!== null) {
-				$reply->data = $bookmark;
+				$reply->data = $social;
 			}
 			//get all of the socials associated with the profileId
 		} else if(empty($socialId) === false) {
@@ -86,7 +86,7 @@ try {
 		//enforce that the user is signed in
 		//not sure what 400 code to put in? and not sure about the success message
 		if(empty($_SESSION["profile"]) === true) {
-			throw(new \InvalidArgumentException("You must be logged in to social ", 40));
+			throw(new \InvalidArgumentException("You must be logged in to social ", 405));
 		}
 		$social = new Social($requestObject->socialId, $_SESSION["profile"]->getProfileId());
 		$social->insert($pdo);
@@ -108,7 +108,7 @@ try {
 		}
 		//enforce that the user is signed in and only trying to edit their own social / not sure about 400 code again
 		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $social->getSocialFoodTruckId()->toString()) {
-			throw(new \InvalidArgumentException("You are not allowed to delete this social link", ?));
+			throw(new \InvalidArgumentException("You are not allowed to delete this social link", 418));
 		}
 		//TODO: What else do I need to add?
 		//enforce the end user has a JWT token
