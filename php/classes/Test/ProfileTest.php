@@ -125,7 +125,6 @@ class ProfileTest extends FoodTruckFinderTest {
 		// grab the date from mySQL and enforce the fields match out expectations
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-		var_dump($pdoProfile);
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
