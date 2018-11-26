@@ -18,7 +18,7 @@ $reply->status = 200;
 $reply->data = null;
 try{
 	// grab the MySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort22/fooddelivery.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort22/fooddelivery.");
 	//check the HTTP method being used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize input (never trust the end user
