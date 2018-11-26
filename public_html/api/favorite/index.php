@@ -76,7 +76,7 @@ try {
 					throw(new \InvalidArgumentException("you must be logged in to favorite a food truck", 403));
 				}
 				validateJwtHeader();
-				$favorite = new Favorite($_SESSION["profile"]->getFoodTruckId(), $requestObject->favoriteFoodTruckId);
+				$favorite = new Favorite($_SESSION["profile"]->getFavoriteProfileId(), $requestObject->favoriteFoodTruckId);
 				$favorite->insert($pdo);
 				$reply->message = "favorite food truck successful";
 			} else if($method === "PUT") {
