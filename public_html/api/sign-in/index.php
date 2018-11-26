@@ -56,7 +56,7 @@ try {
 		}
 
 		//hash the user's password
-		$hash = password_hash($profileHash, PASSWORD_ARGON2I, ["time_cost =>384"]);
+		$hash = password_hash($profileHash, PASSWORD_ARGON2I, ["time_cost" =>384]);
 		//enforce that the user's password matches their password in mySQL
       if ($hash !== $profile->getProfileHash()) {
       	throw (new \InvalidArgumentException("Invalid username or password.", 401));
