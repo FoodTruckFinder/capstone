@@ -13,8 +13,8 @@ use FoodTruckFinder\Capstone\FoodTruck;
 /**
  * Api for the Social class
  *
- * @author
- * @author Erin Scott <bjack2@cnm.edu>
+ *
+ * @author Rea Jack <bjack2@cnm.edu>
  **/
 //verify the session, start session if not already active
 if(session_status() !== PHP_SESSION_ACTIVE) {
