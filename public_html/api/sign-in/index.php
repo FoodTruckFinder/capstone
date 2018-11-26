@@ -39,10 +39,10 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		//check for password
-		if(empty($requestObject->profileHash) === true) {
+		if(empty($requestObject->profilePassword) === true) {
 			throw (new \InvalidArgumentException("A valid password must be entered.", 401));
 		} else {
-			$profileHash = $requestObject->profileHash;
+			$profilePassword = $requestObject->profilePassword;
 		}
 		//check for email
 		if(empty($requestObject->profileEmail) === true) {
@@ -57,7 +57,7 @@ try {
 		}
 
 		//hash the user's password
-		$hash = password_hash($profileHash, PASSWORD_ARGON2I, ["time_cost" =>384]);
+		$hash = password_hash($profilePassword, PASSWORD_ARGON2I, ["time_cost" =>384]);
 		//enforce that the user's password matches their password in mySQL
       if ($hash !== $profile->getProfileHash()) {
       	throw (new \InvalidArgumentException("Invalid username or password.", 401));
