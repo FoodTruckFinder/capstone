@@ -35,7 +35,6 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		var_dump($requestObject);
 
 		// profile email is a required field
 		if(empty($requestObject->profileEmail)  === true) {
@@ -68,7 +67,6 @@ try {
 
 		// create the profile object and prepare to insert into the database
 		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, 0, $requestObject->profileName);
-		var_dump($profile);
 		// insert the profile into the database
 		$profile->insert($pdo);
 
