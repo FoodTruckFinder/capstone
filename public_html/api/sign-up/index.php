@@ -41,12 +41,12 @@ try {
 		}
 
 		// verify that profile password is present
-		if(empty($requestObject->profileHash) === true) {
+		if(empty($requestObject->profilePassword) === true) {
 			throw (new	\InvalidArgumentException("Must input valid password", 405));
 		}
 
 		// verify that confirm password is present
-		if(empty($requestObject->profileHashConfirm) === true) {
+		if(empty($requestObject->profilePasswordConfirm) === true) {
 			throw (new	\InvalidArgumentException("Must input valid password", 405));
 		}
 
@@ -61,7 +61,7 @@ try {
 		}
 
 		// make sure the password and confirm password match
-		if($requestObject->profileHash !== $requestObject->profileHashConfirm) {
+		if($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
 			throw (new \InvalidArgumentException("Password do not match"));
 		}
 
@@ -70,7 +70,7 @@ try {
 		$profileActivationToken = bin2hex(random_bytes(16));
 
 		// create the profile object and prepare to insert inot the database
-		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, $requestObject->profileIsOwner, $requestObject->profileName);
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, 0, $requestObject->profileName);
 
 		// insert the profile into the database
 		$profile->insert($pdo);
