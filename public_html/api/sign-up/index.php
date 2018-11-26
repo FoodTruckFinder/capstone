@@ -65,7 +65,8 @@ try {
 			throw (new \InvalidArgumentException("Password do not match"));
 		}
 
-		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost =>384"]);
+		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		var_dump($hash);
 
 		$profileActivationToken = bin2hex(random_bytes(16));
 
