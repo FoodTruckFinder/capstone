@@ -65,12 +65,14 @@ try {
 			throw (new \InvalidArgumentException("Password do not match"));
 		}
 
-		$hash = password_hash($requestObject->profileHash, PASSWORD_ARGON2I, ["time_cost =>384"]);
+		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost =>384"]);
 
 		$profileActivationToken = bin2hex(random_bytes(16));
 
 		// create the profile object and prepare to insert inot the database
 		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, 0, $requestObject->profileName);
+		var_dump($hash);
+
 
 		// insert the profile into the database
 		$profile->insert($pdo);
