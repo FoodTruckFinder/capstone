@@ -40,7 +40,7 @@ try {
 		//gets the specific social that is associated, based on its composite key (get by both)
 		if ($socialId !== null && $SocialFoodTruckId !== null) {
 			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckTruckId, $socialUrl);
-			if($bookmark!== null) {
+			if($social!== null) {
 				$reply->data = $bookmark;
 			}
 			//get all of the socials associated with the profileId
