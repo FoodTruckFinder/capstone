@@ -26,7 +26,7 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/fooddelivery.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/foodtruck.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//stores the Primary Key ($locationId) for the GET method
@@ -80,7 +80,10 @@ try {
 
 		$requestObject = json_decode($requestContent);
 
-		//make sure the location
+		//make sure the location has a lat and long
+		if(empty($requestObject->locationLatititude) === true|| (empty($requestObject->locationLongitude) === true)) {
+			throw(new \InvalidArgumentException("No long or lat coordinates for location.", 405));
+		}
 
 	}
 
