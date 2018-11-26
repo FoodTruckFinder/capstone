@@ -14,7 +14,7 @@ use FoodTruckFinder\Capstone\FoodTruck;
  * Api for the Social class
  *
  *
- * @author Rea Jack <bjack2@cnm.edu>
+ * @author Rae Jack <bjack2@cnm.edu>
  **/
 //verify the session, start session if not already active
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -38,20 +38,20 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
-		if ($socialId !== null && $socialFoodTruckId !== null) {
-			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckTruckId, $socialUrl);
+		if ($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
+			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckId, $socialUrl);
 			if($social!== null) {
 				$reply->data = $social;
 			}
 			//get all of the socials associated with the profileId
 		} else if(empty($socialId) === false) {
-			$social = Social::getSocialBySocialId($pdo, $socialFoodTruckTruckId)->toArray();
+			$social = Social::getSocialBySocialId($pdo, $socialFoodTruckId)->toArray();
 			if($social !== null) {
 				$reply->data = $social;
 			}
 			//get all of the socials associated with the profileId
 		} else if(empty($socialFoodTruckTruckId) === false) {
-			$social = Social::getSocialBySocialFoodTruckId($pdo, $socialFoodTruckTruckId)->toArray();
+			$social = Social::getSocialBySocialFoodTruckId($pdo, $socialFoodTruckId)->toArray();
 			if($social !== null) {
 				$reply->data = $social;
 			}
