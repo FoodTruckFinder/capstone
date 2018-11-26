@@ -4,7 +4,7 @@
 require_once (dirname(__DIR__, 3) . "/php/classes/autoload.php");
 require_once (dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once (dirname(__DIR__, 3) . "/php/lib/jwt.php");
-require_once ("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once ("/etc/apache2/capstone-mysql/Secrets.php");
 
 use \FoodTruckFinder\Capstone\Profile;
 
@@ -24,8 +24,8 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	// grab mySQL statement
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/foodtruck.ini");
+	$secrets =  new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
+	$pdo = $secrets->getPdoObject();
 
 	// determine which HTTP method is being used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -34,6 +34,8 @@ try {
 		// decode the json and turn it into a php object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
+
+		var_dump($requestObject);
 
 		// profile email is a required field
 		if(empty($requestObject->profileEmail)  === true) {
@@ -50,11 +52,6 @@ try {
 			throw (new	\InvalidArgumentException("Must input valid password", 405));
 		}
 
-		// verify that profile is or is not owner
-		if(empty($requestObject->profileIsOwner) === true) {
-			throw (new	\InvalidArgumentException("Must input profile type", 405));
-		}
-
 		// verify that profile name is present
 		if(empty($requestObject->profileName) === true) {
 			throw (new	\InvalidArgumentException("Must input profile name", 405));
@@ -66,15 +63,12 @@ try {
 		}
 
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		var_dump($hash);
 
 		$profileActivationToken = bin2hex(random_bytes(16));
 
-		// create the profile object and prepare to insert inot the database
+		// create the profile object and prepare to insert into the database
 		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, 0, $requestObject->profileName);
-		var_dump($hash);
-
-
+		var_dump($profile);
 		// insert the profile into the database
 		$profile->insert($pdo);
 
@@ -100,6 +94,20 @@ EOF;
 		// attach the sender to the message
 		// this takes the form of associative array where the email is the key to a real name
 		$swiftMessage->setFrom(["505foodtruckfinder@gmail.com" => "505FoodTruckFinder"]);
+
+		/**
+		 * attach recipients to the message
+		 * notice this is an array that can include or omit the recipient's name
+		 * use the recipient's real name where possible;
+		 * this reduces the probability of the email is marked as spam
+		 */
+		//define who the recipient is
+		$recipients = [$requestObject->profileEmail];
+		//set the recipient to the swift message
+		$swiftMessage->setTo($recipients);
+		//attach the subject line to the email message
+		$swiftMessage->setSubject($messageSubject);
+
 
 		/**
 		 * attach the message to the email
