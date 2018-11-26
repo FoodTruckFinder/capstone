@@ -25,10 +25,10 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	// grab mySQL statement
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/fooddelivery.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/foodtruck.ini");
 
 	// determine which HTTP method is being used
-	$method = array_key_exists("HTTP_X_HTTP_METHOD, $_SERVER") ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	if($method === "POST") {
 		// decode the json and turn it into a php object
@@ -57,7 +57,7 @@ try {
 
 		// verify that profile name is present
 		if(empty($requestObject->profileName) === true) {
-			throw (new	\InvalidArgumentException("Must input profile type", 405));
+			throw (new	\InvalidArgumentException("Must input profile name", 405));
 		}
 
 		// make sure the password and confirm password match
