@@ -38,9 +38,9 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
-		if ($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
+		if($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
 			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckId, $socialUrl);
-			if($social!== null) {
+			if($social !== null) {
 				$reply->data = $social;
 			}
 			//get all of the socials associated with the profileId
@@ -56,62 +56,73 @@ try {
 				$reply->data = $social;
 			}
 			//if none of the search parameters are met, throw an exception
-		} else {
+		} else
 			throw new InvalidArgumentException("invalid search parameters ", 404);
 		}
 		/**
 		 * Post API for Social
 		 **/
-	} else if($method === "POST") {
-		//enforce that the end user has a XSRF token.
-		verifyXsrf();
-		//enforce the end user has a JWT token
-		validateJwtHeader();
-		//decode the response from the frontend
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
-		if(empty($requestObject->socialFoodTruckId) === true) {
-			throw (new \InvalidArgumentException("No profile linked to the social", 405));
-		}
-		if(empty($requestObject->socialId) === true) {
-			throw (new \InvalidArgumentException("No profile linked to the social", 405));
-		}
-//TODO: Not sure if this is needed. Check with George
-//		if(Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $_SESSION["profile"]->getProfileId(), $requestObject->socialId)!==null){
-//			throw(new \InvalidArgumentException("The Social already exists."));
-//		}
-//		if (Profile::getProfileByProfileId($pdo,$requestObject->socialId)===null){
-//			throw(new \InvalidArgumentException("The profile does not exist."));
-//		}
-		//enforce that the user is signed in
-		//not sure what 400 code to put in? and not sure about the success message
-		if(empty($_SESSION["profile"]) === true) {
-			throw(new \InvalidArgumentException("You must be logged in to social ", 405));
-		}
-		$social = new Social($requestObject->socialId, $_SESSION["profile"]->getProfileId());
-		$social->insert($pdo);
-		echo("116");
-		$reply->message = "Successfully entered social accounts";
-	}
-	/**
-	 * Put API for Social
-	 *
-	 * You can only delete only id, thus we have to use a PUT.
-	 **/
-	else if($method === "PUT") {
-		//enforce that the end user has a XSRF token.
-		verifyXsrf();
-		// retrieve the social to be deleted
-		$social = Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $socialId, $socialFoodTruckId, $socialUrl);
-		if($social === null) {
-			throw(new RuntimeException("Social does not exist", 404));
-		}
-		//enforce that the user is signed in and only trying to edit their own social / not sure about 400 code again
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $social->getSocialFoodTruckId()->toString()) {
-			throw(new \InvalidArgumentException("You are not allowed to delete this social link", 418));
-		}
+	else
+		if($method === "PUT" || $method === "POST") {
 
-		else if($method === "DELETE") {
+			// enforce the user has a XSRF token
+			verifyXsrf();
+
+			//  Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
+			$requestContent = file_get_contents("php://input");
+
+			// This Line Then decodes the JSON package and stores that result in $requestObject
+			$requestObject = json_decode($requestContent);
+
+			//make sure social content is available (required field)
+			if(empty($requestObject->socialContent) === true) {
+				throw(new \InvalidArgumentException ("No content for Social.", 405));
+			}
+
+			// make sure social date is accurate (optional field)
+
+			//  make sure profileId is available
+			if(empty($requestObject->socialProfileId) === true) {
+				throw(new \InvalidArgumentException ("No Social Profile ID.", 405));
+			}
+
+			//perform the actual put or post
+			if($method === "PUT") {
+
+				// retrieve the tweet to update
+				$social = Social::getSocialBySocialId($pdo, $id);
+				if($social === null) {
+					throw(new RuntimeException("Social does not exist", 404));
+				}
+
+				//enforce the user is signed in and only trying to edit their own social
+				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $social->getSocialProfileId()->toString()) {
+					throw(new \InvalidArgumentException("You are not allowed to edit this social", 403));
+				}
+
+				// update all attributes
+				$social->setSocialFoodTuckId($requestObject->socialFoodTruckId);
+				$Social->setSocialUrl($requestObject->socialUrl);
+				$social->update($pdo);
+
+				// update reply
+				$reply->message = "Social updated OK";
+
+			} else if($method === "POST") {
+
+				// enforce the user is signed in
+				if(empty($_SESSION["profile"]) === true) {
+					throw(new \InvalidArgumentException("you must be logged in to post social media", 403));
+				}
+
+				// create new social and insert into the database
+				$social = new Social(generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject->socialUrl, null);
+				$social->insert($pdo);
+
+				// update reply
+				$reply->message = "Social created OK";
+			}
+		} else if($method === "DELETE") {
 
 			//enforce that the end user has a XSRF token.
 			verifyXsrf();
@@ -132,5 +143,7 @@ try {
 			// update reply
 			$reply->message = "Social deleted OK";
 		}
+
 // encode and return reply to front end caller
-echo json_encode($reply);
+		echo json_encode($reply);
+
