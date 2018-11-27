@@ -36,11 +36,11 @@ try {
 	$locationLongitude = filter_input(INPUT_GET, "locationLongitude", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	// handle GET request - if locationId or locationFoodTruckId is present, that location is returned, otherwise all location are returned.
 
-	//make sure the locationID is valid for methods that need it
+	//make sure the locationId is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && empty($locationId) === true) {
 		throw(new InvalidArgumentException("id cannot be empty", 405));
 	}
-
+	//handle GET request if id is present, that location is returned, otherswise return all locations
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
@@ -81,9 +81,74 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		//make sure the location has a lat and long
-		if(empty($requestObject->locationLatititude) === true|| (empty($requestObject->locationLongitude) === true)) {
+		if(empty($requestObject->locationLatititude) === true || (empty($requestObject->locationLongitude) === true)) {
 			throw(new \InvalidArgumentException("No long or lat coordinates for location.", 405));
 		}
+
+		//make sure the location has a start and end time
+		if(empty($requestObject->locationStartTime) === true || (empty($requestObject->locationEndTime) === true)) {
+			throw(new \InvalidArgumentException("Location is missing a start or end time", 405));
+		}
+
+		//TODO NOT SURE About Lines  94-102
+		//make sure the start time is accurate
+		if(empty($requestObject->locationStartTime) === true) {
+			$requestObject->locationStartTime = null;
+		}
+		//make sure the end time is accurate
+		if(empty($requestObject->locationEndTime) === true) {
+			$requestObject->locationEndTime = null;
+		} else {
+			$locationStartTime = DateTime::createFromFormat("U.u", $requestObject->locationStartTime / 1000);
+			if($locationStartTime === false) {
+				throw(new RuntimeException("invalid start time", 400));
+			}
+			$requestObject->locationStartTime = $locationStartTime;
+		}
+		//TODO write the same format for locationEndTime?
+
+
+
+
+
+//TODO FINISH PUT/POST
+	}
+
+	if($method === "PUT") {
+
+		//retrieve the location to update
+		$location = Location::getLocationByLocationId($pdo, $locationId);
+		if($location === null) {
+					throw(new RuntimeException("Location does not exist.", 404));
+		}
+		//enforce the user is signed in and is a foodtruck owner
+		//TODO Add a logic block that checks that their foodtruckId matches the locationfoodtruckId this is to enforce that the unique foodtruck owner is only able to edit their location
+		if(empty($_SESSION["profile"]) === true || $profile -> profileIsOwner === false ) {
+			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
+		}
+
+		//update all attributes
+		$location -> setLocationLatitude($requestObject->locationLatitude);
+		$location -> setLocationLongitude($requestObject->locationLongitude);
+		$location -> setLocationStartTime($requestObject->locationStartTime);
+		$location -> setLocationEndTime($requestObject->locationEndTime);
+
+		$location->update($pdo);
+
+		//update reply
+		$reply->message = "Location successfully updated";
+
+	}
+	else if($method === "POST") {
+		//enforce the user is signed in and a foodtruck owner
+		if(empty($_SESSION["profile"]) == true || $profile -> profileIsOwner === false) {
+			throw(new \InvalidArgumentException("you must be logged in to post foodtruck locations", 403));
+
+		}
+
+		//create new Location and insert into the database
+		//TODO how do I tie the profile session to the location so that I can insert it into the DB? STOPPED BELOW
+		$location = new Location(generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject)
 
 	}
 
@@ -101,7 +166,7 @@ try {
 		//enforce the user is signed in and trying to to edit their own location
 
 		//TODO is there  foodtruck session? How do I enforce the foodtruck owner is editing their own location? Add is owner to this if block?
-		if(empty($_SESSION["profile"]) === true || $_SESSION["foodtruck"]->getFoodTruckId()->toString() !== $location->getLocationFoodTruckId()->toString()) {
+		if(empty($_SESSION["profile"]) === false && $profile -> profileIsOwner === false|| $_SESSION["foodtruck"]->getFoodTruckId()->toString() !== $location->getLocationFoodTruckId()->toString()) {
 					throw(new \InvalidArgumentException("You are not allowed to delete this location", 403));
 	}
 	//delete location
