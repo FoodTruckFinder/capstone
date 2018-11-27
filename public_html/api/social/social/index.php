@@ -110,25 +110,27 @@ try {
 		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $social->getSocialFoodTruckId()->toString()) {
 			throw(new \InvalidArgumentException("You are not allowed to delete this social link", 418));
 		}
-		//TODO: What else do I need to add?
-		//enforce the end user has a JWT token
-		validateJwtHeader();
-		// delete social
-		$social->delete($pdo);
-		// update reply message to user
-		$reply->message = "Social successfully deleted";
-		// if any other HTTP request is sent throw an exception
-	} else {
-		throw (new InvalidArgumentException("Invalid HTTP request", 418));
-	}
-	//catch any exceptions that is thrown, and update the reply status and message
-} catch(\Exception | \TypeError $exception) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
-}
-header("Content-type: application/json");
-if($reply->data === null) {
-	unset($reply->data);
-}
+
+		else if($method === "DELETE") {
+
+			//enforce that the end user has a XSRF token.
+			verifyXsrf();
+
+			// retrieve the Social to be deleted
+			$social = Social::getSocialByTSocialId($pdo, $id);
+			if($social === null) {
+				throw(new RuntimeException("Social does not exist", 404));
+			}
+
+			//enforce the user is signed in and only trying to edit their own social
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $social->getSocialProfileId()) {
+				throw(new \InvalidArgumentException("You are not allowed to delete this social", 403));
+			}
+
+			// delete social
+			$social->delete($pdo);
+			// update reply
+			$reply->message = "Social deleted OK";
+		}
 // encode and return reply to front end caller
 echo json_encode($reply);
