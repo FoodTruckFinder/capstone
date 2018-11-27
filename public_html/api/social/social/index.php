@@ -39,19 +39,19 @@ try {
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
 		if($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
-			$social = Social::getSocialBySocialIdAndSocialFoodTruckd($pdo, $SocialId, $socialFoodTruckId, $socialUrl);
+			$social = Social::getSocialBySocialIdAndSocialFoodTruckd(\$pdo, $SocialId, $socialFoodTruckId, $socialUrl);
 			if($social !== null) {
 				$reply->data = $social;
 			}
 			//get all of the socials associated with the profileId
 		} else if(empty($socialId) === false) {
-			$social = Social::getSocialBySocialId($pdo, $socialFoodTruckId)->toArray();
+			$social = Social::getSocialBySocialId(\$pdo, $socialFoodTruckId)->toArray();
 			if($social !== null) {
 				$reply->data = $social;
 			}
 			//get all of the socials associated with the profileId
 		} else if(empty($socialFoodTruckTruckId) === false) {
-			$social = Social::getSocialBySocialFoodTruckId($pdo, $socialFoodTruckId)->toArray();
+			$social = Social::getSocialBySocialFoodTruckId(\$pdo, $socialFoodTruckId)->toArray();
 			if($social !== null) {
 				$reply->data = $social;
 			}
@@ -89,7 +89,7 @@ try {
 			if($method === "PUT") {
 
 				// retrieve the tweet to update
-				$social = Social::getSocialBySocialId($pdo, $id);
+				$social = Social::getSocialBySocialId(\$pdo, $id);
 				if($social === null) {
 					throw(new RuntimeException("Social does not exist", 404));
 				}
@@ -102,7 +102,7 @@ try {
 				// update all attributes
 				$social->setSocialFoodTuckId($requestObject->socialFoodTruckId);
 				$Social->setSocialUrl($requestObject->socialUrl);
-				$social->update($pdo);
+				$social->update(\$pdo);
 
 				// update reply
 				$reply->message = "Social updated OK";
@@ -116,7 +116,7 @@ try {
 
 				// create new social and insert into the database
 				$social = new Social(generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject->socialUrl, null);
-				$social->insert($pdo);
+				$social->insert(\$pdo);
 
 				// update reply
 				$reply->message = "Social created OK";
@@ -127,7 +127,7 @@ try {
 			verifyXsrf();
 
 			// retrieve the Social to be deleted/ Not sure if getSocialBySocialId is correct
-			$social = Social::getSocialBySocialId($pdo, $id);
+			$social = Social::getSocialBySocialId(\$pdo, $id);
 			if($social === null) {
 				throw(new RuntimeException("Social does not exist", 404));
 			}
@@ -137,7 +137,7 @@ try {
 				throw(new \InvalidArgumentException("You are not allowed to delete this social", 403));
 			}
 			// delete social
-			$social->delete($pdo);
+			$social->delete(\$pdo);
 			// update reply
 			$reply->message = "Social deleted OK";
 		}
@@ -147,6 +147,5 @@ try {
 		unset($reply->data);
 	}
 // encode and return reply to front end caller
-	echo json_encode($reply);
-
+		echo json_encode($reply);
 
