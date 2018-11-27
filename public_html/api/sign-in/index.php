@@ -56,11 +56,8 @@ try {
 			throw (new \RuntimeException("Invalid username", 401));
 		}
 
-		//hash the user's password
-		$hash = password_hash($profilePassword, PASSWORD_ARGON2I, ["time_cost" =>384]);
-		//enforce that the user's password matches their password in mySQL
-      if ($hash !== $profile->getProfileHash()) {
-      	throw (new \InvalidArgumentException("Invalid username or password.", 401));
+		if(password_verify($requestObject->profilePassword, $profile->getProfileHash()) === false) {
+			throw(new \InvalidArgumentException("Password is incorrect", 401));
 		}
 		//grab profile by profileId from MySQL and put into the session
 		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
@@ -73,6 +70,7 @@ try {
 		//create the auth payload
 		$authObject = (object) [
 			"profileId" => $profile->getProfileId(),
+
 			"profileName" => $profile->getProfileName()
 		];
 		//create & set the JWT
