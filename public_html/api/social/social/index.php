@@ -2,10 +2,10 @@
 
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
-require_once("/etc/apache2/capstone-mysql/secrets.php");
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
+require_once("/etc/apache2/capstone-mysql/secrets.php");
 
 use FoodTruckFinder\Capstone\Favorite;
 use FoodTruckFinder\Capstone\FoodTruck;
@@ -80,7 +80,7 @@ try {
 //		if(Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $_SESSION["profile"]->getProfileId(), $requestObject->socialId)!==null){
 //			throw(new \InvalidArgumentException("The Social already exists."));
 //		}
-//		if (Profile::getProfileByProfileId($pdo,$requestObject->bookmarkArtId)===null){
+//		if (Profile::getProfileByProfileId($pdo,$requestObject->socialId)===null){
 //			throw(new \InvalidArgumentException("The profile does not exist."));
 //		}
 		//enforce that the user is signed in
