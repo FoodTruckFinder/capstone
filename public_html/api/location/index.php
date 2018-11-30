@@ -148,18 +148,24 @@ try {
 	}
 	else if($method === "POST") {
 		//enforce the user is signed in and a foodtruck owner
-		if(empty($_SESSION["profile"]) == true || $profile -> profileIsOwner === false) {
+		if(empty($_SESSION["profile"]) == true) {
 			throw(new \InvalidArgumentException("you must be logged in as a foodtruck owner to post foodtruck locations", 403));
 
 		}
 
-		//create new Location and insert into the database
-		//TODO how do I tie the profile session to the location so that I can insert it into the DB? STOPPED BELOW
-		$location = new Location(generateUuidV4(), $foodTruck->getFoodTruckId(), $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, $requestObject->locationStartTime);
-		$location->insert($pdo);
+		//retrieve the foodtruck to update TODO enter a test value for foodTruckId
+		$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $foodTruckId);
+		if($foodTruck === null) {
+			throw(new RuntimeException("FoodTruck does not exist.", 404));
 
-		//update reply
-		$reply->message = "Location successfully created";
+			//create new Location and insert into the database
+			//TODO how do I tie the profile session to the location so that I can insert it into the DB? STOPPED BELOW
+			$location = new Location(generateUuidV4(), $foodTruck->getFoodTruckId(), $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, $requestObject->locationStartTime);
+			$location->insert($pdo);
+
+			//update reply
+			$reply->message = "Location successfully created";
+		}
 	}
 
 	else if ($method === "DELETE") {
