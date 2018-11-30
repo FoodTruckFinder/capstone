@@ -128,7 +128,7 @@ try {
 		if($foodTruck === null) {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 		}
-		//enforce the user is signed in and is a foodtruck owner
+		//enforce the user is signed in and their FoodTruckProfileId matches their ProfileId
 		//TODO Add a logic block that checks that their foodtruckId matches the locationfoodtruckId this is to enforce that the unique foodtruck owner is only able to edit their location
 		if($foodTruck->getFoodTruckProfileId()->toString()  !== $_SESSION["profile"]->getProfileId()->toString  &&  empty($_SESSION["profile"]) === false) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
@@ -153,8 +153,8 @@ try {
 
 		}
 
-		//retrieve the foodtruck to update TODO enter a test value for foodTruckId
-		$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $foodTruckId);
+		//retrieve the foodtruck to own the new record TODO enter a test value for foodTruckId
+		$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $locationFoodTruckId);
 		if($foodTruck === null) {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 
