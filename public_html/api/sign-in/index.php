@@ -59,9 +59,11 @@ try {
 		if(password_verify($requestObject->profilePassword, $profile->getProfileHash()) === false) {
 			throw(new \InvalidArgumentException("Password is incorrect", 401));
 		}
-		//grab profile by profileId from MySQL and put into the session
-		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
+
 		//check if user still has an active user activation token. User must validate token before signing in.
+
+		var_dump($profile);
+
 		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {
 			throw (new \RuntimeException("Please verify your account via email before logging in.", 403));
 		}

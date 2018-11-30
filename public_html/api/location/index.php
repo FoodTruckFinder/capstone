@@ -124,7 +124,7 @@ try {
 		}
 		//enforce the user is signed in and is a foodtruck owner
 		//TODO Add a logic block that checks that their foodtruckId matches the locationfoodtruckId this is to enforce that the unique foodtruck owner is only able to edit their location
-		if(empty($_SESSION["profile"]) === true || $profile -> profileIsOwner === false && $_SESSION["profile"]->getProfileId()->toString !== $foodTruck->getFoodTruckProfileId()->toString()) {
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getFoodTruckProfileId()->toString !== $foodTruck->getFoodTruckProfileId()->toString()) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
 		}
 
