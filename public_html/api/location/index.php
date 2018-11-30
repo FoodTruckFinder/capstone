@@ -122,9 +122,15 @@ try {
 		if($location === null) {
 					throw(new RuntimeException("Location does not exist.", 404));
 		}
+
+		//retrieve the foodtruck to update
+		$foodTruck = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $foodTruckProfileId);
+		if($foodTruck === null) {
+			throw(new RuntimeException("FoodTruck does not exist.", 404));
+		}
 		//enforce the user is signed in and is a foodtruck owner
 		//TODO Add a logic block that checks that their foodtruckId matches the locationfoodtruckId this is to enforce that the unique foodtruck owner is only able to edit their location
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getFoodTruckProfileId()->toString !== $foodTruck->getFoodTruckProfileId()->toString()) {
+		if($foodTruck->getFoodTruckProfileId()->toString()  !== $_SESSION["profile"]->getProfileId()->toString  &&  empty($_SESSION["profile"]) === false) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
 		}
 
@@ -167,10 +173,14 @@ try {
 					throw(new RuntimeException("Location not found", 404));
 		}
 
-		//enforce the user is signed in and trying to to edit their own location
+		//retrieve the foodtruck to update
+		$foodTruck = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $foodTruckProfileId);
+		if($foodTruck === null) {
+			throw(new RuntimeException("FoodTruck does not exist.", 404));
+		}
 
-		//TODO is there a foodtruck session? How do I enforce the foodtruck owner is editing their own location? Add is owner to this if block?
-		if(empty($_SESSION["profile"]) === false || $profile -> profileIsOwner === false && $_SESSION["profile"]->getProfileId()->toString !== $foodTruck->getFoodTruckProfileId()->toString()) {
+		//TODO rewrite if block to enforce that foodTruckProfileId === $_SESSION["profile] and $_SESSION["profile] is not empty
+		if($foodTruck->getFoodTruckProfileId()->toString()  !== $_SESSION["profile"]->getProfileId()->toString  &&  empty($_SESSION["profile"]) === false) {
 					throw(new \InvalidArgumentException("You are not allowed to delete this location", 403));
 	}
 	//delete location
