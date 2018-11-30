@@ -65,7 +65,6 @@ try {
 				$reply->data = $locations;
 			}
 		}
-		// If the method request is not GET an invalid argument exception is thrown
 	} else if($method === "PUT" || $method === "POST") {
 
 
@@ -90,6 +89,8 @@ try {
 			throw(new \InvalidArgumentException("Location is missing a start or end time", 405));
 		}
 
+
+		/*
 		//TODO NOT SURE About Lines  94-102
 		//make sure the start time is accurate
 		if(empty($requestObject->locationStartTime) === true) {
@@ -105,8 +106,8 @@ try {
 			}
 			$requestObject->locationStartTime = $locationStartTime;
 		}
-		//TODO write the same format for locationEndTime?
-
+		//TODO Format start and end times before putting or posting??
+*/
 
 
 
@@ -123,7 +124,7 @@ try {
 		}
 		//enforce the user is signed in and is a foodtruck owner
 		//TODO Add a logic block that checks that their foodtruckId matches the locationfoodtruckId this is to enforce that the unique foodtruck owner is only able to edit their location
-		if(empty($_SESSION["profile"]) === true || $profile -> profileIsOwner === false ) {
+		if(empty($_SESSION["profile"]) === true || $profile -> profileIsOwner === false && $_SESSION["profile"]->getProfileId()->toString !== $foodTruck->getFoodTruckProfileId()->toString()) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
 		}
 
@@ -142,14 +143,17 @@ try {
 	else if($method === "POST") {
 		//enforce the user is signed in and a foodtruck owner
 		if(empty($_SESSION["profile"]) == true || $profile -> profileIsOwner === false) {
-			throw(new \InvalidArgumentException("you must be logged in to post foodtruck locations", 403));
+			throw(new \InvalidArgumentException("you must be logged in as a foodtruck owner to post foodtruck locations", 403));
 
 		}
 
 		//create new Location and insert into the database
 		//TODO how do I tie the profile session to the location so that I can insert it into the DB? STOPPED BELOW
-		$location = new Location(generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject)
+		$location = new Location(generateUuidV4(), $foodTruck->getFoodTruckId(), $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, $requestObject->locationStartTime);
+		$location->insert($pdo);
 
+		//update reply
+		$reply->message = "Location successfully created";
 	}
 
 	else if ($method === "DELETE") {
@@ -165,8 +169,8 @@ try {
 
 		//enforce the user is signed in and trying to to edit their own location
 
-		//TODO is there  foodtruck session? How do I enforce the foodtruck owner is editing their own location? Add is owner to this if block?
-		if(empty($_SESSION["profile"]) === false && $profile -> profileIsOwner === false|| $_SESSION["foodtruck"]->getFoodTruckId()->toString() !== $location->getLocationFoodTruckId()->toString()) {
+		//TODO is there a foodtruck session? How do I enforce the foodtruck owner is editing their own location? Add is owner to this if block?
+		if(empty($_SESSION["profile"]) === false || $profile -> profileIsOwner === false && $_SESSION["profile"]->getProfileId()->toString !== $foodTruck->getFoodTruckProfileId()->toString()) {
 					throw(new \InvalidArgumentException("You are not allowed to delete this location", 403));
 	}
 	//delete location
