@@ -474,7 +474,7 @@ class FoodTruck implements \JsonSerializable {
 		$foodTruckName = str_replace("_", "\\_", str_replace("%", "\\%", $foodTruckName));
 
 		// create query template
-		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber WHERE foodTruckName LIKE :foodTruckName";
+		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber FROM foodTruck WHERE foodTruckName LIKE :foodTruckName";
 		$statement = $pdo->prepare($query);
 
 		// bind the truck Name to the placeholder in the template
