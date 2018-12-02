@@ -25,7 +25,7 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/foodDelivery");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
 	$pdo = $secrets->getPdoObject();
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -42,7 +42,7 @@ try {
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
 		if($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
-			$social = Social::getSocialBySocialIdAndSocialFoodTruckId(\$pdo, $SocialId, $socialFoodTruckId, $socialUrl);
+			$social = Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $SocialId, $socialFoodTruckId, $socialUrl);
 			if($social !== null) {
 				$reply->data = $social;
 			}
