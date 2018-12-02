@@ -29,7 +29,7 @@ try {
 	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
 	$pdo = $secrets->getPdoObject();
 
-	$_SESSION["profile"] = Profile::getProfileByProfileId($pdo, "b3200b81-2cdd-47dc-9e8e-21f9bd69fe3b");
+	// $_SESSION["profile"] = Profile::getProfileByProfileId($pdo, "b3200b81-2cdd-47dc-9e8e-21f9bd69fe3b");
 
 	//determine which HTTP method was used
 	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
@@ -83,10 +83,6 @@ try {
 			throw(new \InvalidArgumentException ("No name for food truck.", 405));
 		}
 
-		//  make sure profileId is available
-		if(empty($requestObject->foodTruckProfileId) === true) {
-			throw(new \InvalidArgumentException ("No food truck profile ID.", 405));
-		}
 		if($method === "PUT") {
 			//determine if we have a PUT request. Process PUT request here
 			// retrieve the food Truck to update
@@ -122,7 +118,7 @@ try {
 			}
 
 			// create new food truck and insert into the database
-			$foodTruck = new FoodTruck(generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject->foodTruckDescription, $requestObject->foodTruckImageUrl, $requestObject->foodTruckMenuUrl, $requestObject->foodTruckName, $requestObject->foodTruckPhoneNumber);
+			$foodTruck = new FoodTruck(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->foodTruckDescription, $requestObject->foodTruckImageUrl, $requestObject->foodTruckMenuUrl, $requestObject->foodTruckName, $requestObject->foodTruckPhoneNumber);
 			$foodTruck->insert($pdo);
 
 			// update reply
