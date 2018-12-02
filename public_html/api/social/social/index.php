@@ -25,13 +25,14 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/foodDelivery");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize the search parameters
 	$SocialId = filter_input(INPUT_GET, "SocialId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$socialFoodTruckId = filter_input(INPUT_GET, "socialFoodTruckId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$socialUrl = filter_input(INPUT_GET, "socialUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
 	/**
 	 * Get API for Social
 	 **/
@@ -40,7 +41,7 @@ try {
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
 		if($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
-			$social = Social::getSocialBySocialIdAndSocialFoodTruckd(\$pdo, $SocialId, $socialFoodTruckId, $socialUrl);
+			$social = Social::getSocialBySocialIdAndSocialFoodTruckId(\$pdo, $SocialId, $socialFoodTruckId, $socialUrl);
 			if($social !== null) {
 				$reply->data = $social;
 			}
@@ -57,12 +58,13 @@ try {
 				$reply->data = $social;
 			}
 			//if none of the search parameters are met, throw an exception
-		} else
+		else
 			throw new InvalidArgumentException("invalid search parameters ", 404);
-	} /**
+	}
+	/**
 	 * Post API for Social
 	 **/
-	else
+		 else
 		if($method === "PUT" || $method === "POST") {
 
 			// enforce the user has a XSRF token
@@ -147,6 +149,11 @@ try {
 	if($reply->data === null) {
 		unset($reply->data);
 	}
+
 // encode and return reply to front end caller
-		echo json_encode($reply);
+	echo json_encode($reply);
+	}
+
+
+
 
