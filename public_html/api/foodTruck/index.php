@@ -59,7 +59,7 @@ try {
 				$reply->data = FoodTruck::getFoodTruckByFoodTruckId($pdo, $id);
 			} else if(empty($foodTruckProfileId) === false) {
 				$reply->data = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $foodTruckProfileId)->toArray();
-			} else if(empty($foodTruckDescription) === false) {
+			} else if(empty($foodTruckName) === false) {
 				$reply->data = FoodTruck::getFoodTruckByFoodTruckName($pdo, $foodTruckName)->toArray();
 			} else {
 				$reply->data = FoodTruck::getAllFoodTrucks($pdo)->toArray();
