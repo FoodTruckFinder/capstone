@@ -48,7 +48,7 @@ try {
 			}
 			//get all of the socials associated with the profileId
 		} else if(empty($socialId) === false) {
-			$social = Social::getSocialBySocialId($pdo, $socialFoodTruckId)->toArray();
+			$social = Social::getSocialBySocialId($pdo, $socialFoodTruckId);
 			if($social !== null) {
 				$reply->data = $social;
 			}
@@ -118,7 +118,7 @@ try {
 				}
 
 				// create new social and insert into the database
-				$social = new Social(generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject->socialUrl, null);
+				$social = new Social (generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject->socialUrl, null);
 				$social->insert($pdo);
 
 				// update reply
