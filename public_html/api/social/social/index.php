@@ -31,6 +31,7 @@ try {
 	//sanitize the search parameters
 	$SocialId = filter_input(INPUT_GET, "SocialId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$socialFoodTruckId = filter_input(INPUT_GET, "socialFoodTruckId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$socialUrl = filter_input(INPUT_GET, "socialUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	/**
 	 * Get API for Social
 	 **/
