@@ -12,7 +12,7 @@ use FoodTruckFinder\Capstone\Profile;
 
 /**
  * API for the Profile class
- *
+ * @see Profile
  * @author <dnakitare@cnm.edu>
  */
 
@@ -32,45 +32,57 @@ try {
 	$pdo = $secrets->getPdoObject();
 
 	// determine which HTTP method was used
-	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	// sanitize input
-	$profileId = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	// sanitize inputs
+	$id = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-
-	// make sure the profile id is valid for methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($profileId) === true)) {
-		throw(new \InvalidArgumentException("profile id cannot be empty or negative", 405));
+	// make sure the id  is valid for methods that require it
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
+		throw(new \InvalidArgumentException("id cannot be empty of negative", 405));
 	}
 
 	if($method === "GET") {
-		// set XSRF cookie
+		// set XSRF-TOKEN to prevent Cross Site Request Forgery
 		setXsrfCookie();
 
+
 		// get a Profile by content
-		if(empty($profileId) === false) {
-			$reply->data = Profile::getProfileByProfileId($pdo, $profileId);
-		} elseif(empty($profileActivationToken) === false) {
-			$reply->data = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-		} elseif(empty($profileEmail) == false) {
-			$reply->data = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+		if(empty($id) === false) {
+			$profile = Profile::getProfileByProfileId($pdo, $id);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
+		} elseif(empty($profileEmail) === false) {
+			$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
 		}
+
 	} elseif($method === "PUT") {
 		// enforce that the XSRF token is present in the header
 		verifyXsrf();
 
 		// enforce the user is signed in and only trying to edit their own profile
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $profileId) {
-			throw (new \InvalidArgumentException("You are not allowed to access this profile", 403));
+		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+		if(!$profile) {
+			throw (new \InvalidArgumentException("You must be logged in to modify your profile.", 405));
 		}
 
+		// validate header
 		validateJwtHeader();
 
 		// decode the response from the front end
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
+
+		if(!$requestObject) {
+			throw (new \Exception("Data is missing or invalid", 404));
+		}
+
+		// we only allow the logged in user to modify his/her email address, name,
 
 
 		// retrieve the profile to be updated
