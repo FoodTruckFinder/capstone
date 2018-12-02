@@ -482,7 +482,7 @@ class FoodTruck implements \JsonSerializable {
 		$parameters = ["foodTruckName" => $foodTruckName];
 		$statement->execute($parameters);
 
-		var_dump($statement->rowCount());
+
 
 		//build array of food trucks
 		$foodTrucks = new \SplFixedArray($statement->rowCount());
