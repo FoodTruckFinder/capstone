@@ -122,7 +122,8 @@ class Location implements \JsonSerializable {
 		try {
 			$uuid = self::validateUuid($newLocationFoodTruckId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// store the uuid
 		$this->locationFoodTruckId = $uuid;
