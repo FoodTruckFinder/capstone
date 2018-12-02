@@ -84,7 +84,7 @@ try {
 		if($profile === null) {
 			throw (new \RuntimeException("Profile does not exist", 404));
 		}
-
+// todo front end needs to fill each field to complete PUT
 		// profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw (new \InvalidArgumentException("No profile email", 405));

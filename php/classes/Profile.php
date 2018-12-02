@@ -355,6 +355,48 @@ class Profile implements \JsonSerializable {
 	}
 
 	/**
+	 * get Profile by profile email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileEmail profile email to search for
+	 * @return Profile|null return Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): Profile {
+		// verify the profile email is not empty
+		if(empty($profileEmail) === true) {
+			throw (new \PDOException("email field is empty"));
+		}
+		// trim profile email sanitize
+		$profileEmail = trim($profileEmail);
+		// verify if email is well formed
+		if(filter_var($profileEmail, FILTER_VALIDATE_EMAIL) === false) {
+			throw (new \TypeError("email in not valid format"));
+		}
+		// create query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileEmail LIKE :profileEmail";
+		$statement = $pdo->prepare($query);
+		// bind the profile email to the place holder in the template
+		$parameters = ["profileEmail" => $profileEmail];
+		$statement->execute($parameters);
+
+		//grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row ["profileIsOwner"], $row["profileName"]);
+			}
+		} catch (\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+	}
+
+	/**
 	 * formats the state variable for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
