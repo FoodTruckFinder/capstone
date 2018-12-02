@@ -4,9 +4,10 @@ namespace FoodTruckFinder\Capstone;
 
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
-require_once ("/etc/apache2/capstone-mysql/Secrets.php");
+require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
 use FoodTruckFinder\Capstone\Profile;
 
@@ -17,7 +18,7 @@ use FoodTruckFinder\Capstone\Profile;
  */
 
 // verify the session, start if not active
-if (session_status() !== PHP_SESSION_ACTIVE) {
+if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
@@ -28,7 +29,7 @@ $reply->data = null;
 
 try {
 	// grab the mySQL connection
-	$secrets =  new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
 	$pdo = $secrets->getPdoObject();
 
 	// determine which HTTP method was used
@@ -37,6 +38,7 @@ try {
 	// sanitize inputs
 	$id = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$profileName = filter_input(INPUT_GET, "profileName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	// make sure the id  is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
@@ -48,7 +50,7 @@ try {
 		setXsrfCookie();
 
 
-		// get a Profile by content
+		// get a profile by content
 		if(empty($id) === false) {
 			$profile = Profile::getProfileByProfileId($pdo, $id);
 			if($profile !== null) {
@@ -65,38 +67,30 @@ try {
 		// enforce that the XSRF token is present in the header
 		verifyXsrf();
 
-		// enforce the user is signed in and only trying to edit their own profile
-		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
-		if(!$profile) {
-			throw (new \InvalidArgumentException("You must be logged in to modify your profile.", 405));
+		//enforce the user is signed in and only trying to edit their own profile
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $id) {
+			throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
 		}
 
-		// validate header
+		// enforce that the end user has a JWT token
 		validateJwtHeader();
 
 		// decode the response from the front end
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		if(!$requestObject) {
-			throw (new \Exception("Data is missing or invalid", 404));
-		}
-
-		// we only allow the logged in user to modify his/her email address, name,
-
-
 		// retrieve the profile to be updated
-		$profile = Profile::getProfileByProfileId($pdo, $profileId);
+		$profile = Profile::getProfileByProfileId($pdo, $id);
 		if($profile === null) {
 			throw (new \RuntimeException("Profile does not exist", 404));
 		}
 
-		// profile email
+		// profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw (new \InvalidArgumentException("No profile email", 405));
 		}
 
-		// profile name
+		// profile name is a required field
 		if(empty($requestObject->profileName) === true) {
 			throw (new \InvalidArgumentException("No profile name", 405));
 		}
@@ -112,8 +106,7 @@ try {
 		throw (new \InvalidArgumentException("Invalid HTTP request", 400));
 	}
 	// catch any exceptions that were thrown and update the status and message state variable fields
-} catch
-(\Exception | \TypeError $exception) {
+} catch(\Exception | \TypeError $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 }
@@ -122,8 +115,7 @@ header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
-// encode and return reply to front end caller
+//encode and return reply to front end caller
 echo json_encode($reply);
-
 
 
