@@ -38,7 +38,7 @@ try {
 
 	//make sure the locationId is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && empty($locationId) === true) {
-		throw(new InvalidArgumentException("id cannot be empty", 405));
+		throw(new InvalidArgumentException("location id cannot be empty", 405));
 	}
 	//handle GET request if id is present, that location is returned, otherswise return all locations
 	if($method === "GET") {
