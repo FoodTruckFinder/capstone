@@ -478,9 +478,11 @@ class FoodTruck implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the truck Name to the placeholder in the template
-		$foodTruckName = "%$$foodTruckName%";
+		$foodTruckName = "%$foodTruckName%";
 		$parameters = ["foodTruckName" => $foodTruckName];
 		$statement->execute($parameters);
+
+		var_dump($statement->rowCount());
 
 		//build array of food trucks
 		$foodTrucks = new \SplFixedArray($statement->rowCount());
@@ -513,6 +515,7 @@ class FoodTruck implements \JsonSerializable {
 
 		//build array of foodTrucks
 		$foodTrucks = new \SplFixedArray($statement->rowCount());
+
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
