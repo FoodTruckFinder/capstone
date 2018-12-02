@@ -60,7 +60,7 @@ try {
 				throw (new \InvalidArgumentException("No FoodTruck linked to the Favorite", 405));
 			}
 			if(empty($requestObject->favoriteProfileId) === true) {
-				throw (new \InvalidArgumentException("No tweet linked to the Like", 405));
+				throw (new \InvalidArgumentException("No favorite linked to the Like", 405));
 			}
 			if(empty($requestObject->favoriteAddDate) === true) {
 				$requestObject->favoriteAddDate =  date("y-m-d H:i:s");
