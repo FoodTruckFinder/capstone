@@ -60,7 +60,7 @@ try {
 				throw (new \InvalidArgumentException("No FoodTruck linked to the Favorite", 405));
 			}
 			if(empty($requestObject->favoriteProfileId) === true) {
-				throw (new \InvalidArgumentException("No favorite linked to the Like", 405));
+				throw (new \InvalidArgumentException("No favorite linked to the foodTruck", 405));
 			}
 			if(empty($requestObject->favoriteAddDate) === true) {
 				$requestObject->favoriteAddDate =  date("y-m-d H:i:s");
@@ -75,7 +75,7 @@ try {
 					throw(new \InvalidArgumentException("you must be logged in to favorite a food truck", 403));
 				}
 				validateJwtHeader();
-				$favorite = new Favorite($_SESSION["profile"]->getFavoriteProfileId(), $requestObject->favoriteFoodTruckId);
+				$favorite = new Favorite($_SESSION["profile"]->getProfileId(), $requestObject->favoriteFoodTruckId);
 				$favorite->insert($pdo);
 				$reply->message = "favorite food truck successful";
 			} else if($method === "PUT") {
@@ -84,7 +84,7 @@ try {
 				//enforce the end user has a JWT token
 				validateJwtHeader();
 				//grab the favorite by its composite key
-				$favorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($pdo, $requestObject->favoriteFoodTruckId, $requestObject->favoriteProfileId);
+				$favorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndProfileId($pdo, $requestObject->favoriteFoodTruckId, $requestObject->favoriteProfileId);
 				if($favorite === null) {
 					throw (new RuntimeException("favorite does not exist"));
 				}
