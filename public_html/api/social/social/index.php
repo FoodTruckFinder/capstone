@@ -98,7 +98,7 @@ try {
 				}
 
 				//enforce the user is signed in and only trying to edit their own social
-				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $social->getSocialProfileId()->toString()) {
+				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $social->getSocialId()->toString()) {
 					throw(new \InvalidArgumentException("You are not allowed to edit this social", 403));
 				}
 
@@ -138,7 +138,7 @@ try {
 			$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $social->getSocialFoodTruckId());
 
 			//enforce the user is signed in and only trying to edit their own social
-			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $social->getSocialProfileId()) {
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $social->getSocialId()) {
 				throw(new \InvalidArgumentException("You are not allowed to delete this social", 403));
 			}
 			// delete social
