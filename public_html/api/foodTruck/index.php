@@ -8,7 +8,6 @@ require_once("/etc/apache2/capstone-mysql/Secrets.php");
 use FoodTruckFinder\Capstone\Profile;
 use FoodTruckFinder\Capstone\FoodTruck;
 
-
 /**
  * api for the foodTruck class
  *

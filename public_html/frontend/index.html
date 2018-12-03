@@ -8,46 +8,40 @@
 
 		<meta charset="UTF-8">
 		<meta name="viewport" content="initial-scale=1.0">
-
-		<!-- dont enable this until we know more about responsive design
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		-->
-
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 		<!--CSS dependencies-->
-
 		<link rel="stylesheet" type="text/css" href="style.css">
 
-		<!--JS dependencies ToDo-->
+		<!--toDo JS dependencies -->
 
-		<!--MAKE JS BELOW NOT INLINE BEFORE DEMO DAY-->
+		<!--toDo MAKE JS BELOW NOT INLINE BEFORE DEMO DAY-->
 
-	<script>
-		function initMap() {
-			//default google maps function do not modify without asking
-			var map = new google.maps.Map(document.getElementById('map'),{
+		<script>
+			function initMap() {
+				//default google maps function do not modify without asking
+				var map = new google.maps.Map(document.getElementById('map'),{
 
-				//DO NOT CHANGE ZOOM OR LAT LONG WITHOUT CONSULTING WITH TEAM
-				zoom: 14,
-				center: {lat: 35.083, lng: -106.638},
-			});
-		}
+					//do not change zoom or center
+					zoom: 14,
+					center: {lat: 35.083, lng: -106.638},
+				});
+			}
 
-		//CUSTOM FUNCTIONS -- NOT GOOGLE MAPS API DOCS SUGGESTED
-		//variable declarations only below
-		//var screenWidth = window.innerWidth;
-		//disabling default UI if screen is tiny af
-		//if (screenWidth < 340) {
-		//	disableDefaultUI: true
-		//}
+			//CUSTOM FUNCTIONS -- NOT GOOGLE MAPS API DOCS SUGGESTED
+			//variable declarations only below
+			//var screenWidth = window.innerWidth;
+			//disabling default UI if screen is tiny af
+			//if (screenWidth < 340) {
+			//	disableDefaultUI: true
+			//}
 
-	</script>
-	<!--MAKE THIS ABOVE NOT INLINE BEFORE DEMO DAY-->
+		</script>
 
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap"
-			  async defer>
-	</script>
+		<!-- Google Maps API key below--do not change-->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap"
+				  async defer>
+		</script>
 
 
 		<!--meta misc-->
@@ -57,11 +51,6 @@
 	<body>
 		<div id="map"></div>
 
-		<button class="btn">Post Food Truck Location</button>
-
-
-
-
 		<div class="mainmap">
 
 		</div>
@@ -70,14 +59,10 @@
 		-->
 
 
-		<!-- DO NOT MODIFY API KEY BELOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-	--><script
+		<!-- will use this to reference external JS (no inline JS)~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<script
 			src="doNotUseThisOrModify.txt">
 		</script>
-
-		<!-- DO NOT MODIFY API KEY ABOVE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
 
 	</body>
 
