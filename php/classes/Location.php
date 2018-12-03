@@ -50,17 +50,17 @@ class Location implements \JsonSerializable {
 	 *
 	 * @param Uuid | $newLocationId id of this location
 	 * @param Uuid | $newLocationFoodTruckId id of foodtruck at this location
-	 * @param /DATETIME | $newLocationEndTime datetime value
+	 * @param /DATETIME |null|string $newLocationEndTime datetime value
 	 * @param float $newLocationLatitude latitude coordinate of this location
 	 * @param float $newLocationLongitude longitude coordinate of this location
 	 * @param /DATETIME $newLocationStartTime datetime value
 	 * @throws \InvalidArgumentException if the data types are not valid
-	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \RangeException if data values are out of bounds (e.g., string is too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newLocationId, $newLocationFoodTruckId, $newLocationEndTime, float $newLocationLatitude, float $newLocationLongitude, $newLocationStartTime) {
+	public function __construct($newLocationId, $newLocationFoodTruckId, $newLocationEndTime = null, float $newLocationLatitude, float $newLocationLongitude, $newLocationStartTime) {
 		try {
 			$this->setLocationId($newLocationId);
 			$this->setLocationFoodTruckId($newLocationFoodTruckId);
@@ -95,7 +95,8 @@ class Location implements \JsonSerializable {
 		try {
 			$uuid = self::validateUuid($newLocationId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// store the uuid
 		$this->locationId = $uuid;
@@ -134,7 +135,7 @@ class Location implements \JsonSerializable {
 	 *
 	 * returns locationEndTime
 	 */
-	public function getLocationEndTime(): \DateTime {
+	public function getLocationEndTime(): ?\DateTime {
 		return ($this->locationEndTime);
 
 	}
@@ -147,20 +148,20 @@ class Location implements \JsonSerializable {
 	 * @throws \Exception \InvalidArgumentException or \RangeException if not a valid date.
 	 */
 
-	public function setLocationEndTime($newLocationEndTime = null): void {
+	public function setLocationEndTime( $newLocationEndTime): void {
 		if(empty($newLocationEndTime) === true) {
-			$this->locationEndTime = $this->locationStartTime->add(new \DateInterval('PT4H'));
+			throw(new \TypeError("Date is not formatted correctly."));
 		}
-		// check the end time using the validateDateTime trait
 		try {
 			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
-		} catch(\InvalidArgumentException | \RangeException $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \TypeError |\Exception $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		// store the datetime value
+		//store the new Event End Time
 		$this->locationEndTime = $newLocationEndTime;
 	}
+
 
 	/**
 	 * accessor method for locationStartTime
@@ -310,7 +311,7 @@ class Location implements \JsonSerializable {
 
 	/**
 	 * @param \PDO $pdo PDO connection object
-	 * @param $locationFoodTruckId UUid of FoodTruck to search by
+	 * @param $locationFoodTruckId Uuid of FoodTruck to search by
 	 * @return Location| null returns
 	 */
 

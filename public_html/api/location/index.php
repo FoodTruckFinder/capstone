@@ -1,11 +1,12 @@
 <?php
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
-require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
-use \FoodTruckFinder\Capstone\{Location, Profile, FoodTruck};
+require_once("/etc/apache2/capstone-mysql/Secrets.php");
+use FoodTruckFinder\Capstone\Location;
+use FoodTruckFinder\Capstone\FoodTruck;
 
 /**
  * * api for Location class
@@ -87,8 +88,7 @@ try {
 			throw(new \InvalidArgumentException("No long or lat coordinates for location.", 405));
 		}
 
-		/*
-		//TODO NOT SURE About Lines  94-102
+
 		//make sure the start time is accurate
 		if(empty($requestObject->locationStartTime) === true) {
 			$requestObject->locationStartTime = null;
@@ -96,16 +96,7 @@ try {
 		//make sure the end time is accurate
 		if(empty($requestObject->locationEndTime) === true) {
 			$requestObject->locationEndTime = null;
-		} else {
-			$locationStartTime = DateTime::createFromFormat("U.u", $requestObject->locationStartTime / 1000);
-			if($locationStartTime === false) {
-				throw(new RuntimeException("invalid start time", 400));
 			}
-			$requestObject->locationStartTime = $locationStartTime;
-		}
-		//TODO Format start and end times before putting or posting??
-*/
-
 
 
 
@@ -155,9 +146,11 @@ try {
 
 		//retrieve the foodtruck to own the new record TODO enter a test value for foodTruckId
 else {
+	$test = "e120a31e-3205-4be8-afc8-377cbe261eb6";
 			//create new Location and insert into the database
 			//TODO how do I tie the profile session to the location so that I can insert it into the DB? STOPPED BELOW
-			$location = new Location(generateUuidV4(), $requestObject->locationFoodTruckId, $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, new \DateTime());
+			$location = new Location(generateUuidV4(), $requestObject->locationFoodTruckId, $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, $requestObject->locationStartTime);
+			var_dump($requestObject->locationFoodTruckId);
 			$location->insert($pdo);
 
 			//update reply
