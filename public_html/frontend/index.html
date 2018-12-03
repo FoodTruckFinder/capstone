@@ -17,9 +17,16 @@
 
 		<!--toDo MAKE JS BELOW NOT INLINE BEFORE DEMO DAY-->
 
+		<!--meta misc-->
+
+		<title>Food Truck Finder</title>
+	</head>
+	<body>
+		<div id="map"></div>
+
 		<script>
 			function initMap() {
-				//default google maps function do not modify without asking
+				//default google maps API code
 				var map = new google.maps.Map(document.getElementById('map'),{
 
 					//do not change zoom or center
@@ -38,32 +45,20 @@
 
 		</script>
 
+		<!--not sure if this is needed?
+		<div class="mainmap"></div>
+		-->
+
+		<!-- will use this to reference external JS (no inline JS)
+		<script
+			src="doNotUseThisOrModify.txt">
+		</script>
+		~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
 		<!-- Google Maps API key below--do not change-->
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA&callback=initMap"
 				  async defer>
 		</script>
-
-
-		<!--meta misc-->
-
-		<title>Food Truck Finder</title>
-	</head>
-	<body>
-		<div id="map"></div>
-
-		<div class="mainmap">
-
-		</div>
-
-
-		-->
-
-
-		<!-- will use this to reference external JS (no inline JS)~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-		<script
-			src="doNotUseThisOrModify.txt">
-		</script>
-
 	</body>
 
 </html>
