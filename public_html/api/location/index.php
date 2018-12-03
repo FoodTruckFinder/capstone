@@ -5,6 +5,7 @@ require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
+
 use FoodTruckFinder\Capstone\Location;
 use FoodTruckFinder\Capstone\FoodTruck;
 
@@ -32,7 +33,7 @@ try {
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//stores the Primary Key ($id) for the GET method
-	
+
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$locationFoodTruckId = filter_input(INPUT_GET, "locationFoodTruckId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$locationLatitude = filter_input(INPUT_GET, "locationLatitude", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -42,7 +43,7 @@ try {
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && empty($id) === true) {
-		throw(new InvalidArgumentException("location id cannot be empty", 405));
+		throw(new InvalidArgumentException("location id or location foodtruck cannot be empty", 405));
 	}
 	//handle GET request if id is present, that location is returned, otherswise return all locations
 	if($method === "GET") {
@@ -56,14 +57,12 @@ try {
 			if($location !== null) {
 				$reply->data = $location;
 			}
-		}
-		else if(empty($locationFoodTruckId) === false) {
+		} else if(empty($locationFoodTruckId) === false) {
 			$location = Location::getLocationByLocationFoodTruckId($pdo, $locationFoodTruckId);
 			if($location !== null) {
 				$reply->data = $location;
 			}
-		}
-		else {
+		} else {
 			$locations = Location::getAllLocations($pdo)->toArray();
 			if($locations !== null) {
 				$reply->data = $locations;
@@ -96,11 +95,9 @@ try {
 		//make sure the end time is accurate
 		if(empty($requestObject->locationEndTime) === true) {
 			$requestObject->locationEndTime = null;
-			}
+		}
 
 
-
-//TODO FINISH PUT/POST
 	}
 
 	if($method === "PUT") {
@@ -108,7 +105,7 @@ try {
 		//retrieve the location to update
 		$location = Location::getLocationByLocationId($pdo, $id);
 		if($location === null) {
-					throw(new RuntimeException("Location does not exist.", 404));
+			throw(new RuntimeException("Location does not exist.", 404));
 		}
 
 		//retrieve the foodtruck to update
@@ -117,76 +114,69 @@ try {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 		}
 		//enforce the user is signed in and their FoodTruckProfileId matches their ProfileId
-		//TODO Add a logic block that checks that their foodtruckId matches the locationfoodtruckId this is to enforce that the unique foodtruck owner is only able to edit their location
-		if($foodTruck->getFoodTruckProfileId()->toString()  !== $_SESSION["profile"]->getProfileId()->toString  &&  empty($_SESSION["profile"]) === false) {
+		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString() && empty($_SESSION["profile"]) === false) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
 		}
 
 		//update all attributes
-		$location -> setLocationLatitude($requestObject->locationLatitude);
-		$location -> setLocationLongitude($requestObject->locationLongitude);
-		$location -> setLocationStartTime($requestObject->locationStartTime);
-		$location -> setLocationEndTime($requestObject->locationEndTime);
+		$location->setLocationLatitude($requestObject->locationLatitude);
+		$location->setLocationLongitude($requestObject->locationLongitude);
+		$location->setLocationStartTime($requestObject->locationStartTime);
+		$location->setLocationEndTime($requestObject->locationEndTime);
 
 		$location->update($pdo);
 
 		//update reply
 		$reply->message = "Location successfully updated";
 
-	}
-	else if($method === "POST") {
+	} else if($method === "POST") {
 		//enforce the user is signed in and a foodtruck owner
 		if(empty($_SESSION["profile"]) == true) {
 			throw(new \InvalidArgumentException("you must be logged in as a foodtruck owner to post foodtruck locations", 403));
 
 		}
 		if($_SESSION["profile"]->getProfileIsOwner() !== 1) {
-			throw(new \InvalidArgumentException( "You are not allowed to perform this action.", 403));
-		}
+			throw(new \InvalidArgumentException("You are not allowed to perform this action.", 403));
+		} //retrieve the foodtruck to own the new record TODO enter a test value for foodTruckId
+		else {
 
-		//retrieve the foodtruck to own the new record TODO enter a test value for foodTruckId
-else {
-	$test = "e120a31e-3205-4be8-afc8-377cbe261eb6";
 			//create new Location and insert into the database
-			//TODO how do I tie the profile session to the location so that I can insert it into the DB? STOPPED BELOW
 			$location = new Location(generateUuidV4(), $requestObject->locationFoodTruckId, $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, $requestObject->locationStartTime);
-			var_dump($requestObject->locationFoodTruckId);
+
 			$location->insert($pdo);
 
 			//update reply
 			$reply->message = "Location successfully created";
 		}
-	}
-
-	else if ($method === "DELETE") {
+	} else if($method === "DELETE") {
 
 		//enforce the user has a XSRF Token
 		verifyXsrf();
 
-		//retrieve the Location to be deleted
+		//retrieve the Location to be deleted locationid
 		$location = Location::getLocationByLocationId($pdo, $id);
 		if($location === null) {
-					throw(new RuntimeException("Location not found", 404));
+			throw(new RuntimeException("Location not found", 404));
 		}
 
-		//retrieve the foodtruck to update
-		$foodTruck = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $foodTruckProfileId);
+		//TODO make it so records can be deleted by location id OR locationFoodTruck id CURRENTLY YOU NEED BOTH
+		//retrieve the foodtruck to delete by foodtruck id
+		$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $locationFoodTruckId);
 		if($foodTruck === null) {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 		}
 
-		//TODO rewrite if block to enforce that foodTruckProfileId === $_SESSION["profile] and $_SESSION["profile] is not empty
-		if($foodTruck->getFoodTruckProfileId()->toString()  !== $_SESSION["profile"]->getProfileId()->toString  &&  empty($_SESSION["profile"]) === false) {
-					throw(new \InvalidArgumentException("You are not allowed to delete this location", 403));
-	}
-	//delete location
-	$location->delete($pdo);
-	// update reply
-	$reply->message = "Location Deleted.";
+
+		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString() && empty($_SESSION["profile"]) === false) {
+			throw(new \InvalidArgumentException("You are not allowed to delete this location", 403));
+		}
+		//delete location
+		$location->delete($pdo);
+		// update reply
+		$reply->message = "Location Deleted.";
 
 
-}
-else {
+	} else {
 		throw (new InvalidArgumentException("Invalid HTTP Method Request", 418));
 	}
 // update reply with exception information

@@ -149,8 +149,12 @@ class Location implements \JsonSerializable {
 	 */
 
 	public function setLocationEndTime( $newLocationEndTime): void {
-		if(empty($newLocationEndTime) === true) {
-			throw(new \TypeError("Date is not formatted correctly."));
+		if($newLocationEndTime === null) {
+			$date = new \DateTime();
+			$date->add(new \DateInterval('PT4H'));
+			$this->locationEndTime = $date;
+			return;
+		//	throw(new \TypeError("Date is empty."));
 		}
 		try {
 			$newLocationEndTime = self::validateDateTime($newLocationEndTime);
@@ -179,10 +183,15 @@ class Location implements \JsonSerializable {
 	 * @param null $newLocationStartTime
 	 * @try runs locationStartTime through validateDateTime
 	 * @throws \Exception  if not a valid date/time
+	 *
+	 *
 	 */
 	public function setLocationStartTime($newLocationStartTime = null): void {
 		//base case if the date is null use the current date and time
+		if($newLocationStartTime === null) {
 			$this->locationStartTime = new \DateTime();
+			return;
+		}
 		//store the start time using the ValidateDate Trait
 		try {
 			$newLocationStartTime = self::validateDateTime($newLocationStartTime);
@@ -510,8 +519,8 @@ class Location implements \JsonSerializable {
 
 		$fields["locationId"] = $this->locationId->toString();
 		$fields["locationFoodTruckId"] = $this->locationFoodTruckId->toString();
-		$fields["locationLatitude"] = $this->locationLatitude->toFloat();
-		$fields["locationLongitude"] = $this->locationLongitude->toFloat();
+		$fields["locationLatitude"] = $this->locationLatitude;
+		$fields["locationLongitude"] = $this->locationLongitude;
 		//format the date so that the front end can consume it
 		$fields["locationStartTime"] = round(floatval($this->locationStartTime->format("U.u")) * 1000);
 		$fields["locationEndTime"] = round(floatval($this->locationEndTime->format("U.u")) * 1000);
