@@ -2,6 +2,8 @@
 
 <?php require_once("navbar.php");?>
 
+<!--toDo we might not need/want this-->
+
 <main>
 	<div class="container-fluid p-2">
 		<div class="card">
