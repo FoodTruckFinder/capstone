@@ -1,6 +1,6 @@
 
 function initMap() {
-	//VARIABLE DELCARATION ONLY BELOW
+	//VARIABLE DECLARATION ONLY BELOW
 	var map = new google.maps.Map(document.getElementById('map'), {
 
 		//DO NOT CHANGE ZOOM OR LAT LONG WITHOUT CONSULTING WITH TEAM
