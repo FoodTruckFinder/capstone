@@ -5,6 +5,23 @@
 	</head>
 	<body>
 		<main>
+			<ngb-tabset>
+				<ngb-tab title="Customer Sign Up">
+					<ng-template ngbTabContent>
+
+						<!--insert form-->
+
+					</ng-template>
+				</ngb-tab>
+				<ngb-tab>
+					<ng-template ngbTabTitle><b>Food Truck Owner Signup</b></ng-template>
+					<ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+
+						<!--insert form-->
+
+					</ng-template>
+				</ngb-tab>
+			</ngb-tabset>
 			<div class="container text-center">
 				<h1>Sign Up for Food  Truck Finder</h1>
 				<form class="form-control-lg" id="form" action="" method="post">
