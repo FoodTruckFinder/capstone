@@ -59,12 +59,8 @@ try {
 			if(empty($requestObject->favoriteFoodTruckId) === true) {
 				throw (new \InvalidArgumentException("No FoodTruck linked to the Favorite", 405));
 			}
-			if(empty($requestObject->favoriteProfileId) === true) {
-				throw (new \InvalidArgumentException("No favorite linked to the foodTruck", 405));
-			}
-			if(empty($requestObject->favoriteAddDate) === true) {
-				$requestObject->favoriteAddDate =  date("y-m-d H:i:s");
-			}
+
+
 			if($method === "POST") {
 				//enforce that the end user has a XSRF token.
 				verifyXsrf();
@@ -75,21 +71,21 @@ try {
 					throw(new \InvalidArgumentException("you must be logged in to favorite a food truck", 403));
 				}
 				validateJwtHeader();
-				$favorite = new Favorite ($_SESSION["profile"]->getFoodTruckId(), $requestObject->favoriteProfileId);
+				$favorite = new Favorite ($requestObject->favoriteFoodTruckId, $_SESSION["profile"]->getProfileId(), new \DateTime());
 				$favorite->insert($pdo);
 				$reply->message = "favorite food truck successful";
 			} else if($method === "PUT") {
-				//enforce the end user has a XSRF token.
+				//enforce the end user has an XSRF token.
 				verifyXsrf();
 				//enforce the end user has a JWT token
 				validateJwtHeader();
 				//grab the favorite by its composite key
-				$favorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($pdo, $requestObject->favoriteFoodTruckId, $requestObject->favoriteProfileId);
+				$favorite = Favorite::getFavoriteByFavoriteFoodTruckIdAndFavoriteProfileId($pdo, $requestObject->favoriteFoodTruckId, $_SESSION["profile"]->getProfileId());
 				if($favorite === null) {
 					throw (new RuntimeException("favorite does not exist"));
 				}
 				//enforce the user is signed in and only trying to edit their own favorite
-				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getFavoriteProfileId() !== $favorite->getFavoriteProfileId()) {
+				if(empty($_SESSION["profile"]) === true || $_SESSION["favorite"]->getFavoriteFoodTruckId() !== $favorite->getFavoriteProfileId()) {
 					throw(new \InvalidArgumentException("You are not allowed to delete this favorite", 403));
 				}
 				//validateJwtHeader();
