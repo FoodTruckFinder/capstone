@@ -7,6 +7,7 @@ require_once ("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use phpDocumentor\Reflection\Types\Null_;
+use Prophecy\Exception\Doubler\InterfaceNotFoundException;
 use Ramsey\Uuid\Uuid;
 
 class Social implements \JsonSerializable {
@@ -225,6 +226,46 @@ class Social implements \JsonSerializable {
 
 	}
 
+	/**
+	 * @param \PDO $pdo PDO connection object
+	 * @param $socialFoodTruckId UUid of FoodTruck to search by
+	 * @return \ SplFixedArray of social found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getSocialBySocialFoodTruckId(\PDO $pdo, $socialFoodTruckId) : \SplFixedArray {
+		// sanitize the locationFoodTruckId before searching
+		try {
+			$socialFoodTruckId = self::validateUuid($socialFoodTruckId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT socialId, socialFoodTruckId, socialUrl FROM social WHERE socialFoodTruckId = :socialFoodTruckId";
+		$statement = $pdo->prepare($query);
+
+		// bind the socialFoodTruckId to the place holder in the template
+		$parameters = ["socialFoodTruckId" => $socialFoodTruckId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the social from mySQL
+		// build an array of social food truck ID
+		$socials = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$social = new Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
+				$socials [$socials->key()] = $social;
+				$socials->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($socials);
+	}
 
 
 	/**
@@ -236,7 +277,7 @@ class Social implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getSocialBySocialId(\PDO $pdo, $socialId) : Social {
+	public static function getSocialBySocialId(\PDO $pdo, $socialId) : ?Social {
 		// sanitize the social Id before searching
 
 		try {
@@ -259,64 +300,15 @@ class Social implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$social = new  Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
+				$social = new Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
 			}
-		} catch(\Exception $exception) {
+		} catch(\InvalidArgumentException|\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($social);
+		return ($social);
 
 	}
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * gets the social by social id
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid $socialFoodTruckId social id to search by
-	 * @return \SplFixedArray SplFixedArray of social found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-
-		public function getSocialBySocialFoodTruckId(\PDO $pdo, $socialFoodTruckId) : \SplFixedArray {
-
-			try {
-				$socialFoodTruckId = self::validateUuid($socialFoodTruckId);
-			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-
-			// create query template
-			$query = "SELECT socialId, socialFoodTruckId, socialUrl FROM social WHERE socialFoodTruckId = :socialFoodTruckId";
-			$statement = $pdo->prepare($query);
-			// bind the social food truck id to the place holder in the template
-			$parameters = ["socialFoodTruckId" => $socialFoodTruckId->getBytes()];
-			$statement->execute($parameters);
-			// build an array of social food truck ID
-			$socials = new \SplFixedArray($statement->rowCount());
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			while(($row = $statement->fetch()) !== false) {
-				try {
-					$social = new Social($row["socialId"], $row["socialFoodTruckId"], $row["socialUrl"]);
-					$socials [$socials->key()] = $social;
-					$socials->next();
-				} catch(\Exception $exception) {
-					// if the row couldn't be converted, rethrow it
-					throw(new \PDOException($exception->getMessage(), 0, $exception));
-				}
-			}
-			return($socials);
-		}
 
 	/**
 	 * formats the state variables for JSON serialization

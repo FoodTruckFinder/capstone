@@ -5,7 +5,7 @@ require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
-require_once("/etc/apache2/capstone-mysql/secrets.php");
+require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
 use FoodTruckFinder\Capstone\Social;
 use FoodTruckFinder\Capstone\FoodTruck;
@@ -30,7 +30,7 @@ try {
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize the search parameters
-	$SocialId = filter_input(INPUT_GET, "SocialId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$id = filter_input(INPUT_GET, "socialId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$socialFoodTruckId = filter_input(INPUT_GET, "socialFoodTruckId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$socialUrl = filter_input(INPUT_GET, "socialUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
@@ -41,19 +41,7 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 		//gets the specific social that is associated, based on its composite key (get by both)
-		if($socialFoodTruckId !== null && $socialFoodTruckId !== null) {
-			$social = Social::getSocialBySocialIdAndSocialFoodTruckId($pdo, $SocialId, $socialFoodTruckId, $socialUrl);
-			if($social !== null) {
-				$reply->data = $social;
-			}
-			//get all of the socials associated with the profileId
-		} else if(empty($socialId) === false) {
-			$social = Social::getSocialBySocialId($pdo, $socialFoodTruckId);
-			if($social !== null) {
-				$reply->data = $social;
-			}
-			//get all of the socials associated with the profileId
-		} else if(empty($socialFoodTruckTruckId) === false) {
+		if(empty($socialFoodTruckId) === false) {
 			$social = Social::getSocialBySocialFoodTruckId($pdo, $socialFoodTruckId)->toArray();
 			if($social !== null) {
 				$reply->data = $social;
@@ -77,15 +65,15 @@ try {
 			$requestObject = json_decode($requestContent);
 
 			//make sure social content is available (required field)
-			if(empty($requestObject->socialContent) === true) {
+			if(empty($requestObject->socialUrl) === true) {
 				throw(new \InvalidArgumentException ("No content for Social.", 405));
 			}
 
 			// make sure social date is accurate (optional field)
 
 			//  make sure profileId is available
-			if(empty($requestObject->socialProfileId) === true) {
-				throw(new \InvalidArgumentException ("No Social Profile ID.", 405));
+			if(empty($requestObject->socialFoodTruckId) === true) {
+				throw(new \InvalidArgumentException ("No Social Food Truck ID.", 405));
 			}
 
 			//perform the actual put or post
@@ -103,7 +91,7 @@ try {
 				}
 
 				// update all attributes
-				$social->setSocialFoodTuckId($requestObject->socialFoodTruckId);
+				$social->setSocialFoodTruckId($requestObject->socialFoodTruckId);
 				$social->setSocialUrl($requestObject->socialUrl);
 				$social->update($pdo);
 
@@ -118,7 +106,7 @@ try {
 				}
 
 				// create new social and insert into the database
-				$social = new Social (generateUuidV4(), $_SESSION["profile"]->getProfileId, $requestObject->socialUrl, null);
+				$social = new Social (generateUuidV4(), $requestObject->socialFoodTruckId, $requestObject->socialUrl);
 				$social->insert($pdo);
 
 				// update reply
@@ -132,13 +120,16 @@ try {
 			// retrieve the Social to be deleted/ Not sure if getSocialBySocialId is correct
 			$social = Social::getSocialBySocialId($pdo, $id);
 			if($social === null) {
-				throw(new RuntimeException("Social does not exist", 404));
+				throw(new InvalidArgumentException("Social does not exist", 404));
 			}
 
 			$foodTruck = FoodTruck::getFoodTruckByFoodTruckId($pdo, $social->getSocialFoodTruckId());
+			if($foodTruck === null) {
+				throw(new InvalidArgumentException("Social does not exist", 404));
+			}
 
 			//enforce the user is signed in and only trying to edit their own social
-			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $social->getSocialId()) {
+			if(empty($_SESSION["profile"])=== true && $foodTruck->getFoodTruckId()->toString() !== $social->getSocialFoodTruckId()->toString()) {
 				throw(new \InvalidArgumentException("You are not allowed to delete this social", 403));
 			}
 			// delete social
