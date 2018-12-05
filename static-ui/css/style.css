@@ -3,7 +3,6 @@
 
 body {
 	display: flex;
-	flex-direction: column;
 	font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 input[type=text] input[type=email] {
@@ -16,8 +15,15 @@ button, input, select, textarea {
 	font-size: 100%;
 }
 
-/* styling for the about us page team photo */
+/* styling for the about us page team photo and page */
 .teamphoto {
 	max-width: 60vw;
 	height: auto;
+}
+
+.aboutus {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
