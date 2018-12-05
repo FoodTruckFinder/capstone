@@ -1,3 +1,4 @@
+<?php require_once ("head-utils.php");?>
 
 		<header>
 			<div class="container-fluid p-0 black">
