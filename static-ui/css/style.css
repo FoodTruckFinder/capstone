@@ -1,0 +1,17 @@
+<!--google font imports-->
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+	display: flex;
+	flex-direction: column;
+	font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+input[type=text] input[type=email] {
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+
+button, input, select, textarea {
+	font-family: inherit;
+	font-size: 100%;
+}

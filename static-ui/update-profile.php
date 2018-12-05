@@ -1,7 +1,4 @@
 
-
-
-
 <main>
 	<div class="container-fluid">
 		<h1 class="text-center">Update Profile</h1>

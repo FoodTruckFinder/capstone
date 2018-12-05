@@ -1,5 +1,5 @@
 <!-- toDO put in require_once for head_utils and other files as needed later-->
-
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
 <body>
 	<main>
@@ -7,6 +7,7 @@
 			<h1>Sign Up for Food  Truck Finder</h1>
 		</div>
 
+		<!--toDo put in code below that makes the customer sign-up appear if they clicked "sign up as customer" on modal popup on first time using app-->
 		<ngb-tabset>
 			<ngb-tab title="Customer Sign Up">
 				<ng-template ngbTabContent>
@@ -21,7 +22,7 @@
 						</div>
 					</form>
 
-					<!--toDo add code that marks this sign up as being from a customer-->
+					<!--toDo add code that makes code below appear if they chose to sign up as food truck owner-->
 
 				</ng-template>
 			</ngb-tab>
@@ -35,11 +36,11 @@
 							<input class="form-control" id="email" type="email" name="email" placeholder=" Email Address"/>
 							<input class="form-control" id="password" type="text" name="password" placeholder=" Password">
 							<input class="form-control" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
-							<input class="btn" type="submit" value="Sign Up as Food Truck Owner">
+							<input class="btn" type="submit" value="Next">
 						</div>
 					</form>
 
-					<!--toDo add code that marks this sign up as being from an owner, not a customer-->
+					<!--toDo add code that makes the owner sign-up go to the next form (food truck edit/create)-->
 
 				</ng-template>
 			</ngb-tab>
