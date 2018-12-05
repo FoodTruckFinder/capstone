@@ -6,8 +6,8 @@
 	<!-- Modal -->
 	<div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content gray">
-				<div class="modal-header gray">
+			<div class="modal-content home">
+				<div class="modal-header home">
 					<h5 class="modal-title" id="signIn">Sign In</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
