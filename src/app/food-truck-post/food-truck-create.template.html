@@ -1,4 +1,41 @@
 <navbar></navbar>
 <main>
-	
+	<div class="container text-center">
+		<h1>505 Food Truck Finder - Owner Sign Up</h1>
+		<form [formGroup]="ownerSignUpForm" class="form-control-lg" id="form" action="" method="post" (submit)="createSignUp();" novalidate>
+			<div class="info">
+
+				<!--foodTruckName-->
+				<input class="form-control" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name" formControlName="foodTruckName" required/>
+				<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.foodTruckName?.touched">
+					<p *ngIf="signUpForm.controls.profileUserName?.errors.maxlength">Food truck name is too long.</p>
+					<p *ngIf="signUpForm.controls.profileUserName?.errors.required">Food truck name required.</p>
+				</div>
+
+				<!--foodTruckPhoneNumber-->
+				<input class="form-control" id="foodTruckPhoneNumber" type="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder=" Food Truck Phone Number (Optional)" formControlName="foodTruckPhoneNumber"/>
+				<div class="alert alert-danger" *ngIf="signUpForm.controls.foodTruckPhoneNumber?.invalid && signUpForm.controls.foodTruckPhoneNumber?.touched">
+					<p *ngIf="signUpForm.controls.foodTruckPhoneNumber?.errors.maxlength">Phone number is too long.</p>
+					<span class="note">Format: xxx-xxx-xxxx</span>
+				</div>
+
+				<!--foodTruckDescription-->
+				<input class="form-control" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)" formControlName="foodTruckDescription">
+				<div class="alert alert-danger" *ngIf="signUpForm.controls.foodTruckDescription?.invalid && signUpForm.controls.foodTruckDescription?.touched">
+					<p *ngIf="signUpForm.controls.foodTruckDescription?.errors.maxlength">Description is too long.</p>
+				</div>
+
+				<!--toDo upload food truck image-->
+
+				<!--toDo upload food truck menu image-->
+
+
+				<input class="btn" type="submit" value="Save Changes">
+				<div *ngIf="status !== null" class="alert alert-secondary alert-dismissible" [ngClass]="status.type" role="alert">
+					<button type="button" class="close" aria-label="Close" (click)="status = null;"><span aria-hidden="true">&times;</span></button>
+					{{ status.message }}
+				</div>
+			</div>
+		</form>
+	</div>
 </main>
