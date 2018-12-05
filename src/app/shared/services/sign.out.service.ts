@@ -1,7 +1,8 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
 import {Status} from "../interfaces/status";
-import {Observable} from "rxjs/internal/Observable";
+
 
 @Injectable()
 export class SignOutService {
