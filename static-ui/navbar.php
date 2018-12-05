@@ -23,7 +23,7 @@
 								<signIn></signIn>
 							</li>
 							<li class="nav-item">
-								<a href="update-profile.php" class="nav-link">Update Profile</a>
+								<a href="sign-in.php" class="nav-link">Sign In</a>
 							</li>
 							<li class="nav-item">
 								<a href="edit-create-food-truck.php" class="nav-link">Update FoodTruck</a>
