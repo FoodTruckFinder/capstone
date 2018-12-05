@@ -2,7 +2,7 @@
 
 <?php require_once("navbar.php"); ?>
 
-<main class="Home">
+<main class="home">
 	<div class="container-fluid p-5">
 		<div class="container-fluid p-2" id="map">
 			<div class="row">

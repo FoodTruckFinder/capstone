@@ -13,7 +13,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body gray">
+				<div class="modal-body home">
 					<form class="form-control-lg" id="form" action="" method="post">
 						<div class="info">
 							<input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
