@@ -10,6 +10,8 @@ import {Observable} from 'rxjs';
 import 'rxjs/add/observable/from';
 import {ActivatedRoute, Router} from "@angular/router";
 
+//todo make sure imports point the right files
+
 @Component({
 	selector: "food-truck-post",
 	template: require("./food-truck-create.template.html"),
