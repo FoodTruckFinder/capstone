@@ -16,7 +16,7 @@
 				<input class="form-control" id="foodTruckPhoneNumber" type="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder=" Food Truck Phone Number (Optional)" formControlName="foodTruckPhoneNumber"/>
 				<div class="alert alert-danger" *ngIf="signUpForm.controls.foodTruckPhoneNumber?.invalid && signUpForm.controls.foodTruckPhoneNumber?.touched">
 					<p *ngIf="signUpForm.controls.foodTruckPhoneNumber?.errors.maxlength">Phone number is too long.</p>
-					<span class="note">Format: xxx-xxx-xxxx</span>
+					<span class="note">Phone Number Format: xxx-xxx-xxxx</span>
 				</div>
 
 				<!--foodTruckDescription-->
