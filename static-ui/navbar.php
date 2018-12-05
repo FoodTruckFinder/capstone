@@ -3,7 +3,7 @@
 <?php require_once ("sign-in-modal.php");?>
 
 		<header>
-			<nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary shadow-sm bg-light fixed-top" id="navigation-bar" >
+			<nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary shadow-sm bg-light fixed-top p-0" id="navigation-bar" >
 				<button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse"
 						  data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
 						  aria-label="Toggle Navigation">
@@ -23,7 +23,7 @@
 								<signIn></signIn>
 							</li>
 							<li class="nav-item">
-								<a href="sign-in.php" class="nav-link">Sign In</a>
+								<a href="sign-in-modal.php" class="nav-link">Sign In</a>
 							</li>
 							<li class="nav-item">
 								<a href="edit-create-food-truck.php" class="nav-link">Update FoodTruck</a>
