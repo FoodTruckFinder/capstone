@@ -1,4 +1,4 @@
-export interface Foodtruck {
+export interface FoodTruck {
 	foodTruckId: string;
 	foodTruckProfileId: string;
 	foodTruckDescription: string;

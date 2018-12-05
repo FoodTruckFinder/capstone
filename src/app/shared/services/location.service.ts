@@ -2,6 +2,7 @@
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/internal/Observable";
+import {Status} from "../interfaces/status";
 import {FoodTruck} from "../interfaces/foodtruck";
 import {Location} from"../interfaces/location";
 
