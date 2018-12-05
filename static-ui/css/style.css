@@ -15,3 +15,9 @@ button, input, select, textarea {
 	font-family: inherit;
 	font-size: 100%;
 }
+
+/* styling for the about us page team photo */
+.teamphoto {
+	max-width: 60vw;
+	height: auto;
+}

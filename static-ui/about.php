@@ -8,7 +8,8 @@
 		-->
 
 		<!--referencing the styles needed-->
-		<?php require_once("head_utils.php"); ?>
+		<!--toDO require_once not currently working will fix later php require_once("head_utils.php"); -->
+
 
 		<title>About Us - Food Truck Finder</title>
 	<body>
@@ -22,7 +23,7 @@
 		<h2>The Food Truck 5 Team</h2>
 
 		<!--toDo add image of team-->
-		<img src="#" alt="image of the members of the food truck finder team">
+		<img class="teamphoto" src="https://www.dropbox.com/s/qs9g8hm868j3ooa/teamphoto.png?raw=1" alt="image of the members of the food truck finder team">
 
 		<h2>Check out the Food Truck Finder GitHub Repo</h2>
 		<a href="https://github.com/FoodTruckFinder"><i class="fab fa-github"></i></a>
