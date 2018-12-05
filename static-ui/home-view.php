@@ -38,7 +38,7 @@
 					<div class="card">
 						<img class="card-img-top" src="../src/img/foodTruckPlaceholder.png" alt="Card image cap">
 						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
+							<h4 class="card-title">FoodTruck One</h4>
 						</div>
 					</div>
 				</div>
@@ -46,7 +46,7 @@
 					<div class="card">
 						<img class="card-img-top" src="../src/img/foodTruckPlaceholder.png" alt="Card image cap">
 						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
+							<h4 class="card-title">FoodTruck Two</h4>
 						</div>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 					<div class=" card">
 						<img class="card-img-top" src="../src/img/foodTruckPlaceholder.png" alt="Card image cap">
 						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
+							<h4 class="card-title">FoodTruck Three</h4>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 					<div class="card">
 						<img class="card-img-top" src="../src/img/foodTruckPlaceholder.png" alt="Card image cap">
 						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
+							<h4 class="card-title">FoodTruck Four</h4>
 						</div>
 					</div>
 				</div>
