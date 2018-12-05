@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Food Truck Details</title>
@@ -10,10 +10,13 @@
 				<div class="container">
 					<h1>Sanchez Food Trucks</h1>
 					<h2>Address: 8020 Central Ave SE, Albuquerque, NM 87108</h2>
+					<p><strong>Open Hours: Mon-Thrus 5pm-12am<br>
+							Fri-Sun 4:15pm-2:00am</strong></p>
+
 				</div>
 				<!--div container for images-->
 					<div class="container">
-						<img src="sanchez-tacosn%20(2).jpg" alt="food-truck-1" width="auto" height="300">
+						<img src="sanchez-tacosn%20(2).jpg" alt="food-truck-1" width="auto" height="400">
 					</div>
 				<!--div class container for food truck description-->
 							<div class="container">
@@ -28,7 +31,8 @@
 				<!--div for footer with social media links-->
 									<div>
 										<footer>
-
+											<a href=""> FaceBook </a>
+											<a href=""> Instagram </a>
 										</footer>
 									</div>
 			</body>
