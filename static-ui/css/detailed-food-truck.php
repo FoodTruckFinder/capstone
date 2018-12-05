@@ -10,7 +10,11 @@
 				<div class="container">
 					<h1>Sanchez Food Trucks</h1>
 					<h2>Address: 8020 Central Ave SE, Albuquerque, NM 87108</h2>
-				</div>
+				</div> 
+					<div>
+						<img src="placeholder" alt="food-truck-placeholder">
+						<img src="placeholder" alt="food-truck-placeholder">
+					</div>
 
 			</body>
 </html>
