@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Detailed Food Truck</title>
+		<title>Food Truck Details</title>
 		<link rel="stylesheet" href="./styles/style.css">
 	</head>
 			<body>
