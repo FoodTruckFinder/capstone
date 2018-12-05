@@ -10,7 +10,7 @@
 		<!--referencing the styles needed-->
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<!--toDO require_once not currently working will fix later php require_once("head_utils.php"); -->
-
+		<?php require_once("head-utils.php"); ?>
 
 <<<<<<< HEAD
 		<title>About Us - Food Truck Finder</title>
