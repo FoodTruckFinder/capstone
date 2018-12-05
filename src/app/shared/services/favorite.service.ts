@@ -3,7 +3,6 @@ import{Status} from "../interfaces/status";
 import {Favorite} from "../interfaces/favorite"
 import {Observable} from "rxjs/internal/Observable";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {FoodTruck} from "../interfaces/foodtruck";
 
 @Injectable ()
 export class FavoriteService {
