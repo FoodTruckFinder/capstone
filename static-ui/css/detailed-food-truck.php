@@ -6,8 +6,11 @@
 		<link rel="stylesheet" href="./styles/style.css">
 	</head>
 			<body>
-				<h1>Sanchez Food Truck 1</h1>
-				<h2>Address: 8020 Central Ave SE, Albuquerque, NM 87108</h2>
+				<!--container class for the header h1 and h2-->
+				<div class="container">
+					<h1>Sanchez Food Trucks</h1>
+					<h2>Address: 8020 Central Ave SE, Albuquerque, NM 87108</h2>
+				</div>
 
 			</body>
 </html>
