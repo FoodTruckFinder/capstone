@@ -20,7 +20,6 @@
 							</li>
 							<li class="nav-item">
 								<!-- link trigger modal -->
-								<signIn></signIn>
 							</li>
 							<li class="nav-item">
 								<a href="sign-in-modal.php" class="nav-link">Sign In</a>

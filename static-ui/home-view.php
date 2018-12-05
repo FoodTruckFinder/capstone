@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<div class="container-fluid p-2">
-			<h1>Featured Art</h1>
+			<h1>Featured Food Trucks</h1>
 			<div class="row">
 				<div class="container-fluid col-12 col-sm-6 col-md-3 p-2">
 					<div class="card">
