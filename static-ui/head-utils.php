@@ -29,7 +29,7 @@
 
 	<script src="js/scripts.js"></script>
 
-	<title>Lost Paws</title>
+	<title>505 Food Truck Finder</title>
 
 
 </head>
