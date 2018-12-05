@@ -16,10 +16,16 @@
 						<img src="placeholder" alt="food-truck-placeholder">
 						<img src="placeholder" alt="food-truck-placeholder">
 					</div>
-				<!--div for food truck description-->
-							<div>
+				<!--div class container for food truck description-->
+							<div class="container">
 							<h3><strong>Description</strong></h3>
+								<p>Bacon ipsum dolor amet frankfurter tongue corned beef salami. Fatback kevin pork loin meatloaf, jerky turducken ribeye.<br> Fatback ribeye tri-tip drumstick beef. Meatball corned beef alcatra cow bacon tail jerky boudin frankfurter jowl venison shoulder.<br> Jerky jowl biltong ground round brisket salami pig ball tip bresaola kevin porchetta picanha. <br>
+									Andouille pork loin kevin pork. Corned beef biltong ball tip, ribeye landjaeger pancetta filet mignon spare ribs hamburger prosciutto shoulder.</p>
 							</div>
+				<!--div for ?-->
+								<div>
+
+								</div>
 
 			</body>
 </html>
