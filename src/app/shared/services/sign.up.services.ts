@@ -1,7 +1,8 @@
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {Status} from "../interfaces/status";
 import {Observable} from "rxjs/internal/Observable";
-import {Profile} from "../interfaces/profile";
+import {SignUp} from "../interfaces/sign.up";
 
 @Injectable()
 export class SignUpServices {
