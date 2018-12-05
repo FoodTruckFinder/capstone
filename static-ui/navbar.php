@@ -3,14 +3,16 @@
 <?php require_once ("sign-in-modal.php");?>
 
 		<header>
-			<div class="container-fluid p-0 black">
-				<nav class="navbar navbar-expand-xl navbar-expand-lg navbar-togglable fixed-top navbar-dark">
-					<img src="../epic/505FTF-icon-v1.png" alt="foodTruckLogo" class="foodTruckLogo" width="150">
-					<button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse"
-							  data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-							  aria-label="Toggle Navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
+			<nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary shadow-sm bg-light fixed-top" id="navigation-bar" >
+				<button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse"
+						  data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+						  aria-label="Toggle Navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a class="navbar-brand text-secondary pl-3" href="#"></a><img src="../epic/505FTF-icon-v1.png" alt="foodTruckLogo" class="foodTruckLogo" width="100">
+
+		<!-- <span href="home-view.php" class="navbar-brand text-center ml-3 name">FoodTruck Finder</span>  -->
+
 					<div class="collapse navbar-collapse" id="navbarCollapse">
 						<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
