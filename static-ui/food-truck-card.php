@@ -2,6 +2,7 @@
 
 <?php require_once("navbar.php");?>
 
+
 <!--toDo we might not need/want this-->
 
 <main>
@@ -10,8 +11,8 @@
 			<!--toDo: add image URL for the cards-->
 			<img class="card-img-top p-1" src="foodTruckImageUrl" alt="image for food truck">
 			<ul class="p-1 list-group list-group-flush">
-				<li class="list-group-item">Food Truck Name</li>
-				<li class="list-group-item">Food Truck description</li>
+				<li class="list-group-item">Food Truck Name: </li>
+				<li class="list-group-item">Food Truck description:</li>
 				<li class="list-group-item">Food Truck Menu URL</li>
 				<li class="list-group-item">Food Truck Phone #</li>
 			</ul>
