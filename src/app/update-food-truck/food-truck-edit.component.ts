@@ -4,4 +4,4 @@ import {Component} from "@angular/core";
 	template: require("./food-truck-edit.component.html")
 })
 
-export class UpdateProfileComponent {}
+export class UpdateFoodTruckComponent {}
