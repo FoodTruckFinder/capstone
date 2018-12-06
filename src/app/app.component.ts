@@ -1,4 +1,6 @@
 import {Component, enableProdMode} from "@angular/core";
+import {SessionService} from "./shared/services/session.service";
+import {Status} from "./shared/interfaces/status";
 enableProdMode();
 
 @Component({
@@ -8,4 +10,9 @@ enableProdMode();
 
 export class AppComponent {
 
+	status : Status = {status: null, type: null, message:null};
+
+	constructor(private sessionService : SessionService) {
+		this.sessionService.setSession().subscribe(status => this.status = status)
+	}
 }

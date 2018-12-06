@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Status } from "../interfaces/status";
-import { Observable } from "rxjs/internal/Observable";
 
 @Injectable()
 
@@ -11,7 +10,7 @@ export class SessionService {
 
 	private sessionUrl = "api/earl-grey/";
 
-	/*setSession() {
+	setSession() {
 		return (this.http.get<Status>(this.sessionUrl, {}));
-	} */
+	}
 }
