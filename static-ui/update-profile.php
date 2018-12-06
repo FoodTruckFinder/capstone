@@ -4,7 +4,7 @@
 
 <main>
 	<div class="container-fluid">
-		<h1 class="text-center">Update Profile</h1>
+		<h1 class="text-center">Account Settings</h1>
 		<form class="form-control-lg" id="form" action="" method="post">
 			<div class="info">
 				<input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>

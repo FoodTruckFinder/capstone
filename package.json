@@ -41,6 +41,7 @@
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/router": "^7.0.0",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+    "@ngui/ngui": "^0.15.2",
     "cloudinary": "^1.13.2",
     "core-js": "^2.5.5",
     "rxjs": "^6.3.0",
