@@ -10,12 +10,6 @@
 					<div class="card-block">
 						<h4 class="card-title">Find Food Truck Finder!</h4></div>
 					<form id="form" action="">
-						<p>
-							<input id="distance" type="number" name="distance" placeholder="miles from you"/>
-						</p>
-						<p>
-							<input id="type" type="text" name="type" placeholder="type of art"/>
-						</p>
 						<input class="btn" type="submit" value="Search">
 					</form>
 				</div>
