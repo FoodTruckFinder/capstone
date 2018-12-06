@@ -3,7 +3,7 @@
 <?php require_once("navbar.php");?>
 
 <main>
-	<div class="container text-center">
+	<div class="container text-center pt-3">
 		<h1>What is Food Truck Finder?</h1>
 
 			<!--toDo list people from left to right according to team photo-->

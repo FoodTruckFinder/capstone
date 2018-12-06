@@ -3,7 +3,7 @@
 <?php require_once("navbar.php");?>
 
 <main>
-	<div class="col-6 offset-3 text-center">
+	<div class="col-6 offset-3 text-center mt-4 pt-4">
 		<h1 class="header mt-4">Sign Up for <span class="text-warning">505</span> <span class="text-danger">FoodTruck Finder!</span></h1>
 		<hr>
 		<form id="sign-up-form" class="form-control-lg px-3"  action="" method="post">

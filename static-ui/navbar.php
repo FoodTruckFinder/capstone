@@ -17,24 +17,21 @@
 					<div id="navigation-bar" class="collapse navbar-collapse">
 						<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
-								<a href="sign-up.php" class="nav-link">Sign up</a>
+								<a class="nav-link" href="sign-up.php">Sign up</a>
 							</li>
 							<li class="nav-item">
 								<!-- link trigger modal -->
+								<!--<sign-in></sign-in>-->
+								<a class="nav-link" href="#" data-target="#sign-in-modal" data-toggle="modal">Sign In</a>
 							</li>
 							<li class="nav-item">
-								<!-- link trigger modal -->
-								<sign-in></sign-in>
+								<a class="nav-link" href="food-truck.php">FoodTruck Profiles</a>
 							</li>
 							<li class="nav-item">
-								<a href="edit-create-food-truck.php" class="nav-link">Update FoodTruck</a>
-							</li>
-							<li class="nav-item">
-								<a href="home-view.php" class="nav-link">Sign out</a>
+								<a class="nav-link" href="about.php">About Us</a>
 							</li>
 						</ul>
 					</div>
 				</nav>
 			</div>
 		</header>
-</php>
