@@ -13,7 +13,7 @@
 
 		<!-- <span href="home-view.php" class="navbar-brand text-center ml-3 name">FoodTruck Finder</span>  -->
 
-					<div class="collapse navbar-collapse" id="navbarCollapse">
+					<div id="navigation-bar" class="navbar-expand-lg navbar-dark">
 						<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
 								<a href="sign-up.php" class="nav-link">Sign up</a>
