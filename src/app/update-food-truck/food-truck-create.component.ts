@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+/*  import {Component} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FoodTruck} from "../shared/interfaces/foodtruck";
 import {FoodTruckService} from "../shared/services/foodtruck.service";
@@ -15,7 +15,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
 	selector: "food-truck-post",
 	template: require("./food-truck-create.component.html"),
-	/*directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]*/
+	/*directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 export class FoodTruckCreateComponent {
 	foodTruckForm: FormGroup;
@@ -97,3 +97,4 @@ export class FoodTruckCreateComponent {
 		}
 	}
 }
+*/

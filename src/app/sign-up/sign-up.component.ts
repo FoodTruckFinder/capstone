@@ -5,7 +5,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
 
 @Component({
-	template: require("./sign-up.component.html")
+	template: require("./sign-up.component.html"),
+	selector: "signup"
 })
 
 export class SignUpComponent implements OnInit {

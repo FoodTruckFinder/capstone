@@ -1,10 +1,9 @@
 import {RouterModule, Routes} from "@angular/router";
-import {SplashComponent} from "./splash/splash.component";
 import {APP_BASE_HREF} from "@angular/common";
 import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
-export const allAppComponents = [SplashComponent];
+export const allAppComponents = [HomeViewComponent];
 
 export const routes: Routes = [
 	{path: "", component: SplashComponent}

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+/* import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Status} from "../classes/status";
 import {Observable} from "rxjs";
@@ -49,3 +49,5 @@ export class MapComponent implements OnInit {
 		this.location = location;
 	}
 }
+
+*/
