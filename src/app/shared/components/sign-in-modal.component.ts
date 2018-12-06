@@ -3,7 +3,7 @@ import {Component, ViewChild} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../interfaces/status";
 import {SignIn} from "../interfaces/sign.in";
-import {SignInServices} from "../services/sign.in.services";
+import {SignInService} from "../services/sign.in.service";
 import {CookieService} from "ng2-cookies";
 
 
@@ -18,7 +18,7 @@ export class SignInComponent {
 	signin: SignIn = {profileEmail: null, profilePassword: null};
 	status: Status = {status: null, type: null, message: null};
 
-	constructor(private SignInServices: SignInServices, private router: Router, private cookieService: CookieService) {
+	constructor(private SignInServices: SignInService, private router: Router, private cookieService: CookieService) {
 
 	}
 
