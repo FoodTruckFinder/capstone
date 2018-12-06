@@ -1,51 +1,42 @@
-<!-- toDO put in require_once for head_utils and other files as needed later-->
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<?php require_once ("head-utils.php");?>
 
-<body>
-	<main>
-		<div class="container text-center">
-			<h1>Sign Up for Food  Truck Finder</h1>
-		</div>
+<?php require_once("navbar.php");?>
 
-		<!--toDo put in code below that makes the customer sign-up appear if they clicked "sign up as customer" on modal popup on first time using app-->
-		<ngb-tabset>
-			<ngb-tab title="Customer Sign Up">
-				<ng-template ngbTabContent>
+<main>
+	<div class="col-6 offset-3 text-center">
+		<h1 class="header mt-4">Sign Up for <span class="text-warning">505</span> <span class="text-danger">FoodTruck Finder!</span></h1>
+		<hr>
+		<form id="sign-up-form" class="form-control-lg px-3"  action="" method="post">
 
-					<form class="form-control-lg" id="form" action="" method="post">
-						<div class="info">
-							<input class="form-control" id="name" type="text" name="name" placeholder=" Name"/>
-							<input class="form-control" id="email" type="email" name="email" placeholder=" Email Address"/>
-							<input class="form-control" id="password" type="text" name="password" placeholder=" Password">
-							<input class="form-control" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
-							<input class="btn" type="submit" value="Sign Up as Customer">
+			<div class="form-group">
+				<p class="text-left py-2">Name: <span class="text-danger">*</span></p>
+				<input class="form-control" id="name" type="text" name="profileName" placeholder=" User Name"/>
+				<p class="text-left py-2">Email: <span class="text-danger">*</span></p>
+				<input class="form-control" id="email" type="email" name="profileEmail" placeholder=" Email"/>
+				<p class="text-left py-2">Password: <span class="text-danger">*</span></p>
+				<input class="form-control" id="password" type="text" name="password" placeholder=" Password"/>
+				<p class="text-left py-2">Password Confirm: <span class="text-danger">*</span></p>
+				<input class="form-control py-2" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password"/>
+				<!--	<span class="text-left py-3">Are you a FoodTruck Owner? Click the button below for info on how to Sign up!</span>
+					<input class="form-control text-left" id="isOwner" type="checkbox" name="isOwner" placeholder="Are you a Foodtruck Owner?"/> -->
+				<br>
+				<div class="list-group">
+					<a class="p-2 btn-warning rounded font-weight-bold text-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"> Foodtruck Owner? Click Here to Learn How to Register!</a>
+					<div class="row">
+						<div class="col">
+							<div class="collapse multi-collapse" id="multiCollapseExample1">
+								<div class="mt-4 card card-body text-left font-weight-bold bg-warning">
+									<input class="form-control" id="business#" type="text" name="password" placeholder="Owner Name"/><input class="form-control" id="business#" type="text" name="password" placeholder="FoodTruck Name"/><input class="form-control" id="business#" type="text" name="password" placeholder="Phone #"/><input class="form-control" id="business#" type="text" name="business#" placeholder="Email"/>
+									<span><span class="text-danger">Thank you</span> for your interest in registering as a Foodtruck vendor! We value your <span class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
+								</div>
+							</div>
 						</div>
-					</form>
+						<input class="btn-warning rounded font-weight-bold mt-4" type="submit" value="Sign Up!">
+					</div>
+				</div>
+		</form>
 
-					<!--toDo add code that makes code below appear if they chose to sign up as food truck owner-->
 
-				</ng-template>
-			</ngb-tab>
-			<ngb-tab>
-				<ng-template ngbTabTitle><b>Food Truck Owner Signup</b></ng-template>
-				<ng-template ngbTabContent>
 
-					<form class="form-control-lg" id="form" action="" method="post">
-						<div class="info">
-							<input class="form-control" id="name" type="text" name="name" placeholder=" Name"/>
-							<input class="form-control" id="email" type="email" name="email" placeholder=" Email Address"/>
-							<input class="form-control" id="password" type="text" name="password" placeholder=" Password">
-							<input class="form-control" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
-							<input class="btn" type="submit" value="Next">
-						</div>
-					</form>
+</main>
 
-					<!--toDo add code that makes the owner sign-up go to the next form (food truck edit/create)-->
-
-				</ng-template>
-			</ngb-tab>
-
-		</ngb-tabset>
-
-		</main>
-	</body>
