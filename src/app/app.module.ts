@@ -5,6 +5,7 @@ import {AppComponent} from "./app.component";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+
 const moduleDeclarations = [AppComponent];
 
 @NgModule({

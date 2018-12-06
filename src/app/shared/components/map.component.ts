@@ -32,6 +32,7 @@ export class MapComponent implements OnInit {
 	}
 
 	listLocations() : any {
+		//todo locationObserver does not currenty exist according to PHPStorm
 		this.locationService.locationObserver
 			.subscribe(locations => this.locations = locations);
 	}
