@@ -7,10 +7,10 @@ import {Component, OnInit, ViewChild,} from "@angular/core";
 import {Observable} from "rxjs/Observable"
 import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status";
-import {SignUp} from "../shared/classes/sign.up";
+import {SignUp} from "../shared/interfaces/sign.up";
 import {setTimeout} from "timers";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SignUpServices} from "../shared/services/sign.up.service";
+import {SignUpService} from "../shared/services/sign.up.service";
 
 //declare $ for good old jquery
 declare let $: any;
