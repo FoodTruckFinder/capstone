@@ -7,8 +7,8 @@
 			<div class="info">
 
 				<!--profileUserName-->
-				<input class="form-control" id="profileUserName" type="text" name="name" placeholder=" User Name" formControlName="profileUserName"/>
-				<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.profileUserName?.touched">
+				<input class="form-control" id="profileName" type="text" name="name" placeholder=" User Name" formControlName="profileName"/>
+				<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.profileName?.touched">
 					<p *ngIf="signUpForm.controls.profileUserName?.errors.maxlength">Username is too long</p>
 					<p *ngIf="signUpForm.controls.profileUserName?.errors.required">Username required</p>
 				</div>
