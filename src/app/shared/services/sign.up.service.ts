@@ -4,6 +4,7 @@ import {Status} from "../interfaces/status";
 import {Observable} from "rxjs";
 import {SignUp} from "../interfaces/sign.up";
 
+
 @Injectable()
 
 export class SignUpService {
