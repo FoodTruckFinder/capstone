@@ -9,7 +9,8 @@
 						  aria-label="Toggle Navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<a class="navbar-brand text-secondary pl-3" href="#"></a><img src="../epic/505FTF-icon-v1.png" alt="foodTruckLogo" class="foodTruckLogo" width="100">
+				<a class="navbar-brand text-secondary pl-3" href="#"></a>
+				<img src="../epic/505FTF-icon-v1.png" alt="logo" class="nav-logo" width="100">
 
 		<!-- <span href="home-view.php" class="navbar-brand text-center ml-3 name">FoodTruck Finder</span>  -->
 

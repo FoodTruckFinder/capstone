@@ -1,17 +1,19 @@
-
+<?php require_once("head-utils.php"); ?>
+<?php require_once("navbar.php"); ?>
 
 <main>
 	<!-- Modal -->
-	<div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content home">
-				<div class="modal-header home">
-					<h5 class="modal-title" id="signIn">Sign In</h5>
+	<div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="sign-in-modal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="row ml-auto"
+					<h5 class="modal-title pl-3" id="sign-in">Sign In</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true">&times</span>
 					</button>
 				</div>
-				<div class="modal-body home">
+				<div class="modal-body">
 					<form class="form-control-lg" id="form" action="" method="post">
 						<div class="info">
 							<input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>

@@ -6,14 +6,10 @@
 	<div class="container-fluid p-5">
 		<div class="container-fluid p-2" id="map">
 			<div class="row">
-				<div class="col-12 col-md-3 card">
-					<div class="card-block">
-						<h4 class="card-title">Find Food Truck Finder!</h4></div>
-					<form id="form" action="">
-						<input class="btn" type="submit" value="Search">
-					</form>
+
+						<h4>Welcome to Food Truck Finder</h4></div>
 				</div>
-				<div class="col-12 col-md-8 p-3">
+				<div class="col-12 col-md-8 p-4">
 					<img class="img-fluid" src="../src/img/abqMapPlaceholder.png" alt="map" width="1596" height="1178">
 				</div>
 			</div>
