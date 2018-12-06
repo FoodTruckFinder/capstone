@@ -18,13 +18,6 @@
 						</p>
 						<input class="btn" type="submit" value="Search">
 					</form>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item"><a href="#" class="card-link">FoodTruck One</a></li>
-						<li class="list-group-item"><a href="#" class="card-link">FoodTruck Two</a></li>
-						<li class="list-group-item"><a href="#" class="card-link">FoodTruck Three</a></li>
-						<li class="list-group-item"><a href="#" class="card-link">FoodTruck Three</a></li>
-						<li class="list-group-item"><a href="#" class="card-link">FoodTruck Four</a></li>
-					</ul>
 				</div>
 				<div class="col-12 col-md-8 p-3">
 					<img class="img-fluid" src="../src/img/abqMapPlaceholder.png" alt="map" width="1596" height="1178">
