@@ -3,3 +3,5 @@ import {Component} from "@angular/core";
 	template: require("./splash.component.html")
 })
 export class HomeViewComponent {}
+
+
