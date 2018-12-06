@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {SignUp} from "../interfaces/sign.up";
 
 @Injectable()
+
 export class SignUpService {
 	constructor(protected http: HttpClient) {
 	}

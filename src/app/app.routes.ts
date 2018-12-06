@@ -6,7 +6,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {SignUpService} from "./shared/services/sign.up.service";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 
-export const allAppComponents = [HomeViewComponent, SignUpComponent, SignUpService];
+export const allAppComponents = [HomeViewComponent, SignUpComponent];
 
 export const routes: Routes = [
 	{path: "", component: HomeViewComponent}

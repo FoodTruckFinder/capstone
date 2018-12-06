@@ -6,4 +6,6 @@ enableProdMode();
 	template: require("./app.component.html"),
 })
 
-export class AppComponent {}
+export class AppComponent {
+
+}
