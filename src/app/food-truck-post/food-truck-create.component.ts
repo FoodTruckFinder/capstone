@@ -14,7 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
 	selector: "food-truck-post",
-	template: require("./food-truck-create.template.html"),
+	template: require("./food-truck-create.component.html"),
 	/*directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]*/
 })
 export class FoodTruckCreateComponent {
