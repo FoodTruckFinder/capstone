@@ -16,6 +16,7 @@ button, input, select, textarea {
 }
 
 /* styling for the about us page team photo and page */
+
 .teamphoto {
 	max-width: 60vw;
 	height: auto;
@@ -29,6 +30,8 @@ button, input, select, textarea {
 }
 
 /* styling for the sign-up page */
+
+@import url("https://fonts.googleapis.com/css?family=Bungee|Fira+Sans");
 
 .header, span {
 	font-family: 'Bungee', cursive;
