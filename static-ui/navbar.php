@@ -24,7 +24,7 @@
 							</li>
 							<li class="nav-item">
 								<!-- link trigger modal -->
-								<signIn></signIn>
+								<sign-in></sign-in>
 							</li>
 							<li class="nav-item">
 								<a href="edit-create-food-truck.php" class="nav-link">Update FoodTruck</a>

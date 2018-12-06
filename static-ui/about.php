@@ -1,4 +1,6 @@
-<!--add require once with head util-->
+
+<?php require_once ("head-utils.php");?>
+<?php require_once("navbar.php");?>
 
 <main>
 	<div>
