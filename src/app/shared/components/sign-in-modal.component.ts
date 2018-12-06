@@ -6,7 +6,6 @@ import {SignIn} from "../interfaces/sign.in";
 import {SignInServices} from "../services/sign.in.services";
 import {CookieService} from "ng2-cookies";
 
-declare var $: any;
 
 @Component({
 	template: require("./sign.in.component.html"),
@@ -17,7 +16,7 @@ export class SignInComponent {
 	@ViewChild("signInForm") signInForm: any;
 
 	signin: SignIn = {profileEmail: null, profilePassword: null};
-	status: Status = {status: null, type: null, message};
+	status: Status = {status: null, type: null, message: null};
 
 	constructor(private SignInServices: SignInServices, private router: Router, private cookieService: CookieService) {
 
