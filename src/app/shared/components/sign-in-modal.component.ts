@@ -24,6 +24,17 @@ export class SignInComponent {
 	}
 
 	signIn(): void {
+		localStorage.removeItem("jwt-token");
+		this.SignInServices.postSignIn(this.signin).subscribe(status => {
+			this.status = status;
+
+			if(this.status.status === 200) {
+				this.router.navigate(["/landing-page"]);
+
+			} else {
+				alert("Email or password is incorrect. Try again.")
+			}
+		});
 
 	}
 
