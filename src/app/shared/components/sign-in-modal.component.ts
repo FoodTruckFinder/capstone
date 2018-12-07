@@ -22,7 +22,7 @@ export class SignInComponent implements OnInit {
 		});
 	}
 
-	SignIn() : void {
+	signIn() : void {
 		let signIn: SignIn = {profileEmail: this.signInForm.value.profileEmail, profilePassword: this.signInForm.value.profilePassword};
 
 		this.signInService.postSignIn(signIn).subscribe(status => {

@@ -1,97 +1,40 @@
-/*  import {Component} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from "@angular/core";
 import {FoodTruck} from "../shared/interfaces/foodtruck";
 import {FoodTruckService} from "../shared/services/foodtruck.service";
-import {AuthService} from "../shared/services/auth.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
-import {FileUploader} from 'ng2-file-upload';
-import {Cookie} from 'ng2-cookies';
-import {Observable} from 'rxjs';
-import 'rxjs/add/observable/from';
-import {ActivatedRoute, Router} from "@angular/router";
-
-//todo make sure imports point the right files
 
 @Component({
-	selector: "food-truck-post",
 	template: require("./food-truck-create.component.html"),
-	/*directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]
+	selector: "foodtruck"
+	
 })
-export class FoodTruckCreateComponent {
+
+export class FoodTruckCreateComponent implements OnInit {
 	foodTruckForm: FormGroup;
-	submitted: boolean = false;
-	status: Status = null;
-	foodTruck: FoodTruck;
+	status: Status = {status:null, message:null, type:null};
 
-	foodTruckId = this.route.snapshot.params["foodTruckId"];
-	success: boolean = false;
-	imageUploaded: boolean = false;
+	constructor(private foodTruckService: FoodTruckService, private formBuilder: FormBuilder) {}
 
+	ngOnInit() {
 
-	public uploader: FileUploader = new FileUploader(
-		{
-			itemAlias: 'foodTruck',
-			url: './api/image/',
-			headers: [
-				{name: 'X-JWT-TOKEN', value: window.localStorage.getItem('jwt-token')},
-				{name: 'X-XSRF-TOKEN', value: Cookie.get('XSRF-TOKEN')}
-			],
-			additionalParameter: {}
-		}
-	);
-
-	constructor(protected authService: AuthService,
-					protected foodTruckService: FoodTruckService,
-					protected fb: FormBuilder,
-					protected route: ActivatedRoute,
-					protected router: Router) {
-		this.foodTruckForm = this.fb.group({
-			foodTruckName: ["", [Validators.required, Validators.maxLength(128)]],
-			foodTruckPhoneNumber: ["", [Validators.maxLength(16)]],
-			foodTruckDescription: ["", [Validators.maxLength(256)]],
+		this.foodTruckForm = this.formBuilder.group({
+			foodTruckName: ["", [Validators.maxLength(128), Validators.required]],
+			foodTruckDescription: ["", [Validators.maxLength(256), Validators.required]],
+			foodTruckPhoneNumber: ["", [Validators.maxLength(16), Validators.required]],
+			foodTruckImageUrl: ["", [Validators.maxLength(255), Validators.required]],
+			foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]],
 		});
 	}
 
-	uploadImage(): void {
-		this.uploader.uploadAll();
-		this.cloudinaryPublicObservable.subscribe(cloudinarySecureUrl => this.cloudinarySecureUrl = cloudinarySecureUrl);
-		this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
-			let reply = JSON.parse(response);
-			this.cloudinarySecureUrl = reply.data;
-			this.cloudinaryPublicObservable = Observable.from(this.cloudinarySecureUrl);
-			if (this.cloudinarySecureUrl) {
-				this.imageUploaded = true;
-			}
-		};
-	}
+	createFoodTruck() : void {
+		let foodTruck: FoodTruck = {foodTruckName: this.foodTruckForm.value.foodTruckName, foodTruckDescription: this.foodTruckForm.value.foodTruckDescription, foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber, foodTruckImageUrl: this.foodTruckForm.value.foodTruckImageUrl, foodTruckMenuUrl: this.foodTruckForm.value.foodTruckMenuUrl};
 
-	getFoodTruckFromInput(): void {
-		if (this.cloudinarySecureUrl) {
-			this.foodTruck = {
-				foodTruckId: null,
-				foodTruckProfileId: null,
-				//toDo below line might be messed up
-				foodTruckPhoneNumber: this.foodTruckForm.value.phonenumber,
-				foodTruckDescription: this.foodTruckForm.value.description,
-				foodTruckImageUrl: this.cloudinarySecureUrl,
-				foodTruckMenuUrl: this.cloudinarySecureUrl
-			};
-		}
-	}
+		this.foodTruckForm.postFoodTruck(foodTruck).subscribe(status => {
+			this.status = status;
+			if(status.status === 200) {
 
-	postFoodTruck(): void {
-		if (this.cloudinarySecureUrl) {
-			this.submitted = true;
-			this.getFoodTruckFromInput();
-			if(this.foodTruck) {
-				this.foodTruckService.createFoodTruck(this.foodTruck).subscribe(status => {
-					this.status = status;
-					if(this.status.status === 200) {
-						this.foodTruckForm.reset();
-					}
-				});
 			}
-		}
+		})
 	}
 }
-*/
