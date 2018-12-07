@@ -22,9 +22,10 @@
 		<h1>505 Food Truck Finder - Owner Sign Up</h1>
 		<form [formGroup]="ownerSignUpForm" class="form-control-lg px-3" id="form" action="" method="post" (submit)="createSignUp();" novalidate>
 			<div class="info">
-
+				<br>
+				<br>
 				<!--foodTruckName-->
-				<input class="form-control-lg py-2" formControlName="foodTruckName" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name" formControlName="foodTruckName" required/>
+				<input class="form-control py-2" formControlName="foodTruckName" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name" formControlName="foodTruckName" required/>
 				<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.foodTruckName?.touched">
 					<p *ngIf="signUpForm.controls.profileUserName?.errors.maxlength">Food truck name is too long.</p>
 					<p *ngIf="signUpForm.controls.profileUserName?.errors.required">Food truck name required.</p>
