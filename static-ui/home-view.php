@@ -3,8 +3,8 @@
 <?php require_once("navbar.php"); ?>
 
 <main class="home">
-	<div class="container-fluid p-5">
-		<div class="container-fluid p-2" id="map">
+	<div class="container-fluid mt-3 p-5">
+		<div class="container-fluid p-2 center" id="map">
 			<div class="row">
 
 						<h4>Welcome to Food Truck Finder</h4></div>
