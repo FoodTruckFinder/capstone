@@ -24,7 +24,7 @@
 			<div class="info">
 
 				<!--foodTruckName-->
-				<input class="form-control-lg py-2" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name" formControlName="foodTruckName" required/>
+				<input class="form-control-lg py-2" formControlName="foodTruckName" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name" formControlName="foodTruckName" required/>
 				<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.foodTruckName?.touched">
 					<p *ngIf="signUpForm.controls.profileUserName?.errors.maxlength">Food truck name is too long.</p>
 					<p *ngIf="signUpForm.controls.profileUserName?.errors.required">Food truck name required.</p>
@@ -32,7 +32,7 @@
 				<br>
 
 				<!--foodTruckPhoneNumber-->
-				<input class="form-control py-2" id="foodTruckPhoneNumber" type="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder=" Food Truck Phone Number (Optional)" formControlName="foodTruckPhoneNumber"/>
+				<input class="form-control py-2" formControlName="foodTruckPhoneNumber" id="foodTruckPhoneNumber" type="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder=" Food Truck Phone Number (Optional)" formControlName="foodTruckPhoneNumber"/>
 				<div class="alert alert-danger" *ngIf="signUpForm.controls.foodTruckPhoneNumber?.invalid && signUpForm.controls.foodTruckPhoneNumber?.touched">
 					<p *ngIf="signUpForm.controls.foodTruckPhoneNumber?.errors.maxlength">Phone number is too long.</p>
 					<span class="note">Phone Number Format: xxx-xxx-xxxx</span>
@@ -40,27 +40,30 @@
 				<br>
 
 				<!--foodTruckDescription-->
-				<input class="form-control py-2" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)" formControlName="foodTruckDescription">
+				<input class="form-control py-2" formControlName="foodTruckDescription" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)" formControlName="foodTruckDescription">
 				<div class="alert alert-danger" *ngIf="signUpForm.controls.foodTruckDescription?.invalid && signUpForm.controls.foodTruckDescription?.touched">
 					<p *ngIf="signUpForm.controls.foodTruckDescription?.errors.maxlength">Description is too long.</p>
 				</div>
 				<br>
 
 				<!--foodTruckImageUrl-->
-				<input class="form-control py-2" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL"/>
+				<input class="form-control py-2" formControlName="foodTruckImageUrl" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL"/>
 				<br>
 				<br>
 
 				<!--foodTruckMenuUrl-->
-				<input class="form-control py-2" id="foodTruckMenuUrl" type="url" name="url" placeholder=" Food Truck Menu Image URL"/>
+				<input class="form-control py-2" formControlName="foodTruckMenuUrl" id="foodTruckMenuUrl" type="url" name="url" placeholder=" Food Truck Menu Image URL"/>
 				<br>
 
+				<!--socialUrl-->
+				<input class="form-control py-2" formControlName="socialUrl" id="socialUrl" type="url" name="url" placeholder=" Social Media Channel URL (Required)"/>
+				<br>
 
-				<button type="button" class="btn-primary pull-right mt-4 rounded font-weight-bold" type="submit" value="Submit">
-				<div *ngIf="status !== null" class="alert alert-secondary alert-dismissible" [ngClass]="status.type" role="alert">
-					<button type="button" class="close" aria-label="Close" (click)="status = null;"><span aria-hidden="true">&times;</span></button>
-					{{ status.message }}
-				</div>
+				<!--buttons-->
+				<button type="button" class="btn-primary pull-right mt-4 rounded font-weight-bold" type="submit" value="Submit"></button>
+				<div *ngIf="status !== null" class="alert alert-secondary alert-dismissible" [ngClass]="status.type" role="alert"></div>
+				<button type="button" class="close" aria-label="Close" (click)="status = null;"><span aria-hidden="true">&times;</span></button>
+				{{ status.message }}
 			</div>
 		</form>
 	</div>
