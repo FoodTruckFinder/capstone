@@ -1,27 +1,27 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ViewChild, EventEmitter, Output} from "@angular/core";
 import {SignIn} from "../interfaces/sign.in";
 import {SignInService} from "../services/sign.in.service";
 import {Router} from "@angular/router";
 import {Status} from "../interfaces/status";
-import {FormGroup} from "@angular/forms";
+import {Observable} from "rxjs"
+import {CookieService} from "ng2-cookies";
 
+declare var $: any;
 
-@Component ({
-	template: require("./sign-in-modal.component.html"),
-	selector: "sign-in"
+@Component({
+	template: require( "./sign-in-modal.component.html"),
+	selector: "signin"
 })
 
 export class SignInComponent {
-	@ViewChild("signInForm")
+	@ViewChild("signInForm") signInForm: any;
 
-	signInForm: FormGroup;
 	signin: SignIn = {profileEmail: null, profilePassword: null};
 	status: Status = {status: null, type: null, message: null};
+	//cookie: any = {};
 
-	constructor(
-		private SignInService: SignInService,
-		private router: Router,
-	)	{}
+	constructor(private SignInService: SignInService, private router: Router, private cookieService : CookieService) {
+	}
 
 
 
@@ -30,13 +30,15 @@ export class SignInComponent {
 		this.SignInService.postSignIn(this.signin).subscribe(status => {
 			this.status = status;
 
-			console.log(status.status);
 
-			if(this.status.status === 200) {
-				this.router.navigate(["/profile"]);
+			if(status.status === 200) {
 
+				this.router.navigate(["profile-page"]);
+				//location.reload(true);
+				this.signInForm.reset();
+				setTimeout(1000,function(){$("#signin-modal").modal('hide');});
 			} else {
-				alert("Email or password is incorrect. Please try again.")
+				console.log("failed login")
 			}
 		});
 	}

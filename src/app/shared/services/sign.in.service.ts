@@ -22,3 +22,4 @@ export class SignInService {
 		return(this.http.get<Status>(this.signOutUrl));
 	}
 }
+

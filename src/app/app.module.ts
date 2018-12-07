@@ -6,13 +6,12 @@ import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from "@angular/forms";
 
-
 const moduleDeclarations = [AppComponent];
 
 @NgModule({
 	imports:      [BrowserModule, HttpClientModule, routing, NgbModule, ReactiveFormsModule],
 	declarations: [...moduleDeclarations, ...allAppComponents],
 	bootstrap:    [AppComponent],
-	providers:    [...appRoutingProviders]
+	providers:    [...appRoutingProviders],
 })
 export class AppModule {}
