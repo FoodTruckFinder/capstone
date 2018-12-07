@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'foodtruck',
-  templateUrl: './foodtruck.component.html',
-  styleUrls: ['./foodtruck.component.css']
+  template: require("./foodtruck.component.html"),
 })
-export class FoodtruckComponent implements OnInit {
+export class FoodTruckComponent implements OnInit {
+
 
   constructor() { }
 

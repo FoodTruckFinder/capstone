@@ -8,10 +8,13 @@ import {SignUpComponent} from "./sign-up/sign-up.component";
 import {SessionService} from "./shared/services/session.service";
 import {SignInService} from "./shared/services/sign.in.service";
 import {SignInComponent} from "./shared/components/sign-in-modal.component";
+import {FoodTruckComponent} from "./foodtruck/foodtruck.component";
 
-export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent];
+
+export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckComponent];
 
 export const routes: Routes = [
+	{path: "foodtruck", component: FoodTruckComponent},
 	{path: "", component: HomeViewComponent}
 ];
 
