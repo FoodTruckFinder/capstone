@@ -4,7 +4,7 @@ import {Status} from "./shared/interfaces/status";
 enableProdMode();
 
 @Component({
-	selector: "food-truck-finder",
+	selector: "angular-example-app",
 	template: require("./app.component.html"),
 })
 
