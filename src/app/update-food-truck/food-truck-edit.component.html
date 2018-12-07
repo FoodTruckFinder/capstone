@@ -12,7 +12,8 @@
 <!--font awesome-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
-<!--custom JavaScript-->
+<!--our custom CSS-->
+<link rel="stylesheet" type="text/css" href="../app.css">
 <!--todo replace above with head-utils at some point-->
 
 <main>
@@ -45,7 +46,7 @@
 				<input class="form-control py-2" formControlName="social" id="socialUrl" type="url" name="url" placeholder=" Social Media Channel URL (Required)"/>
 				<div *ngIf="submitted && messageForm.controls.social.errors" class="error">
 					<div *ngIf="messageForm.controls.social.errors.required">Food Truck Social Media Channel URL is required.</div>
-			</div>
+				</div>
 
 			<button type="button" class="btn-primary pull-right mt-4 rounded font-weight-bold" data-dismiss="modal">Cancel</button>
 			<button type="button" class="btn-warning pull-right mt-4 font-weight-bold rounded">Save changes</button>
