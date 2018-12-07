@@ -9,6 +9,7 @@ import {SessionService} from "./shared/services/session.service";
 import {SignInService} from "./shared/services/sign.in.service";
 import {SignInComponent} from "./shared/components/sign-in-modal.component";
 import {FoodTruckComponent} from "./foodtruck/foodtruck.component";
+import {FoodTruckService} from "./shared/services/foodtruck.service";
 
 
 export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckComponent];
@@ -23,7 +24,8 @@ export const appRoutingProviders: any[] = [
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	SessionService,
 	SignUpService,
-	SignInService
+	SignInService,
+	FoodTruckService
 ];
 
 export const routing = RouterModule.forRoot(routes);

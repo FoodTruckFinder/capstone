@@ -57,13 +57,6 @@ class FoodTruck implements \JsonSerializable {
 	 * @param string $newFoodTruckImageUrl string for foodTruck image url
 	 * @param string $newFoodTruckMenuUrl string for foodTruck menu url
 	 * @param string $newFoodTruckName string for foodTruck name
-=======
-	 * @param string|Uuid $newFoodTruckProfileId id of the Profile for the food truck
-	 * @param $newFoodTruckDescription containing description
-	 * @param $newFoodTruckImageUrl for foodTruck image url
-	 * @param $newFoodTruckMenuUrl for foodTruck menu url
-	 * @param $newFoodTruckName for foodTruck name
->>>>>>> 8181 insert select statement for favoriteProfileId
 	 * @param string $newFoodTruckPhoneNumber string for truck phone number
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -510,7 +503,7 @@ class FoodTruck implements \JsonSerializable {
 	 **/
 	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
 		//create query template
-		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber";
+		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber FROM foodTruck";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 

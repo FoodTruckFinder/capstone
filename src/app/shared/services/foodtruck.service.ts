@@ -9,7 +9,7 @@ export class FoodTruckService {
 	constructor(protected http: HttpClient) {}
 
 	// define an API endpoint
-	private foodtruckUrl = "api/foodtruck";
+	private foodtruckUrl = "api/foodTruck/";
 
 	// reach out to the foodtruck API and create the foodtruck
 	createFoodTruck(foodtruck: FoodTruck) : Observable<Status> {

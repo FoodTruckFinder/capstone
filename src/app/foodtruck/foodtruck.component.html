@@ -1,1 +1,16 @@
-<h4>Fuck the world</h4>
+<div class="container-fluid">
+
+	<div class="card-columns">
+		<div class="card bg-light mb-3" *ngFor="let foodtruck of foodtrucks">
+			<div class="card-header">FoodTruck</div>
+			<div class="card-body">
+				<h4 class="card-title">{{foodtruck.foodTruckName}}</h4>
+				<p class="card-text">{{foodtruck.foodTruckMenuUrl}}</p>
+				<p class="card-text">{{foodtruck.foodTruckPhoneNumber}}</p>
+				<p class="card-text">{{foodtruck.foodTruck}}</p>
+				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+					content.</p>
+			</div>
+		</div>
+	</div>
+</div><!--/.container-fluid-->
