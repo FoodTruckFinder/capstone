@@ -14,9 +14,9 @@
 					<div class="modal-body">
 						<form class="form-control-lg" id="form" action="" method="post" [formGroup]="signInForm">
 							<div class="info">
-								<input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
+								<input class="form-control" id="email" type="email" name="email" placeholder=" Email" formControlName="profileEmail"/>
 								<input class="form-control" id="password" type="text" name="password"
-										 placeholder=" Password"/>
+										 placeholder=" Password" formControlName="profilePassword"/>
 							</div>
 						</form>
 						<div class="modal-footer">
