@@ -8,16 +8,14 @@
 	font-family: 'Bungee', cursive;
 	color: black;
 }
+
 p {
 	font-family: 'Fira Sans', sans-serif;
-
 }
 
-span:nth-of-type(1n)
-{
+span:nth-of-type(1n) {
 	font-family: 'Bungee', cursive;
 }
-
 
 a {
 	font-family: 'Bungee', cursive;
@@ -25,8 +23,8 @@ a {
 	padding-right: 5px;
 	padding-left: 5px;
 	box-shadow: 5px 5px 5px black;
-
 }
+
 input:nth-of-type(n) {
 	font-family: 'Bungee', cursive;
 }
