@@ -13,6 +13,7 @@
 					<span class="icon-bar bottom-bar"></span>
 				</button>
 				<a class="navbar-brand text-secondary pl-3" href="#">
+				<!--todo replace our logo with FTF-logo-small.png-->
 				<img src="../epic/505FTF-icon-v1.png" alt="logo" class="nav-logo" width="100">
 				</a>
 

@@ -21,19 +21,25 @@
 		<h1 class="header mt-4">Update Food Truck Info</h1>
 		<form class="form-control-lg px-3" id="update-food-truck-form" action="" method="put">
 			<div class="form-group">
-				<input class="form-control py-2" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name"/>
+				<input class="form-control py-2" formControlName="name" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name"/>
+				<div *ngIf="submitted && messageForm.controls.name.errors" class="error">
+					<div *ngIf="messageForm.controls.name.errors.required">Food Truck Name is required.</div>
+				</div>
 				<br>
-				<input class="form-control py-2" id="foodTruckPhoneNumber" type="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder=" Food Truck Phone Number (Optional)"/>
+
+				<input class="form-control py-2" formControlName="phonenumber" id="foodTruckPhoneNumber" type="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder=" Food Truck Phone Number (Optional)"/>
 				<span class="note py-2">Phone Number Format: xxx-xxx-xxxx</span>
 				<br>
 				<br>
-				<input class="form-control py-2" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)"/>
+				<input class="form-control py-2" formControlName="description" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)"/>
 				<br>
 				<br>
-				<input class="form-control py-2" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL"/>
+				<input class="form-control py-2" formControlName="imageurl" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL"/>
+				<div *ngIf="submitted && messageForm.controls.imageurl.errors" class="error">
+					<div *ngIf="messageForm.controls.imageurl.errors.required">Food Truck Image URL is required.</div>
 				<br>
 				<br>
-				<input class="form-control py-2" id="foodTruckMenuUrl" type="url" name="url" placeholder=" Food Truck Menu Image URL"/>
+				<input class="form-control py-2" formControlName="menuurl" id="foodTruckMenuUrl" type="url" name="url" placeholder=" Food Truck Menu Image URL"/>
 				<br>
 			</div>
 
