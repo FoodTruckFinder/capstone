@@ -21,7 +21,7 @@
 		<h1 class="header mt-4">Update Food Truck Info</h1>
 		<form class="form-control-lg px-3" id="update-food-truck-form" action="" method="put">
 			<div class="form-group">
-				<input class="form-control py-2" formControlName="name" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name"/>
+				<input class="form-control py-2" formControlName="name" id="foodTruckName" type="text" name="name" placeholder=" Food Truck Name (Required)"/>
 				<div *ngIf="submitted && messageForm.controls.name.errors" class="error">
 					<div *ngIf="messageForm.controls.name.errors.required">Food Truck Name is required.</div>
 				</div>
@@ -34,13 +34,16 @@
 				<input class="form-control py-2" formControlName="description" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)"/>
 				<br>
 				<br>
-				<input class="form-control py-2" formControlName="imageurl" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL"/>
+				<input class="form-control py-2" formControlName="imageurl" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL (Required)"/>
 				<div *ngIf="submitted && messageForm.controls.imageurl.errors" class="error">
 					<div *ngIf="messageForm.controls.imageurl.errors.required">Food Truck Image URL is required.</div>
 				<br>
 				<br>
 				<input class="form-control py-2" formControlName="menuurl" id="foodTruckMenuUrl" type="url" name="url" placeholder=" Food Truck Menu Image URL"/>
 				<br>
+				<input class="form-control py-2" formControlName="social" id="socialUrl" type="url" name="url" placeholder=" Social Media Channel URL (Required)"/>
+				<div *ngIf="submitted && messageForm.controls.social.errors" class="error">
+					<div *ngIf="messageForm.controls.social.errors.required">Food Truck Social Media Channel URL is required.</div>
 			</div>
 
 			<button type="button" class="btn-primary pull-right mt-4 rounded font-weight-bold" data-dismiss="modal">Cancel</button>
