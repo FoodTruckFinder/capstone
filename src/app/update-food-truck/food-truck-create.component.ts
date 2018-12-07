@@ -6,7 +6,7 @@ import {Status} from "../shared/interfaces/status";
 
 @Component({
 	template: require("./food-truck-create.component.html"),
-	selector: "foodtruck"
+	selector: "createfoodtruck"
 	
 })
 
@@ -28,9 +28,9 @@ export class FoodTruckCreateComponent implements OnInit {
 	}
 
 	createFoodTruck() : void {
-		let foodTruck: FoodTruck = {foodTruckName: this.foodTruckForm.value.foodTruckName, foodTruckDescription: this.foodTruckForm.value.foodTruckDescription, foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber, foodTruckImageUrl: this.foodTruckForm.value.foodTruckImageUrl, foodTruckMenuUrl: this.foodTruckForm.value.foodTruckMenuUrl};
+		let foodTruck: FoodTruck = {foodTruckId: null, foodTruckProfileId: null, foodTruckName: this.foodTruckForm.value.foodTruckName, foodTruckDescription: this.foodTruckForm.value.foodTruckDescription, foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber, foodTruckImageUrl: this.foodTruckForm.value.foodTruckImageUrl, foodTruckMenuUrl: this.foodTruckForm.value.foodTruckMenuUrl};
 
-		this.foodTruckForm.postFoodTruck(foodTruck).subscribe(status => {
+		this.foodTruckService.createFoodTruck(foodTruck).subscribe(status => {
 			this.status = status;
 			if(status.status === 200) {
 

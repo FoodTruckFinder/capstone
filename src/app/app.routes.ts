@@ -10,12 +10,13 @@ import {SignInService} from "./shared/services/sign.in.service";
 import {SignInComponent} from "./shared/components/sign-in-modal.component";
 import {FoodTruckComponent} from "./foodtruck/foodtruck.component";
 import {FoodTruckService} from "./shared/services/foodtruck.service";
+import {FoodTruckCreateComponent} from "./update-food-truck/food-truck-create.component";
 
 
-export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckComponent];
+export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckComponent, FoodTruckCreateComponent];
 
 export const routes: Routes = [
-	{path: "foodtruck", component: FoodTruckComponent},
+	{path: "createfoodtruck", component: FoodTruckCreateComponent},
 	{path: "", component: HomeViewComponent}
 ];
 
