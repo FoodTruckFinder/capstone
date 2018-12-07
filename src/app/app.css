@@ -9,6 +9,11 @@
 	color: black;
 }
 
+/* adding this because Bootstrap was overriding it */
+h1 {
+	font-family: 'Bungee', cursive !important;
+}
+
 p {
 	font-family: 'Fira Sans', sans-serif;
 }

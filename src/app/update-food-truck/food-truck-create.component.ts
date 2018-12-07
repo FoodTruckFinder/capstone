@@ -40,9 +40,6 @@ export class FoodTruckCreateComponent {
 		}
 	);
 
-	cloudinarySecureUrl: string;
-	cloudinaryPublicObservable: Observable<string> = new Observable<string>();
-
 	constructor(protected authService: AuthService,
 					protected foodTruckService: FoodTruckService,
 					protected fb: FormBuilder,
