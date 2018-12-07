@@ -75,7 +75,7 @@ div:nth-of-type(6n) {
 
 
 	/*corrects IE min-height bug*/
-/**html { display: flex;}
+html { display: flex;}
 body { width: 100%;}
 
 .sfooter {
