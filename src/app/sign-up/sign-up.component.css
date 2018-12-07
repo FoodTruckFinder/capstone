@@ -1,0 +1,37 @@
+
+/* styling for the sign-up page */
+
+@import url("https://fonts.googleapis.com/css?family=Bungee|Fira+Sans");
+
+.header, span {
+	font-family: 'Bungee', cursive;
+	color: black;
+}
+p {
+	font-family: 'Fira Sans', sans-serif;
+
+}
+
+span:nth-of-type(1n)
+{
+	font-family: 'Bungee', cursive;
+}
+
+
+a {
+	font-family: 'Bungee', cursive;
+	font-size: 10pt;
+	padding-right: 5px;
+	padding-left: 5px;
+	box-shadow: 5px 5px 5px black;
+
+}
+input:nth-of-type(n) {
+	font-family: 'Bungee', cursive;
+}
+
+div:nth-of-type(6n) {
+	font-family: 'Bungee', cursive;
+}
+
+/* end styling for the sign-up page */

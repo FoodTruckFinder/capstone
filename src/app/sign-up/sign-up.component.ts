@@ -7,6 +7,7 @@ import {Status} from "../shared/interfaces/status";
 @Component({
 	template: require("./sign-up.component.html"),
 	selector: "signup"
+
 })
 
 export class SignUpComponent implements OnInit {
@@ -38,3 +39,4 @@ export class SignUpComponent implements OnInit {
 		})
 	}
 }
+
