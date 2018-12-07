@@ -37,9 +37,10 @@ export class FoodTruckService {
 	}
 
 	// reach out to the foodtruck API and grab a FoodTruck object by it's FoodTruck Profile Id
-	getAllFoodTrucks(foodtruck: string) : Observable<FoodTruck[]> {
+	getAllFoodTrucks() : Observable<FoodTruck[]> {
 		return(this.http.get<FoodTruck[]>(this.foodtruckUrl));
 	}
 
 
 }
+
