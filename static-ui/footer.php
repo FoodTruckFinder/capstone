@@ -1,21 +1,14 @@
 <?php require_once ("head-utils.php");?>
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="style.css" type="text/css">
-		<title>Footer</title>
-	</head>
-	<body class="sfooter">
 
-		<div class="sfooter-content">
-			<!-- your page content here-->
-		</div>
 
-		<footer>
-			<!-- footer here-->
-		</footer>
 
-	</body>
-</html>
+		<footer class="sfoot>
+
+<div class="container-fluid mt-4">
+<div class="row justify-content-center">
+	<div class=" text-center pb-3">FoodTruck Finder ©2018</div>
+</div>
+</div>
+
+	</footer>
