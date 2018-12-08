@@ -1,10 +1,22 @@
-<div>
-	<div class="row">
-		<div class="col-12">
+
+<div class="container-fluid">
 
 			<!-- this is the google map :P~ -->
-			<ngui-map zoom="13" center="Albuquerque, New Mexico">
-				<marker *ngFor="let location of locations" [position]="[location.locationLatitude, location.locationLongitude]" (click)="clicked($event)" (click)="displayLocation(location)"></marker>
+			<ngui-map
+				zoom="13"
+				center="35.08, -106.64"
+				(mapReady$)="onMapReady($event)"
+				(mapClick)="onMapClick($event)"
+				(idle)="onIdle($event)"
+				mapTypeId="satellite">
+
+				<!--todo might need to name below location instead of position-->
+				<marker *ngFor="let location of locations"
+				   [position]="[location.locationLatitude, location.locationLongitude]"
+				   (click)="clicked($event)"
+				   (click)="displayLocation(location)">
+				</marker>
+
 				<info-window id="foodtruck-details">
 					<div class="map-text p-3 ml-3 text-center"><img class="card-img-top p-1 art-image" src="{{ foodTruck.foodTruckImageUrl }}" alt="FoodTruck image">
 						<br>
@@ -33,6 +45,4 @@
 				</info-window>
 			</ngui-map>
 
-		</div>
-	</div>
 </div>
