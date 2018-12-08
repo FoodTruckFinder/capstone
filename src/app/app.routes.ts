@@ -18,6 +18,7 @@ export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInCompo
 
 export const routes: Routes = [
 	{path: "foodTruck/:name", component: FoodTruckComponent},
+	{path: "foodTrucks", component: FoodTruckCardsComponent},
 	{path: "create-food-truck", component: FoodTruckCreateComponent},
 	{path: "", component: HomeViewComponent}
 ];
