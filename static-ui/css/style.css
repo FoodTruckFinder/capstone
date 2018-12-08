@@ -33,10 +33,11 @@ button, input, select, textarea {
 
 @import url("https://fonts.googleapis.com/css?family=Bungee|Fira+Sans");
 
-.header, span {
+/*.header, span {
 	font-family: 'Bungee', cursive;
 	color: black;
 }
+*/
 p {
 	font-family: 'Fira Sans', sans-serif;
 
