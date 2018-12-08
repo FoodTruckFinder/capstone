@@ -40,7 +40,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Bernina Gray</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					<a href="#" class="btn btn-primary">Visit My Website</a>
+					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
@@ -48,7 +48,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					<a href="#" class="btn btn-primary">Visit My Website</a>
+					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
@@ -56,7 +56,7 @@
 				<div class="card-body">
 					<h3 class="card-title">David Sanderson</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					<a href="#" class="btn btn-primary">Visit My Website</a>
+					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 
@@ -68,7 +68,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Rae Jack</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					<a href="#" class="btn btn-primary">Visit My Website</a>
+					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
@@ -76,7 +76,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Greg Klein</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					<a href="#" class="btn btn-primary">Visit My Website</a>
+					<a href="http://gregkle.in" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<!--div to make spacing correct-->
