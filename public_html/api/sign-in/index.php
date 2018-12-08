@@ -61,8 +61,7 @@ try {
 		}
 
 		//check if user still has an active user activation token. User must validate token before signing in.
-
-		var_dump($profile);
+		
 
 		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {
 			throw (new \RuntimeException("Please verify your account via email before logging in.", 403));
