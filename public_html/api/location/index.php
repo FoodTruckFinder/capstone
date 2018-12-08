@@ -39,6 +39,10 @@ try {
 	$locationLatitude = filter_input(INPUT_GET, "locationLatitude", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$locationLongitude = filter_input(INPUT_GET, "locationLongitude", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
+
+
+
+
 	// handle GET request - if id or locationFoodTruckId is present, that location is returned, otherwise all location are returned.
 
 	//make sure the id is valid for methods that require it
@@ -69,6 +73,10 @@ try {
 			}
 		}
 	} else if($method === "PUT" || $method === "POST") {
+
+		if((( $_SESSION["profile"]) == true) && ($_SESSION["profile"]->getProfileIsOwner() !== 1 )) {
+			throw(new \InvalidArgumentException("You are not allowed to perform this action.", 403));
+		}
 
 
 		// enforce the user has a XSRF Token
@@ -114,7 +122,7 @@ try {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 		}
 		//enforce the user is signed in and their FoodTruckProfileId matches their ProfileId
-		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString() && empty($_SESSION["profile"]) === true) {
+		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString()) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
 		}
 
@@ -130,15 +138,6 @@ try {
 		$reply->message = "Location successfully updated";
 
 	} else if($method === "POST") {
-		//enforce the user is signed in and a foodtruck owner
-		if(empty($_SESSION["profile"]) == true) {
-			throw(new \InvalidArgumentException("you must be logged in as a foodtruck owner to post foodtruck locations", 403));
-
-		}
-		if($_SESSION["profile"]->getProfileIsOwner() !== 1) {
-			throw(new \InvalidArgumentException("You are not allowed to perform this action.", 403));
-		} //retrieve the foodtruck to own the new record TODO enter a test value for foodTruckId
-		else {
 
 			//create new Location and insert into the database
 			$location = new Location(generateUuidV4(), $requestObject->locationFoodTruckId, $requestObject->locationEndTime, $requestObject->locationLatitude, $requestObject->locationLongitude, $requestObject->locationStartTime);
@@ -147,7 +146,7 @@ try {
 
 			//update reply
 			$reply->message = "Location successfully created";
-		}
+
 	} else if($method === "DELETE") {
 
 		//enforce the user has a XSRF Token
@@ -166,6 +165,10 @@ try {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 		}
 
+
+		if((( $_SESSION["profile"]) == true) && ($_SESSION["profile"]->getProfileIsOwner() !== 1 )) {
+			throw(new \InvalidArgumentException("You are not allowed to perform this action.", 403));
+		}
 
 		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString() && empty($_SESSION["profile"]) === false) {
 			throw(new \InvalidArgumentException("You are not allowed to delete this location", 403));
