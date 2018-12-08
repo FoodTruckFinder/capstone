@@ -3,7 +3,7 @@
 	<h1 class="header mt-4">Sign in </h1>
 
 
-<form [formGroup]="signInForm" (ngSubmit)="SignIn()" novalidate>
+<form [formGroup]="signInForm" (ngSubmit)="signIn()" novalidate>
 	<hr>
 	<div class="form-group">
 		<p class="text-left pt-2">Email: <span class="text-danger">*</span></p><input type="text" name="profileEmail" id="profileEmail" formControlName="profileEmail" class="form-control"/>
