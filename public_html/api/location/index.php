@@ -114,7 +114,7 @@ try {
 			throw(new RuntimeException("FoodTruck does not exist.", 404));
 		}
 		//enforce the user is signed in and their FoodTruckProfileId matches their ProfileId
-		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString() && empty($_SESSION["profile"]) === false) {
+		if($foodTruck->getFoodTruckProfileId()->toString() !== $_SESSION["profile"]->getProfileId()->toString() && empty($_SESSION["profile"]) === true) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this location", 403));
 		}
 
