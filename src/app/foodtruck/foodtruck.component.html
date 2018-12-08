@@ -1,14 +1,13 @@
 <div class="container-fluid">
 
 	<div class="card-columns">
-		<div class="card bg-light mb-3" *ngFor="let foodtruck of foodtrucks">
-			<div class="card-header font-weight-bold"><h4>{{foodtruck.foodTruckName}}</h4></div>
+		<div class="card bg-light mb-3" id="foodtruck">
+			<div class="card-header font-weight-bold"><h4>{{foodtruck[0].foodTruckName}}</h4></div>
 			<div class="card-body">
-				<p class="card-text">{{foodtruck.foodTruckMenuUrl}}</p>
-				<p class="card-text">{{foodtruck.foodTruckPhoneNumber}}</p>
-				<p class="card-text">{{foodtruck.foodTruckDescription}}</p>
+				<p class="card-text">{{foodtruck[0].foodTruckMenuUrl}}</p>
+				<p class="card-text">{{foodtruck[0].foodTruckPhoneNumber}}</p>
+				<p class="card-text">{{foodtruck[0].foodTruckDescription}}</p>
 			</div>
 		</div>
 	</div>
-</div><!--/.container-fluid-->
-
+</div>
