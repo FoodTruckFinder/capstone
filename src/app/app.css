@@ -42,4 +42,9 @@ div:nth-of-type(6n) {
 
 /* end styling for the sign-up page */
 
-/* styling for about page */
+/* styling for map */
+ngui-map {
+	height: 75vh !important;
+	background-color: white;
+
+}

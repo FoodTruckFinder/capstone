@@ -4,14 +4,16 @@
 
 <main class="home">
 	<div class="container-fluid mt-3 p-5">
-		<div class="container-fluid p-2 center" id="map">
+		<div class="container-fluid p-2" id="map">
 			<div class="row">
 
 				<h4>Welcome to Food Truck Finder</h4></div>
 		</div>
+
 		<div class="col-12 col-md-8 p-4">
 			<img class="img-fluid" src="../src/img/abqMapPlaceholder.png" alt="map" width="1596" height="1178">
 		</div>
+
 	</div>
 	</div>
 	<div class="container-fluid p-2">
