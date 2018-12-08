@@ -19,7 +19,7 @@ const moduleDeclarations = [AppComponent];
 		FormsModule,
 		ReactiveFormsModule,
 		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA'})],
-	declarations: [...moduleDeclarations, ...allAppComponents,],
+	declarations: [...moduleDeclarations, ...allAppComponents],
 	bootstrap:    [AppComponent],
 	providers:    [...appRoutingProviders],
 })
