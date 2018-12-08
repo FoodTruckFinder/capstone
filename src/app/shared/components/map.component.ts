@@ -1,13 +1,13 @@
-/* import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params} from "@angular/router";
-import {Status} from "../classes/status";
+import {Component, OnInit} from "@angular/core";
+/* import {ActivatedRoute, Params} from "@angular/router"; */
+/* import {Status} from "../classes/status"; */
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
 import "rxjs/add/operator/switchMap";
 import 'rxjs/add/observable/of';
-import {LocationService } from "../services/location.service";
-import {Location } from "../interfaces/location";
-import {Point} from "../classes/point";
+import { LocationService } from "../services/location.service";
+import { Location } from "../interfaces/location";
+/* import { Point } from "../classes/point"; */
 
 
 @Component({
@@ -49,5 +49,3 @@ export class MapComponent implements OnInit {
 		this.location = location;
 	}
 }
-
-*/
