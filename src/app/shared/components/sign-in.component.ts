@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../interfaces/status";
 
 @Component({
-	template: require("./sign-in-modal.component.html"),
+	template: require("./sign-in.component.html"),
 	selector: "signin"
 })
 

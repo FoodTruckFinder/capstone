@@ -27,12 +27,12 @@ export class FoodTruckService {
 	}
 
 	// reach out to the foodtruck API and grab a FoodTruck object by it's FoodTruck Profile Id
-	getFoodTruckByFoodtruckProfileId(foodTruckProfileId: string) : Observable<FoodTruck> {
+	getFoodTruckByFoodTruckProfileId(foodTruckProfileId: string) : Observable<FoodTruck> {
 		return(this.http.get<FoodTruck>(this.foodtruckUrl + foodTruckProfileId));
 	}
 
 	// reach out to the foodtruck API and grab a FoodTruck object by it's Name
-	getFoodTruckByFoodtruckName(foodTruckName: string) : Observable<FoodTruck> {
+	getFoodTruckByFoodTruckName(foodTruckName: string) : Observable<FoodTruck> {
 		return(this.http.get<FoodTruck>(this.foodtruckUrl + foodTruckName));
 	}
 

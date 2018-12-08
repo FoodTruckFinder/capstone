@@ -47,7 +47,8 @@
     "cloudinary": "^1.13.2",
     "core-js": "^2.5.5",
     "rxjs": "^6.3.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "rxjs-compat": "^6.3.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome": "^1.1.7",

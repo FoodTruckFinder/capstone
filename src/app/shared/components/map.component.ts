@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
 
 	// empty array of lat/long points
 
-	location:  = new Location(null, null, null, null, null, null);
+	//location:  = new Location(null, null, null, null, null, null);
 	locations: Location[] = [];
 	data: Observable<Array<Location[]>>;
 	point: any;
@@ -33,19 +33,19 @@ export class MapComponent implements OnInit {
 
 	listLocations() : any {
 		//todo locationObserver does not currenty exist according to PHPStorm
-		this.locationService.locationObserver
-			.subscribe(locations => this.locations = locations);
+		// this.locationService.locationObserver
+		// 	.subscribe(locations => this.locations = locations);
 	}
 
 	clicked({target: marker} : any, location : Location) {
-		this.location = marker;
-		marker.nguiMapComponent.openInfoWindow('foodtruck-details', marker);
+		// this.location = marker;
+		// marker.nguiMapComponent.openInfoWindow('foodtruck-details', marker);
 	}
 	hideMarkerInfo() {
 		this.point.display = !this.point.display;
 	}
 
 	displayLocation(location: Location) {
-		this.location = location;
+		// this.location = location;
 	}
 }
