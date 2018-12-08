@@ -32,42 +32,47 @@
 	</div>
 			<!--toDo list member contact info as cards in order of appearance on the image--one row on desktop, column on mobile. Card will contain headshot, github profile link (as icon), link to PWP, link to social media channels-->
 	<h2>The Food Truck Finder Team</h2>
-	<div class="container">
+
+	<div class="container text-center">
+		<div class="row text-center">
 			<div class="card col-sm-12 col-md-4 mb-3">
 				<img class="card-img-top" src="https://www.dropbox.com/s/hpl1g08xm95ktha/bGray.png?raw=1" alt="Bernina Gray image">
 				<div class="card-body">
-					<h5 class="card-title">Bernina Gray</h5>
+					<h3 class="card-title">Bernina Gray</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
 				<img class="card-img-top" src="https://www.dropbox.com/s/grwst4st6n4fc2t/dNakitare.png?raw=1" alt="Daniel Nakitare">
 				<div class="card-body">
-					<h5 class="card-title">Daniel Nakitare</h5>
+					<h3 class="card-title">Daniel Nakitare</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
 				<img class="card-img-top" src="https://www.dropbox.com/s/v73hxl7mdy14ycn/dSanderson.png?raw=1" alt="David Sanderson">
 				<div class="card-body">
-					<h5 class="card-title">David Sanderson</h5>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				</div>
-			</div>
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
-				<div class="card-body">
-					<h5 class="card-title">Rae Jack</h5>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				</div>
-			</div>
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
-				<div class="card-body">
-					<h5 class="card-title">Greg Klein</h5>
+					<h3 class="card-title">David Sanderson</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 				</div>
 			</div>
 
+			<div class="card col-sm-12 col-md-6 mb-3">
+				<img class="card-img-top" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
+				<div class="card-body">
+					<h3 class="card-title">Rae Jack</h3>
+					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+				</div>
 			</div>
+			<div class="card col-sm-12 col-md-6 mb-3">
+				<img class="card-img-top" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
+				<div class="card-body">
+					<h3 class="card-title">Greg Klein</h3>
+					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 </main>
