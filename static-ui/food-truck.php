@@ -14,7 +14,7 @@
 					Fri-Sun 4:15pm-2:00am</strong></p>
 
 			<!--toDo: add image URL for the cards-->
-			<img class="sanchez-tacosn" src="sanchez-tacosn%20(2).jpg" alt="sanchez-tacosn(2)">
+			<img class="sanchez-tacos-trucks (2).jpg" src="sanchez-tacos-trucks (2).jpg" alt="sanchez-tacos(2)">
 			<ul class="p-1 list-group list-group-flush">
 				<li class="list-group-item">Food Truck Name: Sanchez Taco Trucks </li>
 				<li class="list-group-item">Food Truck Description:<p>f you want fresh mexican style tacos and more.<br> go to sanchez taco food trucks.
