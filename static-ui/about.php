@@ -27,7 +27,7 @@
 
 
 			<h2>Food Truck Finder GitHub Repo</h2>
-			<a href="https://github.com/FoodTruckFinder"><i class="fab fa-github fa-5x"></i></a>
+			<a href="https://github.com/FoodTruckFinder/capstone"><i class="fab fa-github fa-5x"></i></a>
 
 	</div>
 			<!--toDo list member contact info as cards in order of appearance on the image--one row on desktop, column on mobile. Card will contain headshot, github profile link (as icon), link to PWP, link to social media channels-->
