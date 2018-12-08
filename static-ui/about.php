@@ -30,7 +30,7 @@
 			<a href="https://github.com/FoodTruckFinder/capstone"><i class="fab fa-github fa-5x"></i></a>
 
 	</div>
-			<!--toDo list member contact info as cards in order of appearance on the image--one row on desktop, column on mobile. Card will contain headshot, github profile link (as icon), link to PWP, link to social media channels-->
+
 	<h2>The Food Truck Finder Team</h2>
 
 	<div class="container text-center">
@@ -40,6 +40,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Bernina Gray</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<a href="#" class="btn btn-primary">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
@@ -47,6 +48,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<a href="#" class="btn btn-primary">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card col-sm-12 col-md-4 mb-3">
@@ -54,23 +56,31 @@
 				<div class="card-body">
 					<h3 class="card-title">David Sanderson</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<a href="#" class="btn btn-primary">Visit My Website</a>
 				</div>
 			</div>
 
-			<div class="card col-sm-12 col-md-6 mb-3">
+			<!--div to make spacing correct-->
+			<div class="col-md-2"></div>
+
+			<div class="card col-sm-12 col-md-4 mb-3">
 				<img class="card-img-top" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
 				<div class="card-body">
 					<h3 class="card-title">Rae Jack</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<a href="#" class="btn btn-primary">Visit My Website</a>
 				</div>
 			</div>
-			<div class="card col-sm-12 col-md-6 mb-3">
+			<div class="card col-sm-12 col-md-4 mb-3">
 				<img class="card-img-top" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
 				<div class="card-body">
 					<h3 class="card-title">Greg Klein</h3>
 					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<a href="#" class="btn btn-primary">Visit My Website</a>
 				</div>
 			</div>
+			<!--div to make spacing correct-->
+			<div class="col-md-2"></div>
 		</div>
 	</div>
 
