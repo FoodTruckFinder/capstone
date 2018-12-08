@@ -10,7 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 const moduleDeclarations = [AppComponent];
 
-@NgMod ule({
+@NgModule({
 	imports:      [
 		BrowserModule,
 		HttpClientModule,
