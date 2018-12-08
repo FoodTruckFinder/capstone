@@ -35,6 +35,57 @@
 				<input class="form-control py-2" formControlName="description" id="foodTruckDescription" type="text" name="text" placeholder=" Food Truck Description (Optional)"/>
 				<br>
 				<br>
+				<!--button for uploading foodTruckImage-->
+				<div class="col-md-2">
+					<button
+						type="button"
+						class="btn btn-primary text-light mr-3 foodtruckimage-btn"
+						id="foodTruckImageUrl"
+						name="foodTruckImageUrl"
+						#photo
+						(click)="uploadImage()"
+						[disabled]="imageUploaded">
+						<i class="fas fa-file-image"></i> Upload Food Truck Image</button>
+				</div>
+
+				<!--button for posting the food truck image-->
+				<div class="row justify-content-md-center mt-3 mb-5">
+					<div class="form-group col-md-6">
+						<button
+							type="button"
+							class="btn btn-primary text-light mr-3 foodtruckimage-btn"
+							[disabled]="!foodTruckForm.valid"
+							(click)="postImage()">
+							<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
+					</div>
+				</div>
+
+				<div class="col-md-2">
+					<!--button for posting food truck menu url-->
+					<button
+						type="button"
+						class="btn btn-primary text-light mr-3 menu-btn"
+						id="foodTruckMenuUrl"
+						name="foodTruckMenuUrl"
+						#photo
+						(click)="uploadImage()"
+						[disabled]="imageUploaded"
+					><i class="fas fa-file-image"></i> Upload Menu Image</button>
+				</div>
+
+				<div class="row justify-content-md-center mt-3 mb-5">
+					<div class="form-group col-md-6">
+						<button
+							type="button"
+							class="btn btn-primary text-light mr-3 menu-btn"
+							[disabled]="!foodTruckForm.valid"
+							(click)="postImage()">
+							<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
+					</div>
+				</div>
+
+
+				<!--commenting out because we are using cloudinary for these instead
 				<input class="form-control py-2" formControlName="imageurl" id="foodTruckImageUrl" type="url" name="url" placeholder=" Food Truck Image URL (Required)"/>
 				<div *ngIf="submitted && messageForm.controls.imageurl.errors" class="error">
 					<div *ngIf="messageForm.controls.imageurl.errors.required">Food Truck Image URL is required.</div>
@@ -43,6 +94,8 @@
 				<br>
 				<input class="form-control py-2" formControlName="menuurl" id="foodTruckMenuUrl" type="url" name="url" placeholder=" Food Truck Menu Image URL"/>
 				<br>
+				-->
+
 				<input class="form-control py-2" formControlName="social" id="socialUrl" type="url" name="url" placeholder=" Social Media Channel URL (Required)"/>
 				<div *ngIf="submitted && messageForm.controls.social.errors" class="error">
 					<div *ngIf="messageForm.controls.social.errors.required">Food Truck Social Media Channel URL is required.</div>
