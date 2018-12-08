@@ -1,4 +1,4 @@
-/* <!--google font imports-->
+<!--google font imports-->
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body {
@@ -17,7 +17,7 @@ button, input, select, textarea {
 
 /* styling for the about us page team photo and page */
 
-/* .teamphoto {
+.teamphoto {
 	max-width: 60vw;
 	height: auto;
 }
@@ -31,7 +31,7 @@ button, input, select, textarea {
 
 /* styling for the sign-up page */
 
-/* @import url("https://fonts.googleapis.com/css?family=Bungee|Fira+Sans");
+@import url("https://fonts.googleapis.com/css?family=Bungee|Fira+Sans");
 
 .header, span {
 	font-family: 'Bungee', cursive;
@@ -75,7 +75,7 @@ div:nth-of-type(6n) {
 
 
 	/*corrects IE min-height bug*/
-/* html { display: flex;}
+html { display: flex;}
 body { width: 100%;}
 
 .sfooter {
