@@ -41,3 +41,10 @@ div:nth-of-type(6n) {
 }
 
 /* end styling for the sign-up page */
+
+/* styling for about page */
+
+.giticon {
+	width: 100px;
+	height: 100px;
+}
