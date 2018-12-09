@@ -2,13 +2,12 @@
 import {NgModule} from "@angular/core";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {JwtModule} from "@auth0/angular-jwt";
-import {CookieService} from "ngx-cookie-service";
-
 import {AppComponent} from "./app.component";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NguiMapModule } from '@ngui/map';
+import {JwtModule} from "@auth0/angular-jwt";
+import {CookieService} from "ngx-cookie-service";
 
 const moduleDeclarations = [AppComponent];
 

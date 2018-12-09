@@ -1,9 +1,12 @@
 import {Component, OnInit} from "@angular/core";
+//import {Router} from "@angular/router";
+import {Status} from "../interfaces/status";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CookieService} from "ngx-cookie-service";
+
+import {SessionService} from "../../services/session.service";
 import {SignIn} from "../interfaces/sign.in";
 import {SignInService} from "../services/sign.in.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Status} from "../interfaces/status";
-import {CookieService} from "ngx-cookie-service";
 
 @Component({
 	template: require("./sign-in.component.html"),
@@ -14,7 +17,12 @@ export class SignInComponent implements OnInit {
 	signInForm: FormGroup;
 	status: Status = {status: null, message:null, type: null};
 
-	constructor(private signInService: SignInService, private formBuilder: FormBuilder, private cookieService: CookieService) {}
+	constructor(
+		private cookieService: CookieService,
+		private sessionService: SessionService,
+		private formBuilder: FormBuilder,
+		private signInService: SignInService) {}
+	//private router: Router (need to add)
 
 	ngOnInit() {
 		this.signInForm = this.formBuilder.group({
@@ -26,13 +34,22 @@ export class SignInComponent implements OnInit {
 	signIn() : void {
 		let signIn: SignIn = {profileEmail: this.signInForm.value.profileEmail, profilePassword: this.signInForm.value.profilePassword};
 
-		this.signInService.postSignIn(signIn).subscribe(status => {
+		this.signInService.postSignIn(signIn)
+			.subscribe(status => {
 			this.status = status;
 			if(status.status === 200) {
+				this.sessionService.setSession();
+				this.signInForm.reset();
+				this.router.navigate(["posts"]);
+				location.reload();
+				console.log("signin successful");
 
 			} else {
 				alert("Incorrect Email or Password. Try Again.")
 			}
-		})
+		});
+	}
+	signOut() :void {
+		this.signInService.signOut();
 	}
 }

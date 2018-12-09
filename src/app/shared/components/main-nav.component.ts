@@ -26,7 +26,7 @@ export class MainNavComponent {
 //				this.status = status;
 //				if(status.status === 200) {
 
-					delete cookies and jwt
+					//delete cookies and jwt
 					this.cookieService.deleteAll();
 					localStorage.clear();
 
