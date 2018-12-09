@@ -1,4 +1,9 @@
 import {RouterModule, Routes} from "@angular/router";
+import {AuthGuardService as AuthGuard} from "./shared/services/auth-guard-service";
+
+import {AuthService} from "./shared/services/auth.service";
+import {AuthGuardService} from "./shared/services/auth-guard-service";
+
 import {APP_BASE_HREF} from "@angular/common";
 import {HomeViewComponent} from "./home-view/home-view.component";
 import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
@@ -29,7 +34,7 @@ const providers: any[] = [
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
-const services: any[] = [AuthService, CookieService, FoodTruckService, SignInService, SignUpService, SessionService, JwtHelperService, AuthGuard];
+const services: any[] = [AuthService, CookieService, FoodTruckService, SignInService, SignUpService, SessionService, AuthGuard];
 
 
 export const appRoutingProviders: any[] = [providers, services];
