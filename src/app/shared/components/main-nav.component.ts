@@ -3,8 +3,6 @@ import {SignInService} from "../services/sign.in.service";
 import {CookieService} from "ngx-cookie-service";
 //import {Status} from "../classes/status";
 import {Router} from "@angular/router";
-// do we need sign out import as well?
-
 
 @Component({
 	template: require("./main-nav.component.html"),
