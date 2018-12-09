@@ -3,6 +3,7 @@ import {SignIn} from "../interfaces/sign.in";
 import {SignInService} from "../services/sign.in.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../interfaces/status";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
 	template: require("./sign-in.component.html"),
@@ -13,7 +14,7 @@ export class SignInComponent implements OnInit {
 	signInForm: FormGroup;
 	status: Status = {status: null, message:null, type: null};
 
-	constructor(private signInService: SignInService, private formBuilder: FormBuilder) {}
+	constructor(private signInService: SignInService, private formBuilder: FormBuilder, private cookieService: CookieService) {}
 
 	ngOnInit() {
 		this.signInForm = this.formBuilder.group({
