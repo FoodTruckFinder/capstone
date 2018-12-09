@@ -7,7 +7,6 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
-//todo: implement json serializable X
 class FoodTruck implements \JsonSerializable {
 	use ValidateUuid;
 	/**
@@ -45,7 +44,6 @@ class FoodTruck implements \JsonSerializable {
 	 * @var string $foodTruckPhoneNumber
 	 **/
 	private $foodTruckPhoneNumber;
-//todo: replace varchar with string X
 
 	/**
 	 * constructor for this foodTruck
@@ -148,13 +146,11 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckDescription is > 256 characters
 	 * @throws \TypeError if $newFoodTruckDescription is not a string
 	 **/
-	//todo: only ? on nullable X
 	public function setFoodTruckDescription(?string $newFoodTruckDescription): void {
 		if($newFoodTruckDescription === null) {
 			$this->foodTruckDescription = null;
 			return;
 		}
-		//todo: ask george about return above X
 		//verify description is secure
 		$newFoodTruckDescription = trim($newFoodTruckDescription);
 		$newFoodTruckDescription = filter_var($newFoodTruckDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -322,7 +318,6 @@ class FoodTruck implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		//create query template
-		//todo: finish $query line below X
 			$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber) VALUES(:foodTruckId, :foodTruckProfileId, :foodTruckDescription, :foodTruckImageUrl, :foodTruckMenuUrl, :foodTruckName, :foodTruckPhoneNumber)";
 		$statement = $pdo->prepare($query);
 
@@ -417,7 +412,6 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	//todo: change method to return an object instead of an array X
 	public static function getFoodTruckByFoodTruckProfileId(\PDO $pdo, $foodTruckProfileId): ?FoodTruck {
 
 		try {
@@ -463,7 +457,7 @@ class FoodTruck implements \JsonSerializable {
 		if(empty($foodTruckName) === true) {
 			throw(new \PDOException("food truck Name is invalid"));
 		}
-		//todo: remove things that dont need to be searched X
+
 		// escape any mySQL wild cards
 		$foodTruckName = str_replace("_", "\\_", str_replace("%", "\\%", $foodTruckName));
 
