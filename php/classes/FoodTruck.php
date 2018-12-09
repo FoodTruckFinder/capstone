@@ -490,14 +490,14 @@ class FoodTruck implements \JsonSerializable {
 	}
 
 	/**
-	 * gets all foodTrucks
+	 * gets all active foodTrucks
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
+	public static function getAllActiveFoodTrucks(\PDO $pdo): \SPLFixedArray {
 		//create query template
 		$query = "SELECT
   foodTruckId, 
@@ -516,6 +516,37 @@ class FoodTruck implements \JsonSerializable {
 FROM
   foodTruck
   INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId WHERE NOW() BETWEEN location.locationStartTime AND location.locationEndTime ";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build array of foodTrucks
+		$foodTrucks = new \SplFixedArray($statement->rowCount());
+
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
+				$foodTrucks[$foodTrucks->key()] = $foodTruck;
+				$foodTrucks->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($foodTrucks);
+	}
+
+	/**
+	 * gets all foodTrucks
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
+		//create query template
+		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber FROM foodTruck";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
