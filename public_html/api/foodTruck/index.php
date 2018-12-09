@@ -5,7 +5,7 @@ require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
-use FoodTruckFinder\Capstone\Profile;
+use FoodTruckFinder\Capstone\Location;
 use FoodTruckFinder\Capstone\FoodTruck;
 
 /**
@@ -64,7 +64,7 @@ try {
 			} else if(empty($foodTruckName) === false) {
 				$reply->data = FoodTruck::getFoodTruckByFoodTruckName($pdo, $foodTruckName);
 			} else if(empty($active) === false){
-				$reply->data = FoodTruck::getAllActiveFoodTrucks($pdo)->toArray();
+				$reply->data = FoodTruck::getAllActiveFoodTrucks($pdo)->toArray() + Location::getAllLocations($pdo)->toArray();
 			} else {
 				$reply->data = FoodTruck::getAllFoodTrucks($pdo)->toArray();
 			}
