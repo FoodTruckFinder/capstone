@@ -36,7 +36,7 @@
 		<h2 class="pt-5 pb-3 font-weight-bold">The 505 Food Truck Finder Team</h2>
 		<div class="row text-center">
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/hpl1g08xm95ktha/bGray.png?raw=1" alt="Bernina Gray image">
+				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/hpl1g08xm95ktha/bGray.png?raw=1" alt="Bernina Gray image">
 				<div class="card-body">
 					<h3 class="card-title">Bernina Gray</h3>
 					<p class="card-text">add text here</p>
@@ -44,7 +44,7 @@
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/gr1znia3v4vpj8t/dNakitare.jpg?raw=1" alt="Daniel Nakitare">
+				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/gr1znia3v4vpj8t/dNakitare.jpg?raw=1" alt="Daniel Nakitare">
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
 					<p class="card-text">add text here</p>
@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/v73hxl7mdy14ycn/dSanderson.png?raw=1" alt="David Sanderson">
+				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/v73hxl7mdy14ycn/dSanderson.png?raw=1" alt="David Sanderson">
 				<div class="card-body">
 					<h3 class="card-title">David Sanderson</h3>
 					<p class="card-text">add text here</p>
@@ -64,7 +64,7 @@
 			<div class="col-md-2"></div>
 
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
+				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
 				<div class="card-body">
 					<h3 class="card-title">Rae Jack</h3>
 					<p class="card-text">add text here</p>
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
+				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
 				<div class="card-body">
 					<h3 class="card-title">Greg Klein</h3>
 					<p class="card-text">add text here</p>

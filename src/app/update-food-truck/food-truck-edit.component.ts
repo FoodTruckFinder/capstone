@@ -26,9 +26,10 @@ export class UpdateFoodTruckComponent implements OnInit {
 		this.foodTruckForm = this.formBuilder.group({
 			foodTruckName: ["", [Validators.maxLength(128), Validators.required]],
 			foodTruckDescription: ["", [Validators.maxLength(256), Validators.required]],
-			foodTruckPhoneNumber: ["", [Validators.maxLength(16), Validators.required]],
-			foodTruckImageUrl: ["", [Validators.maxLength(255), Validators.required]],
-			foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]]
+			foodTruckPhoneNumber: ["", [Validators.maxLength(16), Validators.required]]
+			//commenting these out because we don't need image editing for our prototype
+			//foodTruckImageUrl: ["", [Validators.maxLength(255), Validators.required]],
+			//foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]]
 		});
 	}
 
