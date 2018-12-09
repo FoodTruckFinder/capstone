@@ -18,48 +18,44 @@
 <navbar></navbar>
 <main>
 	<div class="container text-center pt-3">
-		<h1>What is Food Truck Finder?</h1>
+		<h1 class="py-3">What is Food Truck Finder?</h1>
 
-			<!--toDo list people from left to right according to team photo-->
-			<p>Food Truck Finder was built by (todo)</p>
-
-			<p>Food Truck Finder is a web app designed to help food truck users easily find the best food nearby as well as a resource for food truck owners to let their fans know when they are open for business, what items are on the menu, and more. Albuquerque is known for its local cuisine, and we've created an app that helps both locals and tourists find the best food as quickly as possible.</p>
+		<p>Food Truck Finder is a web app designed to help people easily find the best food nearby as well as a resource for food truck owners to let people know when they are open for business, what items are on the menu, and more. Albuquerque is known for its local cuisine, and we've created an app that helps both locals and tourists find food as quickly as possible.</p>
 
 
-			<h2>Food Truck Finder GitHub Repo</h2>
-
-		<a class="btn btn-primary" href="https://github.com/FoodTruckFinder/capstone" role="button">Food Truck Finder GitHub Repo</a>
+		<div class="container py-3">
+	<a href="https://github.com/FoodTruckFinder/capstone" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Food Truck Finder GitHub Repo</a>
+		</div>
 		<!--
 			<a href="https://github.com/FoodTruckFinder/capstone"><i class="fab fa-github fa-5x"></i></a>
 		-->
 
 	</div>
 
-	<h2>The Food Truck Finder Team</h2>
-
 	<div class="container text-center">
+		<h2 class="pt-5 pb-3 font-weight-bold">The Food Truck Finder Team</h2>
 		<div class="row text-center">
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/hpl1g08xm95ktha/bGray.png?raw=1" alt="Bernina Gray image">
+			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
+				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/hpl1g08xm95ktha/bGray.png?raw=1" alt="Bernina Gray image">
 				<div class="card-body">
 					<h3 class="card-title">Bernina Gray</h3>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<p class="card-text">add text here</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/grwst4st6n4fc2t/dNakitare.png?raw=1" alt="Daniel Nakitare">
+			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
+				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/grwst4st6n4fc2t/dNakitare.png?raw=1" alt="Daniel Nakitare">
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<p class="card-text">add text here</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/v73hxl7mdy14ycn/dSanderson.png?raw=1" alt="David Sanderson">
+			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
+				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/v73hxl7mdy14ycn/dSanderson.png?raw=1" alt="David Sanderson">
 				<div class="card-body">
 					<h3 class="card-title">David Sanderson</h3>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<p class="card-text">add text here</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
@@ -67,19 +63,19 @@
 			<!--div to make spacing correct-->
 			<div class="col-md-2"></div>
 
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
+			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
+				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
 				<div class="card-body">
 					<h3 class="card-title">Rae Jack</h3>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<p class="card-text">add text here</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
-			<div class="card col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
+			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
+				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
 				<div class="card-body">
 					<h3 class="card-title">Greg Klein</h3>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<p class="card-text">add text here</p>
 					<a href="http://gregkle.in" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
