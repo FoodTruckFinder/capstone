@@ -4,6 +4,7 @@ namespace FoodTruckFinder\Capstone;
 
 require_once "autoload.php";
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+use FoodTruckFinder\Capstone\Location;
 
 use Ramsey\Uuid\Uuid;
 
@@ -49,7 +50,7 @@ class FoodTruck implements \JsonSerializable {
 	 * constructor for this foodTruck
 	 *
 	 * @param String| Uuid $newFoodTruckId id of this foodTruck or null if a new truck
-      HEAD
+	 * HEAD
 	 * @param string|Uuid $newFoodTruckProfileId id of the Profile for the food truck
 	 * @param string $newFoodTruckDescription string containing description
 	 * @param string $newFoodTruckImageUrl string for foodTruck image url
@@ -318,6 +319,7 @@ class FoodTruck implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		//create query template
+		//todo: finish $query line below X
 			$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber) VALUES(:foodTruckId, :foodTruckProfileId, :foodTruckDescription, :foodTruckImageUrl, :foodTruckMenuUrl, :foodTruckName, :foodTruckPhoneNumber)";
 		$statement = $pdo->prepare($query);
 
@@ -431,13 +433,13 @@ class FoodTruck implements \JsonSerializable {
 			$foodTruck = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			if ($row !== false) {
+			if($row !== false) {
 				$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
 			}
 		} catch(\Exception $exception) {
-				//if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 		return ($foodTruck);
 	}
 
@@ -471,7 +473,6 @@ class FoodTruck implements \JsonSerializable {
 		$statement->execute($parameters);
 
 
-
 		//build array of food trucks
 		$foodTrucks = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -487,6 +488,7 @@ class FoodTruck implements \JsonSerializable {
 		}
 		return ($foodTrucks);
 	}
+
 	/**
 	 * gets all foodTrucks
 	 *
@@ -497,7 +499,23 @@ class FoodTruck implements \JsonSerializable {
 	 **/
 	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
 		//create query template
-		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber FROM foodTruck";
+		$query = "SELECT
+  foodTruckId, 
+  foodTruckProfileId,
+  foodTruckDescription,
+  foodTruckImageUrl,
+  foodTruckMenuUrl,
+  foodTruckName,
+  foodTruckPhoneNumber,
+  locationId,
+  locationFoodTruckId,
+  locationEndTime,
+  locationLatitude,
+  locationLongitude,
+  locationStartTime
+FROM
+  foodTruck
+  INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
