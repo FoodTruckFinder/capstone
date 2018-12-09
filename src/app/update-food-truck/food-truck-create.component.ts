@@ -42,7 +42,7 @@ export class FoodTruckCreateComponent {
 	});
 
 	cloudinarySecureUrl: string;
-	cloudinarySecureUrl2: string;
+	//cloudinarySecureUrl2: string;
 	cloudinaryPublicObservable: Observable<string> = new Observable<string>();
 
 
@@ -81,7 +81,7 @@ createFoodTruck(): void {
 			foodTruckDescription: this.foodTruckForm.value.foodTruckDescription,
 			foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber,
 			foodTruckImageUrl: this.cloudinarySecureUrl,
-			foodTruckMenuUrl: this.cloudinarySecureUrl2
+			foodTruckMenuUrl: this.foodTruckForm.value.foodTruckMenuUrl
 		};
 	}
 }
