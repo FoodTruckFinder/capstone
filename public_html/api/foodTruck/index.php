@@ -41,8 +41,10 @@ try {
 	$foodTruckMenuUrl = filter_input(INPUT_GET, "foodTruckMenuUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$foodTruckName = filter_input(INPUT_GET, "foodTruckName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$foodTruckPhoneNumber = filter_input(INPUT_GET, "foodTruckPhoneNumber", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+   $active = filter_input(INPUT_GET, "active", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-	//make sure the id is valid for methods that require it
+
+   //make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("food truck id cannot be empty or negative", 405));
 	}
@@ -60,6 +62,8 @@ try {
 				$reply->data = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $foodTruckProfileId);
 			} else if(empty($foodTruckName) === false) {
 				$reply->data = FoodTruck::getFoodTruckByFoodTruckName($pdo, $foodTruckName);
+			} else if(empty($active) === false){
+				$reply->data = FoodTruck::getAllActiveFoodTrucks($pdo)->toArray();
 			} else {
 				$reply->data = FoodTruck::getAllFoodTrucks($pdo)->toArray();
 			}
