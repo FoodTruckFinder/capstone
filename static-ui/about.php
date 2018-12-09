@@ -18,13 +18,13 @@
 <navbar></navbar>
 <main>
 	<div class="container text-center pt-3">
-		<h1 class="py-3">What is Food Truck Finder?</h1>
+		<h1 class="py-3">What is 505 Food Truck Finder?</h1>
 
-		<p>Food Truck Finder is a web app designed to help people easily find the best food nearby as well as a resource for food truck owners to let people know when they are open for business, what items are on the menu, and more. Albuquerque is known for its local cuisine, and we've created an app that helps both locals and tourists find food as quickly as possible.</p>
+		<p>505 Food Truck Finder is a web app designed to help people easily find the best food nearby as well as a resource for food truck owners to let people know when they are open for business, what items are on the menu, and more. Albuquerque is known for its local cuisine, and we've created an app that helps both locals and tourists find food as quickly as possible.</p>
 
 
 		<div class="container py-3">
-	<a href="https://github.com/FoodTruckFinder/capstone" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Food Truck Finder GitHub Repo</a>
+	<a href="https://github.com/FoodTruckFinder/capstone" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">505 Food Truck Finder GitHub Repo</a>
 		</div>
 		<!--
 			<a href="https://github.com/FoodTruckFinder/capstone"><i class="fab fa-github fa-5x"></i></a>
