@@ -17,6 +17,8 @@ export class MainNavComponent {
 		private router: Router
 	) {}
 
+
+
 	signOut() : void {
 		this.signInService.signOut();
 

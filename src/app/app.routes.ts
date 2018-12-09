@@ -12,6 +12,7 @@ import {FoodTruckCardsComponent} from "./foodtruck/foodtruck.cards.component";
 import {FoodTruckService} from "./shared/services/foodtruck.service";
 import {FoodTruckCreateComponent} from "./update-food-truck/food-truck-create.component";
 import {FoodTruckComponent} from "./foodtruck/foodtruck.component";
+import {CookieService} from "ngx-cookie-service";
 
 
 export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckCardsComponent, FoodTruckCreateComponent, FoodTruckComponent];
@@ -23,13 +24,14 @@ export const routes: Routes = [
 	{path: "", component: HomeViewComponent}
 ];
 
-export const appRoutingProviders: any[] = [
-	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
+const providers: any[] = [
+	{provide:APP_BASE_HREF, useValue: window["_base_href"]},
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
-	SessionService,
-	SignUpService,
-	SignInService,
-	FoodTruckService
+	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
+const services: any[] = [AuthService, CookieService, FoodTruckService, SignInService, SignUpService, SessionService, JwtHelperService, AuthGuard];
+
+
+export const appRoutingProviders: any[] = [providers, services];
 
 export const routing = RouterModule.forRoot(routes);
