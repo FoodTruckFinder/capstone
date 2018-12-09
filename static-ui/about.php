@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="container text-center">
-		<h2 class="pt-5 pb-3 font-weight-bold">The Food Truck Finder Team</h2>
+		<h2 class="pt-5 pb-3 font-weight-bold">The 505 Food Truck Finder Team</h2>
 		<div class="row text-center">
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
 				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/hpl1g08xm95ktha/bGray.png?raw=1" alt="Bernina Gray image">
@@ -44,7 +44,7 @@
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/grwst4st6n4fc2t/dNakitare.png?raw=1" alt="Daniel Nakitare">
+				<img class="card-img-top rounded-circle" src="https://www.dropbox.com/s/gr1znia3v4vpj8t/dNakitare.jpg?raw=1" alt="Daniel Nakitare">
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
 					<p class="card-text">add text here</p>
