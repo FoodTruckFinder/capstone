@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-//import {Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {Status} from "../interfaces/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
@@ -40,7 +40,7 @@ export class SignInComponent implements OnInit {
 			if(status.status === 200) {
 				this.sessionService.setSession();
 				this.signInForm.reset();
-				this.router.navigate(["posts"]);
+				//this.router.navigate(["sign-in-homeview"]); signed-in-homeview route does n't exist, do we need one?
 				location.reload();
 				console.log("signin successful");
 
