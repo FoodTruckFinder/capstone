@@ -4,7 +4,7 @@ import {Status} from "../interfaces/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
 
-import {SessionService} from "../../services/session.service";
+import {SessionService} from "../services/session.service";
 import {SignIn} from "../interfaces/sign.in";
 import {SignInService} from "../services/sign.in.service";
 
