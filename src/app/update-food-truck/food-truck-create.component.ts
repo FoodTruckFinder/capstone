@@ -4,15 +4,12 @@ import {FoodTruckService} from "../shared/services/foodtruck.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
 
-
-//i think we need these--not sure--going off Lost Paws animal-post.component.ts https://github.com/jisbell347/lost-paws/blob/master/src/app/animal-post/animal-post.component.ts
+//i think we need these--going off Lost Paws animal-post.component.ts https://github.com/jisbell347/lost-paws/blob/master/src/app/animal-post/animal-post.component.ts
 import {FileUploader} from 'ng2-file-upload';
 import {Cookie} from 'ng2-cookies';
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/from';
 import {ActivatedRoute, Router} from "@angular/router";
-
-
 
 @Component({
 	selector: "food-truck-create",
@@ -54,7 +51,6 @@ export class FoodTruckCreateComponent {
 			foodTruckName: ["", [Validators.maxLength(128), Validators.required]],
 			foodTruckDescription: ["", [Validators.maxLength(256), Validators.required]],
 			foodTruckPhoneNumber: ["", [Validators.maxLength(16), Validators.required]],
-			foodTruckImageUrl: ["", [Validators.maxLength(255), Validators.required]],
 			foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]],
 		});
 }
