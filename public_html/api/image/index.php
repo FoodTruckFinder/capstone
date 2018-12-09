@@ -8,13 +8,13 @@ require_once (dirname(__DIR__, 3) . "/php/lib/jwt.php");
 use gregoryklein\FoodTruckFinder\{Profile, FoodTruck};
 /**
  * the user upload an image file to Cloudinary, the server grabs the secure image URL from Cloudinary
- * and updates the animalImageUrl field of a specified animal
- * @see OAuth
+ * and updates the foodTruckImageUrl field of a specified foodTruck
  * @see Profile
- * @see Animal
+ * @see FoodTruck
  * @author greg klein <gklein@cnm.edu>
  * @version 1.0.0
  */
+
 // verify that a session is active, if not -- start the session
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
@@ -25,7 +25,7 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
-	// determine the HTTP method used (we only allow the POST method to be used for image uploaing)
+	// determine the HTTP method used (we only allow the POST method to be used for image uploading)
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if ($method !== "POST") {
 		throw (new \Exception("This HTTP method is not supported for image upload.", 405));

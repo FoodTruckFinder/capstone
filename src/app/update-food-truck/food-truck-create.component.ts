@@ -15,10 +15,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
 	selector: "food-truck-create",
-	template: require("./food-truck-create.component.html")
+	template: require("./food-truck-create.template.html")
 })
 
-export class FoodTruckCreateComponent implements OnInit {
+//took out on the onInit because Lost Paws only uses it in the edit ts
+export class FoodTruckCreateComponent {
 	foodTruckForm: FormGroup;
 	submitted: boolean = false;
 	status: Status = {status: null, message: null, type: null};

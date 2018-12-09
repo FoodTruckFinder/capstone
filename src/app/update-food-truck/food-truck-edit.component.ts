@@ -7,7 +7,7 @@ import 'rxjs/add/observable/from';
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-	template: require("./food-truck-edit.component.html"),
+	template: require("./food-truck-edit.template.html"),
 	selector: "food-truck-edit"
 })
 
