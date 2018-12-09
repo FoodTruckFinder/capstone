@@ -57,34 +57,34 @@ $profile->insert($pdo);
 
 
 
-$foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "FoodTruck1", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Supper Truck","505-555-5555" );
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"d6794e24-ee51-45f9-82ea-db05ee6f6ec2", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"d6794e24-ee51-45f9-82ea-db05ee6f6ec2", "FoodTruck2", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Oni Noodles","505-555-5555");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"d33dbe86-24c0-4ab8-95fd-c01d14fcb735", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"d33dbe86-24c0-4ab8-95fd-c01d14fcb735", "FoodTruck3", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Nomad BBQ","505-555-5555");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"df33c1fb-5f7a-470d-973b-19e93acb7318", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"df33c1fb-5f7a-470d-973b-19e93acb7318", "FoodTruck4", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","ABQ BBQ on Wheels","505-555-5555");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "FoodTruck5", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Grilled Cheez eXpress","505-555-5555");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"a8e72b51-abff-48da-a763-089c086be673", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"a8e72b51-abff-48da-a763-089c086be673", "FoodTruck6", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","El Paisa","Chamisa");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"a90148b5-2c7e-4f61-8a42-cda261c828bd", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"a90148b5-2c7e-4f61-8a42-cda261c828bd", "FoodTruck7", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Meals on Wheels","Chamisa");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"f506c838-971f-4353-b6c5-2bac7cdf667a", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"f506c838-971f-4353-b6c5-2bac7cdf667a", "FoodTruck8", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Su Bak","Chamisa");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"ef85dd98-1a4f-4d3c-87d3-fadd660fdc28", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"ef85dd98-1a4f-4d3c-87d3-fadd660fdc28", "FoodTruck9", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Deep Fried PBJ ","Chamisa");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"33d415f-be51-40c6-8290-863718cd95a7", "IAMSAM10@gmail.com", "password", 1,"Chamisa");
+$foodtruck = new FoodTruck(generateUuidV4(),"33d415f-be51-40c6-8290-863718cd95a7", "FoodTruck10", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Kerus","Chamisa");
 $foodtruck->insert($pdo);
 
 /*

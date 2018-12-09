@@ -515,7 +515,7 @@ class FoodTruck implements \JsonSerializable {
   locationStartTime
 FROM
   foodTruck
-  INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId";
+  INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId WHERE NOW() BETWEEN location.locationStartTime AND location.locationEndTime ";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
