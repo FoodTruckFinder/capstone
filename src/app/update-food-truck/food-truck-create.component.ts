@@ -3,21 +3,48 @@ import {FoodTruck} from "../shared/interfaces/foodtruck";
 import {FoodTruckService} from "../shared/services/foodtruck.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
+import {FileUploader} from 'ng2-file-upload';
+
+//i think we need these--not sure--going off Lost Paws animal-post.component.ts https://github.com/jisbell347/lost-paws/blob/master/src/app/animal-post/animal-post.component.ts
+import {Cookie} from 'ng2-cookies';
+import {Observable} from 'rxjs';
+import 'rxjs/add/observable/from';
+
+
 
 @Component({
-	template: require("./food-truck-create.component.html"),
-	selector: "createfoodtruck"
-	
+	selector: "food-truck-create",
+	template: require("./food-truck-create.component.html")
 })
 
 export class FoodTruckCreateComponent implements OnInit {
 	foodTruckForm: FormGroup;
-	status: Status = {status:null, message:null, type:null};
+	submitted: boolean = false;
+	status: Status = {status: null, message: null, type: null};
+	foodTruck: FoodTruck;
 
-	constructor(private foodTruckService: FoodTruckService, private formBuilder: FormBuilder) {}
+	foodTruckId = this.route.snapshot.params["foodTruckId"];
+	success: boolean = false;
+	imageUploaded: boolean = false;
 
-	ngOnInit() {
+	public uploader: FileUploader = new FileUploader({
+		itemAlias: 'foodtruck',
+		url: './api/image/',
+		headers: [
+			{name: 'X-JWT-TOKEN', value: window.localStorage.getItem('jwt-token')},
+			{name: 'X-XSRF-TOKEN', value: Cookie.get('XSRF-TOKEN')}
+		],
+		additionalParameter: {}
+	});
 
+	cloudinarySecureUrl: string;
+	cloudinaryPublicObservable: Observable<string> = new Observable<string>();
+
+
+	constructor(private foodTruckService: FoodTruckService,
+					private formBuilder: FormBuilder,
+					protected route: ActivatedRoute,
+					protected router: Router) {
 		this.foodTruckForm = this.formBuilder.group({
 			foodTruckName: ["", [Validators.maxLength(128), Validators.required]],
 			foodTruckDescription: ["", [Validators.maxLength(256), Validators.required]],
@@ -25,16 +52,47 @@ export class FoodTruckCreateComponent implements OnInit {
 			foodTruckImageUrl: ["", [Validators.maxLength(255), Validators.required]],
 			foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]],
 		});
+}
+
+uploadImage(): void {
+	this.uploader.uploadAll();
+	this.cloudinaryPublicObservable.subscribe(cloudinarySecureUrl => this.cloudinarySecureUrl = cloudinarySecureUrl);
+	this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
+		let reply = JSON.parse(response);
+		this.cloudinarySecureUrl = reply.data;
+		this.cloudinaryPublicObservable = Observable.from(this.cloudinarySecureUrl);
+		if(this.cloudinarySecureUrl) {
+			this.imageUploaded = true;
+		}
+	};
+}
+
+createFoodTruck(): void {
+	if(this.cloudinarySecureUrl) {
+		this.foodTruck = {
+			foodTruckId: null,
+			foodTruckProfileId: null,
+			foodTruckName: this.foodTruckForm.value.foodTruckName,
+			foodTruckDescription: this.foodTruckForm.value.foodTruckDescription,
+			foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber,
+			foodTruckImageUrl: this.cloudinarySecureUrl,
+			foodTruckMenuUrl: this.cloudinarySecureUrl
+		};
 	}
+}
 
-	createFoodTruck() : void {
-		let foodTruck: FoodTruck = {foodTruckId: null, foodTruckProfileId: null, foodTruckName: this.foodTruckForm.value.foodTruckName, foodTruckDescription: this.foodTruckForm.value.foodTruckDescription, foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber, foodTruckImageUrl: this.foodTruckForm.value.foodTruckImageUrl, foodTruckMenuUrl: this.foodTruckForm.value.foodTruckMenuUrl};
-
-		this.foodTruckService.createFoodTruck(foodTruck).subscribe(status => {
-			this.status = status;
-			if(status.status === 200) {
-
-			}
-		})
+postFoodTruck(): void {
+	if(this.cloudinarySecureUrl) {
+		this.submitted = true;
+		this.createFoodTruck();
+		if(this.foodTruck) {
+			this.foodTruckService.createFoodTruck(this.foodTruck).subscribe(status => {
+				this.status = status;
+				if(this.status.status === 200) {
+					this.foodTruckForm.reset();
+				}
+			});
+		}
 	}
+}
 }
