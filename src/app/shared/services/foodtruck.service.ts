@@ -21,7 +21,7 @@ export class FoodTruckService {
 		return(this.http.put<Status>(this.foodtruckUrl, foodtruck));
 	}
 
-	// reach out to the foodtruck API and grab a FoodTruck object by it's Id
+	// reach out to the foodtruck API and grab a FoodTruck object by its Id
 	getFoodTruckByFoodTruckId(foodTruckId: string) : Observable<FoodTruck> {
 		return(this.http.get<FoodTruck>(this.foodtruckUrl + foodTruckId));
 	}
