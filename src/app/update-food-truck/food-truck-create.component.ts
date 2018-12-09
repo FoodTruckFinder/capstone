@@ -9,6 +9,7 @@ import {FileUploader} from 'ng2-file-upload';
 import {Cookie} from 'ng2-cookies';
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/from';
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 
