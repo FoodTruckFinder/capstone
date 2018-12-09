@@ -8,6 +8,7 @@ use FoodTruckFinder\Capstone\Location;
 
 use Ramsey\Uuid\Uuid;
 
+//todo: implement json serializable X
 class FoodTruck implements \JsonSerializable {
 	use ValidateUuid;
 	/**
@@ -45,6 +46,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @var string $foodTruckPhoneNumber
 	 **/
 	private $foodTruckPhoneNumber;
+//todo: replace varchar with string X
 
 	/**
 	 * constructor for this foodTruck
@@ -147,11 +149,13 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \RangeException if $newFoodTruckDescription is > 256 characters
 	 * @throws \TypeError if $newFoodTruckDescription is not a string
 	 **/
+	//todo: only ? on nullable X
 	public function setFoodTruckDescription(?string $newFoodTruckDescription): void {
 		if($newFoodTruckDescription === null) {
 			$this->foodTruckDescription = null;
 			return;
 		}
+		//todo: ask george about return above X
 		//verify description is secure
 		$newFoodTruckDescription = trim($newFoodTruckDescription);
 		$newFoodTruckDescription = filter_var($newFoodTruckDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -320,7 +324,7 @@ class FoodTruck implements \JsonSerializable {
 
 		//create query template
 		//todo: finish $query line below X
-			$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber) VALUES(:foodTruckId, :foodTruckProfileId, :foodTruckDescription, :foodTruckImageUrl, :foodTruckMenuUrl, :foodTruckName, :foodTruckPhoneNumber)";
+		$query = "INSERT INTO foodTruck(foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber) VALUES(:foodTruckId, :foodTruckProfileId, :foodTruckDescription, :foodTruckImageUrl, :foodTruckMenuUrl, :foodTruckName, :foodTruckPhoneNumber)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
@@ -414,6 +418,7 @@ class FoodTruck implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
+	//todo: change method to return an object instead of an array X
 	public static function getFoodTruckByFoodTruckProfileId(\PDO $pdo, $foodTruckProfileId): ?FoodTruck {
 
 		try {
@@ -459,7 +464,7 @@ class FoodTruck implements \JsonSerializable {
 		if(empty($foodTruckName) === true) {
 			throw(new \PDOException("food truck Name is invalid"));
 		}
-
+		//todo: remove things that dont need to be searched X
 		// escape any mySQL wild cards
 		$foodTruckName = str_replace("_", "\\_", str_replace("%", "\\%", $foodTruckName));
 
@@ -490,14 +495,14 @@ class FoodTruck implements \JsonSerializable {
 	}
 
 	/**
-	 * gets all active foodTrucks
+	 * gets all foodTrucks
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getAllActiveFoodTrucks(\PDO $pdo): \SPLFixedArray {
+	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
 		//create query template
 		$query = "SELECT
   foodTruckId, 
@@ -515,38 +520,7 @@ class FoodTruck implements \JsonSerializable {
   locationStartTime
 FROM
   foodTruck
-  INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId WHERE NOW() BETWEEN location.locationStartTime AND location.locationEndTime ";
-		$statement = $pdo->prepare($query);
-		$statement->execute();
-
-		//build array of foodTrucks
-		$foodTrucks = new \SplFixedArray($statement->rowCount());
-
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
-				$foodTrucks[$foodTrucks->key()] = $foodTruck;
-				$foodTrucks->next();
-			} catch(\Exception $exception) {
-				//if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($foodTrucks);
-	}
-
-	/**
-	 * gets all foodTrucks
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
-		//create query template
-		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber FROM foodTruck";
+  INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
