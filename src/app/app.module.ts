@@ -7,6 +7,7 @@ import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NguiMapModule } from '@ngui/map';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CookieService} from "ngx-cookie-service";
 
 const moduleDeclarations = [AppComponent];
 
@@ -21,6 +22,6 @@ const moduleDeclarations = [AppComponent];
 		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA'})],
 	declarations: [...moduleDeclarations, ...allAppComponents],
 	bootstrap:    [AppComponent],
-	providers:    [...appRoutingProviders],
+	providers:    [...appRoutingProviders, CookieService],
 })
 export class AppModule {}

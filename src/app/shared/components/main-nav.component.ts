@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {SignInService} from "../services/sign.in.service";
-//import {CookieService} from "ngx-cookie-service";
-// import {Status} from "../classes/status";
+import {CookieService} from "ngx-cookie-service";
+//import {Status} from "../classes/status";
 import {Router} from "@angular/router";
 // do we need sign out import as well?
 
@@ -15,7 +15,7 @@ export class MainNavComponent {
 
 	constructor(
 		private signInService: SignInService,
-//		private cookieService: CookieService,
+		private cookieService: CookieService,
 		private router: Router
 	) {}
 
@@ -26,8 +26,8 @@ export class MainNavComponent {
 //				this.status = status;
 //				if(status.status === 200) {
 
-					//delete cookies and jwt
-//					this.cookieService.deleteAll();
+					delete cookies and jwt
+					this.cookieService.deleteAll();
 					localStorage.clear();
 
 					//send user back home, refresh page
