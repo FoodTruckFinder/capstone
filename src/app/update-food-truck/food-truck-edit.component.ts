@@ -28,9 +28,7 @@ export class UpdateFoodTruckComponent implements OnInit {
 			foodTruckDescription: ["", [Validators.maxLength(256), Validators.required]],
 			foodTruckPhoneNumber: ["", [Validators.maxLength(16), Validators.required]],
 			foodTruckImageUrl: ["", [Validators.maxLength(255), Validators.required]],
-			foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]],
-			animalLocation: ["", [Validators.maxLength(200)]],
-			animalDescription: ["", [Validators.maxLength(500), Validators.required]]
+			foodTruckMenuUrl: ["", [Validators.maxLength(255), Validators.required]]
 		});
 	}
 

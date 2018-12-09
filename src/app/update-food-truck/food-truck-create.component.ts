@@ -3,9 +3,10 @@ import {FoodTruck} from "../shared/interfaces/foodtruck";
 import {FoodTruckService} from "../shared/services/foodtruck.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
-import {FileUploader} from 'ng2-file-upload';
+
 
 //i think we need these--not sure--going off Lost Paws animal-post.component.ts https://github.com/jisbell347/lost-paws/blob/master/src/app/animal-post/animal-post.component.ts
+import {FileUploader} from 'ng2-file-upload';
 import {Cookie} from 'ng2-cookies';
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/from';
@@ -30,6 +31,7 @@ export class FoodTruckCreateComponent {
 	imageUploaded: boolean = false;
 
 	public uploader: FileUploader = new FileUploader({
+		//todo not sure what itemAlias is or how it should be named
 		itemAlias: 'foodtruck',
 		url: './api/image/',
 		headers: [
@@ -40,6 +42,7 @@ export class FoodTruckCreateComponent {
 	});
 
 	cloudinarySecureUrl: string;
+	cloudinarySecureUrl2: string;
 	cloudinaryPublicObservable: Observable<string> = new Observable<string>();
 
 
@@ -78,7 +81,7 @@ createFoodTruck(): void {
 			foodTruckDescription: this.foodTruckForm.value.foodTruckDescription,
 			foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber,
 			foodTruckImageUrl: this.cloudinarySecureUrl,
-			foodTruckMenuUrl: this.cloudinarySecureUrl
+			foodTruckMenuUrl: this.cloudinarySecureUrl2
 		};
 	}
 }

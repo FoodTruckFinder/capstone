@@ -27,7 +27,11 @@
 
 
 			<h2>Food Truck Finder GitHub Repo</h2>
+
+		<a class="btn btn-primary" href="https://github.com/FoodTruckFinder/capstone" role="button">Food Truck Finder GitHub Repo</a>
+		<!--
 			<a href="https://github.com/FoodTruckFinder/capstone"><i class="fab fa-github fa-5x"></i></a>
+		-->
 
 	</div>
 
