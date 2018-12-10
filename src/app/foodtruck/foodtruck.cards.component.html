@@ -1,20 +1,20 @@
+<head>
+	<title>505 Food Truck Finder</title>
+</head>
+<body>
+	<div class="container-fluid">
 
-	<head>
-		<title>505 Food Truck Finder</title>
-	</head>
-	<body>
-		<div class="container-fluid">
-
-			<div class="card-columns">
-				<div class="card bg-warning mb-3" *ngFor="let foodtruck of foodtrucks">
-					<span class="card-title font-weight-bold text-center"><h4>{{foodtruck.foodTruckName}}</h4></span>
-					<img class="card-img-top" src="{{foodtruck.foodTruckImageUrl}}" alt="Card image cap">
-					<div class="card-body">
-						<p class="card-text">{{foodtruck.foodTruckPhoneNumber}}</p>
-						<a href="{foodtruck.foodTruckMenuUrl}}">Menu</a>
-						<p class="card-text">{{foodtruck.foodTruckDescription}}</p>
-					</div>
+		<div class="card-columns">
+			<div class="card bg-warning mb-3" *ngFor="let foodtruck of foodtrucks">
+				<h1 class="card-title font-weight-bold text-center"><span>{{foodtruck.foodTruckName}}</span></h1>
+				<img class="card-img-top img-responsive p-1" src="{{foodtruck.foodTruckImageUrl}}"
+					  alt="foodtruck image caption">
+				<div class="card-body">
+					<p class="card-text text-right"><span class="lead text-danger">Phone: {{foodtruck.foodTruckPhoneNumber}}</span></p>
+					<p class="card-text text-right"><a class="lead text-dark border border-primary" href="{foodtruck.foodTruckMenuUrl}}">Menu Link</a></p>
+					<p class="card-text text-left"><span class="lead">Description: {{foodtruck.foodTruckDescription}}</span></p>
 				</div>
 			</div>
-		</div><!--/.container-fluid-->
-	</body>
+		</div>
+	</div><!--/.container-fluid-->
+</body>
