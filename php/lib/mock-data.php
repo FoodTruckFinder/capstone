@@ -53,10 +53,10 @@ $profile = new Profile(generateUuidV4(),null, "IAMSAM10@gmail.com", "$hash", 1,"
 $profile->insert($pdo);
 */
 
-//begin fake foodtrucks bb5169b3-7f4b-4b3e-975e-5223cacd05a9
+//begin fake foodtrucks
 
 
-
+/*
 $foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "FoodTruck1", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Supper Truck","505-555-5555" );
 $foodtruck->insert($pdo);
 
@@ -66,12 +66,13 @@ $foodtruck->insert($pdo);
 $foodtruck = new FoodTruck(generateUuidV4(),"d33dbe86-24c0-4ab8-95fd-c01d14fcb735", "FoodTruck3", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Nomad BBQ","505-555-5555");
 $foodtruck->insert($pdo);
 
-$foodtruck = new FoodTruck(generateUuidV4(),"df33c1fb-5f7a-470d-973b-19e93acb7318", "FoodTruck4", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","ABQ BBQ on Wheels","505-555-5555");
+$foodtruck = new FoodTruck(generateUuidV4(),"bb5169b3-7f4b-4b3e-975e-5223cacd05a9", "FoodTruck4", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","ABQ BBQ on Wheels","505-555-5555");
 $foodtruck->insert($pdo);
+
 
 $foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "FoodTruck5", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Grilled Cheez eXpress","505-555-5555");
 $foodtruck->insert($pdo);
-
+*/
 $foodtruck = new FoodTruck(generateUuidV4(),"a8e72b51-abff-48da-a763-089c086be673", "FoodTruck6", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","El Paisa","Chamisa");
 $foodtruck->insert($pdo);
 

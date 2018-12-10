@@ -1,6 +1,4 @@
-<?php require_once("head-utils.php"); ?>
 
-<?php require_once("sign-in-modal.php"); ?>
 
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-light fixed-top p-0"

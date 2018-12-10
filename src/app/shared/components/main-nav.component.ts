@@ -1,9 +1,10 @@
 import {Component} from "@angular/core";
 import {SignInService} from "../services/sign.in.service";
 import {CookieService} from "ngx-cookie-service";
-// import {Status} from "../../interfaces/status";
+
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
+import {Status} from "../interfaces/status";
 
 @Component({
 	template: require("./main-nav.component.html"),
@@ -12,18 +13,21 @@ import {AuthService} from "../services/auth.service";
 
 export class MainNavComponent {
 
+	status: Status = {status: null, message:null, type: null};
+
 	constructor(
 		private authService: AuthService,
 		private signInService: SignInService,
 		private cookieService: CookieService,
 		private router: Router
-	) {}
-
-	isAuthenticated(): boolean {
-		return(this.authService.isAuthenticated());
+	) {
 	}
 
-	signOut() : void {
+	isAuthenticated(): boolean {
+		return (this.authService.isAuthenticated());
+	}
+
+	signOut(): void {
 		this.signInService.signOut()
 		// should this be getSignOut?
 
@@ -40,5 +44,6 @@ export class MainNavComponent {
 					location.reload();
 					console.log("goodbye");
 				}
-//			});
+			});
+	}
 }

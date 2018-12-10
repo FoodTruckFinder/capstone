@@ -53,6 +53,7 @@ try {
 	if($method === "GET") {
 		if($method === "GET") {
 			//set XSRF cookie
+
 			setXsrfCookie();
 
 			//get a specific foodTruck based on arguments provided or all the foodTrucks and update reply

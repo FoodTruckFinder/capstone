@@ -22,8 +22,6 @@
 	<!--google fonts-->
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 
-	<!--custom CSS styles-->
-	<link rel="stylesheet" href="css/style.css"/>
 
 	<!--custom JavaScript-->
 
