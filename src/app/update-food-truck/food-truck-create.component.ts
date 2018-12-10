@@ -19,7 +19,6 @@ export class FoodTruckCreateComponent {
 	foodTruckForm: FormGroup;
 	submitted: boolean = false;
 	status: Status = {status: null, message: null, type: null};
-	foodTruck: FoodTruck;
 
 	foodTruckId = this.route.snapshot.params["foodTruckId"];
 	success: boolean = false;
@@ -66,26 +65,30 @@ uploadImage(): void {
 	};
 }
 
-createFoodTruck(): void {
+createFoodTruck(): FoodTruck {
 	if(this.cloudinarySecureUrl) {
-		this.foodTruck = {
+		return {
 			foodTruckId: null,
 			foodTruckProfileId: null,
-			foodTruckName: this.foodTruckForm.value.foodTruckName,
 			foodTruckDescription: this.foodTruckForm.value.foodTruckDescription,
-			foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber,
 			foodTruckImageUrl: this.cloudinarySecureUrl,
+			foodTruckPhoneNumber: this.foodTruckForm.value.foodTruckPhoneNumber,
+			foodTruckName: this.foodTruckForm.value.foodTruckName,
 			foodTruckMenuUrl: this.foodTruckForm.value.foodTruckMenuUrl
 		};
+
+
 	}
 }
 
 postFoodTruck(): void {
 	if(this.cloudinarySecureUrl) {
 		this.submitted = true;
+
 		this.createFoodTruck();
-		if(this.foodTruck) {
-			this.foodTruckService.createFoodTruck(this.foodTruck).subscribe(status => {
+		let foodTruck : FoodTruck = this.createFoodTruck();
+		if(foodTruck) {
+			this.foodTruckService.createFoodTruck(foodTruck).subscribe(status => {
 				this.status = status;
 				if(this.status.status === 200) {
 					this.foodTruckForm.reset();
