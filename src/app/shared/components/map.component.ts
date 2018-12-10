@@ -25,7 +25,7 @@ export class MapComponent implements OnInit {
 
 	ngOnInit() : void {
 		this.foodTruckService.getAllActiveFoodTrucks().subscribe(foodTruckLocations => {this.foodTruckLocations = foodTruckLocations});
-
+console.log("foodtruckLocations", this.foodTruckLocations)
 			}
 
 

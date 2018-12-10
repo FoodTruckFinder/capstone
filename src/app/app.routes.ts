@@ -28,7 +28,9 @@ export const routes: Routes = [
 	{path: "foodTruck/:name", component: FoodTruckComponent},
 	{path: "foodTrucks", component: FoodTruckCardsComponent},
 	{path: "create-food-truck", component: FoodTruckCreateComponent},
-	{path: "", component: HomeViewComponent}
+	{path: "", component: HomeViewComponent},
+	{path: "sign-up", component: SignUpComponent},
+	{path: "sign-in", component: SignInComponent}
 ];
 
 const providers: any[] = [
