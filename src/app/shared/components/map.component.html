@@ -11,7 +11,7 @@
 		(idle)="onIdle($event)"
 		mapTypeId="roadmap">
 		<marker *ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]" (click)="clicked($event)"></marker>
-		-<info-window id="foodtruck-deetz">
+		<info-window id="foodtruck-deetz">
 			<!-- <div class="map-text p-3 ml-3 text-center"><img class="card-img-top p-1 art-image" src="{{ foodTruck.foodTruckImageUrl}}" alt="Food Truck Image caption"> -->
 				<br>
 				<br>
