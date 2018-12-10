@@ -1,10 +1,8 @@
 import {Component, OnInit} from "@angular/core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FoodTruck} from "../shared/interfaces/foodtruck";
 import {FoodTruckService} from "../shared/services/foodtruck.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
-
-//i think we need these--going off Lost Paws animal-post.component.ts https://github.com/jisbell347/lost-paws/blob/master/src/app/animal-post/animal-post.component.ts
 import {FileUploader} from 'ng2-file-upload';
 import {Cookie} from 'ng2-cookies';
 import {Observable} from 'rxjs';
@@ -43,8 +41,8 @@ export class FoodTruckCreateComponent {
 	cloudinaryPublicObservable: Observable<string> = new Observable<string>();
 
 
-	constructor(private foodTruckService: FoodTruckService,
-					private formBuilder: FormBuilder,
+	constructor(protected foodTruckService: FoodTruckService,
+					protected formBuilder: FormBuilder,
 					protected route: ActivatedRoute,
 					protected router: Router) {
 		this.foodTruckForm = this.formBuilder.group({
