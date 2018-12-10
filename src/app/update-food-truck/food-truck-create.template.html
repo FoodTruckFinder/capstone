@@ -1,121 +1,115 @@
-<!--<navbar></navbar>-->
-<!--<main class="my-5">-->
-	<!--&lt;!&ndash;-->
-	<!--<div class="container-fluid text-center text-sm-left">-->
+<navbar></navbar>
+<main class="my-5">
+	<div class="container-fluid text-center text-sm-left">
 
-		<!--<div class="row mb-3">-->
-			<!--<div class="col">-->
-				<!--<h1>Create Food Truck Profile</h1>-->
-			<!--</div>-->
-		<!--</div>-->
+		<div class="row mb-3">
+			<div class="col">
+				<h1>Create Food Truck Profile</h1>
+			</div>
+		</div>
 
-		<!--<div class="row alert alert-light">-->
-			<!--<div class="col-md-8">-->
-				<!--&lt;!&ndash;added post method here&ndash;&gt;-->
-				<!--<form [formGroup]="foodTruckForm" (ngSubmit)="createFoodTruck()" novalidate action="" method="post">-->
-					<!--<p>Food Truck Name</p>-->
-					<!--<input type="text" name="foodTruckName" id="foodTruckName" formControlName="foodTruckName" class="form-control"/>-->
-					<!--<p>Food Truck Description</p>-->
-					<!--<input type="text" name="foodTruckDescription" id="foodTruckDescription" formControlName="foodTruckDescription" class="form-control">-->
-					<!--<p>Food Truck Phone Number</p>-->
-					<!--<input type="text" name="foodTruckPhoneNumber" id="foodTruckPhoneNumber" formControlName="foodTruckPhoneNumber" class="form-control">-->
+		<div class="row alert alert-light">
+			<div class="col-md-8">
+				<!--added post method here-->
+				<form [formGroup]="foodTruckForm" (ngSubmit)="createFoodTruck()" novalidate action="" method="post">
+					<p>Food Truck Name</p>
+					<input type="text" name="foodTruckName" id="foodTruckName" formControlName="foodTruckName" class="form-control"/>
+					<p>Food Truck Description</p>
+					<input type="text" name="foodTruckDescription" id="foodTruckDescription" formControlName="foodTruckDescription" class="form-control">
+					<p>Food Truck Phone Number</p>
+					<input type="text" name="foodTruckPhoneNumber" id="foodTruckPhoneNumber" formControlName="foodTruckPhoneNumber" class="form-control">
 
-					<!--<div class="row justify-content-md-center mt-3 mb-5">-->
-						<!--<div class="form-group col-md-4">-->
-							<!--<input-->
-								<!--type="file"-->
-								<!--accept="image/*"-->
-								<!--name="foodtruck"-->
-								<!--id="foodtruck"-->
-								<!--ng2FileSelect-->
-								<!--[uploader]="uploader"-->
-								<!--aria-describedby="foodTruckHelp"-->
-							<!--/>-->
-							<!--<small id="foodTruckHelp">Please select an image of your food truck to upload.</small>-->
-						<!--</div>&lt;!&ndash;form-group col-md-6-->
-						<!--<div class="col-md-2">-->
-							<!--<button-->
-								<!--type="button"-->
-								<!--class="btn btn-primary text-light mr-3 foodtruck-btn"-->
-								<!--id="photo"-->
-								<!--name="photo"-->
-								<!--#photo-->
-								<!--(click)="uploadImage()"-->
-								<!--[disabled]="imageUploaded"-->
-							<!--&gt;<i class="fas fa-file-image"></i> Upload Image</button>-->
-						<!--</div>-->
-					<!--</div>&lt;!&ndash;row justify-content-md-center-->
-					<!--<div class="row justify-content-md-center mt-3 mb-5">-->
-						<!--<div class="form-group col-md-6">-->
-							<!--<button-->
-								<!--type="button"-->
-								<!--class="btn btn-primary text-light mr-3 foodtruck-btn"-->
-								<!--[disabled]="!foodTruckForm.valid"-->
-								<!--(click)="postFoodTruck()"-->
-							<!--&gt;<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>-->
-						<!--</div>-->
-					<!--</div>-->
+					<div class="row justify-content-md-center mt-3 mb-5">
+						<div class="form-group col-md-4">
+							<input
+								type="file"
+								accept="image/*"
+								name="foodtruck"
+								id="foodtruck"
+								ng2FileSelect
+								[uploader]="uploader"
+								aria-describedby="foodTruckHelp"
+							/>
+							<small id="foodTruckHelp">Please select an image of your food truck to upload.</small>
+						</div><!--form-group col-md-6-->
+						<div class="col-md-2">
+							<button
+								type="button"
+								class="btn btn-primary text-light mr-3 foodtruck-btn"
+								id="photo"
+								name="photo"
+								#photo
+								(click)="uploadImage()"
+								[disabled]="imageUploaded"
+							><i class="fas fa-file-image"></i> Upload Image</button>
+						</div>
+					</div><!--row justify-content-md-center-->
+					<div class="row justify-content-md-center mt-3 mb-5">
+						<div class="form-group col-md-6">
+							<button
+								type="button"
+								class="btn btn-primary text-light mr-3 foodtruck-btn"
+								[disabled]="!foodTruckForm.valid"
+								(click)="postFoodTruck()"
+							><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
+						</div>
+					</div>
 
-					<!--&lt;!&ndash;button for uploading foodTruckImage-->
-					<!--<div class="col-md-2">-->
-						<!--<button-->
-							<!--type="button"-->
-							<!--class="btn btn-primary text-light mr-3 foodtruckimage-btn"-->
-							<!--id="foodtruck"-->
-							<!--name="foodtruck"-->
-							<!--#photo-->
-							<!--(click)="uploadImage()"-->
-							<!--[disabled]="imageUploaded">-->
-							<!--<i class="fas fa-file-image"></i> Upload Food Truck Image</button>-->
-					<!--</div>-->
+					<!--button for uploading foodTruckImage
+					<div class="col-md-2">
+						<button
+							type="button"
+							class="btn btn-primary text-light mr-3 foodtruckimage-btn"
+							id="foodtruck"
+							name="foodtruck"
+							#photo
+							(click)="uploadImage()"
+							[disabled]="imageUploaded">
+							<i class="fas fa-file-image"></i> Upload Food Truck Image</button>
+					</div>
+					<div class="row justify-content-md-center mt-3 mb-5">
+						<div class="form-group col-md-6">
+							<button
+								type="button"
+								class="btn btn-primary text-light mr-3 foodtruckimage-btn"
+								[disabled]="!foodTruckForm.valid"
+								(click)="postImage()">
+							<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
+						</div>
+					</div>
+					<div class="col-md-2"
+						<button
+							type="button"
+							class="btn btn-primary text-light mr-3 menu-btn"
+							id="foodTruckMenuUrl"
+							name="foodTruckMenuUrl"
+							#photo
+							(click)="uploadImage()"
+							[disabled]="imageUploaded"
+						><i class="fas fa-file-image"></i> Upload Menu Image</button>
+					</div>
+					<div class="row justify-content-md-center mt-3 mb-5">
+						<div class="form-group col-md-6">
+							<button
+								type="button"
+								class="btn btn-primary text-light mr-3 menu-btn"
+								[disabled]="!foodTruckForm.valid"
+								(click)="postImage()">
+							<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
+						</div>
+					</div>
+					end of commenting out code-->
 
-					<!--<div class="row justify-content-md-center mt-3 mb-5">-->
-						<!--<div class="form-group col-md-6">-->
-							<!--<button-->
-								<!--type="button"-->
-								<!--class="btn btn-primary text-light mr-3 foodtruckimage-btn"-->
-								<!--[disabled]="!foodTruckForm.valid"-->
-								<!--(click)="postImage()">-->
-							<!--<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>-->
-						<!--</div>-->
-					<!--</div>-->
+					<!--commeting out because we are using cloudinary instead
+					<p>Food Truck Image Url</p>
+					<input type="text" name="foodTruckImageUrl" id="foodTruckImageUrl" formControlName="foodTruckImageUrl" class="form-control">
+					<p>Food Truck Menu Url</p>
+					<input type="text" name="foodTruckMenuUrl" id="foodTruckMenuUrl" formControlName="foodTruckMenuUrl" class="form-control">
+					end of commenting out code that's not working-->
 
-					<!--<div class="col-md-2"-->
-
-						<!--<button-->
-							<!--type="button"-->
-							<!--class="btn btn-primary text-light mr-3 menu-btn"-->
-							<!--id="foodTruckMenuUrl"-->
-							<!--name="foodTruckMenuUrl"-->
-							<!--#photo-->
-							<!--(click)="uploadImage()"-->
-							<!--[disabled]="imageUploaded"-->
-						<!--&gt;<i class="fas fa-file-image"></i> Upload Menu Image</button>-->
-					<!--</div>-->
-
-					<!--<div class="row justify-content-md-center mt-3 mb-5">-->
-						<!--<div class="form-group col-md-6">-->
-							<!--<button-->
-								<!--type="button"-->
-								<!--class="btn btn-primary text-light mr-3 menu-btn"-->
-								<!--[disabled]="!foodTruckForm.valid"-->
-								<!--(click)="postImage()">-->
-							<!--<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>-->
-						<!--</div>-->
-					<!--</div>-->
-					<!--end of commenting out code&ndash;&gt;-->
-
-					<!--&lt;!&ndash;commeting out because we are using cloudinary instead-->
-					<!--<p>Food Truck Image Url</p>-->
-					<!--<input type="text" name="foodTruckImageUrl" id="foodTruckImageUrl" formControlName="foodTruckImageUrl" class="form-control">-->
-					<!--<p>Food Truck Menu Url</p>-->
-					<!--<input type="text" name="foodTruckMenuUrl" id="foodTruckMenuUrl" formControlName="foodTruckMenuUrl" class="form-control">-->
-					<!--end of commenting out code that's not working-->
-
-					<!--<button type="submit" class="btn btn-info btn-lg"> Submit</button>-->
-				<!--</form>-->
-			<!--</div>-->
-	<!--</div>-->
-	<!--</div>-->
-<!--&ndash;&gt;-->
-<!--</main>-->
+					<button type="submit" class="btn btn-info btn-lg"> Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</main>
