@@ -10,10 +10,9 @@ import {FoodTruckLocations} from "../interfaces/foodtrucklocations";
 
 @Injectable()
 export class FoodTruckService {
-	protected foodTruckSubject : BehaviorSubject<FoodTruck[]> = new BehaviorSubject<FoodTruck[]>([]);
-	public foodTruckObserver : Observable<FoodTruck[]> = this.foodTruckSubject.asObservable();
+
 	constructor(protected http: HttpClient) {
-		this.getAllActiveFoodTrucks().subscribe(foodTruckLocations => this.foodTruckSubject.next(foodTruckLocations));
+		//this.getAllActiveFoodTrucks().subscribe(foodTruckLocations => {this.foodTruckLocations = foodTruckLocations});
 	}
 
 	// define an API endpoint
@@ -50,10 +49,14 @@ export class FoodTruckService {
 	getAllFoodTrucks() : Observable<FoodTruck[]> {
 		return(this.http.get<FoodTruck[]>(this.foodtruckUrl));
 	}
-	getAllActiveFoodTrucks() : Observable<any> {
-		return(this.http.get<FoodTruckLocations[]>(this.foodtruckUrl));
-	}
+	getAllActiveFoodTrucks() : Observable<FoodTruckLocations[]> {
+		return(this.http.get<FoodTruckLocations[]>(this.foodtruckUrl+"?active=active"));
 
+
+
+
+
+	}
 
 }
 

@@ -1,11 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {FoodTruckService} from "../services/foodtruck.service";
 import {FoodTruck} from "../interfaces/foodtruck";
-import {Location} from "../interfaces/location";
 import {Status} from "../interfaces/status";
 import {ActivatedRoute} from "@angular/router";
 import {FoodTruckLocations} from "../interfaces/foodtrucklocations";
-import {Observable} from "rxjs";
+
 
 
 @Component({
@@ -15,8 +14,15 @@ import {Observable} from "rxjs";
 
 
 export class MapComponent implements OnInit {
+	marker = {
+		display: true,
+		foodTruckName: null,
+		foodTruckPhoneNumber: null
+	};
+
 
 	foodTruckLocations: FoodTruckLocations[] = [];
+
 
 	status: Status = {status: null, message: null, type: null};
 
@@ -25,9 +31,20 @@ export class MapComponent implements OnInit {
 
 	ngOnInit() : void {
 		this.foodTruckService.getAllActiveFoodTrucks().subscribe(foodTruckLocations => {this.foodTruckLocations = foodTruckLocations});
-console.log("foodtruckLocations", this.foodTruckLocations)
 			}
 
+
+	clicked({target: marker} : any, foodTruck : FoodTruck) {
+
+	}
+
+	hideMarkerInfo() {
+		this.marker.display = !this.marker.display;
+	}
+
+	displayFoodTruck(foodTruck: FoodTruck) {
+//		this.foodTruck = foodTruck;
+	}
 
 
 

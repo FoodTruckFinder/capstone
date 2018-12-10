@@ -30,11 +30,12 @@
 		<div class="container-fluid">
 
 			<div class="card-columns">
-				<div class="card bg-light mb-3" *ngFor="let foodtruck of foodtrucks">
-					<div class="card-header font-weight-bold"><h4>{{foodtruck.foodTruckName}}</h4></div>
+				<div class="card bg-warning mb-3" *ngFor="let foodtruck of foodtrucks">
+					<span class="card-title font-weight-bold text-center"><h4>{{foodtruck.foodTruckName}}</h4></span>
+					<img class="card-img-top" src="{{foodtruck.foodTruckImageUrl}}" alt="Card image cap">
 					<div class="card-body">
-						<p class="card-text">{{foodtruck.foodTruckMenuUrl}}</p>
 						<p class="card-text">{{foodtruck.foodTruckPhoneNumber}}</p>
+						<a href="{foodtruck.foodTruckMenuUrl}}">Menu</a>
 						<p class="card-text">{{foodtruck.foodTruckDescription}}</p>
 					</div>
 				</div>
