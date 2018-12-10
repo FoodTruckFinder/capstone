@@ -1,13 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-/* import {ActivatedRoute, Params} from "@angular/router"; */
-/* import {Status} from "../classes/status"; */
+import {FoodTruckService} from "../services/foodtruck.service";
+import {FoodTruck} from "../interfaces/foodtruck";
+import {Location} from "../interfaces/location";
+import {Status} from "../interfaces/status";
+import {ActivatedRoute} from "@angular/router";
+import {FoodTruckLocations} from "../interfaces/foodtrucklocations";
 import {Observable} from "rxjs";
-import "rxjs/add/observable/from";
-import "rxjs/add/operator/switchMap";
-import 'rxjs/add/observable/of';
-import { LocationService } from "../services/location.service";
-import { Location } from "../interfaces/location";
-/* import { Point } from "../classes/point"; */
 
 
 @Component({
@@ -17,35 +15,27 @@ import { Location } from "../interfaces/location";
 
 export class MapComponent implements OnInit {
 
-	// empty array of lat/long points
+	status: Status = {status: null, message: null, type: null};
 
-	//location:  = new Location(null, null, null, null, null, null);
-	locations: Location[] = [];
-	data: Observable<Array<Location[]>>;
-	point: any;
-
-	constructor(
-		protected locationService : LocationService) {}
+	constructor(protected foodTruckService: FoodTruckService, private route: ActivatedRoute) {}
 
 	ngOnInit() : void {
-		this.listLocations();
+		this.listActiveFoodTrucks();
+		this.getAllActiveFoodTrucks().subscribe(
+			res => {
+				let datas = dat["data"];
+				let data = data[0];
+				console.log(data["foodTruck"]);
+			});
 	}
 
-	listLocations() : any {
-		//todo locationObserver does not currenty exist according to PHPStorm
-		// this.locationService.locationObserver
-		// 	.subscribe(locations => this.locations = locations);
+	getAllActiveFoodTrucks() : Observable<any> {
+		return this.http.get(this.url).map(res => res.json());
 	}
 
-	clicked({target: marker} : any, location : Location) {
-		// this.location = marker;
-		// marker.nguiMapComponent.openInfoWindow('foodtruck-details', marker);
-	}
-	hideMarkerInfo() {
-		this.point.display = !this.point.display;
-	}
+		listActiveFoodTrucks(): any {
+			this.foodTruckService.foodTruckObserver.subscribe(foodTruckLocations => this.foodTruckLocations = foodTruckLocations)
+		}
 
-	displayLocation(location: Location) {
-		// this.location = location;
-	}
+
 }

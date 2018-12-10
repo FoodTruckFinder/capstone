@@ -1,48 +1,15 @@
 
-<div class="container-fluid">
+		<h1>
+			<span class="text-danger">505</span>FoodTruck Finder
+		</h1>
 
-			<!-- this is the google map :P~ -->
-			<ngui-map
-				zoom="13"
-				center="35.08, -106.64"
-				(mapReady$)="onMapReady($event)"
-				(mapClick)="onMapClick($event)"
-				(idle)="onIdle($event)"
-				mapTypeId="satellite">
+	<ngui-map
+		zoom="13"
+		center="35.0844, -106.6504"
+		(mapReady$)="onMapReady($event)"
+		(mapClick)="onMapClick($event)"
+		(idle)="onIdle($event)"
+		mapTypeId="roadmap">
+		<marker *ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]" ></marker>
+	</ngui-map>
 
-				<!--todo might need to name below location instead of position-->
-				<marker *ngFor="let location of locations"
-				   [position]="[location.locationLatitude, location.locationLongitude]"
-				   (click)="clicked($event)"
-				   (click)="displayLocation(location)">
-				</marker>
-
-				<info-window id="foodtruck-details">
-					<div class="map-text p-3 ml-3 text-center"><img class="card-img-top p-1 art-image" src="{{ foodTruck.foodTruckImageUrl }}" alt="FoodTruck image">
-						<br>
-						<br>
-						<strong>Name:</strong> {{foodTruck.foodTruckName}}
-						<br>
-						<br>
-						<strong>Description:</strong> {{foodTruck.foodTruckImageUrl}}
-						<br>
-						<br>
-						<!--todo might not have enough space on the card for the description-->
-						<strong>Description:</strong> {{foodTruck.foodTruckDescription}}
-						<br>
-						<br>
-						<!--todo could show this on the food truck page-->
-						<strong>Menu:</strong> {{foodTruck.foodTruckMenuUrl}}
-						<br>
-						<br>
-						<!--todo could show this on the food truck page-->
-						<strong>Description:</strong> {{foodTruck.foodTruckPhoneNumber}}
-						<br>
-						<br>
-						<!--todo might wanna make the link below a button-->
-						<a [routerLink]="'/foodTruck/' + foodTruck.foodTruckId">Click <strong>here</strong> for more about this food truck!</a>
-					</div>
-				</info-window>
-			</ngui-map>
-
-</div>

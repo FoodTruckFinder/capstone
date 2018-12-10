@@ -6,6 +6,7 @@ require_once "autoload.php";
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 use FoodTruckFinder\Capstone\Location;
 
+use phpDocumentor\Reflection\Types\Object_;
 use Ramsey\Uuid\Uuid;
 
 //todo: implement json serializable X
@@ -495,14 +496,14 @@ class FoodTruck implements \JsonSerializable {
 	}
 
 	/**
-	 * gets all foodTrucks
+	 * gets all active foodTrucks
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
+	public static function getAllActiveFoodTrucks(\PDO $pdo): \SPLFixedArray {
 		//create query template
 		$query = "SELECT
   foodTruckId, 
@@ -518,9 +519,40 @@ class FoodTruck implements \JsonSerializable {
   locationLatitude,
   locationLongitude,
   locationStartTime
-FROM
-  foodTruck
-  INNER JOIN location on foodTruck.foodTruckId = location.locationFoodTruckId";
+FROM location
+INNER JOIN foodTruck on foodTruck.foodTruckId = location.locationFoodTruckId WHERE NOW() BETWEEN location.locationStartTime AND location.locationEndTime ";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build array of foodTrucks
+		$foodTrucks = new \SplFixedArray($statement->rowCount());
+
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$foodTruck = new FoodTruck($row["foodTruckId"], $row["foodTruckProfileId"], $row["foodTruckDescription"], $row["foodTruckImageUrl"], $row["foodTruckMenuUrl"], $row["foodTruckName"], $row["foodTruckPhoneNumber"]);
+				$location = new Location($row["locationId"], $row["locationFoodTruckId"], $row["locationEndTime"], $row["locationLatitude"], $row["locationLongitude"], $row["locationStartTime"]);
+				$foodTrucks[$foodTrucks->key()] = (object)["foodTruck"=>$foodTruck, "location"=> $location];
+				$foodTrucks->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($foodTrucks);
+	}
+
+	/**
+	 * gets all foodTrucks
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of foodTrucks found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllFoodTrucks(\PDO $pdo): \SPLFixedArray {
+		//create query template
+		$query = "SELECT foodTruckId, foodTruckProfileId, foodTruckDescription, foodTruckImageUrl, foodTruckMenuUrl, foodTruckName, foodTruckPhoneNumber FROM foodTruck";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 

@@ -1,15 +1,28 @@
-import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {FoodTruck} from "../interfaces/foodtruck";
+import {Location} from "../interfaces/location";
 import {Status} from "../interfaces/status";
+import {BehaviorSubject} from "rxjs";
+import {FoodTruckLocations} from "../interfaces/foodtrucklocations";
+
 
 @Injectable()
 export class FoodTruckService {
-	constructor(protected http: HttpClient) {}
+	protected foodTruckSubject : BehaviorSubject<FoodTruck[]> = new BehaviorSubject<FoodTruck[]>([]);
+	public foodTruckObserver : Observable<FoodTruck[]> = this.foodTruckSubject.asObservable();
+	constructor(protected http: HttpClient) {
+		this.getAllActiveFoodTrucks().subscribe(foodTruckLocations => this.foodTruckSubject.next(foodTruckLocations));
+	}
 
 	// define an API endpoint
 	private foodtruckUrl = "api/foodTruck/";
+
+	// reach out to the foodtruck API and grab a FoodTruck object by it's Id
+	getFoodTruckByFoodTruckId(id: string) : Observable<FoodTruck> {
+		return(this.http.get<FoodTruck>(this.foodtruckUrl + id));
+	}
 
 	// reach out to the foodtruck API and create the foodtruck
 	createFoodTruck(foodtruck: FoodTruck) : Observable<Status> {
@@ -21,10 +34,7 @@ export class FoodTruckService {
 		return(this.http.put<Status>(this.foodtruckUrl, foodtruck));
 	}
 
-	// reach out to the foodtruck API and grab a FoodTruck object by its Id
-	getFoodTruckByFoodTruckId(foodTruckId: string) : Observable<FoodTruck> {
-		return(this.http.get<FoodTruck>(this.foodtruckUrl + foodTruckId));
-	}
+
 
 	// reach out to the foodtruck API and grab a FoodTruck object by it's FoodTruck Profile Id
 	getFoodTruckByFoodTruckProfileId(foodTruckProfileId: string) : Observable<FoodTruck> {
@@ -40,7 +50,9 @@ export class FoodTruckService {
 	getAllFoodTrucks() : Observable<FoodTruck[]> {
 		return(this.http.get<FoodTruck[]>(this.foodtruckUrl));
 	}
-
+	getAllActiveFoodTrucks() : Observable<any> {
+		return this.http.get(this.url).map(res => res.json());
+	}
 
 }
 
