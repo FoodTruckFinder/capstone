@@ -1,7 +1,7 @@
 
 {
   "require": {
-    "cloudinary/cloudinary_php": "@stable",
+    "cloudinary/cloudinary_php": "dev-master",
     "php": "7.2.*",
     "ext-json": "*",
     "ext-pdo": "*",
