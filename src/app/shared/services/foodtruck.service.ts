@@ -51,8 +51,9 @@ export class FoodTruckService {
 		return(this.http.get<FoodTruck[]>(this.foodtruckUrl));
 	}
 	getAllActiveFoodTrucks() : Observable<any> {
-		return this.http.get(this.url).map(res => res.json());
+		return(this.http.get<FoodTruckLocations[]>(this.foodtruckUrl));
 	}
+
 
 }
 

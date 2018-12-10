@@ -1,6 +1,6 @@
 export interface Location {
-	locationId: string;
-	locationFoodTruckId: string;
+	//locationId: string;
+	//locationFoodTruckId: string;
 	locationEndTime: string;
 	locationLatitude: string;
 	locationLongitude: string;
