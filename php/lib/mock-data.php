@@ -51,12 +51,12 @@ $profile->insert($pdo);
 
 $profile = new Profile(generateUuidV4(),null, "IAMSAM10@gmail.com", "$hash", 1,"Chamisa");
 $profile->insert($pdo);
-*/
+
 
 //begin fake foodtrucks
 
 
-/*
+
 $foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "FoodTruck1", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Supper Truck","505-555-5555" );
 $foodtruck->insert($pdo);
 
@@ -72,7 +72,7 @@ $foodtruck->insert($pdo);
 
 $foodtruck = new FoodTruck(generateUuidV4(),"7c87fb70-91a4-4014-b6f6-2e216e26e09d", "FoodTruck5", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Grilled Cheez eXpress","505-555-5555");
 $foodtruck->insert($pdo);
-*/
+
 $foodtruck = new FoodTruck(generateUuidV4(),"a8e72b51-abff-48da-a763-089c086be673", "FoodTruck6", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","El Paisa","Chamisa");
 $foodtruck->insert($pdo);
 
@@ -88,39 +88,36 @@ $foodtruck->insert($pdo);
 $foodtruck = new FoodTruck(generateUuidV4(),"33d415f-be51-40c6-8290-863718cd95a7", "FoodTruck10", "https://static.wixstatic.com/media/2462fd_0d26898bbf88def0a5de05dee979da49.jpg/v1/fill/w_960,h_608,al_c,q_90/2462fd_0d26898bbf88def0a5de05dee979da49.webp", "https://www.ilovesupper.com/menu","Kerus","Chamisa");
 $foodtruck->insert($pdo);
 
-/*
-//begin fake locations
+*/
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.079144,-106.646242, null);
+$location = new Location(generateUuidV4(),"0632e2c4-0493-4bbf-9121-565c5881cf23", null, 35.0928,-106.6467, null);
 $location->insert($pdo);
 
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.098716,-106.672275, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.130449,-106.530022, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.204097,-106.601356, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.216457,-106.698214, null);
 $location->insert($pdo);
 
 $location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.104368,-106.574661, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.301295,-106.554704, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.118007, -106.614151, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.301295,-106.554704, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null,  35.106097, -106.650892, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.301295,-106.554704, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.102533, -106.647781, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.301295,-106.554704, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.079654, -106.606705, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.301295,-106.554704, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.086723, -106.594554, null);
 $location->insert($pdo);
 
-$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.301295,-106.554704, null);
+$location = new Location(generateUuidV4(),"25c39272-92dc-47a8-a056-ab976be96c4f", null, 35.080986, -106.650044, null);
 $location->insert($pdo);
 
-
-*/
