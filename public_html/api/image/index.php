@@ -2,7 +2,10 @@
 
 require_once (dirname(__DIR__,3). "/vendor/autoload.php");
 require_once (dirname(__DIR__, 3) . "/php/lib/xsrf.php");
-require_once ("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once ("/etc/apache2/capstone-mysql/Secrets.php");
+
+use FoodTruckFinder\Capstone\Profile;
+use FoodTruckFinder\Capstone\FoodTruck;
 
 /**
  * the user upload an image file to Cloudinary, the server grabs the secure image URL from Cloudinary
@@ -27,12 +30,15 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if($method === "POST") {
 		verifyXsrf();
-		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/fooddelivery.ini");
 
-		//cloudinary api stuff
-		$config = readConfig("/etc/apache2/capstone-mysql/fooddelivery.ini");
-		$cloudinary = json_decode($config["cloudinary"]);
-		\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
+		$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort22/fooddelivery");
+		$pdo = $secrets->getPdoObject();
+
+		$secret = $secrets->getSecret("cloudinary");
+
+		//var_dump($secret);
+
+		\Cloudinary::config(["cloud_name" => $secret->cloudName, "api_key" => $secret->apiKey, "api_secret" => $secret->apiSecret]);
 
 		//assigning variables to the user image name, MIME type, and image extension
 		$tempUserFileName = $_FILES["foodtruck"]["tmp_name"];
