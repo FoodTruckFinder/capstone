@@ -15,7 +15,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 
 //took out on the onInit because Lost Paws only uses it in the edit ts
-export class FoodTruckCreateComponent {
+export class FoodTruckCreateComponent  {
 	foodTruckForm: FormGroup;
 	submitted: boolean = false;
 	status: Status = {status: null, message: null, type: null};

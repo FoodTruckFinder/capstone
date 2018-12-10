@@ -1,3 +1,4 @@
+<navbar></navbar>
 <main class="my-5">
 	<div class="container-fluid text-center text-sm-left">
 
@@ -9,7 +10,8 @@
 
 		<div class="row alert alert-light">
 			<div class="col-md-8">
-				<form [formGroup]="foodTruckForm" (ngSubmit)="createFoodTruck()" novalidate>
+				<!--added post method here-->
+				<form [formGroup]="foodTruckForm" (ngSubmit)="createFoodTruck()" novalidate action="" method="post">
 					<p>Food Truck Name</p>
 					<input type="text" name="foodTruckName" id="foodTruckName" formControlName="foodTruckName" class="form-control"/>
 					<p>Food Truck Description</p>

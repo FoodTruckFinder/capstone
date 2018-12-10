@@ -1,12 +1,9 @@
 <?php
 
 require_once (dirname(__DIR__,3). "/vendor/autoload.php");
-require_once (dirname(__DIR__, 3) . "/php/classes/autoload.php");
 require_once (dirname(__DIR__, 3) . "/php/lib/xsrf.php");
-require_once  (dirname(__DIR__, 3) ."/php/lib/uuid.php");
 require_once ("/etc/apache2/capstone-mysql/encrypted-config.php");
-require_once (dirname(__DIR__, 3) . "/php/lib/jwt.php");
-use FoodTruckFinder\capstone\{Profile, FoodTruck};
+
 /**
  * the user upload an image file to Cloudinary, the server grabs the secure image URL from Cloudinary
  * and updates the foodTruckImageUrl field of a specified foodTruck
@@ -28,46 +25,35 @@ $reply->data = null;
 try {
 	// determine the HTTP method used (we only allow the POST method to be used for image uploading)
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
-	if ($method !== "POST") {
-		throw (new \Exception("This HTTP method is not supported for image upload.", 405));
+	if($method === "POST") {
+		verifyXsrf();
+		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/fooddelivery.ini");
+
+		//cloudinary api stuff
+		$config = readConfig("/etc/apache2/capstone-mysql/fooddelivery.ini");
+		$cloudinary = json_decode($config["cloudinary"]);
+		\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
+
+		//assigning variables to the user image name, MIME type, and image extension
+		$tempUserFileName = $_FILES["foodtruck"]["tmp_name"];
+
+		//upload image to cloudinary and get public id
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, ["width"=>500, "crop"=>"scale"]);
+
+		//after sending the image to Cloudinary, grab the public id and create a new image
+		$reply->data = $cloudinaryResult["public_id"];
+		$reply->message = "Image upload ok";
+	} else{
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
-
-	// verify that a XSRF-TOKEN is present
-	verifyXsrf();
-
-	// make sure that a user is logged in before uploading a picture
-	if(empty($_SESSION["profile"]) || empty($_SESSION["profile"]->getProfileId()->toString())) {
-		throw(new \InvalidArgumentException("You must be logged in to upload food truck images.", 403));
-	}
-
-	// validate header
-	validateJwtHeader();
-
-	$config = readConfig("/etc/apache2/capstone-mysql/fooddelivery.ini");
-	$cloudinary = json_decode($config["cloudinary"]);
-	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
-
-	// assigning variable to the food truck image, add image extension
-	$tempAnimalFileName = $_FILES["foodtruckimage"]["tmp_name"];
-
-	// upload image to cloudinary and get public id
-	$cloudinaryResult = \Cloudinary\Uploader::upload($tempFoodTruckFileName, array("width" => 500, "crop" => "scale"));
-
-	// after sending the image to Cloudinary, set foodTruckImageUrl to the ft record
-	$reply->data = $cloudinaryResult["secure_url"];
-
-	// update reply
-	$reply->message = "Image uploaded Ok.";
-} catch(\Exception | \TypeError $exception) {
+} catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
+header("Content-type: application/json");
 
-//encode and return reply to the front-end caller
-header("Content-Type: application/json");
-if (!$reply->data) {
-	unset($reply->data);
-}
-
-// encode and return reply to front-end caller
+// encode and return reply to front end caller
 echo json_encode($reply);
