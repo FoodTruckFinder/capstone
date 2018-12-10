@@ -20,7 +20,7 @@ export class UpdateFoodTruckComponent implements OnInit {
 	success: boolean = false;
 
 	constructor(protected foodTruckService: FoodTruckService,
-					private formBuilder: FormBuilder,
+					protected formBuilder: FormBuilder,
 					protected route: ActivatedRoute,
 					protected router: Router) {
 		this.foodTruckForm = this.formBuilder.group({
