@@ -2,8 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../interfaces/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CookieService} from "ngx-cookie-service";
 
+import {CookieService} from "ngx-cookie-service";
 import {SessionService} from "../services/session.service";
 import {SignIn} from "../interfaces/sign.in";
 import {SignInService} from "../services/sign.in.service";
@@ -21,8 +21,9 @@ export class SignInComponent implements OnInit {
 		private cookieService: CookieService,
 		private sessionService: SessionService,
 		private formBuilder: FormBuilder,
-		private signInService: SignInService) {}
-	//private router: Router (need to add)
+		private signInService: SignInService){}
+	   //private router: Router (need to add)
+
 
 	ngOnInit() {
 		this.signInForm = this.formBuilder.group({

@@ -27,6 +27,9 @@ a {
 	font-size: 10pt;
 	padding-right: 5px;
 	padding-left: 5px;
+}
+
+a:hover {
 	box-shadow: 5px 5px 5px black;
 }
 
