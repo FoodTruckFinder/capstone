@@ -17,20 +17,55 @@
 					<p>Food Truck Phone Number</p>
 					<input type="text" name="foodTruckPhoneNumber" id="foodTruckPhoneNumber" formControlName="foodTruckPhoneNumber" class="form-control">
 
-					<!--button for uploading foodTruckImage-->
+					<div class="row justify-content-md-center mt-3 mb-5">
+						<div class="form-group col-md-4">
+							<input
+								type="file"
+								accept="image/*"
+								name="foodtruck"
+								id="foodtruck"
+								ng2FileSelect
+								[uploader]="uploader"
+								aria-describedby="foodTruckHelp"
+							/>
+							<small id="foodTruckHelp">Please select an image of your food truck to upload.</small>
+						</div><!--form-group col-md-6-->
+						<div class="col-md-2">
+							<button
+								type="button"
+								class="btn btn-primary text-light mr-3 foodtruck-btn"
+								id="photo"
+								name="photo"
+								#photo
+								(click)="uploadImage()"
+								[disabled]="imageUploaded"
+							><i class="fas fa-file-image"></i> Upload Image</button>
+						</div>
+					</div><!--row justify-content-md-center-->
+					<div class="row justify-content-md-center mt-3 mb-5">
+						<div class="form-group col-md-6">
+							<button
+								type="button"
+								class="btn btn-primary text-light mr-3 foodtruck-btn"
+								[disabled]="!foodTruckForm.valid"
+								(click)="postFoodTruck()"
+							><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
+						</div>
+					</div>
+
+					<!--button for uploading foodTruckImage
 					<div class="col-md-2">
 						<button
 							type="button"
 							class="btn btn-primary text-light mr-3 foodtruckimage-btn"
-							id="foodTruckImageUrl"
-							name="foodTruckImageUrl"
+							id="foodtruck"
+							name="foodtruck"
 							#photo
 							(click)="uploadImage()"
 							[disabled]="imageUploaded">
 							<i class="fas fa-file-image"></i> Upload Food Truck Image</button>
 					</div>
 
-					<!--button for posting the food truck image-->
 					<div class="row justify-content-md-center mt-3 mb-5">
 						<div class="form-group col-md-6">
 							<button
@@ -42,9 +77,8 @@
 						</div>
 					</div>
 
-					<div class="col-md-2">
-						<!--todo make this entering a URL for the menu image instead of button-->
-						<!--button for posting food truck menu url-->
+					<div class="col-md-2"
+
 						<button
 							type="button"
 							class="btn btn-primary text-light mr-3 menu-btn"
@@ -66,13 +100,14 @@
 							<i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Post</button>
 						</div>
 					</div>
+					end of commenting out code-->
 
 					<!--commeting out because we are using cloudinary instead
 					<p>Food Truck Image Url</p>
 					<input type="text" name="foodTruckImageUrl" id="foodTruckImageUrl" formControlName="foodTruckImageUrl" class="form-control">
 					<p>Food Truck Menu Url</p>
 					<input type="text" name="foodTruckMenuUrl" id="foodTruckMenuUrl" formControlName="foodTruckMenuUrl" class="form-control">
-					-->
+					end of commenting out code that's not working-->
 
 					<button type="submit" class="btn btn-info btn-lg"> Submit</button>
 				</form>
