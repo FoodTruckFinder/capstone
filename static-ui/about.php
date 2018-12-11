@@ -68,7 +68,6 @@
 				<div class="card-body">
 					<h3 class="card-title">Rae Jack</h3>
 					<p class="card-text">Travel enthusiast who loves to learn about different cultures and countries. Passionate about teaching creative and innovative forms of expression to youth of all ages.</p>
-					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
