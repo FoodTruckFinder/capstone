@@ -3,6 +3,7 @@ import {NgModule} from "@angular/core";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NguiMapModule} from '@ngui/map';
@@ -32,7 +33,8 @@ const JwtHelper = JwtModule.forRoot({
 		FormsModule,
 		ReactiveFormsModule,
 		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyCzkPjQz_zGaHXvnmEYO5u_g8LsKP7IxTA'}),
-		JwtHelper],
+		JwtHelper,
+		CollapseModule.forRoot()],
 	declarations: [...moduleDeclarations, ...allAppComponents, FileSelectDirective],
 	bootstrap:    [AppComponent],
 	providers:    [...appRoutingProviders, CookieService],
