@@ -9,7 +9,7 @@
 	<div>
 		<marker
 			*ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
-			(click)="clicked($event, foodTruckLocation)" (initialized$)="onMarkerInit($event)" ></marker>
+			(click)="clicked($event, foodTruckLocation)"></marker>
 
 		<info-window id="foodtruck-deetz">
 			<div class="map-text p-3 ml-3 text-left">
