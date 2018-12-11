@@ -71,7 +71,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Greg Klein</h3>
 					<p class="card-text">I recently graduated from Deep Dive Coding's Full Stack Web Development course. I was born and raised in Albuquerque, and I want to give back to the community by designing beautiful, responsive websites for local businesses.</p>
-					<a href="http://gregkle.in" class="btn btn-warning">Visit My Website</a>
+					<a href="http://gregklein.co" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<!--div to make spacing correct-->
