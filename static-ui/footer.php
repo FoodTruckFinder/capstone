@@ -1,7 +1,7 @@
 <?php require_once("head-utils.php"); ?>
 
 
-<footer class="sfoot>
+<footer class="sfoot bg-dark text-light>
 
 <div class=" container-fluid mt-4">
 <div class="row justify-content-center">

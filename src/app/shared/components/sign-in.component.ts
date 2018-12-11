@@ -9,7 +9,7 @@ import {SignInService} from "../services/sign.in.service";
 
 @Component({
 	template: require("./sign-in.component.html"),
-	selector: "signin"
+	selector: "sign-in"
 })
 
 export class SignInComponent implements OnInit {
