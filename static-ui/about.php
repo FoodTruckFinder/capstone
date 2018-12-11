@@ -67,7 +67,7 @@
 				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/tecvhfp5w26ps8f/rJack.png?raw=1" alt="Rae Jack">
 				<div class="card-body">
 					<h3 class="card-title">Rae Jack</h3>
-					<p class="card-text">add text here</p>
+					<p class="card-text">Travel enthusiast who loves to learn about different cultures and countries. Passionate about teaching creative and innovative forms of expression to youth of all ages.</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
