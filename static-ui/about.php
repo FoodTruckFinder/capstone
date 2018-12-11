@@ -26,10 +26,6 @@
 		<div class="container py-3">
 	<a href="https://github.com/FoodTruckFinder/capstone" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">505 Food Truck Finder GitHub Repo</a>
 		</div>
-		<!--
-			<a href="https://github.com/FoodTruckFinder/capstone"><i class="fab fa-github fa-5x"></i></a>
-		-->
-
 	</div>
 
 	<div class="container text-center">
@@ -74,7 +70,7 @@
 				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/t7gk4dtwp4gcc0d/gKlein.jpg?raw=1" alt="Greg Klein">
 				<div class="card-body">
 					<h3 class="card-title">Greg Klein</h3>
-					<p class="card-text">add text here</p>
+					<p class="card-text">I recently graduated from Deep Dive Coding's Full Stack Web Development course. I was born and raised in Albuquerque, and I want to give back to the community by designing beautiful, responsive websites for local businesses.</p>
 					<a href="http://gregkle.in" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
