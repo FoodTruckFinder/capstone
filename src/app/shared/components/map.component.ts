@@ -2,8 +2,9 @@ import {Component, OnInit} from "@angular/core";
 import {FoodTruckService} from "../services/foodtruck.service";
 import {FoodTruck} from "../interfaces/foodtruck";
 import {Status} from "../interfaces/status";
+import {Location} from "../interfaces/location";
 import {ActivatedRoute} from "@angular/router";
-import {FoodTruckLocations} from "../interfaces/foodtrucklocations";
+import {FoodTruckLocation} from "../interfaces/foodtrucklocations";
 import {Observable} from "rxjs";
 
 
@@ -28,9 +29,11 @@ export class MapComponent implements OnInit {
 
 	status: Status = {status: null, message: null, type: null};
 
-	foodTruckLocations: FoodTruckLocations[] = [];
+	foodTruck : FoodTruck = {foodTruckId: null, foodTruckProfileId: null, foodTruckDescription: null, foodTruckImageUrl: null, foodTruckMenuUrl: null, foodTruckName: null, foodTruckPhoneNumber: null};
 
-	foodTruckLocation: Array[Object];
+	location : Location = {locationId: null, locationFoodTruckId: null, locationEndTime: null, locationLatitude: null, locationLongitude: null, locationStartTime: null};
+
+	foodTruckLocations: FoodTruckLocation[] = [];
 
 
 	constructor(protected foodTruckService: FoodTruckService, private route: ActivatedRoute) {}
@@ -41,7 +44,8 @@ export class MapComponent implements OnInit {
 			}
 
 	clicked({target: marker} :any, foodTruckLocation : FoodTruckLocation) {
-		this.foodtruck = marker;
+		this.foodTruck = foodTruckLocation.foodTruck;
+		this.location = foodTruckLocation.location;
 		marker.nguiMapComponent.openInfoWindow('foodtruck-deetz', marker)
 	}
 
@@ -50,10 +54,6 @@ export class MapComponent implements OnInit {
 
 	hideMarkerInfo() {
 		this.marker.display = !this.marker.display;
-	}
-//making state variable for this
-	displayFoodTruck(foodTruckLocation : FoodTruckLocation) {
-		this.foodtruck = foodtruck;
 	}
 
 }

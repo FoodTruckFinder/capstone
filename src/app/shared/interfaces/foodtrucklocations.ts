@@ -1,7 +1,7 @@
 import {FoodTruck} from "./foodtruck";
 import {Location} from "./location";
 
-export interface FoodTruckLocations {
+export interface FoodTruckLocation {
 
 	foodTruck: FoodTruck,
 

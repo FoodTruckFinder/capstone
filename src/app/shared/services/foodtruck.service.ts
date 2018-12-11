@@ -5,7 +5,7 @@ import {FoodTruck} from "../interfaces/foodtruck";
 import {Location} from "../interfaces/location";
 import {Status} from "../interfaces/status";
 import {BehaviorSubject} from "rxjs";
-import {FoodTruckLocations} from "../interfaces/foodtrucklocations";
+import {FoodTruckLocation} from "../interfaces/foodtrucklocations";
 
 
 @Injectable()
@@ -49,8 +49,8 @@ export class FoodTruckService {
 	getAllFoodTrucks() : Observable<FoodTruck[]> {
 		return(this.http.get<FoodTruck[]>(this.foodtruckUrl));
 	}
-	getAllActiveFoodTrucks() : Observable<FoodTruckLocations[]> {
-		return(this.http.get<FoodTruckLocations[]>(this.foodtruckUrl+"?active=active"));
+	getAllActiveFoodTrucks() : Observable<FoodTruckLocation[]> {
+		return(this.http.get<FoodTruckLocation[]>(this.foodtruckUrl+"?active=active"));
 
 
 

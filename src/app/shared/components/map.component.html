@@ -9,26 +9,26 @@
 	<div>
 		<marker
 			*ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
-			(click)="displayFoodTruck(foodtruck)" (click)="clicked($event)"></marker>
+			(click)="clicked($event, foodTruckLocation)" (initialized$)="onMarkerInit($event)" ></marker>
 
-		<info-window id="foodtruck-deetz" *ngFor="let foodTruckLocation of foodTruckLocations" >
+		<info-window id="foodtruck-deetz">
 			<div class="map-text p-3 ml-3 text-left">
 				<div class="card">
-					<img class="card-img-top p-1"  [src]="[foodTruckLocation.foodTruck.foodTruckImageUrl]">
+					<!--<img class="card-img-top p-1"  [src]="[foodTruckLocation.foodTruck.foodTruckImageUrl]">-->
 
-					<span><h1>{{foodTruckLocation.foodTruck.foodTruckName}}</h1>
+					<span><h1>{{foodTruck.foodTruckName}}</h1>
 				<br>
-				Menu:<a>{{foodTruckLocation.foodTruck.foodTruckMenuUrl}}</a>
+				Menu:<a>{{foodTruck.foodTruckMenuUrl}}</a>
 				<br>
-				<span class="text-danger">Hours: {{foodTruckLocation.location.locationStartTime | date}} - {{foodTruckLocation.location.locationEndTime | date}}</span>
+				<span class="text-danger">Hours: {{location.locationStartTime | date:'medium'}} - {{location.locationEndTime | date}}</span>
 				<br>
-				Phone: {{foodTruckLocation.foodTruck.foodTruckPhoneNumber}}
+				Phone: {{foodTruck.foodTruckPhoneNumber}}
 				<br>
-				Description: {{foodTruckLocation.foodTruck.foodTruckDescription}}
+				Description: {{foodTruck.foodTruckDescription}}
 			</span>
 					<br>
 					<br>
-					<a class="text-primary" [routerLink]="'/foodTruck/' + foodTruckLocation.foodTruck.foodTruckName">Detailed
+					<a class="text-primary" [routerLink]="'/foodTruck/' + foodTruck.foodTruckName">Detailed
 						FoodTruck Page</a>
 					<br>
 					<button (click)="hideMarkerInfo();"><span>Hide Info</span></button>
