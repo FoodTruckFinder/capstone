@@ -1,22 +1,32 @@
+<h2 xmlns="http://www.w3.org/1999/html">
+	<span class="text-danger pl-2 ">505 </span><span class="text-warning">FoodTruck</span><span> Finder</span>
+</h2>
 
-		<h2>
-			<span class="text-danger pl-2 ">505 </span><span class="text-warning">FoodTruck</span><span> Finder</span>
-		</h2>
+<ngui-map
+	zoom="13"
+	center="35.0844, -106.6504"
+	mapTypeId="roadmap">
+	<marker *ngFor="let foodTruckLocation of foodTruckLocations"
+			  [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
+			  (click)="clicked($event)"></marker>
+	<info-window id="foodtruck-deetz" *ngFor="let foodTruckLocation of foodTruckLocations">
+		<div class="map-text p-3 ml-3 text-left">
 
-	<ngui-map
-		zoom="13"
-		center="35.0844, -106.6504"
-		(mapReady$)="onMapReady($event)"
-		(mapClick)="onMapClick($event)"
-		(idle)="onIdle($event)"
-		mapTypeId="roadmap">
-		<marker *ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]" (click)="clicked($event)"></marker>
-		<info-window id="foodtruck-deetz">
-			<!-- <div class="map-text p-3 ml-3 text-center"><img class="card-img-top p-1 art-image" src="{{ foodTruck.foodTruckImageUrl}}" alt="Food Truck Image caption"> -->
+			<div class="row"></div>
+			<img class="card-img-top p-1" [src]="[foodTruckLocation.foodTruck.foodTruckImageUrl]">
+
+			<span>FoodTruckName: {{foodTruckLocation.foodTruck.foodTruckName}}
 				<br>
+				Menu:{{foodTruckLocation.foodTruck.foodTruckMenuUrl}}
 				<br>
-			<!--	<strong>Title:</strong> {{foodTruck.foodTruckName}} -->
+				Hours: {{foodTruckLocation.location.locationStartTime | date}} - {{foodTruckLocation.location.locationEndTime | date}}
 				<br>
+				Phone: {{foodTruckLocation.foodTruck.foodTruckPhoneNumber}}
 				<br>
-		</info-window>
-	</ngui-map>
+				Description: {{foodTruckLocation.foodTruck.foodTruckDescription}}
+			</span>
+			<br>
+			<button (click)="hideMarkerInfo();"><span>Hide Info</span></button>
+		</div>
+	</info-window>
+</ngui-map>
