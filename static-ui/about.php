@@ -15,7 +15,7 @@
 <!--our custom CSS-->
 <link rel="stylesheet" type="text/css" href="/src/app/app.css">
 
-<navbar></navbar>
+
 <main>
 	<div class="container text-center pt-3">
 		<h1 class="py-3">What is 505 Food Truck Finder?</h1>
@@ -43,7 +43,7 @@
 				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/gr1znia3v4vpj8t/dNakitare.jpg?raw=1" alt="Daniel Nakitare">
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
-					<p class="card-text">add text here</p>
+					<p class="card-text">Originally from Maine, I moved to Rio Rancho after retiring from the Army and have fallen in love with the South West. After getting an MBA, I was still searching for a fulfilling career and stumbled across the Deep Dive Bootcamp. Web development allows me to build things, solve problems, and connect people and the world. I am hooked and have never looked back.</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
