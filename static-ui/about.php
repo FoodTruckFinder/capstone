@@ -44,7 +44,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Daniel Nakitare</h3>
 					<p class="card-text">Originally from Maine, I moved to Rio Rancho after retiring from the Army and have fallen in love with the South West. After getting an MBA, I was still searching for a fulfilling career and stumbled across the Deep Dive Bootcamp. Web development allows me to build things, solve problems, and connect people and the world. I am hooked and have never looked back.</p>
-					<a href="#" class="btn btn-warning">Visit My Website</a>
+					<a href="http://nakitare.io" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
