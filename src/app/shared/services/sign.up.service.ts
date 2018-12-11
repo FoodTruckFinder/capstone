@@ -13,6 +13,7 @@ export class SignUpService {
 	private signUpUrl = "api/sign-up/";
 
 	createProfile(signUp: SignUp) : Observable<Status> {
-		return(this.http.post<Status>(this.signUpUrl, signUp));
+		return(this.http.post<Status>(this.signUpUrl, signUp)
+		);
 	}
 }

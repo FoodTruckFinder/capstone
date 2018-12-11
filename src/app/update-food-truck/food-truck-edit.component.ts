@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+/*import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FoodTruck} from "../shared/interfaces/foodtruck";
 import {FoodTruckService} from "../shared/services/foodtruck.service";
@@ -65,3 +65,4 @@ export class UpdateFoodTruckComponent implements OnInit {
 	}
 }
 
+*/

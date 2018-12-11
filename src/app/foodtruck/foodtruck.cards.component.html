@@ -1,7 +1,13 @@
 <head>
+	<!--Bootstrap JS-->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 	<title>505 Food Truck Finder</title>
 </head>
 <body>
+	<mainNav></mainNav>
 	<div class="container-fluid">
 
 		<div class="card-columns">
@@ -10,8 +16,9 @@
 				<img class="card-img-top img-responsive p-1" src="{{foodtruck.foodTruckImageUrl}}"
 					  alt="foodtruck image caption">
 				<div class="card-body">
-					<p class="card-text text-right"><span class="lead text-danger">Phone: {{foodtruck.foodTruckPhoneNumber}}</span></p>
-					<p class="card-text text-right"><a class="lead text-dark border border-primary" href="{foodtruck.foodTruckMenuUrl}}">Menu Link</a></p>
+					<p class="card-text text-left ml-2"><span class="lead text-danger display-4"><i class="fas fa-heart"></i></span></p>
+					<p class="card-text text-right"><span class="lead text-dark">Phone: {{foodtruck.foodTruckPhoneNumber}}</span></p>
+					<p class="card-text text-right"><a class="lead text-primary border border-primary" href="{{foodtruck.foodTruckMenuUrl}}">Menu</a></p>
 					<p class="card-text text-left"><span class="lead">Description: {{foodtruck.foodTruckDescription}}</span></p>
 				</div>
 			</div>

@@ -1,32 +1,40 @@
-<h2 xmlns="http://www.w3.org/1999/html">
-	<span class="text-danger pl-2 ">505 </span><span class="text-warning">FoodTruck</span><span> Finder</span>
+<h2 class="display-4">
+	<span class="text-danger pl-2">505 </span><span class="text-warning">FoodTruck</span><span> Finder</span>
 </h2>
 
 <ngui-map
 	zoom="13"
 	center="35.0844, -106.6504"
 	mapTypeId="roadmap">
-	<marker *ngFor="let foodTruckLocation of foodTruckLocations"
-			  [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
-			  (click)="clicked($event)"></marker>
-	<info-window id="foodtruck-deetz" *ngFor="let foodTruckLocation of foodTruckLocations">
-		<div class="map-text p-3 ml-3 text-left">
+	<div>
+		<marker
+			*ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
+			(click)="displayFoodTruck(foodtruck)" (click)="clicked($event)"></marker>
 
-			<div class="row"></div>
-			<img class="card-img-top p-1" [src]="[foodTruckLocation.foodTruck.foodTruckImageUrl]">
+		<info-window id="foodtruck-deetz" *ngFor="let foodTruckLocation of foodTruckLocations" >
+			<div class="map-text p-3 ml-3 text-left">
+				<div class="card">
+					<img class="card-img-top p-1"  [src]="[foodTruckLocation.foodTruck.foodTruckImageUrl]">
 
-			<span>FoodTruckName: {{foodTruckLocation.foodTruck.foodTruckName}}
+					<span><h1>{{foodTruckLocation.foodTruck.foodTruckName}}</h1>
 				<br>
-				Menu:{{foodTruckLocation.foodTruck.foodTruckMenuUrl}}
+				Menu:<a>{{foodTruckLocation.foodTruck.foodTruckMenuUrl}}</a>
 				<br>
-				Hours: {{foodTruckLocation.location.locationStartTime | date}} - {{foodTruckLocation.location.locationEndTime | date}}
+				<span class="text-danger">Hours: {{foodTruckLocation.location.locationStartTime | date}} - {{foodTruckLocation.location.locationEndTime | date}}</span>
 				<br>
 				Phone: {{foodTruckLocation.foodTruck.foodTruckPhoneNumber}}
 				<br>
 				Description: {{foodTruckLocation.foodTruck.foodTruckDescription}}
 			</span>
-			<br>
-			<button (click)="hideMarkerInfo();"><span>Hide Info</span></button>
-		</div>
-	</info-window>
+					<br>
+					<br>
+					<a class="text-primary" [routerLink]="'/foodTruck/' + foodTruckLocation.foodTruck.foodTruckName">Detailed
+						FoodTruck Page</a>
+					<br>
+					<button (click)="hideMarkerInfo();"><span>Hide Info</span></button>
+				</div>
+			</div>
+
+		</info-window>
+	</div>
 </ngui-map>

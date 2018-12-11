@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import { Router } from "@angular/router";
 import {Status} from "../interfaces/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-
 import {CookieService} from "ngx-cookie-service";
 import {SessionService} from "../services/session.service";
 import {SignIn} from "../interfaces/sign.in";

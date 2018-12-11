@@ -1,3 +1,5 @@
+/*
+
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FoodTruck} from "../shared/interfaces/foodtruck";
@@ -99,3 +101,4 @@ export class FoodTruckCreateComponent  {
 		}
 	}
 }
+*/
