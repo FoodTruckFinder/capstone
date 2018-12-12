@@ -35,7 +35,7 @@
 				<img class="card-img-top rounded-circle pt-4" src="images/bGray.png" alt="Bernina Gray image">
 				<div class="card-body">
 					<h3 class="card-title">Bernina Gray</h3>
-					<p class="card-text">Voracious reader who enjoys figuring out how things work and how to make them better if possible and enjoys creating art in her spare time.</p>
+					<p class="card-text">Voracious reader who enjoys figuring out how things work and how to make them better if possible. Enjoys creating art in her spare time.</p>
 					<a href="https://www.linkedin.com/in/berninagray/" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
