@@ -36,7 +36,7 @@
 				<div class="card-body">
 					<h3 class="card-title">Bernina Gray</h3>
 					<p class="card-text">Voracious reader who enjoys figuring out how things work and how to make them better if possible and enjoys creating art in her spare time.</p>
-					<a href="#" class="btn btn-warning">Visit My Website</a>
+					<a href="https://www.linkedin.com/in/berninagray/" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
