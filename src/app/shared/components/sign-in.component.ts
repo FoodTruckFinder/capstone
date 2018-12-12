@@ -45,7 +45,7 @@ export class SignInComponent implements OnInit {
 				this.signInForm.reset();
 				this.router.navigate([""]);
 				location.reload();
-				console.log("sign-in successful");
+				alert("Sign-in successful");
 
 			} else {
 				alert("Incorrect Email or Password. Try Again.")

@@ -3,7 +3,7 @@ import {SignUp} from "../shared/interfaces/sign.up";
 import {SignUpService} from "../shared/services/sign.up.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
-import { NgbCollapse} from "@ng-bootstrap/ng-bootstrap";
+import { Router } from "@angular/router";
 
 @Component({
 	template: require("./sign-up.component.html"),
@@ -16,7 +16,7 @@ export class SignUpComponent implements OnInit {
 	signUpForm: FormGroup;
 	status: Status = {status:null, message:null, type:null};
 
-	constructor(private signUpService: SignUpService, private formBuilder: FormBuilder) {}
+	constructor(private signUpService: SignUpService, private formBuilder: FormBuilder, private router: Router,) {}
 
 	ngOnInit() {
 
@@ -36,6 +36,10 @@ export class SignUpComponent implements OnInit {
 		this.signUpService.createProfile(signUp).subscribe(status => {
 			this.status = status;
 			if(status.status === 200) {
+				this.signUpForm.reset();
+				this.router.navigate([""]);
+				location.reload();
+				alert("Sign-in successful! Please verify your email address to activate your account");
 
 			}
 		})
