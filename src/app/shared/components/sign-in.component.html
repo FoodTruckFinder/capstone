@@ -9,11 +9,11 @@
 		<p class="text-left pt-2">Email: <span class="text-danger">*</span></p><input type="text" name="profileEmail" id="profileEmail" formControlName="profileEmail" class="form-control"/>
 		<p class="text-left pt-2">Password: <span class="text-danger">*</span></p>	<input type="password" name="profilePassword" id="profilePassword" formControlName="profilePassword" class="form-control">
 		<br>
-		<a class="btn-warning rounded font-weight-bold text-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"> Foodtruck Owner? Click Here to Learn How to Register!</a>
+		<a class="btn-warning rounded font-weight-bold text-danger" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><span class="text-danger">Foodtruck Owner? Click Here to Learn How to Register!</span> </a>
 		<div class="row">
 			<div class="col">
-				<div class="collapse multi-collapse" id="multiCollapseExample1">
-					<div class=" mt-4 card card-body text-left font-weight-bold bg-warning"><span><span class="text-danger">Thank you</span> for your interest in registering as a Foodtruck vendor! We value your <span class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
+				<div class="collapse multi-collapse"  [ngbCollapse]="isCollapsed">
+					<div class="mt-4 card card-body text-left font-weight-bold bg-warning"><span><span class="text-danger">Thank you</span> for your interest in registering as a Foodtruck vendor! We value your <span class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
 					</div>
 				</div>
 			</div>

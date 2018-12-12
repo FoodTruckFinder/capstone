@@ -22,11 +22,6 @@ export class MapComponent implements OnInit {
 		locationLongitude: null,
 	};
 
-
-
-
-
-
 	status: Status = {status: null, message: null, type: null};
 
 	foodTruck : FoodTruck = {foodTruckId: null, foodTruckProfileId: null, foodTruckDescription: null, foodTruckImageUrl: null, foodTruckMenuUrl: null, foodTruckName: null, foodTruckPhoneNumber: null};

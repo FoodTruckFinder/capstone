@@ -18,10 +18,10 @@
 					<!-- End of Form Input Beginning of Buttons! -->
 					<br>
 					<div class="list-group">
-						<a class="btn-warning rounded font-weight-bold text-danger p-2 " data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Are you a food truck owner? Click here to register!</a>
+						<a class="btn-warning rounded font-weight-bold text-danger p-2 " data-toggle="collapse" (click)="isCollapsed = !isCollapsed" role="button" aria-expanded="false"><span class="text-danger">Are you a food truck owner? Click here to register!</span></a>
 						<div class="row">
 							<div class="col">
-								<div class="collapse multi-collapse" id="multiCollapseExample1">
+								<div class="collapse multi-collapse" [ngbCollapse]="isCollapsed">
 									<div class="mt-4 card card-body text-left font-weight-bold bg-warning">
 										<input class="form-control" id="." type="text" name="password" placeholder="Owner Name"/><input class="form-control" id="" type="text" name="password" placeholder="FoodTruck Name"/><input class="form-control" id="busines#" type="text" name="password" placeholder="Phone #"/><input class="form-control" id="business#" type="text" name="business#" placeholder="Email"/>
 										<span><span class="text-danger">Thank you</span> for your interest in registering as a food truck vendor! We value your <span class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>

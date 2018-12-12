@@ -13,6 +13,7 @@ import {SignInService} from "../services/sign.in.service";
 })
 
 export class SignInComponent implements OnInit {
+	public isCollapsed = true;
 	signInForm: FormGroup;
 	status: Status = {status: null, message:null, type: null};
 

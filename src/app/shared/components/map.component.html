@@ -1,4 +1,4 @@
-<h2 class="display-4">
+<h2 class="display-4 mt-5">
 	<span class="text-danger pl-2">505 </span><span class="text-warning">FoodTruck</span><span> Finder</span>
 </h2>
 
@@ -8,30 +8,33 @@
 	mapTypeId="roadmap">
 	<div>
 		<marker
-			*ngFor="let foodTruckLocation of foodTruckLocations" [position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
-			(click)="clicked($event, foodTruckLocation)"></marker>
+			*ngFor="let foodTruckLocation of foodTruckLocations"
+			[position]="[foodTruckLocation.location.locationLatitude, foodTruckLocation.location.locationLongitude]"
+			(click)="clicked($event, foodTruckLocation)" (initialized$)="onMarkerInit($event)"></marker>
 
 		<info-window id="foodtruck-deetz">
 			<div class="map-text p-3 ml-3 text-left">
 				<div class="card">
 					<!--<img class="card-img-top p-1"  [src]="[foodTruckLocation.foodTruck.foodTruckImageUrl]">-->
 
-					<span><h1>{{foodTruck.foodTruckName}}</h1>
-				<br>
-				Menu:<a>{{foodTruck.foodTruckMenuUrl}}</a>
-				<br>
-				<span class="text-danger">Hours: {{location.locationStartTime | date:'medium'}} - {{location.locationEndTime | date}}</span>
-				<br>
-				Phone: {{foodTruck.foodTruckPhoneNumber}}
-				<br>
-				Description: {{foodTruck.foodTruckDescription}}
-			</span>
-					<br>
-					<br>
-					<a class="text-primary" [routerLink]="'/foodTruck/' + foodTruck.foodTruckName">Detailed
-						FoodTruck Page</a>
-					<br>
-					<button (click)="hideMarkerInfo();"><span>Hide Info</span></button>
+					<span><h1>{{foodTruck.foodTruckName}}</h1></span>
+					<p class="lead font-weight-bold">
+						<br>
+						Menu:<a class="text-primary">{{foodTruck.foodTruckMenuUrl}}</a>
+						<br>
+						Hours:  {{location.locationStartTime | date:'medium'}} - {{location.locationEndTime | date:'shortTime'}}
+						<br>
+						Phone: {{foodTruck.foodTruckPhoneNumber}}
+						<br>
+						Description: {{foodTruck.foodTruckDescription}}
+
+						<br>
+						<br>
+						<a class="text-primary" [routerLink]="'/foodTruck/' + foodTruck.foodTruckName">Detailed
+							FoodTruck Page</a>
+						<br>
+					</p>
+						<button (click)="hideMarkerInfo();"><span>Hide Info</span></button>
 				</div>
 			</div>
 

@@ -3,6 +3,7 @@ import {SignUp} from "../shared/interfaces/sign.up";
 import {SignUpService} from "../shared/services/sign.up.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status";
+import { NgbCollapse} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
 	template: require("./sign-up.component.html"),
@@ -11,6 +12,7 @@ import {Status} from "../shared/interfaces/status";
 })
 
 export class SignUpComponent implements OnInit {
+	public isCollapsed = true;
 	signUpForm: FormGroup;
 	status: Status = {status:null, message:null, type:null};
 
