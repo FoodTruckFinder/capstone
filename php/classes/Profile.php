@@ -316,6 +316,43 @@ class Profile implements \JsonSerializable {
 	}
 
 	/**
+	 * get Profile by profile activation token
+	 *
+	 * @param |PDO $pdo PDO connection object
+	 * @param string $profileActivationToken profile activation token to search for
+	 * @return Profile|null return Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken): Profile {
+		// make sure activation toke is in the right format and that it is a string of hexadecimal
+		$profileActivationToken = trim($profileActivationToken);
+		if(ctype_xdigit($profileActivationToken) === false) {
+			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
+		}
+		// create query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileIsOwner, profileName FROM profile WHERE profileActivationToken = :profileActivationToken";
+		$statement = $pdo->prepare($query);
+		// bind the profile id to the place holder in the template
+		$parameters = ["profileActivationToken" => $profileActivationToken];
+		$statement->execute($parameters);
+
+		//grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row ["profileIsOwner"], $row["profileName"]);
+			}
+		} catch (\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+	}
+
+	/**
 	 * get Profile by profile id
 	 *
 	 * @param \PDO $pdo PDO connection object

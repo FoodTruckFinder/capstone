@@ -47,7 +47,7 @@ try{
 				//update the profile in the database
 				$profile->update($pdo);
 				//set the reply for the end user
-				$reply->data = "Thank you for activating your account, you will be auto-redirected to your profile shortly.";
+				$reply->data = "Thank you for activating your account, please return to homepage and sign in.";
 			}
 		} else {
 			//throw an exception if the activation token does not exist
