@@ -48,7 +48,7 @@
 				</div>
 			</div>
 			<div class="card text-white bg-dark col-sm-12 col-md-4 mb-3">
-				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/mjdjv2w372qx6bd/dSanderson.jpg?raw=1" alt="David Sanderson">
+				<img class="card-img-top rounded-circle pt-4" src="https://www.dropbox.com/s/mjdjv2w372qx6bd/david.jpg?raw=1" alt="David Sanderson">
 				<div class="card-body">
 					<h3 class="card-title">David Sanderson</h3>
 					<p class="card-text">add text here</p>
