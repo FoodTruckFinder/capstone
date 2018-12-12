@@ -53,7 +53,7 @@
 					<h3 class="card-title">David Sanderson</h3>
 					<p class="card-text">I am a Full-Stack Web Developer. I am proficient with several web-based technologies including Javascript, Angular 5, HTML, CSS, Bootstrap, PHP, and MySQL. I am particularly interested using these technologies to strengthen Albuquerque's community and local businesses.
 
-						I have had the opportunity to work in various fields since I graduated from UNM In 2013 with a degree in Evolutionary Anthropology. I have 4 years of Sales and Customer Service experience in Public Relations/Content Distribution and Real Estate. I also had an internship doing design research for a medical start-up in Cincinnati, Ohio. I have a life long passion for computers which lead me to Web Development. I love building things and excel in environments where I can solve problems and contribute to a team.</p>
+						I love building things and excel in environments where I can solve problems and contribute to a team.</p>
 					<a href="#" class="btn btn-warning">Visit My Website</a>
 				</div>
 			</div>
