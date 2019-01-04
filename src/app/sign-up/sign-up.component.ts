@@ -21,10 +21,10 @@ export class SignUpComponent implements OnInit {
 	ngOnInit() {
 
 		this.signUpForm = this.formBuilder.group({
-			profileEmail: ["", [Validators.maxLength(128), Validators.required]],
-			profilePassword: ["", [Validators.maxLength(97), Validators.required]],
-			profilePasswordConfirm: ["", [Validators.maxLength(97), Validators.required]],
-			profileName: ["", [Validators.maxLength(32), Validators.required]]
+			profileEmail: ["", [Validators.required, Validators.maxLength(128), Validators.minLength(2), Validators.email]],
+			profilePassword: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(97) ]],
+			profilePasswordConfirm: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(97)]],
+			profileName: ["", [Validators.required, Validators.maxLength(10), Validators.minLength(2)]]
 		});
 
 	}

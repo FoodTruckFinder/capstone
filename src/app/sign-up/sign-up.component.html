@@ -1,84 +1,174 @@
-
 <title>Sign up - 505 Food Truck Finder</title>
 
 <!--HEADER-->
-	<div class="col-6 offset-3 text-center">
-		<h1 class="header mt-4">Sign Up for <span class="text-warning">505</span> <span class="text-danger"> FoodTruck Finder!</span></h1>
-		<hr>
+<div class="col-6 offset-3 text-center">
+	<h1 class="header mt-4">Sign Up for <span class="text-warning">505</span> <span class="text-danger"> FoodTruck Finder!</span>
+	</h1>
+	<hr>
 
 
-					<!--FORM BEGINS -->
-				<form class="form-control-lg px-3" [formGroup]="signUpForm" (ngSubmit)="createSignUp()" novalidate>
+	<!--FORM BEGINS -->
+	<form class="form-control-lg px-3" [formGroup]="signUpForm" (ngSubmit)="createSignUp()" novalidate>
 
-					<!--Name Input -->
+		<!--Name Input -->
 
-					<p class="text-left py-2">Name: <span class="text-danger">*</span></p>
-					<input
-						type="text"
-						name="profileName"
-						id="profileName"
-						formControlName="profileName"
-						class="form-control"
-						placeholder="Name"
-					/>
+		<div class="form-group"
+			  [ngClass]="{ 'has-error' : signUpForm.get('profileName').errors && (signUpForm.get('profileName').touched || signUpForm.get('profileName').dirty)}">
+
+			<p class="text-left py-2">Name: <span class="text-danger">*</span></p>
+			<input
+				type="text"
+				name="profileName"
+				id="profileName"
+				formControlName="profileName"
+				class="form-control"
+				placeholder="Name"
+			/>
+
+			<!--FOR VALIDATION ERROR MSGS for Profile Name -->
+			<span class="help-block"
+					*ngIf="signUpForm.get('profileName').errors && (signUpForm.get('profileName').touched || signUpForm.get('profileName').dirty)">
+			<span
+				class="text-danger"
+				*ngIf="signUpForm.get('profileName').errors.required">
+
+				A Name is required
+
+			</span>
 
 
-					<!--Email Input -->
+			<span
+				class="text-danger"
+				*ngIf="signUpForm.get('profileName').errors.minlength || signUpForm.get('profileName').errors.maxlength ">
 
-					<div class="form-group" [ngClass]="{ 'has-error' : signUpForm.get('profileEmail').errors && (signUpForm.get('profileEmail').touched || signUpForm.get('profileEmail').dirty)}">
+				Name must be greater than 2 characters and less than 10 characters
 
-					<p class="text-left py-2">Email: <span class="text-danger">*</span></p>
-					<input
-						required email=""
-						type="text"
-						name="profileEmail"
-						id="profileEmail"
-						formControlName="profileEmail"
-						class="form-control text-left py-2"
-						placeholder="Email"
-					/>
-					</div>
+			</span>
+</span>
+		</div>
 
-					<!--Pass Input -->
+		<!--Email Input -->
 
-					<p class="text-left py-2">Password: <span class="text-danger">*</span></p>
-					<input
-						type="password"
-						name="profilePassword"
-						id="profilePassword"
-						formControlName="profilePassword"
-						class="form-control"
-							 placeholder="Password"
-					/>
+		<div class="form-group"
+			  [ngClass]="{ 'has-error' : signUpForm.get('profileEmail').errors && (signUpForm.get('profileEmail').touched || signUpForm.get('profileEmail').dirty)}">
 
-					<p class="text-left py-2">Password Confirm: <span class="text-danger">*</span></p>
-					<input
-						type="password"
-						name="profilePasswordConfirm"
-						id="profilePasswordConfirm"
-						formControlName="profilePasswordConfirm"
-						class="form-control text-left py-2"
-						placeholder=" Re-enter Password"
-					/>
+			<p class="text-left py-2">Email: <span class="text-danger">*</span></p>
+			<input
+				type="text"
+				name="profileEmail"
+				id="profileEmail"
+				formControlName="profileEmail"
+				class="form-control text-left py-2"
+				placeholder="Email"
+			/>
 
-					<!-- End of Form Input Beginning of Buttons! -->
+			<!--FOR VALIDATION ERROR MSGS for Email -->
+			<span class="help-block"
+					*ngIf="signUpForm.get('profileEmail').errors && (signUpForm.get('profileEmail').touched || signUpForm.get('profileEmail').dirty)">
 
-					<br>
-					<div class="list-group">
-						<a class="btn-warning rounded font-weight-bold text-danger p-2 " data-toggle="collapse" (click)="isCollapsed = !isCollapsed" role="button" aria-expanded="false"><span class="text-danger">Are you a food truck owner? Click here to register!</span></a>
-						<div class="row">
-							<div class="col">
-								<div class="collapse multi-collapse" [ngbCollapse]="isCollapsed">
-									<div class="mt-4 card card-body text-left font-weight-bold bg-warning">
-										<input class="form-control" id="." type="text" name="password" placeholder="Owner Name"/><input class="form-control" id="" type="text" name="password" placeholder="FoodTruck Name"/><input class="form-control" id="busines#" type="text" name="password" placeholder="Phone #"/><input class="form-control" id="business#" type="text" name="business#" placeholder="Email"/>
-										<span><span class="text-danger">Thank you</span> for your interest in registering as a food truck vendor! We value your <span class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
-									</div>
-								</div>
-							</div>
+				<span
+					class="text-danger"
+					*ngIf="signUpForm.get('profileEmail').errors.required">
+
+				An Email is required
+
+			</span>
+
+			<span
+				class="text-danger"
+				*ngIf="signUpForm.get('profileEmail').errors.email">
+
+				Please enter a valid Email
+
+			</span>
+			</span>
+
+		</div>
+
+
+		<!--Pass Input -->
+		<div class="form-group"
+			  [ngClass]="{ 'has-error' : signUpForm.get('profilePassword').errors && (signUpForm.get('profilePassword').touched || signUpForm.get('profilePassword').dirty)}">
+
+			<p class="text-left py-2">Password: <span class="text-danger">*</span></p>
+			<input
+				type="password"
+				name="profilePassword"
+				id="profilePassword"
+				formControlName="profilePassword"
+				class="form-control"
+				placeholder="Password"
+			/>
+
+			<span class="help-block"
+					*ngIf="signUpForm.get('profilePassword').errors && (signUpForm.get('profilePassword').touched || signUpForm.get('profilePassword').dirty)">
+		<span
+			class="text-danger"
+			*ngIf="signUpForm.get('profilePassword').errors.minlength">
+
+				Incorrect Password Length
+
+			</span>
+			</span>
+		</div>
+
+		<!--Pass Confirm -->
+
+		<div class="form-group"
+			  [ngClass]="{ 'has-error' : signUpForm.get('profilePasswordConfirm').errors && (signUpForm.get('profilePasswordConfirm').touched || signUpForm.get('profilePasswordConfirm').dirty)}">
+
+			<p class="text-left py-2">Password Confirm: <span class="text-danger">*</span></p>
+			<input
+				type="password"
+				name="profilePasswordConfirm"
+				id="profilePasswordConfirm"
+				formControlName="profilePasswordConfirm"
+				class="form-control text-left py-2"
+				placeholder=" Re-enter Password"
+			/>
+
+			<span class="help-block"
+					*ngIf="signUpForm.get('profilePasswordConfirm').errors && (signUpForm.get('profilePasswordConfirm').touched || signUpForm.get('profilePasswordConfirm').dirty)">
+		<span
+			class="text-danger"
+			*ngIf="signUpForm.get('profilePasswordConfirm').errors.required">
+
+				Please confirm a valid Password
+
+			</span>
+
+			</span>
+		</div>
+
+		<!-- End of Form Input Beginning of Buttons! -->
+
+		<br>
+		<div class="list-group">
+
+			<input class="btn-warning mb-4 mt-2 rounded font-weight-bold" type="submit" value="Sign-up">
+
+
+			<a class="btn-warning rounded font-weight-bold text-danger p-2 " data-toggle="collapse"
+				(click)="isCollapsed = !isCollapsed" role="button" aria-expanded="false"><span class="text-danger">Are you a food truck owner? Click here to register!</span></a>
+
+
+			<div class="row">
+				<div class="col">
+					<div class="collapse multi-collapse" [ngbCollapse]="isCollapsed">
+						<div class="mt-4 card card-body text-left font-weight-bold bg-warning">
+							<input class="form-control" id="." type="text" name="password" placeholder="Owner Name"/><input
+							class="form-control" id="" type="text" name="password" placeholder="FoodTruck Name"/><input
+							class="form-control" id="busines#" type="text" name="password" placeholder="Phone #"/><input
+							class="form-control" id="business#" type="text" name="business#" placeholder="Email"/>
+							<span><span class="text-danger">Thank you</span> for your interest in registering as a food truck vendor! We value your <span
+								class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span
+								class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
 						</div>
-						<input class="btn-warning mt-4 rounded font-weight-bold" type="submit" value="Sign-up">
 					</div>
-					<!-- End of Form -->
-				</form>
-	</div>
+				</div>
+			</div>
+		</div>
+		<!-- End of Form -->
+	</form>
+</div>
 
