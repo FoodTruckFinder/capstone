@@ -104,6 +104,14 @@
 					*ngIf="signUpForm.get('profilePassword').errors && (signUpForm.get('profilePassword').touched || signUpForm.get('profilePassword').dirty)">
 		<span
 			class="text-danger"
+			*ngIf="signUpForm.get('profilePassword').errors.required">
+
+				A valid password is required
+
+			</span>
+
+				<span
+			class="text-danger"
 			*ngIf="signUpForm.get('profilePassword').errors.minlength">
 
 				Incorrect Password Length
@@ -129,11 +137,20 @@
 
 			<span class="help-block"
 					*ngIf="signUpForm.get('profilePasswordConfirm').errors && (signUpForm.get('profilePasswordConfirm').touched || signUpForm.get('profilePasswordConfirm').dirty)">
-		<span
-			class="text-danger"
-			*ngIf="signUpForm.get('profilePasswordConfirm').errors.required">
 
-				Please confirm a valid Password
+				<span
+					class="text-danger"
+					*ngIf="signUpForm.get('profilePasswordConfirm').errors.required">
+
+				Please Re-Enter Valid Password
+
+			</span>
+
+				<span
+			class="text-danger"
+			*ngIf="signUpForm.get('profilePasswordConfirm').errors.minlength || signUpForm.get('profilePasswordConfirm').errors.maxlength ">
+
+				Invalid Password Length
 
 			</span>
 
