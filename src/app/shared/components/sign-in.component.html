@@ -57,16 +57,21 @@
 			</span>
 			</span>
 	</div>
+	<div class="list-group">
+		<input class="btn-warning mt-4 mb-4 rounded font-weight-bold" type="submit" value="Sign in">
 		<a class="btn-warning rounded font-weight-bold text-danger" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><span class="text-danger">Foodtruck Owner? Click Here to Learn How to Register!</span> </a>
+
 		<div class="row">
 			<div class="col">
 				<div class="collapse multi-collapse"  [ngbCollapse]="isCollapsed">
 					<div class="mt-4 card card-body text-left font-weight-bold bg-warning"><span><span class="text-danger">Thank you</span> for your interest in registering as a Foodtruck vendor! We value your <span class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
 					</div>
+
 				</div>
 			</div>
-			<input class="btn-warning mt-4 rounded font-weight-bold" type="submit" value="Sign in">
+
 		</div>
+	</div>
 
 </form>
 </div>
