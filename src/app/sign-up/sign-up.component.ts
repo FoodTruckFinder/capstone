@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit {
 				this.signUpForm.reset();
 				this.router.navigate([""]);
 				location.reload();
-				alert("Sign-in successful! Please verify your email address to activate your account");
+				alert("Sign-up successful! Please verify your email address to activate your account");
 
 			}
 		})

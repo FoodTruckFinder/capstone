@@ -44,9 +44,6 @@ export class MapComponent implements OnInit {
 		marker.nguiMapComponent.openInfoWindow('foodtruck-deetz', marker)
 	}
 
-
-
-
 	hideMarkerInfo() {
 		this.marker.display = !this.marker.display;
 	}
