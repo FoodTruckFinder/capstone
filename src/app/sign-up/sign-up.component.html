@@ -1,22 +1,68 @@
 
 <title>Sign up - 505 Food Truck Finder</title>
 
+<!--HEADER-->
 	<div class="col-6 offset-3 text-center">
 		<h1 class="header mt-4">Sign Up for <span class="text-warning">505</span> <span class="text-danger"> FoodTruck Finder!</span></h1>
 		<hr>
+
+
+					<!--FORM BEGINS -->
 				<form class="form-control-lg px-3" [formGroup]="signUpForm" (ngSubmit)="createSignUp()" novalidate>
+
 					<!--Name Input -->
+
 					<p class="text-left py-2">Name: <span class="text-danger">*</span></p>
-					<input type="text" name="profileName" id="profileName" formControlName="profileName" class="form-control" placeholder="Name"/>
+					<input
+						type="text"
+						name="profileName"
+						id="profileName"
+						formControlName="profileName"
+						class="form-control"
+						placeholder="Name"
+					/>
+
+
 					<!--Email Input -->
+
+					<div class="form-group" [ngClass]="{ 'has-error' : signUpForm.get('profileEmail').errors && (signUpForm.get('profileEmail').touched || signUpForm.get('profileEmail').dirty)}">
+
 					<p class="text-left py-2">Email: <span class="text-danger">*</span></p>
-					<input type="text" name="profileEmail" id="profileEmail" formControlName="profileEmail" class="form-control text-left py-2" placeholder="Email"/>
+					<input
+						required email=""
+						type="text"
+						name="profileEmail"
+						id="profileEmail"
+						formControlName="profileEmail"
+						class="form-control text-left py-2"
+						placeholder="Email"
+					/>
+					</div>
+
 					<!--Pass Input -->
+
 					<p class="text-left py-2">Password: <span class="text-danger">*</span></p>
-					<input type="password" name="profilePassword" id="profilePassword" formControlName="profilePassword" class="form-control" placeholder="Password"/>
+					<input
+						type="password"
+						name="profilePassword"
+						id="profilePassword"
+						formControlName="profilePassword"
+						class="form-control"
+							 placeholder="Password"
+					/>
+
 					<p class="text-left py-2">Password Confirm: <span class="text-danger">*</span></p>
-					<input type="password" name="profilePasswordConfirm" id="profilePasswordConfirm" formControlName="profilePasswordConfirm" class="form-control text-left py-2" placeholder=" Re-enter Password"/>
+					<input
+						type="password"
+						name="profilePasswordConfirm"
+						id="profilePasswordConfirm"
+						formControlName="profilePasswordConfirm"
+						class="form-control text-left py-2"
+						placeholder=" Re-enter Password"
+					/>
+
 					<!-- End of Form Input Beginning of Buttons! -->
+
 					<br>
 					<div class="list-group">
 						<a class="btn-warning rounded font-weight-bold text-danger p-2 " data-toggle="collapse" (click)="isCollapsed = !isCollapsed" role="button" aria-expanded="false"><span class="text-danger">Are you a food truck owner? Click here to register!</span></a>
@@ -32,6 +78,7 @@
 						</div>
 						<input class="btn-warning mt-4 rounded font-weight-bold" type="submit" value="Sign-up">
 					</div>
+					<!-- End of Form -->
 				</form>
 	</div>
 
