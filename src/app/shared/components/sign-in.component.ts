@@ -29,8 +29,8 @@ export class SignInComponent implements OnInit {
 
 	ngOnInit() {
 		this.signInForm = this.formBuilder.group({
-			profileEmail: ["", [Validators.maxLength(128), Validators.required]],
-			profilePassword: ["", [Validators.maxLength(97), Validators.required]]
+			profileEmail: ["", [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(128), ]],
+			profilePassword: ["", [Validators.required, Validators.minLength(8),Validators.maxLength(97)]]
 		});
 	}
 
@@ -52,6 +52,7 @@ export class SignInComponent implements OnInit {
 			}
 		});
 	}
+
 	signOut() :void {
 		this.signInService.signOut();
 	}
