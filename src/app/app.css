@@ -10,7 +10,7 @@
 }
 
 /* adding this because Bootstrap was overriding it */
-h1 {
+h1, span {
 	font-family: 'Bungee', monospace;
 }
 
