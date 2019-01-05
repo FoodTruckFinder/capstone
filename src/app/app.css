@@ -40,6 +40,6 @@ div:nth-of-type(6n) {
 /* styling for map */
 ngui-map {
 	height: 75vh !important;
-	background-color: black;
+	background-color: red;
 
 }
