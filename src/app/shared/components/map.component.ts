@@ -5,7 +5,7 @@ import {Status} from "../interfaces/status";
 import {Location} from "../interfaces/location";
 import {ActivatedRoute} from "@angular/router";
 import {FoodTruckLocation} from "../interfaces/foodtrucklocations";
-import {Observable} from "rxjs";
+// import {Observable} from "rxjs";
 
 
 @Component({

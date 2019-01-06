@@ -43,3 +43,12 @@ ngui-map {
 	background-color: red;
 
 }
+
+footer {
+	height: 10vh;
+	background-color: grey;
+	display: flex;
+	align-items: center;
+
+}
+
