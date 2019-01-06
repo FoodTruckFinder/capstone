@@ -3,11 +3,8 @@ import {Component} from "@angular/core";
 
 @Component({
 	template: require("./footer.component.html"),
-	selector: "Footer"
+	selector: "footer"
 })
 
 
-export class FooterComponent {
-
-
-}
+export class FooterComponent {}
