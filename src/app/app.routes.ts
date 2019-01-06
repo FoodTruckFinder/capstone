@@ -19,9 +19,10 @@ import {FoodTruckComponent} from "./foodtruck/foodtruck.component";
 import {CookieService} from "ngx-cookie-service";
 import {MapComponent} from "./shared/components/map.component";
 import {MainNavComponent} from "./shared/components/main-nav.component";
+import {FooterComponent} from "./shared/components/footer.component";
 
 
-export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckCardsComponent, FoodTruckComponent, MapComponent, MainNavComponent];
+export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckCardsComponent, FoodTruckComponent, MapComponent, MainNavComponent, FooterComponent];
 
 export const routes: Routes = [
 	{path: "foodTruck/:name", component: FoodTruckComponent},
