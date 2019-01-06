@@ -16,7 +16,7 @@ class Location implements \JsonSerializable {
 	 * id for this location this is a primary key
 	 * @var Uuid $locationId
 	 */
-
+	//declare properties
 	private $locationId;
 
 	/**

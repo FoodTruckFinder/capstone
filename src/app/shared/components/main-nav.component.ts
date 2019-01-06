@@ -13,7 +13,7 @@ import {Status} from "../interfaces/status";
 
 export class MainNavComponent {
 
-	isCollapsed = true;
+	public isCollapsed = true;
 
 	status: Status = {status: null, message:null, type: null};
 

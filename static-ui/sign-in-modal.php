@@ -32,7 +32,7 @@
 				<p class="text-left pt-2">Password: <span class="text-danger">*</span></p>
 				<input class="form-control" id="password" type="text" name="password" placeholder=" Password"/>
 				<br>
-				<a class="btn-warning rounded font-weight-bold text-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"> Foodtruck Owner? Click Here to Learn How to Register!</a>
+				<a class="btn-warning rounded font-weight-bold text-danger" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"> Foodtruck Owner? Click Here to Learn How to Register!</a>
 				<div class="row">
 					<div class="col">
 						<div class="collapse multi-collapse" id="multiCollapseExample1">

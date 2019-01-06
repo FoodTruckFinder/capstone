@@ -2,28 +2,27 @@
 
 /* styling for the sign-up page */
 
-@import url("https://fonts.googleapis.com/css?family=Lato|Bungee|Fira+Sans");
+@import url("https://fonts.googleapis.com/css?family=Lato|Bungee|Fira+Sans|Varela+Round");
 
 .header, span {
-	font-family: 'Bungee', cursive;
+	font-family: 'Bungee', sans-serif;
 	color: black;
 }
 
 /* adding this because Bootstrap was overriding it */
-h1 {
-	font-family: 'Bungee', cursive !important;
+h1, span {
+	font-family: 'Bungee', monospace;
 }
 
 p {
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Varela Round', sans-serif;
 }
 
-span {
-	font-family: 'Bungee', cursive;
+a {
+	font-family: 'Varela Round', sans-serif;
 }
-
-a:hover {
-	box-shadow: 5px 5px 5px black;
+a:hover, p:hover {
+	font-size: 1.5em;
 }
 
 input:nth-of-type(n) {
@@ -33,7 +32,7 @@ input:nth-of-type(n) {
 }
 
 div:nth-of-type(6n) {
-	font-family: 'Bungee', cursive;
+	font-family: 'Bungee', sans-serif;
 }
 
 /* end styling for the sign-up page */
@@ -41,6 +40,6 @@ div:nth-of-type(6n) {
 /* styling for map */
 ngui-map {
 	height: 75vh !important;
-	background-color: white;
+	background-color: red;
 
 }
