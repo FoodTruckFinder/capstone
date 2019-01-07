@@ -1,0 +1,200 @@
+<title>Post Location - 505 Food Truck Finder</title>
+
+<!--HEADER-->
+<div class="container">
+	<div class="col-sm-6-offset-3 text-center">
+		<h1 class="header mt-4"><span>Post Location</span>
+		</h1>
+		<hr>
+		<!--FORM BEGINS -->
+		<form class="form-control-lg px-3" [formGroup]="postLocationForm" (ngSubmit)="postLocation()">
+
+			<!--Location FoodTruck Id for Testing  -->
+
+			<div class="form-group"
+				  [ngClass]="{ 'has-error' : postLocationForm.get('locationFoodTruckId').errors && (postLocationForm.get('locationFoodTruckId').touched || postLocationForm.get('locationFoodTruckId').dirty)}">
+
+				<p class="text-left py-2">FoodTruckId: <span class="text-danger">*</span></p>
+				<input
+					type="name"
+					name="locationFoodTruckId"
+					id="locationFoodTruckId"
+					formControlName="locationFoodTruckId"
+					class="form-control"
+					placeholder="FoodTruck Id"
+				/>
+
+				<!--FOR VALIDATION Error Messages for Location Start Time -->
+				<span class="help-block"
+						*ngIf="postLocationForm.get('locationFoodTruckId').errors && (postLocationForm.get('locationFoodTruckId').touched || postLocationForm.get('locationFoodTruckId').dirty)">
+			<span
+				class="text-danger"
+				*ngIf="postLocationForm.get('locationFoodTruckId').errors.required">
+
+				A location food truck id is required
+
+			</span>
+
+
+			<span
+				class="text-danger"
+				*ngIf="postLocationForm.get('locationFoodTruckId').errors.minlength || postLocationForm.get('locationFoodTruckId').errors.maxlength ">
+
+
+			</span>
+</span>
+			</div>
+
+
+			<!--Location Start Time  -->
+
+			<div class="form-group"
+				  [ngClass]="{ 'has-error' : postLocationForm.get('locationStartTime').errors && (postLocationForm.get('locationStartTime').touched || postLocationForm.get('locationStartTime').dirty)}">
+
+				<p class="text-left py-2">Start Time: <span class="text-danger">*</span></p>
+				<input
+					type="datetime-local"
+					name="locationStartTime"
+					id="locationStartTime"
+					formControlName="locationStartTime"
+					class="form-control"
+					placeholder="Start Time"
+				/>
+
+				<!--FOR VALIDATION Error Messages for Location Start Time -->
+				<span class="help-block"
+						*ngIf="postLocationForm.get('locationStartTime').errors && (postLocationForm.get('locationStartTime').touched || postLocationForm.get('locationStartTime').dirty)">
+			<span
+				class="text-danger"
+				*ngIf="postLocationForm.get('locationStartTime').errors.required">
+
+				A location start time is required
+
+			</span>
+
+
+			<span
+				class="text-danger"
+				*ngIf="postLocationForm.get('locationStartTime').errors.minlength || postLocationForm.get('locationStartTime').errors.maxlength ">
+
+
+			</span>
+</span>
+			</div>
+
+			<!--Location End Time  -->
+
+			<div class="form-group"
+				  [ngClass]="{ 'has-error' : postLocationForm.get('locationEndTime').errors && (postLocationForm.get('locationEndTime').touched || postLocationForm.get('locationEndTime').dirty)}">
+
+				<p class="text-left py-2">End Time: <span class="text-danger">*</span></p>
+				<input
+					type="datetime"
+					name="locationEndTime"
+					id="locationEndTime"
+					formControlName="locationEndTime"
+					class="form-control"
+					placeholder="End Time"
+				/>
+
+				<!--FOR VALIDATION ERROR MSGS for Email -->
+				<span class="help-block"
+						*ngIf="postLocationForm.get('locationEndTime').errors && (postLocationForm.get('locationEndTime').touched || postLocationForm.get('locationEndTime').dirty)">
+
+				<span
+					class="text-danger"
+					*ngIf="postLocationForm.get('locationEndTime').errors.required">
+
+				A location end time is required
+
+			</span>
+
+			<span
+				class="text-danger"
+				*ngIf="postLocationForm.get('locationEndTime').errors.email">
+
+				Please enter a valid Email
+
+			</span>
+			</span>
+
+			</div>
+
+
+			<!--Lat input -->
+			<div class="form-group"
+				  [ngClass]="{ 'has-error' : postLocationForm.get('locationLatitude').errors && (postLocationForm.get('locationLatitude').touched || postLocationForm.get('locationLatitude').dirty)}">
+
+				<p class="text-left py-2">Latitude: <span class="text-danger">*</span></p>
+				<input
+					type="number"
+					name="locationLatitude"
+					id="locationLatitude"
+					formControlName="locationLatitude"
+					class="form-control"
+					placeholder="Latitude"
+				/>
+
+				<span class="help-block"
+						*ngIf="postLocationForm.get('locationLatitude').errors && (postLocationForm.get('locationLatitude').touched || postLocationForm.get('locationLatitude').dirty)">
+		<span
+			class="text-danger"
+			*ngIf="postLocationForm.get('locationLatitude').errors.required">
+
+				A valid password is required
+
+			</span>
+
+				<span
+					class="text-danger"
+					*ngIf="postLocationForm.get('locationLatitude').errors.minlength">
+
+				Incorrect Password Length
+
+			</span>
+			</span>
+			</div>
+
+			<!--Long Input -->
+
+			<div class="form-group"
+				  [ngClass]="{ 'has-error' : postLocationForm.get('locationLongitude').errors && (postLocationForm.get('locationLongitude').touched || postLocationForm.get('locationLongitude').dirty)}">
+
+				<p class="text-left py-2">Longitude: <span class="text-danger">*</span></p>
+				<input
+					type="number"
+					name="locationLongitude"
+					id="locationLongitude"
+					formControlName="locationLongitude"
+					class="form-control text-left py-2"
+					placeholder="Longitude"
+				/>
+
+				<span class="help-block"
+						*ngIf="postLocationForm.get('locationLongitude').errors && (postLocationForm.get('locationLongitude').touched || postLocationForm.get('locationLongitude').dirty)">
+
+				<span
+					class="text-danger"
+					*ngIf="postLocationForm.get('locationLongitude').errors.required">
+
+				Please Re-Enter Valid Password
+
+			</span>
+
+				<span
+					class="text-danger"
+					*ngIf="postLocationForm.get('locationLongitude').errors.minlength || postLocationForm.get('locationLongitude').errors.maxlength ">
+
+				Invalid Password Length
+
+			</span>
+
+			</span>
+			</div>
+
+
+				<button class="btn-warning mb-4 mt-2 rounded font-weight-bold" type="submit" value="Post-Location"><span>Post Location</span></button>
+		</form>
+	</div>
+
+</div>

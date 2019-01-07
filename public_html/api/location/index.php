@@ -96,11 +96,11 @@ try {
 		}
 
 
-		//make sure the start time is accurate
+		//make sure the start time is not empty
 		if(empty($requestObject->locationStartTime) === true) {
 			$requestObject->locationStartTime = null;
 		}
-		//make sure the end time is accurate
+		//make sure the end time is not empty
 		if(empty($requestObject->locationEndTime) === true) {
 			$requestObject->locationEndTime = null;
 		}

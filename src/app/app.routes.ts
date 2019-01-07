@@ -20,9 +20,11 @@ import {CookieService} from "ngx-cookie-service";
 import {MapComponent} from "./shared/components/map.component";
 import {MainNavComponent} from "./shared/components/main-nav.component";
 import {FooterComponent} from "./shared/components/footer.component";
+import {PostLocationComponent} from "./shared/components/postLocation.component";
+import {LocationService} from "./shared/services/location.service";
 
 
-export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckCardsComponent, FoodTruckComponent, MapComponent, MainNavComponent, FooterComponent];
+export const allAppComponents = [HomeViewComponent, SignUpComponent, SignInComponent, FoodTruckCardsComponent, FoodTruckComponent, MapComponent, MainNavComponent, FooterComponent, PostLocationComponent];
 
 export const routes: Routes = [
 	{path: "foodTruck/:name", component: FoodTruckComponent},
@@ -37,7 +39,7 @@ const providers: any[] = [
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
-const services: any[] = [AuthService, CookieService, FoodTruckService, SignInService, SignUpService, SessionService, AuthGuard];
+const services: any[] = [AuthService, CookieService, FoodTruckService, SignInService, SignUpService, SessionService, AuthGuard, LocationService];
 
 
 export const appRoutingProviders: any[] = [providers, services];

@@ -1,9 +1,10 @@
 
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/internal/Observable";
+import {Observable} from "rxjs";
 import {Status} from "../interfaces/status";
 import {Location} from"../interfaces/location";
+import {PostLocation} from "../interfaces/postlocation";
 
 @Injectable()
 export class LocationService {
@@ -28,8 +29,8 @@ export class LocationService {
 		return (this.http.get<Location>(this.locationUrl, {params: new HttpParams().set("FoodTruckId", locationFoodTruckId)}));
 	}
 
-	postLocation(location: Location) : Observable<Status> {
-		return(this.http.post<Status>(this.locationUrl, location)
+	createLocation(postlocation: PostLocation) : Observable<Status> {
+		return(this.http.post<Status>(this.locationUrl, postlocation)
 		);
 	}
 

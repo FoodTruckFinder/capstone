@@ -10,7 +10,7 @@ enableProdMode();
 
 export class AppComponent {
 
-	status : Status = {status: null, type: null, message:null};
+	status : Status = {status: null, type: null, message: null};
 
 	constructor(private sessionService : SessionService) {
 		this.sessionService.setSession().subscribe(status => this.status = status)
