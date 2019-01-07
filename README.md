@@ -43,13 +43,3 @@ Facebook/Twitter/Instagram integration
 1) user: abqapp1@gmail.com  / password: test
 2) user: abqapp2@gmail.com  / password: test
 3) user: abqapp3@gmail.com  / password: test
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
