@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/internal/Observable";
 import {Status} from "../interfaces/status";
-// import {FoodTruck} from "../interfaces/foodtruck";
 import {Location} from"../interfaces/location";
 
 @Injectable()
@@ -24,9 +23,15 @@ export class LocationService {
 		return (this.http.get<Location>(this.locationUrl + id));
 	}
 
-	// call to the Location API and get a Location object by its email address
+	// call to the Location API and get a Location object by its foodTruck Id
 	getLocationByFoodTruckId(locationFoodTruckId: string): Observable<Location> {
 		return (this.http.get<Location>(this.locationUrl, {params: new HttpParams().set("FoodTruckId", locationFoodTruckId)}));
 	}
+
+	postLocation(location: Location) : Observable<Status> {
+		return(this.http.post<Status>(this.locationUrl, location)
+		);
+	}
+
 
 }
