@@ -8,11 +8,11 @@ Internet browser (Chrome, Firefox, Safari, Edge)
 Internet capable device (smartphone or PC)
 
 ## Authors 
-# David Sanderson - https://github.com/dsanderson90
-# Rae Jack - https://github.com/RaeJack
-# Bernina Gray - https://github.com/berninagray
-# Greg Klein - https://github.com/gregoryklein
-# Daniel Nakitare - https://github.com/Dnakitare
+- David Sanderson - https://github.com/dsanderson90
+-  Rae Jack - https://github.com/RaeJack
+- Bernina Gray - https://github.com/berninagray
+- Greg Klein - https://github.com/gregoryklein
+- Daniel Nakitare - https://github.com/Dnakitare
 
 Developer bios can be found on the About page of the site.
 
