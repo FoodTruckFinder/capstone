@@ -1,25 +1,20 @@
 # 505 Food Truck Finder 
 
-toDo One Paragraph of project description goes here
+This is a mobile friendly web app designed to help locals find their favorite food trucks quickly. It also helps food truck owners let customers know when they active, show what's on the menu, and promote their social media channels. 
 
 ### Prerequisites
 
 Internet browser (Chrome, Firefox, Safari, Edge) 
+Internet capable device (smartphone or PC)
 
-## toDo Authors 
+## Authors 
 David Sanderson - https://github.com/dsanderson90
 Rae Jack - https://github.com/RaeJack
 Bernina Gray - https://github.com/berninagray
 Greg Klein - https://github.com/gregoryklein
 Daniel Nakitare - https://github.com/Dnakitare
 
-### toDo Installing 
-
-A step by step series of examples that tell you how to get a development env running
-
-## toDo App vs. Site
-
-Add additional notes about how to deploy this on a live system
+Developer bios can be found on the About page of the site.
 
 ## Whats Currently in Development
 Functionality
@@ -40,7 +35,7 @@ Make it so sign-in and sign-up work on the Foodtruck Profiles page
 
 Future Features:
 Facebook/Twitter/Instagram integration 
-3 good deeds
+3 good deeds (?)
 ???
 
 ## Built With toDo
