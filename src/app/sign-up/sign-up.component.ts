@@ -24,7 +24,7 @@ export class SignUpComponent implements OnInit {
 			profileEmail: ["", [Validators.required, Validators.maxLength(128), Validators.minLength(2), Validators.email]],
 			profilePassword: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(97) ]],
 			profilePasswordConfirm: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(97)]],
-			profileName: ["", [Validators.required, Validators.maxLength(10), Validators.minLength(2)]]
+			profileName: ["", [Validators.required, Validators.maxLength(24), Validators.minLength(2)]]
 		});
 
 	}

@@ -1,7 +1,7 @@
 <title>Sign up - 505 Food Truck Finder</title>
 
 <!--HEADER-->
-<div class="col-6 offset-3 text-center">
+<div class="col-lg-6-offset-3 text-center">
 	<h1 class="header mt-4">Sign Up for <span class="text-danger">505</span> <span class="text-warning"> FoodTruck</span> Finder!
 	</h1>
 	<hr>
@@ -41,7 +41,7 @@
 				class="text-danger"
 				*ngIf="signUpForm.get('profileName').errors.minlength || signUpForm.get('profileName').errors.maxlength ">
 
-				Name must be greater than 2 characters and less than 10 characters
+				Name must be greater than 2 characters and less than 24 characters
 
 			</span>
 </span>
@@ -176,7 +176,7 @@
 							<span><span class="text-danger">Thank you</span> for your interest in registering as a food truck vendor! We value your <span
 								class="text-danger">business</span> and want to connect you with more <span class="text-danger">hungry customers!</span> Please fill out the form below and email a photo of your business license to <span
 								class="text-danger">505FoodTruckFinder@gmail.com</span>! We will be in touch within 3-5 business days!</span>
-							<input class="form-control m-2" id="profileName" type="text" name="password" placeholder="Owner Name"/>
+							<input class="form-control m-2" id="foodTruckProfileName" type="text" name="password" placeholder="Owner Name"/>
 							<input class="form-control m-2" id="foodTruckName" type="text" name="password" placeholder="FoodTruck Name"/>
 							<input class="form-control m-2" id="email" type="text" name="password" placeholder="Email"/>
 							<input class="form-control m-2" id="bizLicense" type="text" name="business#" placeholder="Business License #"/>
