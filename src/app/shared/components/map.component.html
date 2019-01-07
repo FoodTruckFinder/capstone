@@ -1,11 +1,10 @@
-<h2 class="display-4 m-3">
-	<span class="text-danger pl-2">505 </span><span class="text-warning">FoodTruck</span><span> Finder</span>
-</h2>
+
 
 <ngui-map
 	zoom="13"
 	center="35.0844, -106.6504"
-	mapTypeId="roadmap">
+	mapTypeId="roadmap"
+	class="map">
 	<div>
 		<marker
 			*ngFor="let foodTruckLocation of foodTruckLocations"
@@ -41,7 +40,7 @@
 	</div>
 </ngui-map>
 
-<div>
-<button (click)="geoFindMe()">Find Current Location</button>
+<div class="container text-center pt-5">
+	<button (click)="geoFindMe()" class="btn btn-outline-danger btn0lg">Find Current Location</button>
 	<div id="output"></div>
 </div>

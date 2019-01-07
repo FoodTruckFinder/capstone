@@ -6,11 +6,20 @@
 
 .header, span {
 	font-family: 'Bungee', sans-serif;
+
+}
+
+.header h2 {
 	color: black;
+
+}
+
+html .border-bottom {
+	border-bottom-color: rgba(46,51,56,1) !important;
 }
 
 /* adding this because Bootstrap was overriding it */
-h1, span {
+h1 {
 	font-family: 'Bungee', monospace;
 }
 
@@ -40,9 +49,14 @@ div:nth-of-type(6n) {
 /* styling for map */
 ngui-map {
 	height: 75vh !important;
-	background-color: red;
+	background-color: #fefefe;
 
 }
+
+.map {
+	padding-top: 10.5vh;
+}
+
 
 footer {
 	height: 10vh;
