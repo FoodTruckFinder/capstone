@@ -46,9 +46,10 @@ ngui-map {
 
 footer {
 	height: 10vh;
-	background-color: grey;
+	background-color: rgb(46,51,56);
 	display: flex;
 	align-items: center;
+	font-family: 'Bungee', monospace;
 
 }
 
