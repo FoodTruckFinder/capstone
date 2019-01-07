@@ -38,21 +38,11 @@ Facebook/Twitter/Instagram integration
 3 good deeds (?)
 ???
 
-## Built With toDo
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Test Accounts
 
-1) abqapp1@gmail.com pw test
-2) abqapp2@gmail.com pw test
-3) abqapp3@gmail.com pw test
+1) user: abqapp1@gmail.com  / password: test
+2) user: abqapp2@gmail.com  / password: test
+3) user: abqapp3@gmail.com  / password: test
 
 ## License
 
