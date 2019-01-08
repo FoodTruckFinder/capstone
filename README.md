@@ -4,8 +4,8 @@ This is a mobile friendly web app designed to help locals find their favorite fo
 
 ### Prerequisites
 
-Internet browser (Chrome, Firefox, Safari, Edge) 
-Internet capable device (smartphone or PC)
+- Internet browser (Chrome, Firefox, Safari, Edge) 
+- Internet capable device (smartphone or PC)
 
 ## Authors 
 - David Sanderson - https://github.com/dsanderson90
