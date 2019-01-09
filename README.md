@@ -22,7 +22,7 @@ Developer bios can be found on the About page of the site.
 ![screenshot 2](https://github.com/FoodTruckFinder/capstone/blob/master/2019-01-06%2023_25_54-Settings.png?raw=true)
 ![screenshot 1](https://github.com/FoodTruckFinder/capstone/blob/master/2019-01-06%2023_26_40-Settings.png?raw=true)
 
-## Whats Currently in Development
+## Future Features We're Working On (WIP)
 Functionality
 Form Validation for Sign-in/Sign-up for users 
 Build out sign up for vendors
@@ -41,8 +41,7 @@ Make it so sign-in and sign-up work on the Foodtruck Profiles page
 
 Future Features:
 Facebook/Twitter/Instagram integration 
-3 good deeds (?)
-???
+3 good deeds
 
 ## Test Accounts
 
