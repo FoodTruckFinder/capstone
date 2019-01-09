@@ -16,6 +16,12 @@ This is a mobile friendly web app designed to help locals find their favorite fo
 
 Developer bios can be found on the About page of the site.
 
+## Screenshots
+
+![screenshot 1](https://github.com/FoodTruckFinder/capstone/blob/master/2019-01-06%2023_25_35-Settings.png?raw=true)
+![screenshot 2](https://github.com/FoodTruckFinder/capstone/blob/master/2019-01-06%2023_25_54-Settings.png?raw=true)
+![screenshot 1](https://github.com/FoodTruckFinder/capstone/blob/master/2019-01-06%2023_26_40-Settings.png?raw=true)
+
 ## Whats Currently in Development
 Functionality
 Form Validation for Sign-in/Sign-up for users 
