@@ -7,6 +7,7 @@ require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once ("/etc/apache2/capstone-mysql/Secrets.php");
 
 use \FoodTruckFinder\Capstone\Profile;
+use \FoodTruckFinder\Capstone\FoodTruck;
 
 /**
  * API for app user sign-in
@@ -69,11 +70,22 @@ try {
 		//add profile to session upon successful sign-in
 		$_SESSION["profile"] = $profile;
 		//create the auth payload
-		$authObject = (object) [
-			"profileId" => $profile->getProfileId(),
+		if(($profile->getProfileIsOwner()) === 0) {
+			$authObject = (object) [
+				"profileId" => $profile->getProfileId(),
 
-			"profileName" => $profile->getProfileName()
-		];
+				"profileName" => $profile->getProfile(),
+
+				"foodTruckId" => $profile->getFoodTruckByFoodTruckProfileId(),
+			];
+		} else {
+			$authObject = (object) [
+				"profileId" => $profile->getProfileId(),
+
+				"profileName" => $profile->getProfileName()
+			];
+		}
+
 		//create & set the JWT
 		setJwtAndAuthHeader("auth", $authObject);
 		//update reply
