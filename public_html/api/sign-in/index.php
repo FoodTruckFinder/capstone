@@ -67,10 +67,25 @@ try {
 		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {
 			throw (new \RuntimeException("Please verify your account via email before logging in.", 403));
 		}
+
+		if ($profile->getProfileIsOwner() === 1) {
+			$profileId = $profile->getProfileId();
+			$foodTruck = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $profileId);
+			$authObject = (object) [
+
+				"profileId" => $profile->getProfileId(),
+
+				"profileName" => $profile->getProfileName(),
+
+				"foodTruckId" => $foodTruck->getFoodTruckId(),
+			];
+
+
+		}
+
 		//add profile to session upon successful sign-in
-		$_SESSION["profile"] = $profile;
 		//create the auth payload
-		if(($profile->getProfileIsOwner()) === 0) {
+		else {
 			$authObject = (object) [
 				"profileId" => $profile->getProfileId(),
 
@@ -78,13 +93,9 @@ try {
 
 				"foodTruckId" => $profile->getFoodTruckByFoodTruckProfileId(),
 			];
-		} else {
-			$authObject = (object) [
-				"profileId" => $profile->getProfileId(),
-
-				"profileName" => $profile->getProfileName()
-			];
 		}
+
+		$_SESSION["profile"] = $profile;
 
 		//create & set the JWT
 		setJwtAndAuthHeader("auth", $authObject);
