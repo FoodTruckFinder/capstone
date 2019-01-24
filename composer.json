@@ -2,7 +2,7 @@
 {
   "require": {
     "cloudinary/cloudinary_php": "dev-master",
-    "php": "7.2.*",
+    "php": "7.*",
     "ext-json": "*",
     "ext-pdo": "*",
     "ramsey/uuid": "^3.8",
