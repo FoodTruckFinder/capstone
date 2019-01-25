@@ -68,16 +68,20 @@ try {
 			throw (new \RuntimeException("Please verify your account via email before logging in.", 403));
 		}
 
+		$_SESSION["profile"] = $profile;
+
 		if ($profile->getProfileIsOwner() === 1) {
 			$profileId = $profile->getProfileId();
+
 			$foodTruck = FoodTruck::getFoodTruckByFoodTruckProfileId($pdo, $profileId);
+			var_dump($foodTruck);
 			$authObject = (object) [
 
 				"profileId" => $profile->getProfileId(),
 
 				"profileName" => $profile->getProfileName(),
 
-				"foodTruckId" => $foodTruck->getFoodTruckId(),
+				"foodTruckId" => $foodTruck->getFoodTruckId()
 			];
 
 
@@ -89,13 +93,11 @@ try {
 			$authObject = (object) [
 				"profileId" => $profile->getProfileId(),
 
-				"profileName" => $profile->getProfile(),
+				"profileName" => $profile->getProfileName()
 
-				"foodTruckId" => $profile->getFoodTruckByFoodTruckProfileId(),
 			];
 		}
 
-		$_SESSION["profile"] = $profile;
 
 		//create & set the JWT
 		setJwtAndAuthHeader("auth", $authObject);

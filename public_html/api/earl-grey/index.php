@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__DIR__,3 ) .  "/php/lib/xsrf.php";
 require_once dirname(__DIR__,3 ) .  "/php/lib/jwt.php";
+
+
 use FoodTruckFinder\Capstone;
 $reply = new stdClass();
 $reply->status = 200;
@@ -22,5 +24,7 @@ try {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 }
+
+
 // encode and return reply to front end caller
 echo json_encode($reply);
