@@ -1,5 +1,5 @@
 export interface FoodTruck {
-  id: number;
+  _id: number;
   userId: number;
   name: string;
   contact: {

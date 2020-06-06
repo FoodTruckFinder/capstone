@@ -36,14 +36,14 @@ export const addFoodTruck = async ({
 }) => {
   const body = await request.body();
   const {
-    id,
+    _id,
     userId,
     name,
     contact,
     location,
     date_created,
   }: {
-    id: number;
+    _id: number;
     userId: number;
     name: string;
     contact: {
@@ -61,7 +61,7 @@ export const addFoodTruck = async ({
   } = body.value;
 
   const obj = {
-    id: id,
+    _id: _id,
     userId: userId,
     name: name,
     contact: {
