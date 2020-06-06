@@ -3,7 +3,7 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    isOwner: boolean,
-    foodtruckName: string | null
+    isOwner: boolean;
+    foodtruckName?: string;
   }
   
