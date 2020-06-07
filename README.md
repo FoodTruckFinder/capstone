@@ -6,9 +6,14 @@
 1.  **Install Deno.**
 
     # Install [Deno](https://deno.land/#installation); 
-    i.e
+    Windows
     ```shell
     choco install deno
+    ```
+    
+    Mac
+    ```shell
+    brew install deno
     ```
 
 1.  **Start developing.**
